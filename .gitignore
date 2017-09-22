@@ -1,0 +1,9 @@
+*.pyc
+*.pyo
+*~
+*.swp
+*/#*#
+.#*
+.DS_Store
+.cvsignore
+.svn
