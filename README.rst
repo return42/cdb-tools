@@ -11,6 +11,7 @@ DATABASE (CDB) Installationen.
 - Reposetorie:   `github return42/cdb-tools <https://github.com/return42/cdb-tools>`_
 - Author e-mail: markus.heiser@darmarit.de
 
+
 Wichtige Hinweise
 =================
 
@@ -56,6 +57,3 @@ müssen lediglich einmal *geklont* (download) werden und immer in einer CDB-Shel
   $ $CADDOK_RUNTIME/cdbsh
   cdb$ cd cdb-tools
   cdb$ powerscript ... # Name des Skripts, das ausgeführt wird
-
-
-  
