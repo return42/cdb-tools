@@ -18,10 +18,11 @@ DB Export einspielen
 ====================
 
 - Mit den DB-Tools das Backup der DB einspielen.
-- Ggf. Transaction Log löschen und/oder nach bedarf konfigurieren
+- Ggf. Transaction Log löschen und/oder nach bedarf konfigurieren (:ref:`optimze_db`)
+
 
 CDB Umgebung einrichten
------------------------
+=======================
 
 - CDB Binaries (Software) installieren
 - In der Kopie der Instanz die DB in ``$CADDOK_BASE/etc/dbtab`` konfigurieren.
