@@ -67,10 +67,19 @@ def takeover_service():
               u" um CDB Starten zu können. Alle weiteren Dienste können danach"
               u" in einer CDB Sitzung interaktiv eingerichtet werden. Die Dienste"
               u" werden eingerichtet, indem die Konfiguration eines Application"
-              u" Servers des *original* Systems für diesen Host *übernommen* wird."
+              u" Servers des *original* Systems für diesen Host *übernommen* und"
+              u" als *default* Site eingerichtet wird."
               u" In CDB sind derzeit Dienste für folgende Hosts konfiguriert:")
 
-    query = "SELECT hostname FROM cdbus_svcs GROUP BY hostname ORDER BY COUNT(hostname) DESC"
+    query = """
+  SELECT hostname FROM cdbus_svcs
+   WHERE svcname IN (
+           'cdb.uberserver.Uberserver'
+           , 'cdb.uberserver.services.apache.Apache'
+           , 'cdb.uberserver.services.server.Launcher'
+           , 'cdb.uberserver.services.blobstore.BlobStore' )
+   GROUP BY hostname ORDER BY COUNT(hostname) DESC
+"""
     hostnames = [ x.hostname for x in sqlapi.RecordSet2(sql=query) ]
     orig_host = SUI.ask_choice(
         u"Von welchem Application Server soll die Konfiguration übernommen werden?", hostnames)
@@ -78,7 +87,7 @@ def takeover_service():
     sql = """
   UPDATE cdbus_svcs
      SET hostname='%s'
-   WHERE hostname='%s'""" % (orig_host, FQDN)
+   WHERE hostname='%s'""" % (FQDN, orig_host)
 
     SUI.echo("\nÜbernahme der Konfiguration:: \n%s" % sql)
     rows = sqlapi.SQL(sql)
@@ -86,7 +95,7 @@ def takeover_service():
     SUI.wait_key()
 
     sql = """
-  UPDATE cdbus_svcs set active=1
+  UPDATE cdbus_svcs SET active=1, autostart=1, site='default'
    WHERE hostname='%s' AND svcname IN (
            'cdb.uberserver.Uberserver'
            , 'cdb.uberserver.services.apache.Apache'
@@ -113,8 +122,11 @@ def assert_service(svcname, hostname):
         hostnames = [ x.hostname for x in sqlapi.RecordSet2(sql=query) ]
         orig_host = SUI.ask_choice(
             u"Welche Server-Konfiguration soll übernommen werden?", hostnames)
-        sql = ("UPDATE cdbus_svcs SET hostname='%s' WHERE hostname='%s' AND svcname='%s'") % (
-            FQDN, orig_host, svcname)
+        sql = """
+  UPDATE cdbus_svcs
+     SET hostname='%s', active=1, autostart=1, site='default'
+   WHERE hostname='%s' AND svcname='%s'
+""" % (FQDN, orig_host, svcname)
         rows = sqlapi.SQL(sql)
         SUI.echo(u"\n--> %s rows updated" % rows)
     else:
