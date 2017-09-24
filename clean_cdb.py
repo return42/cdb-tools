@@ -28,14 +28,12 @@ ACHTUNG:  ES WERDEN DATEN GELÖSCHT!
 # imports
 # ==============================================================================
 
-from __future__ import print_function
+import dm # muss zuert importiert werden!
 
 import sys
 import os
 import re
 from datetime import datetime, timedelta
-
-sys.path.append(os.path.join(os.path.dirname(__file__), "fspath"))
 
 from fspath.sui import SUI
 from fspath.cli import CLI

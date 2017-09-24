@@ -15,32 +15,20 @@ sollten nur von Personen durchgeführt werden, die wissen, was sie machen!
 """
 # pylint: disable=wrong-import-position, missing-docstring
 
+import dm # muss zuert importiert werden!
+
 import sys
 import os
 import socket
-
-sys.path.append(os.path.join(os.path.dirname(__file__), "fspath"))
 
 from fspath.sui import SUI
 from fspath.cli import CLI
 
 from cdb import sqlapi
 
-FQDN = socket.getfqdn()
+from dm.helper import port_is_free
 
-def port_is_free(port):
-    try:
-        sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        sock.bind(('127.0.0.1', int(port)))
-        sock.listen(5)
-        sock.close()
-        sock = socket.socket(socket.AF_INET6, socket.SOCK_STREAM)
-        sock.bind(('::1', int(port)))
-        sock.listen(5)
-        sock.close()
-    except socket.error:
-        return False
-    return True
+FQDN = socket.getfqdn()
 
 def deactivate_services():
     SUI.rst_title(u"CDB-Dienste deaktivieren")
