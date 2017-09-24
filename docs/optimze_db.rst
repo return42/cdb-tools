@@ -1,6 +1,6 @@
 .. -*- coding: utf-8; mode: rst -*-
 
-.. _optimze_db::
+.. _optimze_db:
 
 =============
 DB optimieren

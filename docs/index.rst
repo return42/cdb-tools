@@ -1,7 +1,7 @@
 .. -*- coding: utf-8; mode: rst -*-
 
 ================================================================================
-cdb-tools
+CDB Tools
 ================================================================================
 
 Die CDB-Tools sind eine (kleine) Sammlung von Skripten zur Wartung von CIM
@@ -17,3 +17,4 @@ DATABASE (CDB) Installationen.
    init_cdb_mirror
    clean_cdb
    optimze_db
+   winShortcuts

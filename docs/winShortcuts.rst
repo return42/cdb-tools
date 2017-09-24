@@ -7,7 +7,7 @@ winShortcuts
 In der Datei ``winShortcuts/cdbEnv.bat`` müssen folgende Umgebungen angepasst
 werden.
 
-.. code-block:: cmd
+.. code-block:: dosbatch
 
    SET CADDOK_DBNAME=prod_copy
    SET CADDOK_RUNTIME=C:\share\cdb10_1_sl48

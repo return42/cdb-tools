@@ -7,3 +7,11 @@
 .DS_Store
 .cvsignore
 .svn
+
+# Distribution / packaging
+.Python
+build/
+local/
+dist/
+downloads/
+gh-pages/
