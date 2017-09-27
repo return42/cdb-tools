@@ -226,7 +226,7 @@ def setup_basic_services():
     print_opts(opts)
 
 
-def main(cliArgs):
+def _main(cliArgs):
     _doc = __doc__.strip().split('\n')
     SUI.rst_title(_doc[0], level='part')
     SUI.rst_p('\n'.join(_doc[1:]))
@@ -244,5 +244,5 @@ Ein minimales Setup wurde eingerichtet. Es kann der CDBSVCD gestartet werden.
 Alle weiteren Einstellungen sollten von nun an in CDB möglich sein.""")
     return 0
 
-if __name__ == '__main__':
-    sys.exit(CLI(cmdFunc = main)())
+def main():
+    sys.exit(CLI(cmdFunc = _main)())

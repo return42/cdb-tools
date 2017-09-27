@@ -12,7 +12,7 @@ REM ----------------------------------------------------------------------------
 call %~d0%~p0cdbEnv.bat
 
 title %~n0 (%CDB_INSTANCE%)
-cd /D %CADDOK_BASE%
+REM cd /D %CADDOK_BASE%
 
 echo ============================================================
 echo %~n0 (%CDB_INSTANCE%)
