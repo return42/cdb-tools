@@ -41,3 +41,4 @@ html_context = {
 }
 
 intersphinx_mapping = {}
+html_logo = 'darmarIT_logo_128.png'

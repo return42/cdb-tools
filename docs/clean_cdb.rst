@@ -4,21 +4,20 @@
 Bereinigung der Datenbank
 =========================
 
-In CDB sammeln sich z.T. DB Einträge z.B. aus Message-Queue Anwendungen oder
-dem ERP-Log die nicht alle immer benötigt werden. Nicht benötigte Einträge
-sollten von Zeit zu Zeit aufgeräumt werden um die DB *schlank* und damit
-performant zu halten.
+In CDB sammeln sich z.T. Daten an, die u.U. nicht länger benötigt werden.  Gute
+Beispiele sind *uralt* Einträge in der Lizenzstatistik, abgeschlossene Jobs in
+den MQ-Anwendungen oder ein Überbordendes ERP-Log. Es kann sich lohnen solche
+Einträge von Zeit zu Zeit mal aufzuräumen, resp. nicht benötigtes zu löschen. In
+*unaufgeräumten* Installationen die seit Jahren laufen können schon mal bis
+zu 30% oder 50% der DB-Resourcen auf solche obsoleten Objekte entfallen.
 
-Das Aufräumen dieser Einträge lohnt sich insbesondere in schon lang laufenden
-Systemen die bisher nicht aufgeräumt wurden. In solchen Systemen werden z.T.
-bis zu 60% der DB Resourcen auf *unnütze* Einträge verschwendet (z.B. eine
-über mehrere Jahre angesammelte Lizenzstatistik).
-
-Ob Optimierungen solcher Art für Ihre konkreten Anwendungszenarien überhaupt
+Ob Optimierungen solcher Art für Ihre konkreten Anwendungsszenarien überhaupt
 geeignet sind oder ob dabei ggf. noch benötigte Daten gelöscht werden kann
-nicht allgemein beantwortet werden. Das Löschen von Daten muss immer gegen
-die eigenen Anwendungszenarien geprüft werden! Testen Sie die Tools sorgfältig
-in einer Entwickler-Kopie bevor Sie diese auf ein produktives System anwenden!
+nicht allgemein beantwortet werden.
+
+  Das Löschen von Daten muss immer gegen die eigenen Anwendungsszenarien geprüft
+  werden! Testen Sie die Tools sorgfältig in einer Entwickler-Kopie bevor Sie
+  diese auf ein produktives System anwenden!
 
 Für die Bereinigung steht das Tool ``clean_cdb`` zur Verfügung::
 
@@ -28,24 +27,27 @@ Für die Bereinigung steht das Tool ``clean_cdb`` zur Verfügung::
 
    ACHTUNG:  ES WERDEN DATEN GELÖSCHT!
 
+Kommando clean_cdb
+==================
+
 Wenn in einem System, das schon lange läuft zum Ersten mal aufgeräumt wird,
 können die Transaktionen zum Löschen gewaltig sein. Um das Transaktions-Log
 nicht zum bersten zu bringen kann es sinnvoll sein, zuerst die ganz alten
-Einträge (meist gibt es eine Option ``--days`` ) zu löschen und sich sukzessieve
+Einträge (meist gibt es eine Option ``--days`` ) zu löschen und sich sukzessive
 zum gewünschten Erhalt-Datum nach vorne zu arbeiten.
 
 Wenn die Inhalte der zu bereinigenden DB-Tabellen komplett gelöscht werden
 können, dann kann das i.d.R. über die Option ``--truncate`` erreicht werden.
 Die DB Tabellen werden dan mit dem SQL ``TRUNCATE`` Statement geleert, welches
 kein Trnsaction-Log erstellt. Diese Option ist oftmals für Spiegel-Systeme
-geignet, die man auf einfache weise *schlank* halten will (z.B. ``clean_cdb all
+geeignet, die man auf einfache weise *schlank* halten will (z.B. ``clean_cdb all
 --truncate``).
 
 
 Löschen der Lizenz-Statistik (lstatistics)
 ==========================================
 
-Die Lizenstatistik wächst kontinuierlich an. In lang laufenden Systemen mit
+Die Lizenzstatistik wächst kontinuierlich an. In lang laufenden Systemen mit
 vielen Benutzern ist die Statistik oftmals eine der größten Tabellen. Sofern
 die Statistik nicht ausgewertet wird, kann sie auch von Zeit zu Zeit mal
 gelöscht werden.::
@@ -74,7 +76,7 @@ CAD-Konfig-Schalter gesteuert:
 In einem produktiven System sollte der "SAP Logmode" auf ``Results`` stehen, zu
 Diagnosezwecken empfiehlt es sich den Wert kurzfristig auf z.B. ``Results,
 Messages`` zu setzen (Details bitte dem Handbuch entnehmen). In jedem Fall
-sollten solche Diagnose Einstellungen aber nicht dauerhaft im produktieven
+sollten solche Diagnose Einstellungen aber nicht dauerhaft im produktiven
 System aktiviert sein, da das ERP Log die DB aufbläht.
 
 Auch wenn das Logging nur auf 'Results' steht, kann es passieren, dass das Log
