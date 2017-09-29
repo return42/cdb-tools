@@ -16,15 +16,20 @@ help:
 	@echo  ''
 	@$(MAKE) -s -f utils/makefile.sphinx docs-help
 
-
 PHONY += docs
-docs:  sphinx-doc
+docs:  sphinx-doc slides
 	$(call cmd,sphinx,html,docs,docs)
-#	$(call cmd,sphinx,html,$(SLIDES),$(SLIDES))
+
+PHONY += slides
+slides: cdb-slide
+	cd $(DOCS_DIST)/slides; zip -r cdb_comp.zip cdb_comp
+
+PHONY += cdb-slide
+cdb-slide:  sphinx-doc
+	$(call cmd,sphinx,html,$(SLIDES)/cdb_comp,$(SLIDES)/cdb_comp,slides/cdb_comp)
 
 PHONY += clean
 clean: pyclean docs-clean
 	$(call cmd,common_clean)
 
 .PHONY: $(PHONY)
-
