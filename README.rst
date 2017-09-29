@@ -12,13 +12,7 @@ an erfahrene CDB Entwickler und Administratoren.
 - Reposetorie:   `github return42/cdb-tools <https://github.com/return42/cdb-tools>`_
 - Author e-mail: markus.heiser@darmarit.de
 
+Bitte beachten:
 
-.. include:: docs/install.rst
-
-.. include:: docs/hints.rst
-
-
-
-  
-
-
+- wichtige Hinweise: https://return42.github.io/cdb-tools/hints.html
+- Installation:      https://return42.github.io/cdb-tools/install.html
