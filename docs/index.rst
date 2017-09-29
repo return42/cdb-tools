@@ -12,13 +12,20 @@ an erfahrene CDB Entwickler und Administratoren.
 - Reposetorie:   `github return42/cdb-tools <https://github.com/return42/cdb-tools>`_
 - Author e-mail: markus.heiser@darmarit.de
 
-.. toctree::
-   :maxdepth: 2
 
+Inhalte
+=======
+
+.. toctree::
+   :maxdepth: 1
+
+   hints
+   install
    init_cdb_mirror
    clean_cdb
    optimze_db
    winShortcuts
+   LICENSE   
 
 Foliensammlungen
 ================
@@ -28,3 +35,11 @@ Foliensammlungen
 
 * `get git started <http://return42.github.io/handsOn/slides/git/index.html>`_
   (`zip <http://return42.github.io/handsOn/slides/git.zip>`__)
+
+
+.. hint::
+
+   Die CDB-Tools sind aktuell im Aufbau. Sollten Sie Fehler finden, melden Sie
+   diese bitte. Anregungen und/oder Pull-Requests (PR) sind ebenfalls immer
+   willkommen -- Danke!
+

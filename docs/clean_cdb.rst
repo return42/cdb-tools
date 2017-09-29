@@ -6,10 +6,10 @@ Bereinigung der Datenbank
 
 In CDB sammeln sich z.T. Daten an, die u.U. nicht länger benötigt werden.  Gute
 Beispiele sind *uralt* Einträge in der Lizenzstatistik, abgeschlossene Jobs in
-den MQ-Anwendungen oder ein Überbordendes ERP-Log. Es kann sich lohnen solche
-Einträge von Zeit zu Zeit mal aufzuräumen, resp. nicht benötigtes zu löschen. In
-*unaufgeräumten* Installationen die seit Jahren laufen können schon mal bis
-zu 30% oder 50% der DB-Resourcen auf solche obsoleten Objekte entfallen.
+den MQ-Anwendungen oder ein überbordendes ERP-Log. Es kann sich lohnen solche
+Einträge von Zeit zu Zeit mal aufzuräumen, resp. nicht änger benötigte Daten zu
+löschen. In *unaufgeräumten* Installationen die seit Jahren laufen können schon
+mal bis zu 30% oder 50% der DB-Resourcen auf solche obsoleten Objekte entfallen.
 
 Ob Optimierungen solcher Art für Ihre konkreten Anwendungsszenarien überhaupt
 geeignet sind oder ob dabei ggf. noch benötigte Daten gelöscht werden kann
@@ -75,9 +75,12 @@ CAD-Konfig-Schalter gesteuert:
 
 In einem produktiven System sollte der "SAP Logmode" auf ``Results`` stehen, zu
 Diagnosezwecken empfiehlt es sich den Wert kurzfristig auf z.B. ``Results,
-Messages`` zu setzen (Details bitte dem Handbuch entnehmen). In jedem Fall
-sollten solche Diagnose Einstellungen aber nicht dauerhaft im produktiven
-System aktiviert sein, da das ERP Log die DB aufbläht.
+Messages`` zu setzen (Details bitte dem Handbuch entnehmen).  In jedem Fall
+sollten solche Diagnose Einstellungen aber nicht dauerhaft im produktiven System
+aktiviert sein, da das ERP Log die DB aufbläht.  Zum Löschen alter Meldungen
+eignet sich das Kommando::
+
+    powerscript cdb-tools/clean_cdb.py erplog --help
 
 Auch wenn das Logging nur auf 'Results' steht, kann es passieren, dass das Log
 extrem anwächst, wenn z.B. SAP Abgleichvorgänge fehlschlagen, diese aber
@@ -100,8 +103,5 @@ eine Bereinigung des Logs lohnen.
 
    SELECT COUNT(*) FROM erp_log;
 
-Sollte das letzte Statement mehr als 200.000 Einträge zählen kann man auch
-mal überlegen aufzuräumen::
-
-  powerscript cdb-tools/clean_cdb.py erplog --help
-
+Sollte das letzte Statement mehr als 200.000 Einträge zählen, kann man auch mal
+überlegen aufzuräumen.
