@@ -8,6 +8,10 @@
 .cvsignore
 .svn
 
+# local packages
+py27/
+
+
 # Distribution / packaging
 .Python
 build/
