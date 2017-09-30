@@ -40,6 +40,12 @@ REM
 
 SET PYTHONPATH=%CDBTOOLS_HOME%\bootstrap;%PYTHONPATH%
 powerscript -c "import get_pip, sys;sys.executable='powerscript.exe';get_pip.main()" --install-option="--prefix=%PY27%"
+
+REM install requirements
+REM --------------------
+
+"%CDBTOOLS_HOME%\winShortcuts\cdbtools" pip-install.bat -r "%CDBTOOLS_HOME%\bootstrap\requirements.txt"
+
 pause
 GOTO Exit
 
