@@ -2,4 +2,3 @@
 # requires
 # --------
 
-fspath
