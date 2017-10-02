@@ -5,7 +5,7 @@ CDB Tools
 ================================================================================
 
 In den CDB-Tools finden sich Skripte, Tools und Dokumente rund um die Wartung
-und Weiter-Entwicklung von CIM DATABASE (CDB) Installationen. Sie richten sich
+und Weiter-Entwicklung von CIM-DATABASE (CDB) Installationen. Sie richten sich
 an erfahrene CDB Entwickler und Administratoren.
 
 - Dokumentation: http://return42.github.io/cdb-tools
@@ -21,10 +21,9 @@ Inhalte
 
    hints
    install
-   init_cdb_mirror
-   clean_cdb
-   optimze_db
    winShortcuts
+   cdbtools/index
+   optimze_db
    LICENSE   
 
 Foliensammlungen

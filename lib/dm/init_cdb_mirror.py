@@ -49,7 +49,7 @@ def takeover_service():
     SUI.rst_title(u"CDB-Dienste einrichten")
     SUI.rst_p(u'Der FQDN dieses Hosts (localhost) ist: %s' % FQDN)
     SUI.rst_p(u"Es werden die minimal erforderlichen CDB-Dienste eingerichtet"
-              u" um CDB Starten zu können. Alle weiteren Dienste können danach"
+              u" um CDB starten zu können. Alle weiteren Dienste können danach"
               u" in einer CDB Sitzung interaktiv eingerichtet werden. Die Dienste"
               u" werden eingerichtet, indem die Konfiguration eines Application"
               u" Servers des *original* Systems für diesen Host *übernommen* und"

@@ -6,22 +6,29 @@
 DB optimieren
 =============
 
-Oracle
-======
-
-comming soon ...
-
-
 MSSQL
 =====
 
-.. _MSSQL-Transaction-log: https://docs.microsoft.com/en-us/sql/relational-databases/logs/the-transaction-log-sql-server
+.. _`MS-SQL Transaction-log`: https://docs.microsoft.com/en-us/sql/relational-databases/logs/the-transaction-log-sql-server
+
+.. _`MS-SQL DB-Files`: https://docs.microsoft.com/en-us/sql/relational-databases/databases/database-files-and-filegroups
+
+.. _`MS-SQL shrink DB`: https://docs.microsoft.com/en-us/sql/relational-databases/databases/shrink-a-database
+
+Datenbank-Files
+---------------
+
+Datenbank Management-Systeme geben i.d.R. einmal allozierten Platz in den
+DB-Files nicht von alleine frei (`MS-SQL DB-Files`_). Nach größeren Änderungen
+an den DB-Inhalten (Aufräum-Aktionen), kann es Sinn machen die DB-Files auch zu
+*shrinken* (s. `MS-SQL shrink DB`_) damit der überschüssig allozierte
+Plattenplatz wieder frei gegeben wird und dem System zur Verfügung steht.
 
 
 MSSQL-Transaction
 -----------------
 
-Die Dateigrößen des MSSQL-Transaction-log_ können u.U. stark anwachsen,
+Die Dateigrößen des `MS-SQL Transaction-log`_ können u.U. stark anwachsen,
 insbesondere nach größeren SQL-UPDATE Statements die große Tabellen komplett
 ändern oder leeren.
 
@@ -37,3 +44,9 @@ kann man auch die *Autogrow* Eigenschaften parametrisieren::
 
 In der Spalte 'Autogrowth / Maxsize' können die Einstellungen vorgenommen
 werden. In einer Entwickler Installation sollte ein Limit von 2GB genug sein.
+
+Oracle
+======
+
+comming soon ...
+

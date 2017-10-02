@@ -3,7 +3,7 @@
 # Sphinx documentation build configuration file
 
 import os, sys
-sys.path.insert(0, os.path.abspath(os.path.join("..")))
+sys.path.insert(0, os.path.abspath(os.path.join("..", "lib")))
 
 from dm import __pkginfo__ as pkginfo
 import sphinx_rtd_theme

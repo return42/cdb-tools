@@ -1,13 +1,15 @@
 .. -*- coding: utf-8; mode: rst -*-
 
+.. _clean_cdb:
+
 =========================
 Bereinigung der Datenbank
 =========================
 
 In CDB sammeln sich z.T. Daten an, die u.U. nicht länger benötigt werden.  Gute
 Beispiele sind *uralt* Einträge in der Lizenzstatistik, abgeschlossene Jobs in
-den MQ-Anwendungen oder ein überbordendes ERP-Log. Es kann sich lohnen solche
-Einträge von Zeit zu Zeit mal aufzuräumen, resp. nicht änger benötigte Daten zu
+den MQ-Anwendungen oder ein Überbordendes ERP-Log. Es kann sich lohnen solche
+Einträge von Zeit zu Zeit mal aufzuräumen, resp. nicht länger benötigte Daten zu
 löschen. In *unaufgeräumten* Installationen die seit Jahren laufen können schon
 mal bis zu 30% oder 50% der DB-Resourcen auf solche obsoleten Objekte entfallen.
 
@@ -38,7 +40,7 @@ zum gewünschten Erhalt-Datum nach vorne zu arbeiten.
 
 Wenn die Inhalte der zu bereinigenden DB-Tabellen komplett gelöscht werden
 können, dann kann das i.d.R. über die Option ``--truncate`` erreicht werden.
-Die DB Tabellen werden dan mit dem SQL ``TRUNCATE`` Statement geleert, welches
+Die DB Tabellen werden dann mit dem SQL ``TRUNCATE`` Statement geleert, welches
 kein Trnsaction-Log erstellt. Diese Option ist oftmals für Spiegel-Systeme
 geeignet, die man auf einfache weise *schlank* halten will (z.B. ``clean_cdb all
 --truncate``).
@@ -83,8 +85,8 @@ eignet sich das Kommando::
     [CDB-Tools] $ clean-cdb erplog --help
 
 Auch wenn das Logging nur auf 'Results' steht, kann es passieren, dass das Log
-extrem anwächst, wenn z.B. SAP Abgleichvorgänge fehlschlagen, diese aber
-permanent wiederholt werden.
+extrem anwächst, wenn z.B. SAP Abgleichvorgänge über lange Zeiträume
+fehlschlagen, diese aber permanent wiederholt werden.
 
 Folgendes SQL Statement kann einen Eindruck vermitteln ob es angebracht ist das
 Log mal zu bereinigen.
@@ -105,3 +107,12 @@ eine Bereinigung des Logs lohnen.
 
 Sollte das letzte Statement mehr als 200.000 Einträge zählen, kann man auch mal
 überlegen aufzuräumen.
+
+DB-Management System
+====================
+
+Räumt man eine DB nach langer Zeit zum ersten mal auf, so können die gelöschten
+Daten z.T. sehr groß sein und es kann Sinn machen die Datenbank-Files zu
+*shrinken* als auch das Transaction Log zu löschen und/oder nach bedarf zu
+konfigurieren (s.a. :ref:`optimze_db`).
+
