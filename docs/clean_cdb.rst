@@ -21,7 +21,7 @@ nicht allgemein beantwortet werden.
 
 Für die Bereinigung steht das Tool ``clean_cdb`` zur Verfügung::
 
-  powerscript cdb-tools/clean_cdb.py --help
+  [CDB-Tools] $ clean-cdb --help
 
 .. caution::
 
@@ -52,7 +52,7 @@ vielen Benutzern ist die Statistik oftmals eine der größten Tabellen. Sofern
 die Statistik nicht ausgewertet wird, kann sie auch von Zeit zu Zeit mal
 gelöscht werden.::
 
-  powerscript cdb-tools/clean_cdb.py lstatistics --help
+  [CDB-Tools] $ clean-cdb lstatistics --help
 
 
 Bereinigen der MQ-Anwendungen (mq)
@@ -61,7 +61,7 @@ Bereinigen der MQ-Anwendungen (mq)
 Es werden alle Message-Queues aufgelistet und Vorschläge zum Reduzieren der
 MQ-Daten gemacht (inklusieve dem Löschen der Langtexte).::
 
-  powerscript cdb-tools/clean_cdb.py mq --help
+  [CDB-Tools] $ clean-cdb mq --help
 
 
 Reduzieren der ERP-Log-Einträge
@@ -80,7 +80,7 @@ sollten solche Diagnose Einstellungen aber nicht dauerhaft im produktiven System
 aktiviert sein, da das ERP Log die DB aufbläht.  Zum Löschen alter Meldungen
 eignet sich das Kommando::
 
-    powerscript cdb-tools/clean_cdb.py erplog --help
+    [CDB-Tools] $ clean-cdb erplog --help
 
 Auch wenn das Logging nur auf 'Results' steht, kann es passieren, dass das Log
 extrem anwächst, wenn z.B. SAP Abgleichvorgänge fehlschlagen, diese aber
