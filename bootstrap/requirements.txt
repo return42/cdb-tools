@@ -2,3 +2,4 @@
 # requires
 # --------
 
+-e subs/fspath

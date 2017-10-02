@@ -16,9 +16,8 @@ IF NOT DEFINED CDBTOOLS_HOME (
 SET PY27=%CDBTOOLS_HOME%\py27
 
 REM wrap environment of the CDB-Tools
-SET PYTHONPATH=%CDBTOOLS_HOME%\lib;%CDBTOOLS_HOME%\lib\fspath;%CDBTOOLS_HOME%\py27\Lib\site-packages;%PYTHONPATH%
+SET PYTHONPATH=%CDBTOOLS_HOME%\lib;%CDBTOOLS_HOME%\py27\Lib\site-packages;%PYTHONPATH%
 SET PATH=%CDBTOOLS_HOME%\win_bin;%CDBTOOLS_HOME%\py27\Scripts;%PATH%
-
 
 REM ----------------------------------------------------------------------------
 REM action
