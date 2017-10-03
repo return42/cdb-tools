@@ -20,7 +20,7 @@ REM
 REM   #!powerscript.exe
 REM
 
-powerscript -c "import pip, sys;sys.executable='powerscript.exe';pip.main()" install --install-option="--prefix=%PY27%" %*
+powerscript -c "import pip, sys;sys.executable='powerscript.exe';pip.main()" install --ignore-installed --install-option="--prefix=%PY27%" %*
 
 REM ----------------------------------------------------------------------------
 :Exit

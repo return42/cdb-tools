@@ -62,7 +62,7 @@ Doppelklick auf ``winShortcuts/cdbSHELL.bat`` eine CDB-Shell zu starten:
   ...
   [cdb:prod_copy] C:\> echo Die CDB-Tools liegen hier: %CDBTOOLS_HOME%
   Die CDB-Tools liegen hier: C:\share\cdb-tools
-  [cdb:prod_copy] C:\> 
+  [cdb:prod_copy] C:\>
 
 Der Prompt ``[cdb:prod_copy]`` ist der Prompt, den die cdb-Shell setzt, er wird
 in der eigenen Instanz vermutlich etwas anders aussehen.
@@ -74,7 +74,7 @@ in der eigenen Instanz vermutlich etwas anders aussehen.
 
 
 .. _bootstrap_cdbtools:
-   
+
 bootstrap
 =========
 
@@ -84,7 +84,7 @@ einmal installiert werden.:
 .. code-block:: dosbatch
 
   [cdb:prod_copy] C:\> cdb-tools\bootstrap\install.bat
-  
+
 Mit diesem Kommando wird das ``pip`` Paketmanagement für die CDB-Tools
 eingerichtet und es werden die externen Abhängigkeiten (Python Pakete) in den
 Ordner ``cdb-tools/py27`` installiert. Die Kommandos aus diesen Paketen stehen
@@ -111,24 +111,20 @@ kann das Skript aber auch in einer Kommandozeile aufrufen.
 .. code-block:: dosbatch
 
    C:\> cdb-tools\winShortcuts\cdbtools.bat
-   ...
-   [CDB-Tools] C:\>
-
-   ------------------------------------------------------------
-   CDB-Tools environment
-   ------------------------------------------------------------
-
-    CDBTOOLS_HOME: C:\share\cdb-tools
-    HOME:          C:\Users\user
 
    Executing Script: C:\share\cdb_sw\cdb\etc\std.conf
    Executing Script: C:\share\instance\etc\site.conf
    Using instance prod_copy@:C:\share\instance
    Software in C:\share\cdb_sw
-   Microsoft Windows [Version 6.3.9600]
-   (c) 2013 Microsoft Corporation. Alle Rechte vorbehalten.
+   ------------------------------------------------------------
+   CDB-Tools environment
+   ------------------------------------------------------------
 
-   [CDB-Tools] C:\>
+   CDBTOOLS_HOME: c:\share\yyy\cdb-tools
+   HOME:          C:\Users\user
+
+   [CDB-Tools] C:\
+   $ ...
 
 .. hint::
 

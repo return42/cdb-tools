@@ -24,29 +24,26 @@ REM --------------------------------
 SET PY27=%CDBTOOLS_HOME%\py27
 mkdir %PY27%  > nul  2> nul
 
-REM bootstrap pip
-REM -------------
-
-REM This is a small hackisch injection to get *portable* shebangs for the .exe
-REM starter installed in /Scripts::
-REM
-REM   sys.executable='powerscript.exe'
-REM
-REM In sense of beeing *portable* we need a shebang without absolute pathnames.
-REM With above, we get::
-REM
-REM   #!powerscript.exe
-REM
+REM bootstrap package management
+REM ----------------------------
 
 SET PYTHONPATH=%CDBTOOLS_HOME%\bootstrap;%PYTHONPATH%
-powerscript -c "import get_pip, sys;sys.executable='powerscript.exe';get_pip.main()" --install-option="--prefix=%PY27%"
+powerscript -c "import get_pip, sys;sys.executable='powerscript.exe';get_pip.main()" --ignore-installed --install-option="--prefix=%PY27%"
 
-REM install requirements
-REM --------------------
+REM CDB-Tools
 
-"%CDBTOOLS_HOME%\winShortcuts\cdbtools" pip-install.bat -r "%CDBTOOLS_HOME%\bootstrap\requirements.txt"
+call %CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat --
 
-pause
+REM die setuptools in CDB sind steinalt, damit ist ein vernüftiges
+REM Package-Management nicht möglich. Die setuptools müssen als
+REM erstes installiert werden.
+call pip-install setuptools==36.5
+
+REM requirements
+REM ------------
+
+call pip-install -r "%CDBTOOLS_HOME%\bootstrap\requirements.txt"
+
 GOTO Exit
 
 REM ----------------------------------------------------------------------------
