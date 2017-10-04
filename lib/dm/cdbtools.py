@@ -1,6 +1,23 @@
 # -*- coding: utf-8; mode: python -*-
 
-import sys
+# -------------
+# sort sys.path
+# -------------
+#
+# .. hint::
+#
+#    While importing cdbtools, the RTE is manipulated: all pathes with
+#    $CDBTOOLS_HOME are placed in front of sys.path
+#
+#    Reordering sys.path has to be the first task!!
+#
+
+import sys, os
+if os.environ.get("CDBTOOLS_HOME", None) is None:
+    raise Exception("Missing CDBTOOLS_HOME environment, can't init cdbtools!")
+sys.path = sorted(sys.path, key=lambda x: x.startswith(os.environ.get("CDBTOOLS_HOME", None)), reverse=True)
+
+
 import re
 from fspath import FSPath
 
@@ -33,7 +50,7 @@ IF EXIST "%%~dpn0-script.py" (
 :Exit
 """
 
-def replace_exe_with_bat(folder, interpreter=u"powerscript", ignore=None):
+def replace_exe_with_bat(folder, interpreter=u"powerscript.exe", ignore=None):
     u"""Legt die *.exe Wrapper mit '!#powerscript' im shebang an.
 
     Z.B. in ``%CADDOK_TOOLS%/py27/Scripts``
@@ -45,13 +62,13 @@ def replace_exe_with_bat(folder, interpreter=u"powerscript", ignore=None):
     if ignore is None:
         ignore = ['easy_install', 'pip', 'wheel']
     folder = FSPath(folder)
-    for py_file in folder.glob("*.py"):
+    for py_fname in folder.glob("*.py"):
 
-        if [i for i in ignore if py_file.BASENAME.startswith(i)]:
+        if [i for i in ignore if py_fname.BASENAME.startswith(i)]:
             continue
 
-        exe_fname  = FSPath(re.sub(r'(-script\.pyw?|\.exe)?$', '.exe', py_file))
-        bat_fname  = FSPath(re.sub(r'(-script\.pyw?|\.exe)?$', '.bat', py_file))
+        exe_fname  = FSPath(re.sub(r'(-script\.pyw?|\.exe)?$', '.exe', py_fname))
+        bat_fname  = FSPath(re.sub(r'(-script\.pyw?|\.exe)?$', '.bat', py_fname))
         bat_script = bat_template % locals()
 
         log("generate: %s" % bat_fname)
@@ -64,6 +81,27 @@ def replace_exe_with_bat(folder, interpreter=u"powerscript", ignore=None):
             exe_fname.rmfile()
 
         log("          create wrapper with interpreter: '%s' " % interpreter)
+        py_script = py_fname.readFile().splitlines()
+        new_line  = u"import dm.cdbtools # automatic inserted by cdbtools. This will reorder sys.path !!!"
+        if [l for l in py_script if l.startswith("import dm.cdbtools")]:
+            new_line = u""
+
+        new_script = u""
+        start_insert = False
+        for l in py_script:
+            if l.startswith(u"#!"):
+                l = u"#!%s" % interpreter
+            if not l.strip().startswith(u"#"):
+                start_insert = True
+            if new_line and start_insert:
+                new_script += new_line + u'\n'
+                new_line = ""
+            new_script += l + u'\n'
+
+        log("          prepare python script: '%s' " % py_fname)
+        with py_fname.openTextFile(mode="w") as py:
+            py.write(new_script)
+
         with bat_fname.openTextFile(mode="w") as bat:
             bat.write(bat_script)
         if bat_fname.EXISTS:

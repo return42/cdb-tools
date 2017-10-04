@@ -12,10 +12,10 @@ IF NOT DEFINED CDBTOOLS_HOME (
    goto Exit
 )
 
-IF NOT DEFINED CADDOK_TOOL (
-   echo ERROR: script %~n0 missing CADDOK_TOOL environment
-   goto Exit
-)
+rem IF NOT DEFINED CADDOK_TOOL (
+rem    echo ERROR: script %~n0 missing CADDOK_TOOL environment
+rem    goto Exit
+rem )
 
 if [%1]==[--] (
   goto SetEnv
@@ -31,11 +31,13 @@ SET PYTHONPATH=%CDBTOOLS_HOME%\lib;%CDBTOOLS_PY27%\Lib\site-packages;%PYTHONPATH
 SET PATH=%CDBTOOLS_HOME%\win_bin;%CDBTOOLS_PY27%\Scripts;%PATH%
 
 if [%1]==[--] (
-  SHIFT
+  SHIFT /1
 )
 
 if NOT '%1' == '' (
-  %*
+  REM FIXME: Workaround, dieses bekloppte SHIFT von M$-Win shiebt
+  REM nicht die Argumente in %*
+  %1 %2 %3 %4 %5 %6 %7 %8 %9
   GOTO Exit
 )
 

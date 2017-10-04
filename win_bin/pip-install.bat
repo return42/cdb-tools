@@ -21,8 +21,18 @@ REM   #!powerscript.exe
 REM
 
 SET __PYVENV_LAUNCHER__=powerscript.exe
+SET PIP_INGNORE_INSTALLED=true
 
 powerscript -c "import pip, sys;sys.executable='powerscript.exe';pip.main()" install --ignore-installed --install-option="--prefix=%PY27%" %*
+
+REM .bat wrapper
+REM ------------
+
+echo.
+echo fixing script wrapper
+echo =====================
+echo.
+powerscript -c "import dm.cdbtools; dm.cdbtools.replace_exe_with_bat('%PY27%\Scripts')"
 
 REM ----------------------------------------------------------------------------
 :Exit
