@@ -2,6 +2,8 @@
 # requires
 # --------
 
+# pathnames are relative to $CDBTOOLS_HOME
+
 -e subs/fspath
 
 pylint

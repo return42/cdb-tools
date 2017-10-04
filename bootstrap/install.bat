@@ -27,12 +27,14 @@ mkdir %PY27%  > nul  2> nul
 REM bootstrap package management
 REM ----------------------------
 
+SET __PYVENV_LAUNCHER__=powerscript.exe
 SET PYTHONPATH=%CDBTOOLS_HOME%\bootstrap;%PYTHONPATH%
 powerscript -c "import get_pip, sys;sys.executable='powerscript.exe';get_pip.main()" --ignore-installed --install-option="--prefix=%PY27%"
 
 REM CDB-Tools
 
 call %CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat --
+PUSHD %CDBTOOLS_HOME%
 
 REM die setuptools in CDB sind steinalt, damit ist ein vernüftiges
 REM Package-Management nicht möglich. Die setuptools müssen als
@@ -44,6 +46,12 @@ REM ------------
 
 call pip-install -r "%CDBTOOLS_HOME%\bootstrap\requirements.txt"
 
+REM .bat wrapper
+REM ------------
+
+powerscript -c "import dm.cdbtools; dm.cdbtools.replace_exe_with_bat('%PY27%\Scripts')"
+
+POPD
 GOTO Exit
 
 REM ----------------------------------------------------------------------------

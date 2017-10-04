@@ -20,6 +20,8 @@ REM
 REM   #!powerscript.exe
 REM
 
+SET __PYVENV_LAUNCHER__=powerscript.exe
+
 powerscript -c "import pip, sys;sys.executable='powerscript.exe';pip.main()" install --ignore-installed --install-option="--prefix=%PY27%" %*
 
 REM ----------------------------------------------------------------------------
