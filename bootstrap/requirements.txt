@@ -6,5 +6,10 @@
 
 -e subs/fspath
 
-pylint
+# Aktuellere Versionen von PyLint haben Probleme mit dem RTE von CDB
+# da wirft pylint ein 'RuntimeError: Inconsistent hierarchy' s.a.:
+#
+#   https://github.com/PyCQA/pylint/issues/1388#issuecomment-304524918
+#
+pylint==1.5.2
 
