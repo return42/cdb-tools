@@ -12,11 +12,15 @@ Laufzeitumgebungen
 Die CDB-Tools sind *non invasiv*, d.h. sie werden nicht in CDB installiert.  Die
 Idee der CDB-Tools ist es, eine erweiterte Laufzeitumgebung bereit zu stellen in
 der Wartungs- und Diagnose- Werkzeuge in CDB ausgeführt werden können, ohne das
-dazu die CDB Installation *verändert* werden müsste.  Zur Erweiterung der
-Laufzeitumgebungen von CDB Prozessen nutzen die CDB-Tools die Umgebungsvariablen
-``PATH`` und ``PYTHONPATH``.  Auf diese Weise müssen Werkzeuge für die Wartung
-und Diagnose nicht mehr in CDB installiert werden, was die CDB Instanz
-zusätzlich *schlank* hält.
+dazu die CDB Installation *verändert* werden müsste.
+
+Zur Erweiterung der Laufzeitumgebungen von CDB Prozessen nutzen die CDB-Tools
+die Umgebungsvariablen ``PATH`` und ``PYTHONPATH`` und in Python Prozessen wird
+die Liste der Python-Pfade ``sys.path`` angepasst.
+
+Das Paketmanagement der CDB-Tools (:ref:`cdbtools_pckg`) ist unabhängig von CDB.
+Auf diese Weise müssen Werkzeuge für die Wartung und Diagnose nicht mehr in CDB
+installiert werden, was die CDB Instanz zusätzlich *schlank* hält.
 
 
 Download (git clone)
@@ -131,3 +135,44 @@ kann das Skript aber auch in einer Kommandozeile aufrufen.
    Hier in der Anleitung wird der Prompt ``[CDB-Tools]`` weiter genutzt, um
    anzuzeigen, wann ein Kommando **in einer CDB-Tools Umgebung** ausgeführt
    werden muss.
+
+.. _cdbtools_pckg:
+
+Paketmanagement der CDB-Tools
+=============================
+
+Die CDB-Tools bringen ihr eigenes Paket-Managment (pip + setuptools) mit, dass
+wenige bis keine Abhängigkeiten zu CDB hat, also unabhängig von CDB genutzt
+werden kann (in CDB 10 gibt es beispielsweise kein pip).
+
+Die Python Pakete werden in dem Ordner::
+
+  %CDBTOOLS_HOME%\py27
+
+angelegt, dort werden auch die Launcher im Ordner ``py27/Scripts`` eingerichtet
+und von den CDB-Tools so angepasst, dass sie in der CDB-Tools Umgebung laufen.
+In der Datei::
+
+  bootstrap/requirements.txt
+
+sind die zu installierenden (s. :ref:`bootstrap_cdbtools`) Pakete aufgelistet.
+Um die CDB-Software *unberührt* zu lassen müssen Installationen in die CDB-Tools
+Umgebung mit pip immer über folgende Schalter verfügen::
+
+
+  pip install --ignore-installed \
+              --install-option="--prefix=%CDBTOOLS_HOME%\py27" 
+
+.. hint::
+
+   Bei unsachgemäßer Installation von Paketen mit pip kann die CDB-Software
+   u.U. beschädigt werden, deshalb immer erst mal in einem *unkritischen* System
+   testen!
+
+   Setzt man den Schalter ``--ignore-installed`` nicht, dann besteht immer die
+   Gefahr, dass das pip versucht ein Paket aus der CDB-Software zu
+   deinstallieren und durch ein neueres unter ``--prefix=%CDBTOOLS_HOME%\py27``
+   zu ersetzen. Damit wäre die CDB-Software manipuliert und nicht mehr
+   lauffähig.
+
+   
