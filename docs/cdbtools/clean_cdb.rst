@@ -21,15 +21,20 @@ nicht allgemein beantwortet werden.
   werden! Testen Sie die Tools sorgfältig in einer Entwickler-Kopie bevor Sie
   diese auf ein produktives System anwenden!
 
-Für die Bereinigung steht das Tool ``clean_cdb`` zur Verfügung::
+Für die Bereinigung steht das Tool ``clean-cdb`` zur Verfügung::
 
   [CDB-Tools] $ clean-cdb --help
+
+Mit dem Tool können die unten beschriebenen Anwendungen aufgeräumt werden. Will
+man alle Aktionen nacheinander ausführen, so nutzt man dafür ``all``::
+
+  [CDB-Tools] $ clean-cdb all
 
 .. caution::
 
    ACHTUNG:  ES WERDEN DATEN GELÖSCHT!
 
-Kommando clean_cdb
+Kommando clean-cdb
 ==================
 
 Wenn in einem System, das schon lange läuft zum Ersten mal aufgeräumt wird,

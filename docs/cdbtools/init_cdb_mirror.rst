@@ -1,7 +1,7 @@
 .. -*- coding: utf-8; mode: rst -*-
 
 .. _FQDN: https://en.wikipedia.org/wiki/Fully_qualified_domain_name
-   
+
 ================================================================================
 Initialisierung eines CDB Spiegel-Systems
 ================================================================================
@@ -20,7 +20,7 @@ CDB Software
 Die Software (Server) muss auf dem Host bereit gestellt werden (der
 ``CADDOK_RUNTIME`` Ordner).
 
-  
+
 DB Export einspielen
 ====================
 
@@ -95,8 +95,8 @@ Konfiguration eines Application Servers des *original* Systems für den lokalen
 Host *übernommen* und als *default* Site eingerichtet werden.
 
 Mit ``init-cdb-mirror`` können auch gleichzeitig die Passwörter zurück gesetzt
-werden und für die Dienste werden einfache Logins eingerichtet. Diese
-Einstellungen sind nur für *Entwickler-Systeme* geeignet.
+werden und für die Dienste werden einfache Logins (``caddok/welcome``)
+eingerichtet. Diese Einstellungen sind nur für *Entwickler-Systeme* geeignet.
 
 .. hint::
 
