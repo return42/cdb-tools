@@ -107,11 +107,15 @@ danach in einer :ref:`CDB-Tools Umgebung <cdbtools_env>` bereit.
 
 .. hint::
 
-   Für den Download/Update der externen Abgängigkeiten (Python Pakete) ist ein
-   online Zugangang erforderlich. In *restricted areas* ist das nicht immer
-   gegeben, weshalb dieser Vorgang auch auf einem Host durchgeführt werden kann
-   der online ist. Anschließend muss nur der ganze cdb-tools Ordner auf den
-   *offline* Host kopiert werden.
+   Für den Download/Update der externen Abgängigkeiten (Python Pakete von
+   https://pypi.python.org ) ist ein online Zugangang und eine CDB Installation
+   erforderlich.
+
+In *restricted areas* ist das nicht immer gegeben, weshalb dieser Vorgang auch
+auf einem Host durchgeführt werden kann der online ist. Dazu müssen die
+CDB-Software + CDB Instanz + cdb-tools auf den Server kopiert werden, der
+*online** ist und man führt den bootstrap einfach dort aus. Anschließend muss
+nur der ganze cdb-tools Ordner auf den *offline* Host kopiert werden.
 
 Wenn ein Proxy voreingestellt ist, kann man versuchen *direkt nach draußen zu
 kommen*, indem man den Proxy Eintrag in der CDBShell zurücksetzt.::
