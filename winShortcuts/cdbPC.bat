@@ -4,12 +4,12 @@ REM ----------------------------------------------------------------------------
 REM Purpose:     start CDB-Client
 REM ----------------------------------------------------------------------------
 
-call %~d0%~p0cdbEnv.bat
+call "%~d0%~p0cdbEnv.bat"
 
-@echo on
-REM start %CADDOK_CLIENT_HOME%\cdbpc.exe --user caddok --password "welcome" --autologon
-start %CADDOK_CLIENT_HOME%\cdbpc.exe
+REM start "CDB-Client" "%CADDOK_CLIENT_HOME%\cdbpc.exe" --user caddok --password "welcome" --autologon
+start "CDB-Client" "%CADDOK_CLIENT_HOME%\cdbpc.exe"
 
 REM ==============================================================================
 :Exit
 REM ==============================================================================
+pause

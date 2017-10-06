@@ -7,7 +7,7 @@ IF NOT DEFINED CDBTOOLS_HOME (
    GOTO Exit
 )
 
-SET PY27=%CDBTOOLS_HOME%\py27
+SET "PY27=%CDBTOOLS_HOME%\py27"
 
 powerscript -c "import dm.init_cdb_mirror;dm.init_cdb_mirror.main()"  %*
 

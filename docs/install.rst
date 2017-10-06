@@ -42,11 +42,11 @@ Datei ``winShortcuts/cdbEnv.bat`` folgende Umgebungen angepasst werden.
 
 .. code-block:: dosbatch
 
-   SET CADDOK_DBNAME=prod_copy
-   SET CADDOK_RUNTIME=C:\share\cdb_sw
-   SET CADDOK_BASE=C:\share\customer\instance_prod_copy
+   SET "CADDOK_DBNAME=prod_copy"
+   SET "CADDOK_RUNTIME=C:\share\cdb_sw"
+   SET "CADDOK_BASE=C:\share\customer\instance_prod_copy"
    ...
-   SET CDBTOOLS_HOME=C:\share\cdb-tools
+   SET "CDBTOOLS_HOME=C:\share\cdb-tools"
 
 Der letzte Wert ``CDBTOOLS_HOME`` muss nur gesetzt werden, wenn man sich den
 winShortcuts Ordner an eine andere Stelle (z.B. in die CDB-Instanz) kopiert hat.
@@ -72,6 +72,17 @@ in der eigenen Instanz vermutlich etwas anders aussehen.
    Hier in der Anleitung wird der Prompt ``[cdb:prod_copy]`` genutzt, um
    anzuzeigen, wann ein Kommando **in einer cdb-Shell** ausgeführt werden muss.
 
+Um zu überprüfen ob die Umgebung korrekt gesetzt ist sollte man sich die
+``CADDOK_*`` Variablen anschauen::
+
+  [cdb:prod_copy] C:\> SET CADDOK
+  CADDOK_DEFAULT=prod_copy@:C:\share\customer\instance_prod_copy
+  CADDOK_TMPDIR=C:\share\customer\instance_prod_copy\tmp
+  CADDOK_LOGDIR=C:\share\customer\instance_prod_copy\tmp
+  ...
+
+Stimmen nicht alle Einstellungen muss man ggf. noch die ``etc/site.conf`` oder
+eine der anderen ``etc/*.conf`` Dateien anpassen.
 
 .. _bootstrap_cdbtools:
 

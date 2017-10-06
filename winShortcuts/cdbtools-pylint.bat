@@ -10,19 +10,19 @@ REM Purpose:     wrap libraries from CDB-Tools
 REM ----------------------------------------------------------------------------
 
 IF NOT DEFINED CDBTOOLS_HOME (
-   call %~d0%~p0cdbEnv.bat
+   call "%~d0%~p0cdbEnv.bat"
 )
 
 SET RCFILE=
 
-if EXIST %CDBTOOLS_HOME%\templates\pylintrc (
-   SET RCFILE=--rcfile=%CDBTOOLS_HOME%\templates\pylintrc
+if EXIST "%CDBTOOLS_HOME%\templates\pylintrc" (
+   SET "RCFILE=--rcfile=%CDBTOOLS_HOME%\templates\pylintrc"
 )
 
-if EXIST %CADDOK_BASE%\etc\pylintrc (
-   SET RCFILE=--rcfile=%CADDOK_BASE%\etc\pylintrc
+if EXIST "%CADDOK_BASE%\etc\pylintrc" (
+   SET "RCFILE=--rcfile=%CADDOK_BASE%\etc\pylintrc"
 )
 
-call %CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat --
+call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" --
 
-"%CADDOK_RUNTIME%\powerscript.exe" -db %CDB_INSTANCE% %CDBTOOLS_HOME%\py27\Scripts\pylint-script.py %RCFILE% %*
+"%CADDOK_RUNTIME%\powerscript.exe" -db "%CADDOK_DEFAULT%" "%CDBTOOLS_HOME%\py27\Scripts\pylint-script.py" "%RCFILE%" %*
