@@ -109,6 +109,22 @@ danach in einer :ref:`CDB-Tools Umgebung <cdbtools_env>` bereit.
    der online ist. Anschließend muss nur der ganze cdb-tools Ordner auf den
    *offline* Host kopiert werden.
 
+Wenn ein Proxy voreingestellt ist, kann man versuchen *direkt nach draußen zu
+kommen*, indem man den Proxy Eintrag in der CDBShell zurücksetzt.::
+
+ SET http_proxy=""
+ SET https_proxy=""
+
+Wenn man nur über den Proxy nach draußen kommt klappt das vermutlich nicht, dann
+stellet sich die Frage, ob man überhaupt über den Proxy nach draußen kommt. In
+manchen Umgebungen kann man in der CDBShell auch folgendes setzen::
+
+ SET http_proxy=http://username:password@your_proxy:your_port
+ SET https_proxy=http://username:password@your_proxy:your_port
+
+Wenn Sie die Shell schließen sind diese Werte wieder *weg*, sie sind
+nur für Kommandos aktiv, die in der Shell aufgerufen werden.
+
 
 .. _cdbtools_env:
 
