@@ -20,6 +20,7 @@ import socket
 
 from fspath.sui import SUI
 from fspath.cli import CLI
+from fspath import FSPath
 
 from cdb import sqlapi
 
@@ -148,6 +149,29 @@ def check_port(opts):
             rows = sqlapi.SQL(sql)
             SUI.rst_p(u"--> %s rows updated" % rows)
 
+def check_path(opts):
+    for row in opts:
+        if not row.name in ('base_path', 'path'):
+            continue
+        SUI.echo("")
+        SUI.echo("Der Dienst benutzt den Pfad (%s): %s" % (row.name, row.value))
+        path = FSPath(row.value)
+        if not path.EXISTS:
+            SUI.rst_p("Der Pfad existiert nicht!")
+
+        while True:
+            new_path = SUI.ask_fspath(msg="Neuer Pfad: ", default=path)
+            sql = ("update cdbus_svcopts SET value='%s' WHERE svcid='%s' AND name='%s' AND value='%s'"
+                   % (new_path, row.svcid, row.name, row.value))
+            rows = sqlapi.SQL(sql)
+            SUI.rst_p(u"--> %s rows updated" % rows)
+            try:
+                new_path.makedirs()
+                break
+            except OSError, exc:
+                SUI.rst_p("Pfad kann nicht angelegt werden!")
+                SUI.wait_key()
+
 
 def check_login(opts):
     username = 'caddok'
@@ -199,6 +223,7 @@ def setup_basic_services():
     opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     check_login(opts)
     check_port(opts)
+    opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     print_opts(opts)
 
     svcname  = 'cdb.uberserver.services.blobstore.BlobStore'
@@ -207,6 +232,8 @@ def setup_basic_services():
     opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     check_login(opts)
     check_port(opts)
+    check_path(opts)
+    opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     print_opts(opts)
 
     svcname  = 'cdb.uberserver.services.apache.Apache'
@@ -215,6 +242,7 @@ def setup_basic_services():
     opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     check_login(opts)
     check_port(opts)
+    opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     print_opts(opts)
 
     svcname  = 'cdb.uberserver.services.server.Launcher'
@@ -223,6 +251,7 @@ def setup_basic_services():
     opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     check_login(opts)
     check_port(opts)
+    opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     print_opts(opts)
 
 
