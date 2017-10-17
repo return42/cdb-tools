@@ -9,20 +9,21 @@ REM ----------------------------------------------------------------------------
 REM Purpose:     start CDB shell prompt
 REM ----------------------------------------------------------------------------
 
-call %~d0%~p0cdbEnv.bat
+call "%~d0%~p0cdbEnv.bat"
 
-title %~n0 (%CDB_INSTANCE%)
+title %~n0 (%CADDOK_DEFAULT%)
 REM cd /D %CADDOK_BASE%
 
 echo ============================================================
-echo %~n0 (%CDB_INSTANCE%)
+echo %~n0 (%CADDOK_DEFAULT%)
 echo ============================================================
 echo.
 echo   CADDOK_RUNTIME: %CADDOK_RUNTIME%
 echo   CADDOK_BASE:    %CADDOK_BASE%
-echo   Instanz:        %CDB_INSTANCE%
+echo   CADDOK_DEFAULT: %CADDOK_DEFAULT%
 echo.
 echo ============================================================
 
 @echo on
-"%CADDOK_RUNTIME%\cdbsh.exe" -v -db %CDB_INSTANCE%
+"%CADDOK_RUNTIME%\cdbsh.exe" -v -db "%CADDOK_DEFAULT%"
+pause

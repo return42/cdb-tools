@@ -20,6 +20,27 @@ CDB Software
 Die Software (Server) muss auf dem Host bereit gestellt werden (der
 ``CADDOK_RUNTIME`` Ordner).
 
+Die Installer von Microsoft installieren Software Pakete meist irgendwo unter::
+
+  "C:\Program Files (x86)"
+
+Nachteil an diesem Pfadnamen ist, dass er Leerzeichen enthält. Leerzeichen,
+besondere Zeichen wie '-' (Minus) oder '\*' (Sternchen) sind nicht selten
+Ursache von Fehlern. CDB als auch die CDBTools sollten damit umgehen können,
+sobald man aber andere Tools benutzt oder eigen Skripte schreibt kann man mit
+solchen Zeichen in Pfadnamen schnell Probleme bekommen. Es wird daher empfohlen
+die gesammte Installation (CDB Software & Instanz) unter Pfaden abzulegen, die
+keine solche Zeichen enthalten. Gern genutzt wird z.B. ``opt``::
+
+  C:\opt\cdbsrv
+  C:\opt\instance_prod_copy
+  C:\opt\cdb-tools
+
+Einige (älter) Versionen von CDB haben Probleme mit der Apache Konfiguration
+wenn das Instanz Verzeichnis Leerzeichen beinhaltet. Auch wenn solche BUGs
+i.d.R. gefixet werden, man sollte auf Leer- und Sonderzeichen als auch Umlaute
+in Pfadnamen immer verzichten.
+
 
 DB Export einspielen
 ====================

@@ -7,7 +7,7 @@ IF NOT DEFINED CDBTOOLS_HOME (
    GOTO Exit
 )
 
-SET PY27=%CDBTOOLS_HOME%\py27
+SET "PY27=%CDBTOOLS_HOME%\py27"
 
 REM This is a small hackisch injection to get *portable* shebangs for the .exe
 REM starter installed in /Scripts::

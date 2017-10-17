@@ -10,8 +10,7 @@ REM Purpose:     wrap libraries from CDB-Tools
 REM ----------------------------------------------------------------------------
 
 IF NOT DEFINED CDBTOOLS_HOME (
-   call %~d0%~p0cdbEnv.bat
+   call "%~d0%~p0cdbEnv.bat"
 )
 
-"%CADDOK_RUNTIME%\cdbsh.exe" -v -db %CDB_INSTANCE% -c %CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat %*
-
+"%CADDOK_RUNTIME%\cdbsh.exe" -v -db "%CADDOK_DEFAULT%" -c "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" %*
