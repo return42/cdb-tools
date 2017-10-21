@@ -32,7 +32,7 @@ echo.
 echo fixing script wrapper
 echo =====================
 echo.
-powerscript -c "import dm.cdbtools; dm.cdbtools.replace_exe_with_bat('%PY27%\Scripts')"
+powerscript -c "import dm.cdbtools.bootstrap; import dm.cdbtools.bootstrap.replace_exe_with_bat('%PY27%\Scripts')"
 
 REM ----------------------------------------------------------------------------
 :Exit

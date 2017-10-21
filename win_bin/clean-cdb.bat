@@ -9,7 +9,7 @@ IF NOT DEFINED CDBTOOLS_HOME (
 
 SET PY27=%CDBTOOLS_HOME%\py27
 
-powerscript -c "import dm.clean_cdb;dm.clean_cdb.main()"  %*
+powerscript -c "import dm.cdbtools.clean_cdb;dm.cdbtools.clean_cdb.main()"  %*
 
 REM ----------------------------------------------------------------------------
 :Exit

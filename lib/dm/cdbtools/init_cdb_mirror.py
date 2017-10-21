@@ -24,7 +24,7 @@ from fspath import FSPath
 
 from cdb import sqlapi
 
-from dm.helper import port_is_free
+from dm.cdbtools.helper import port_is_free
 
 FQDN = socket.getfqdn()
 

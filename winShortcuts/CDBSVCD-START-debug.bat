@@ -15,16 +15,16 @@ echo ============================================================
 echo %~n0 (%CADDOK_DEFAULT%) debug mode!!
 echo ============================================================
 echo.
+echo   CDBTOOLS_HOME:  %CDBTOOLS_HOME%
+echo.
 echo   CADDOK_RUNTIME: %CADDOK_RUNTIME%
 echo   CADDOK_BASE:    %CADDOK_BASE%
 echo   CADDOK_DEFAULT: %CADDOK_DEFAULT%
 echo.
 echo ============================================================
-
 @echo on
-START "%~n0 (%CADDOK_DEFAULT%)" "%CADDOK_RUNTIME%\cdbsvcd.exe" -d -v -db "%CADDOK_DEFAULT%"
+START "%~n0 cdbtools (%CADDOK_DEFAULT%)" "%CADDOK_RUNTIME%\cdbsvcd.exe" -d -v -db "%CADDOK_DEFAULT%"
 @echo off
-echo waiting for remote debug session ...
-
-"%CADDOK_RUNTIME%\python.exe" -c "from fspath.debug import rtrace_client;rtrace_client(polltime=3)"
+echo.
+"%CADDOK_RUNTIME%\python.exe" -c "from dm.cdbtools.debug import client;client(polltime=3)"
 pause

@@ -9,7 +9,7 @@ IF NOT DEFINED CDBTOOLS_HOME (
 
 SET "PY27=%CDBTOOLS_HOME%\py27"
 
-powerscript -c "import dm.init_cdb_mirror;dm.init_cdb_mirror.main()"  %*
+powerscript -c "import dm.cdbtools.init_cdb_mirror;dm.cdbtools.init_cdb_mirror.main()"  %*
 
 REM ----------------------------------------------------------------------------
 :Exit
