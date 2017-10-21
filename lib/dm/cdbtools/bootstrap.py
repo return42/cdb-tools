@@ -1,6 +1,8 @@
 # -*- coding: utf-8; mode: python -*-
 
+import sys
 import re
+
 from fspath import FSPath
 
 bat_template = u"""@REM -*- coding: windows-1252; mode: bat -*-
