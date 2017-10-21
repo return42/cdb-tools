@@ -1,5 +1,7 @@
 .. -*- coding: utf-8; mode: rst -*-
 
+.. _pdb: https://docs.python.org/3/library/pdb.html#debugger-commands
+   
 .. _shortcuts:
 
 ============
@@ -90,3 +92,37 @@ erweiterete CDB-Tools Umgebung
      Hier in der Anleitung wird der Prompt ``[CDB-Tools]`` weiter genutzt, um
      anzuzeigen, wann ein Kommando **in einer CDB-Tools Umgebung** ausgeführt
      werden muss (s.a. :ref:`cdbtools_env`).
+
+- ``CDBSVCD-START-debug.bat``:
+
+  Eignet sich für (remote) Debug-Zwecke in einer Entwickler Installation.
+
+  Es wird der *lokale* CDB Server und die für *diesen* Host konfigurierten
+  Dienste gestartet. Gleichzeitig startet in der Konsole ein *Listener*, der auf
+  Breakpoints lauscht. Einen Breakpoint setzt man wie folgt:
+
+  .. code-block:: python
+
+     from dm.cdbtools import BP
+     BP()
+
+  Wird der Breakpoint erreicht, so öffnet der Listener eine Py-Debugger Sitzung
+  (siehe pdb_).  Setzt man einen neuen Breakpoint in den Sourcen, so muss nicht
+  immer der ``CDBSVCD`` Prozess neu gestartet werden. So reicht es
+  beispielsweise aus, den PC-Client neu zu starten, wenn man lediglich die
+  Sourcen eines ``cdbsrv`` Prozess debuggen will (klassische UserExit
+  Programmierung wie im PowerScript Studio).
+
+  Vorteil dieser Art von (remote) Debugging ist, dass man hiermit jeden
+  Server-Prozess debuggen kann und das auch alle Dienste laufen. Im
+  Powerscript-Studio läuft beispielsweise nur der cdbsrv Prozess im Debug Modus
+  und man vermisst evtl. die eLink Anwendungen.
+
+  Die Kommunikation zwischen dem Debugger-Client und dem Breakpoint erfolgt über
+  IP sockets, weshalb man das auch remote Debugging nennen kann. Prinzipell ist
+  es auch möglich Server Prozesse auf Remote-Hosts zu debuggen, jedoch sollte
+  man in einer verteilten Umgebung darauf achten, dass die Breakpoints nicht von
+  anderen Benutzern oder Prozessen erreicht werden. In der Regel wird man diese
+  Art des Debugging nur in *lokalen* Entwickler Umgebungen nutzen. Dort kann es
+  dann aber auch eine große Hilfe sein, wo man bisher nur die Möglichkeit hatte
+  Logfiles zu lesen.
