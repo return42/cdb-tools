@@ -6,35 +6,32 @@
 Installation
 ============
 
-Laufzeitumgebungen
-==================
-
 Die CDB-Tools sind *non invasiv*, d.h. sie werden nicht in CDB installiert.  Die
 Idee der CDB-Tools ist es, eine erweiterte Laufzeitumgebung bereit zu stellen in
-der Wartungs- und Diagnose- Werkzeuge in CDB ausgeführt werden können, ohne das
-dazu die CDB Installation *verändert* werden müsste.
+Werkzeuge zur Wartung und Diagnose in CDB ausgeführt werden können, ohne das
+dazu die CDB Installation dazu *verändert* werden müsste.
 
 Zur Erweiterung der Laufzeitumgebungen von CDB Prozessen nutzen die CDB-Tools
-die Umgebungsvariablen ``PATH`` und ``PYTHONPATH`` und in Python Prozessen wird
-die Liste der Python-Pfade ``sys.path`` angepasst.
+die Umgebungsvariablen ``PATH`` und ``PYTHONPATH``. In Python Prozessen wird die
+Liste der Python-Pfade ``sys.path`` angepasst.
 
 Das Paketmanagement der CDB-Tools (:ref:`cdbtools_pckg`) ist unabhängig von CDB.
 Auf diese Weise müssen Werkzeuge für die Wartung und Diagnose nicht mehr in CDB
-installiert werden, was die CDB Instanz zusätzlich *schlank* hält.
+installiert werden, was die CDB Instanz nachhaltig *schlank* hält.
 
+.. _get_cdbtools:
 
 Download (git clone)
 ====================
 
 Anstatt eines klassischen Downloads sollten die CDB-Tools mit ``git clone``
-*gedownloaded* werden, so kann man später mittels ``git pull`` die CDB-Tools
-auch einfach *updaten*.::
+*geklont* werden, so kann man sie dann später auch mittels ``git pull``
+aktualisieren (s.u.).::
 
   $ git clone --recursive https://github.com/return42/cdb-tools
 
 Wichtig ist der Schalter ``--recursive`` der sicherstellt, dass auch die
 Submodule der CDB-Tools *geklont* werden.
-
 
 .. _setup_cdbenv:
 
@@ -94,7 +91,7 @@ bootstrap
 =========
 
 Bevor die CDB-Tools genutzt werden können müssen ihre externen Abhängigkeiten
-einmal installiert werden.:
+einmal installiert werden:
 
 .. code-block:: dosbatch
 
@@ -133,6 +130,22 @@ manchen Umgebungen kann man in der CDBShell auch folgendes setzen::
 Wenn Sie die Shell schließen sind diese Werte wieder *weg*, sie sind
 nur für Kommandos aktiv, die in der Shell aufgerufen werden.
 
+.. _update_cdbtools:
+
+Update
+======
+
+Die Aktualisierung der CDB-Tools erfolgt mittels ``git``::
+
+   $ git pull
+   $ git submodule update --recursive
+
+und einem erneutem ``install`` (s.a. :ref:`bootstrap_cdbtools`):
+
+.. code-block:: dosbatch
+
+  [cdb:prod_copy] C:\> cdb-tools\bootstrap\install.bat
+
 
 .. _cdbtools_env:
 
@@ -140,7 +153,7 @@ CDB-Tools Umgebung
 ==================
 
 Die CDB-Tools Umgebung wird über das Skript ``winShortcuts/cdbtools.bat`` bereit
-gestellt. I.d.R. wird man durch einen Doppelklick darauf eine Shell öffnen, man
+gestellt. I.d.R. wird man mittels *Doppelklick* eine Shell öffnen wollen. Man
 kann das Skript aber auch in einer Kommandozeile aufrufen.
 
 .. code-block:: dosbatch
