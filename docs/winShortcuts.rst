@@ -1,7 +1,7 @@
 .. -*- coding: utf-8; mode: rst -*-
 
 .. _pdb: https://docs.python.org/3/library/pdb.html#debugger-commands
-   
+.. _`PyDev Remote Debugger`: http://www.pydev.org/manual_adv_remote_debugger.html   
 .. _shortcuts:
 
 ============
@@ -95,7 +95,8 @@ erweiterete CDB-Tools Umgebung
 
 - ``CDBSVCD-START-debug.bat``:
 
-  Eignet sich für (remote) Debug-Zwecke in einer Entwickler Installation.
+  Eignet sich für remote Debug-Zwecke in einer Entwickler Installation (eine
+  einfache Alternative zum `PyDev Remote Debugger`_).
 
   Es wird der *lokale* CDB Server und die für *diesen* Host konfigurierten
   Dienste gestartet. Gleichzeitig startet in der Konsole ein *Listener*, der auf
@@ -113,16 +114,16 @@ erweiterete CDB-Tools Umgebung
   Sourcen eines ``cdbsrv`` Prozess debuggen will (klassische UserExit
   Programmierung wie im PowerScript Studio).
 
-  Vorteil dieser Art von (remote) Debugging ist, dass man hiermit jeden
-  Server-Prozess debuggen kann und das auch alle Dienste laufen. Im
-  Powerscript-Studio läuft beispielsweise nur der cdbsrv Prozess im Debug Modus
-  und man vermisst evtl. die eLink Anwendungen.
+  Vorteil des remote Debugging ist, dass man hiermit jeden Server-Prozess
+  debuggen kann und das auch alle Dienste laufen. Im Powerscript-Studio läuft
+  normalerweise nur der cdbsrv Prozess im Debug Modus und man vermisst
+  evtl. Services die beispielsweise die eLink Anwendungen bereit stellen.
 
   Die Kommunikation zwischen dem Debugger-Client und dem Breakpoint erfolgt über
   IP sockets, weshalb man das auch remote Debugging nennen kann. Prinzipell ist
-  es auch möglich Server Prozesse auf Remote-Hosts zu debuggen, jedoch sollte
-  man in einer verteilten Umgebung darauf achten, dass die Breakpoints nicht von
-  anderen Benutzern oder Prozessen erreicht werden. In der Regel wird man diese
-  Art des Debugging nur in *lokalen* Entwickler Umgebungen nutzen. Dort kann es
-  dann aber auch eine große Hilfe sein, wo man bisher nur die Möglichkeit hatte
-  Logfiles zu lesen.
+  es auch möglich Server Prozesse auf entfernten Hosts zu debuggen, jedoch
+  sollte man in einer verteilten Umgebung darauf achten, dass die Breakpoints
+  nicht von anderen Benutzern oder Prozessen erreicht werden (können). In der
+  Regel wird man diese Art des Debugging nur in *lokalen* Entwickler Umgebungen
+  nutzen. Dort kann es dann aber auch eine große Hilfe sein, wo man bisher nur
+  die Möglichkeit hatte Logfiles zu lesen.
