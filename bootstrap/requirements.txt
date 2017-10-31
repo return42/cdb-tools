@@ -13,3 +13,8 @@
 #
 pylint==1.5.2
 
+# http://lxml.de/
+lxml==4.1.0 --only-binary=lxml
+
+# http://docs.python-zeep.org
+zeep
