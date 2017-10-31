@@ -30,7 +30,7 @@ REM ----------------------------
 SET __PYVENV_LAUNCHER__=powerscript.exe
 SET PIP_INGNORE_INSTALLED=true
 SET "PYTHONPATH=%CDBTOOLS_HOME%\bootstrap;%PYTHONPATH%"
-powerscript -c "import get_pip, sys;sys.executable='powerscript.exe';get_pip.main()" --ignore-installed --install-option="--prefix=%PY27%"
+python -c "import get_pip, sys;sys.executable='python.exe';get_pip.main()" --ignore-installed --install-option="--prefix=%PY27%"
 
 PUSHD "%CDBTOOLS_HOME%"
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" --
@@ -39,7 +39,7 @@ REM die setuptools in CDB sind steinalt, damit ist ein vernüftiges
 REM Package-Management nicht möglich. Die setuptools müssen als
 REM erstes nach pip installiert werden.
 
-powerscript -c "import pip, sys;sys.executable='powerscript.exe';pip.main()" install --ignore-installed --install-option="--prefix=%PY27%" setuptools==36.5
+python -c "import pip, sys;sys.executable='python.exe';pip.main()" install --ignore-installed --install-option="--prefix=%PY27%" setuptools==36.6
 
 REM requirements of CDB-Tools
 REM -------------------------

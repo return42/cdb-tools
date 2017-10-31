@@ -16,7 +16,7 @@ echo.
 echo fixing script wrapper
 echo =====================
 echo.
-powerscript -c "import dm.cdbtools.bootstrap;dm.cdbtools.bootstrap.replace_exe_with_bat('%PY27%\Scripts')"
+python -c "import dm.cdbtools.bootstrap;dm.cdbtools.bootstrap.replace_exe_with_bat('%PY27%\Scripts')"
 
 REM ----------------------------------------------------------------------------
 :Exit
