@@ -21,3 +21,14 @@ zeep
 
 # https://github.com/jaraco/keyring
 keyring
+
+# http://python-prompt-toolkit.readthedocs.io
+prompt_toolkit
+
+# https://github.com/jonathanslenders/ptpython
+ptpython
+
+# more up to date fork: https://github.com/return42/ptpdb.git
+#-e file:c:/share/ptpdb
+git+https://github.com/return42/ptpdb.git
+

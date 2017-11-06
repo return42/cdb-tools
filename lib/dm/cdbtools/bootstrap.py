@@ -34,25 +34,51 @@ IF EXIST "%%~dpn0-script.py" (
 :Exit
 """
 
-def replace_exe_with_bat(folder, interpreter=u"powerscript.exe", ignore=None):
+def replace_exe_with_bat(folder, interpreter=None):
     u"""Legt die *.exe Wrapper mit '!#powerscript' im shebang an.
 
     Z.B. in ``%CADDOK_TOOLS%/py27/Scripts``
     """
     from fspath.win import wrapScriptExe
-
     def log(msg):
         sys.stderr.write(msg + "\n")
-    if ignore is None:
-        ignore = ['easy_install', 'pip', 'wheel']
+
     folder = FSPath(folder)
+    def_py = interpreter or 'powerscript.exe'
+
+    delete = ['python.exe', 'pythonw.exe'
+              , 'pip2.bat'   , 'pip2.exe'  , 'pip2-script.py'
+              , 'pip2.7.bat' , 'pip2.7.exe', 'pip2.7-script.py'
+              , 'activate.bat', 'deactivate.bat'
+              , 'ptpython.exe', 'ptpython.exe.manifest'
+              , 'ptipython.bat' , 'ptipython.exe'   , 'ptipython.exe.manifest' ,  'ptipython-script.py'
+              , 'ptpython2.bat' , 'ptpython2.exe'   , 'ptpython2.exe.manifest' ,  'ptpython2-script.py'
+              , 'ptipython2.bat', 'ptipython2.exe'  , 'ptipython2.exe.manifest',  'ptipython2-script.py'
+              , ]
+    map_py = {'pip'            : 'python.exe'
+              , 'pip2'         : 'python.exe'
+              , 'pip27'        : 'python.exe'
+              , 'wheel'        : 'python.exe'
+              , 'easy_install' : 'python.exe' # ?
+              , 'virtualenv'   : 'python.exe'
+              , 'which'        : 'python.exe'
+              , 'fspath'       : 'python.exe'
+              , }
+
+    for d in delete:
+        d = folder / d
+        if d.EXISTS:
+            log("delete: %s" % d)
+            d.delete()
+
     for py_fname in folder.glob("*.py"):
 
-        if [i for i in ignore if py_fname.BASENAME.startswith(i)]:
-            continue
+        fname = FSPath(re.sub(r'(-script\.pyw?)?$', '', py_fname)).relpath(folder)
 
-        exe_fname  = FSPath(re.sub(r'(-script\.pyw?|\.exe)?$', '.exe', py_fname))
-        bat_fname  = FSPath(re.sub(r'(-script\.pyw?|\.exe)?$', '.bat', py_fname))
+        interpreter = map_py.get(fname, def_py)
+
+        bat_fname  = folder / fname + '.bat'
+        exe_fname  = folder / fname + '.exe'
         bat_script = bat_template % locals()
 
         log("generate: %s" % bat_fname)
@@ -64,7 +90,7 @@ def replace_exe_with_bat(folder, interpreter=u"powerscript.exe", ignore=None):
             log("          .exe file exits, try to remove ..")
             exe_fname.rmfile()
 
-        log("          create wrapper with interpreter: '%s' " % interpreter)
+        log("          create shebang & bat-wrapper with interpreter: '%s' " % interpreter)
         py_script = py_fname.readFile().splitlines()
         new_line  = u"import dm.cdbtools # automatic inserted by cdbtools. This will reorder sys.path !!!"
         if [l for l in py_script if l.startswith("import dm.cdbtools")]:
@@ -86,9 +112,10 @@ def replace_exe_with_bat(folder, interpreter=u"powerscript.exe", ignore=None):
         with py_fname.openTextFile(mode="w") as py:
             py.write(new_script)
 
+        log("          create bat wrapper: '%s' " % bat_fname)
         with bat_fname.openTextFile(mode="w") as bat:
             bat.write(bat_script)
         if bat_fname.EXISTS:
-            log("generate: %s OK" % bat_fname)
+            log("          %s OK" % bat_fname)
         else:
-            log("generate: %s ERROR" % bat_fname)
+            log("          %s ERROR" % bat_fname)

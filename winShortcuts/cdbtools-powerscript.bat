@@ -14,8 +14,20 @@ IF NOT DEFINED CDBTOOLS_HOME (
 )
 
 REM if NOT '%1' == 'conemu' (
-REM  START "ConEmu" "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" -reuse -run %0 conemu
+REM   START "ConEmu" "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" -reuse -run %0 conemu
 REM  GOTO Exit
 REM )
 
-"%CADDOK_RUNTIME%\cdbsh.exe" -v -db "%CADDOK_DEFAULT%" -c "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" --
+REM ----------------------------------------------------------------------------
+:openCMD
+REM ----------------------------------------------------------------------------
+
+chcp 65001 >NUL
+SET LC_ALL=de_DE.UTF-8
+
+call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
+call ptpython
+
+REM ----------------------------------------------------------------------------
+:Exit
+REM ----------------------------------------------------------------------------
