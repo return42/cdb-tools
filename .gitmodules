@@ -1,3 +1,6 @@
 [submodule "fspath"]
 	path = subs/fspath
 	url = https://github.com/return42/fspath
+[submodule "subs/ptpdb"]
+	path = subs/ptpdb
+	url = https://github.com/return42/ptpdb.git

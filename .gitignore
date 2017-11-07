@@ -13,9 +13,13 @@ py27/
 
 
 # Distribution / packaging
+.cache/
 .Python
 build/
 local/
 dist/
 downloads/
 gh-pages/
+
+# software shipped with
+win_bin/ConEmu/

@@ -20,5 +20,3 @@ sys.path = sorted(sys.path, key=lambda x: x.startswith(os.environ.get("CDBTOOLS_
 # shortcuts
 
 from dm.cdbtools.debug import breakpoint as BP
-
-import ptpython

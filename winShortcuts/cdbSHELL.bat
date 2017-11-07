@@ -26,4 +26,3 @@ echo ============================================================
 
 @echo on
 "%CADDOK_RUNTIME%\cdbsh.exe" -v -db "%CADDOK_DEFAULT%"
-pause
