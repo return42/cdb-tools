@@ -27,7 +27,7 @@ REM ----------------------------------------------------------------------------
 SET LC_ALL=de_DE.UTF-8
 
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
-call python
+call cdbtools-python
 
 REM ----------------------------------------------------------------------------
 :Exit

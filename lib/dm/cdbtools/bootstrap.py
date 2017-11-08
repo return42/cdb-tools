@@ -16,17 +16,17 @@ REM ----------------------------------------------------------------------------
 REM Purpose:     wrap foo.py to foo.bat
 REM ----------------------------------------------------------------------------
 
-IF NOT DEFINED CDBTOOLS_HOME (
-   echo ERROR: missing environment: CDBTOOLS_HOME
-   pause
-   GOTO Exit
-)
-IF NOT DEFINED CADDOK_RUNTIME (
-   echo ERROR: missing environment: CADDOK_RUNTIME
-   echo ERROR: !! run this command in a 'cdbtools' environment !!
-   pause
-   GOTO Exit
-)
+IF DEFINED CDBTOOLS_HOME goto cdbtoolsok
+for %%%%A IN ("%%~dp0\..\..") DO SET "CDBTOOLS_HOME=%%%%~fA"
+IF %%CDBTOOLS_HOME:~-1%%==\ SET CDBTOOLS_HOME=%%CDBTOOLS_HOME:~0,-1%%
+call "%%CDBTOOLS_HOME%%\winShortcuts\cdbEnv.bat"
+call "%%CDBTOOLS_HOME%%\win_bin\cdbtools-activate.bat"
+:cdbtoolsok
+
+REM if NOT EXIST "%%CDBTOOLS_HOME%%\win_bin\ConEmu\ConEmu.exe" goto openCMDNative
+REM "%%CDBTOOLS_HOME%%\win_bin\ConEmu\ConEmu.exe" -run "%%CADDOK_RUNTIME%%\python.exe" -m dm.cdbtools.run_ptpython %%*
+REM goto Exit
+
 IF EXIST "%%~dpn0.py" (
   "%%CADDOK_RUNTIME%%\%(interpreter)s" "%%~dpn0.py" %%*
   GOTO Exit
@@ -50,18 +50,18 @@ REM ----------------------------------------------------------------------------
 REM Purpose:     wrap ptpython
 REM ----------------------------------------------------------------------------
 
-IF NOT DEFINED CDBTOOLS_HOME (
-   echo ERROR: missing environment: CDBTOOLS_HOME
-   pause
-   GOTO Exit
-)
-IF NOT DEFINED CADDOK_RUNTIME (
-   echo ERROR: missing environment: CADDOK_RUNTIME
-   echo ERROR: !! run this command in a 'cdbtools' environment !!
-   pause
-   GOTO Exit
-)
+IF DEFINED CDBTOOLS_HOME goto cdbtoolsok
+for %%%%A IN ("%%~dp0\..\..") DO SET "CDBTOOLS_HOME=%%%%~fA"
+IF %%CDBTOOLS_HOME:~-1%%==\ SET CDBTOOLS_HOME=%%CDBTOOLS_HOME:~0,-1%%
+call "%%CDBTOOLS_HOME%%\winShortcuts\cdbEnv.bat"
+call "%%CDBTOOLS_HOME%%\win_bin\cdbtools-activate.bat"
+:cdbtoolsok
 
+REM if NOT EXIST "%%CDBTOOLS_HOME%%\win_bin\ConEmu\ConEmu.exe" goto openCMDNative
+REM "%%CDBTOOLS_HOME%%\win_bin\ConEmu\ConEmu.exe" -run "%%CADDOK_RUNTIME%%\python.exe" -m dm.cdbtools.run_ptpython %%*
+REM goto Exit
+
+:openCMDNativ
 "%%CADDOK_RUNTIME%%\%(interpreter)s" -m dm.cdbtools.run_ptpython %%*
 
 :Exit
@@ -96,8 +96,8 @@ def replace_exe_with_bat(folder, def_py='powerscript.exe', template=BAT_TEMPLATE
         , 'which'            : ('python.exe', BAT_TEMPLATE)
         , 'fspath'           : ('python.exe', BAT_TEMPLATE)
         , 'activate_this'    : None
-        , 'ptpython'         : {'python'       : ('python.exe',      PTPYTHON_TEMPLATE)
-                                , 'powerscript': ('powerscript.exe', PTPYTHON_TEMPLATE)
+        , 'ptpython'         : {'cdbtools-python'       : ('python.exe',      PTPYTHON_TEMPLATE)
+                                , 'cdbtools-powerscript': ('powerscript.exe', PTPYTHON_TEMPLATE)
                                 , }
         , }
 
@@ -110,14 +110,14 @@ def replace_exe_with_bat(folder, def_py='powerscript.exe', template=BAT_TEMPLATE
         bat_fname  = wrapper_name + '.bat'
         log("generate: %s" % bat_fname)
         if bat_fname.EXISTS:
-            log("          .bat file exits, try to remove ..")
+            #log("          .bat file exits, try to remove ..")
             bat_fname.rmfile()
 
         if exe_fname.EXISTS:
-            log("          .exe file exits, try to remove ..")
+            #log("          .exe file exits, try to remove ..")
             exe_fname.rmfile()
 
-        log("          create shebang & bat-wrapper with interpreter: '%s' " % interpreter)
+        #log("          create shebang & bat-wrapper with interpreter: '%s' " % interpreter)
         py_script = py_fname.readFile().splitlines()
         new_line  = u"import dm.cdbtools # automatic inserted by cdbtools. This will reorder sys.path !!!"
         if [l for l in py_script if l.startswith("import dm.cdbtools")]:
@@ -135,17 +135,17 @@ def replace_exe_with_bat(folder, def_py='powerscript.exe', template=BAT_TEMPLATE
                 new_line = ""
             new_script += l + u'\n'
 
-        log("          prepare python script: '%s' " % py_fname)
+        #log("          prepare python script: '%s' " % py_fname)
         with py_fname.openTextFile(mode="w") as pyf:
             pyf.write(new_script)
 
-        log("          create bat wrapper: '%s' " % bat_fname)
+        #log("          create bat wrapper: '%s' " % bat_fname)
         with bat_fname.openTextFile(mode="w") as bat:
             bat.write(bat_script)
-        if bat_fname.EXISTS:
-            log("          %s OK" % bat_fname)
-        else:
-            log("          %s ERROR" % bat_fname)
+        # if bat_fname.EXISTS:
+        #     log("          %s OK" % bat_fname)
+        # else:
+        #     log("          %s ERROR" % bat_fname)
 
     # delete files
     # ------------

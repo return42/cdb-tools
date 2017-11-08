@@ -12,10 +12,7 @@ SET "MYPYTHON_EXE=%CADDOK_RUNTIME%\python.exe"
 
 SET PIP_INGNORE_INSTALLED=true
 
-echo.
-echo fixing script wrapper
-echo =====================
-echo.
+echo fixing script wrapper ...
 "%MYPYTHON_EXE%" -c "import dm.cdbtools.bootstrap;dm.cdbtools.bootstrap.replace_exe_with_bat('%CDBTOOLS_PY27%\Scripts')"
 
 REM ----------------------------------------------------------------------------

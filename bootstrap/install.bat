@@ -31,7 +31,7 @@ SET "PATH=%CDBTOOLS_HOME%\win_bin;%CDBTOOLS_PY27%\Scripts;%PATH%"
 SET "PYTHONPATH=%CDBTOOLS_HOME%\bootstrap;%CDBTOOLS_HOME%\lib;%CDBTOOLS_PY27%\Lib\site-packages;%PYTHONPATH%"
 
 REM create folder for lokal packages
-mkdir "CDBTOOLS_PY27"  > nul  2> nul
+mkdir "%CDBTOOLS_PY27%"  > nul  2> nul
 
 SET PIP_INGNORE_INSTALLED=true
 
@@ -56,4 +56,4 @@ PUSHD "%CDBTOOLS_HOME%"
 call "%CDBTOOLS_HOME%\win_bin\pip-install.bat" -r "%CDBTOOLS_HOME%\bootstrap\requirements.txt"
 POPD
 
-"%MYPYTHON_EXE%" bootstrap\build.py install-software
+"%MYPYTHON_EXE%" "%CDBTOOLS_HOME%\bootstrap\build.py" install-software
