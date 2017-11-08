@@ -27,7 +27,7 @@ REM ----------------------------------------------------------------------------
 SET LC_ALL=de_DE.UTF-8
 
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
-powerscript -m ptpython.entry_points.run_ptpython
+call python
 
 REM ----------------------------------------------------------------------------
 :Exit

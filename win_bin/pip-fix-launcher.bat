@@ -7,16 +7,16 @@ IF NOT DEFINED CDBTOOLS_HOME (
    GOTO Exit
 )
 
-SET "PY27=%CDBTOOLS_HOME%\py27"
+SET "CDBTOOLS_PY27=%CDBTOOLS_HOME%\py27"
+SET "MYPYTHON_EXE=%CADDOK_RUNTIME%\python.exe"
 
-SET __PYVENV_LAUNCHER__=powerscript.exe
 SET PIP_INGNORE_INSTALLED=true
 
 echo.
 echo fixing script wrapper
 echo =====================
 echo.
-python -c "import dm.cdbtools.bootstrap;dm.cdbtools.bootstrap.replace_exe_with_bat('%PY27%\Scripts')"
+"%MYPYTHON_EXE%" -c "import dm.cdbtools.bootstrap;dm.cdbtools.bootstrap.replace_exe_with_bat('%CDBTOOLS_PY27%\Scripts')"
 
 REM ----------------------------------------------------------------------------
 :Exit

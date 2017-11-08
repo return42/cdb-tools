@@ -9,7 +9,7 @@ import zipfile
 import re
 
 from datetime import datetime
-from fspath import FSPath, CLI, OS_ENV
+from fspath import FSPath, CLI, OS_ENV, progressbar
 
 if OS_ENV.get("CDBTOOLS_HOME", None) is None:
     raise Exception("Missing CDBTOOLS_HOME environment, can't build cdbtools without!")
@@ -17,6 +17,7 @@ if OS_ENV.get("CDBTOOLS_HOME", None) is None:
 CDBTOOLS_HOME  = FSPath(os.environ["CDBTOOLS_HOME"]).ABSPATH
 CDBTOOLS_DIST  = CDBTOOLS_HOME / "dist"
 CDBTOOLS_CACHE = CDBTOOLS_HOME / ".cache"
+SOFTWARE_CACHE = CDBTOOLS_CACHE / "software"
 
 SOFTWARE_ARCHIVES = (
     ('win_bin/ConEmu', 'ConEmu.zip', 'https://storage/SoftwareDB/darmarIT/cdb-tools')
@@ -57,12 +58,24 @@ def main():
 
     u"""cdbtools -- build maintenance script"""
     cli = CLI(description=main.__doc__)
-    cmd = cli.addCMDParser(cli_dist, cmdName='dist')
-    cmd = cli.addCMDParser(cli_zip_cdbtools, cmdName='zip-cdbtools')
-    cmd = cli.addCMDParser(cli_build_zip_software, cmdName='zip-software')
-    cmd = cli.addCMDParser(cli_build_get_software, cmdName='get-software')
-    cmd = cli.addCMDParser(cli_build_install_software, cmdName='install-software')
+    cli.addCMDParser(cli_build_install_software , cmdName='install-software')
+    cli.addCMDParser(cli_build_get_software     , cmdName='get-software')
+    cli.addCMDParser(cli_dist                   , cmdName='dist')
+    cli.addCMDParser(cli_zip_cdbtools           , cmdName='zip-cdbtools')
+    cli.addCMDParser(cli_build_zip_software     , cmdName='zip-software')
     cli()
+
+def cli_build_install_software(cli):
+    u"""get software archieves (ZIP)"""
+    SOFTWARE_CACHE.makedirs()
+    for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
+        _install(src_folder, zip_fname, url)
+
+def cli_build_get_software(cli):
+    u"""get software archieves (ZIP)"""
+    SOFTWARE_CACHE.makedirs()
+    for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
+        _download(src_folder, zip_fname, url)
 
 def cli_dist(cli):
     u"""build distribution"""
@@ -72,57 +85,54 @@ def cli_dist(cli):
 def cli_zip_cdbtools(cli):
     u"""build complete zip"""
     zip_fname  = CDBTOOLS_DIST / datetime.now().strftime("%Y%m%d_%H%M_cdb-tools.zip")
-    do_zip(zip_fname, CDBTOOLS_HOME, FSPath("cdb-tools"))
-
+    _zip(zip_fname, CDBTOOLS_HOME, FSPath("cdb-tools"))
 
 def cli_build_zip_software(cli):
     u"""build software archieves (ZIP)"""
     for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
-        do_zip(CDBTOOLS_DIST / zip_fname, CDBTOOLS_HOME / src_folder, FSPath(src_folder))
+        _zip(CDBTOOLS_DIST / zip_fname, CDBTOOLS_HOME / src_folder, FSPath(src_folder))
 
-def cli_build_get_software(cli):
-    u"""get software archieves (ZIP)"""
-    sw_folder = CDBTOOLS_CACHE / "software"
-    sw_folder.makedirs()
+def _download(src_folder, zip_fname, url):
 
-    for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
-        url = url + "/" + zip_fname
-        arch = sw_folder / zip_fname
-        if arch.EXISTS:
-            print("overwrite existing ZIP: %s" % zip_fname)
-        arch.download(url, ticker=True)
+    url = url + "/" + zip_fname
+    print("download: %s ..." % url)
+    arch = SOFTWARE_CACHE / zip_fname
+    if arch.EXISTS:
+        print("  --> overwrite existing ZIP: %s" % zip_fname)
+    arch.download(url, ticker=True)
 
-def cli_build_install_software(cli):
-    u"""get software archieves (ZIP)"""
-    sw_folder = CDBTOOLS_CACHE / "software"
+def _install(src_folder, zip_fname, url):
 
-    if not sw_folder.EXISTS:
-        raise IOError("missing downloaded software in %s" % sw_folder)
+    src_folder = FSPath(src_folder)
+    print("install: %s" % src_folder)
+    arch = SOFTWARE_CACHE / zip_fname
+    if not arch.EXISTS:
+        print("  missing %s" % zip_fname)
+        _download(src_folder, zip_fname, url)
+    if (CDBTOOLS_HOME / src_folder).EXISTS:
+        print("  %s already installed\n  --> to update first remove: %s\n  --> "
+              % (zip_fname, CDBTOOLS_HOME / src_folder), end='')
+        while (CDBTOOLS_HOME / src_folder).EXISTS:
+            print(".", end='')
+            time.sleep(1)
+        print('')
+    _unzip(arch, CDBTOOLS_HOME)
+    print("install: %s OK" % src_folder)
 
-    for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
-        src_folder = FSPath(src_folder)
-        print("install: %s" % src_folder)
-        arch = sw_folder / zip_fname
-        if not arch.EXISTS:
-            print("  missing %s\n  --> can't install: %s\n  --> to update run download first"
-                  % (zip_fname, src_folder))
-            print("FAILED: %s" % src_folder)
-            continue
-        if (CDBTOOLS_HOME / src_folder).EXISTS:
-            print("  %s already installed\n  --> to update first remove: %s\n  --> "
-                  % (zip_fname, CDBTOOLS_HOME / src_folder), end='')
-            while (CDBTOOLS_HOME / src_folder).EXISTS:
-                print(".", end='')
-                time.sleep(1)
-            print('')
 
-        myzip = zipfile.ZipFile(arch)
-        for member in myzip.namelist():
-            myzip.extract(member, CDBTOOLS_HOME)
+def _unzip(arch, folder):
+    myzip = zipfile.ZipFile(arch)
+    ml = myzip.namelist()
+    mx = len(ml) - 1
+    zn = arch.BASENAME if len(arch.BASENAME) < 20 else arch.BASENAME[:18] + ".."
+    for c, member in enumerate(ml):
+        mn = FSPath(member).BASENAME
+        mn = mn if len(mn) < 20 else mn[:18] + ".."
+        progressbar(c, mx, prompt="  --> %s: %-20s" % (zn, mn))
+        myzip.extract(member, folder)
+    print("")
 
-        print("OK: %s" % src_folder)
-
-def do_zip(zip_fname, src_folder, arch_prefix, ignore_folders=None, ignore_files=None):
+def _zip(zip_fname, src_folder, arch_prefix, ignore_folders=None, ignore_files=None):
 
     if ignore_files is None:
         ignore_files   = RE_IGNORE_FILES
@@ -151,7 +161,6 @@ def do_zip(zip_fname, src_folder, arch_prefix, ignore_folders=None, ignore_files
         for folder, dirnames, filenames in src_folder.ABSPATH.walk():
             folder = folder.relpath(src_folder.ABSPATH)
             doIgn  = bool([x for x in ignored if folder[:len(x)] == x])
-            #import pdb; pdb.set_trace()
             if doIgn:
                 continue
 

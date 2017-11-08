@@ -1,11 +1,11 @@
 # -*- coding: utf-8; mode: python -*-
-
+u"""misc tools for bootstrapping cdbtools"""
 import sys
 import re
 
 from fspath import FSPath
 
-bat_template = u"""@REM -*- coding: windows-1252; mode: bat -*-
+BAT_TEMPLATE = u"""@REM -*- coding: windows-1252; mode: bat -*-
 @echo off
 REM ----------------------------------------------------------------------------
 REM --                             --  File:     wrapper.bat
@@ -13,74 +13,101 @@ REM -- Copyright (C) 2017 darmarIT --  Author:   Markus Heiser
 REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------
-REM Purpose:     wrap .py to .bat
+REM Purpose:     wrap foo.py to foo.bat
 REM ----------------------------------------------------------------------------
 
 IF NOT DEFINED CDBTOOLS_HOME (
-   echo ERROR: !! This command has to be run in a CDB-Tools environment cdbtools !!
+   echo ERROR: missing environment: CDBTOOLS_HOME
    pause
    GOTO Exit
 )
-
+IF NOT DEFINED CADDOK_RUNTIME (
+   echo ERROR: missing environment: CADDOK_RUNTIME
+   echo ERROR: !! run this command in a 'cdbtools' environment !!
+   pause
+   GOTO Exit
+)
 IF EXIST "%%~dpn0.py" (
-  %(interpreter)s "%%~dpn0.py" %%*
+  "%%CADDOK_RUNTIME%%\%(interpreter)s" "%%~dpn0.py" %%*
   GOTO Exit
 )
 IF EXIST "%%~dpn0-script.py" (
-  %(interpreter)s "%%~dpn0-script.py" %%*
+  "%%CADDOK_RUNTIME%%\%(interpreter)s" "%%~dpn0-script.py" %%*
   GOTO Exit
 )
 
 :Exit
 """
 
-def replace_exe_with_bat(folder, interpreter=None):
+PTPYTHON_TEMPLATE = u"""@REM -*- coding: windows-1252; mode: bat -*-
+@echo off
+REM ----------------------------------------------------------------------------
+REM --                             --  File:     wrapper.bat
+REM -- Copyright (C) 2017 darmarIT --  Author:   Markus Heiser
+REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
+REM --                             --  http://www.darmarIT.de
+REM ----------------------------------------------------------------------------
+REM Purpose:     wrap ptpython
+REM ----------------------------------------------------------------------------
+
+IF NOT DEFINED CDBTOOLS_HOME (
+   echo ERROR: missing environment: CDBTOOLS_HOME
+   pause
+   GOTO Exit
+)
+IF NOT DEFINED CADDOK_RUNTIME (
+   echo ERROR: missing environment: CADDOK_RUNTIME
+   echo ERROR: !! run this command in a 'cdbtools' environment !!
+   pause
+   GOTO Exit
+)
+
+"%%CADDOK_RUNTIME%%\%(interpreter)s" -m dm.cdbtools.run_ptpython %%*
+
+:Exit
+"""
+
+def replace_exe_with_bat(folder, def_py='powerscript.exe', template=BAT_TEMPLATE):
     u"""Legt die *.exe Wrapper mit '!#powerscript' im shebang an.
 
     Z.B. in ``%CADDOK_TOOLS%/py27/Scripts``
     """
-    from fspath.win import wrapScriptExe
+    # pylint: disable=too-many-locals, too-many-branches, too-many-statements
+
+    folder  = FSPath(folder)
+    del_map = [
+        'activate.bat', 'deactivate.bat'
+        , 'python.exe', 'pythonw.exe', 'python27.dll'
+        , 'easy_install-2.7.exe.manifest', 'easy_install-2.7.bat', 'easy_install-2.7-script.py'
+        , 'pip2.exe'                     , 'pip2.bat'            , 'pip2-script.py'
+        , 'pip2.7.exe'                   , 'pip2.7.bat'          , 'pip2.7-script.py'
+        , 'ptpython.exe.manifest'        , 'ptpython.exe'
+        , 'ptipython.exe.manifest'       , 'ptipython.bat'       , 'ptipython-script.py' , 'ptipython.exe'
+        , 'ptpython2.exe.manifest'       , 'ptpython2.bat'       , 'ptpython2-script.py' , 'ptpython2.exe'
+        , 'ptipython2.exe.manifest'      , 'ptipython2.bat'      , 'ptipython2-script.py', 'ptipython2.exe'
+        , ]
+    map_py = {
+        'pip'                : ('python.exe', BAT_TEMPLATE)
+        , 'pip2'             : ('python.exe', BAT_TEMPLATE)
+        , 'pip27'            : ('python.exe', BAT_TEMPLATE)
+        , 'wheel'            : ('python.exe', BAT_TEMPLATE)
+        , 'easy_install'     : ('python.exe', BAT_TEMPLATE) # ?
+        , 'virtualenv'       : ('python.exe', BAT_TEMPLATE)
+        , 'which'            : ('python.exe', BAT_TEMPLATE)
+        , 'fspath'           : ('python.exe', BAT_TEMPLATE)
+        , 'activate_this'    : None
+        , 'ptpython'         : {'python'       : ('python.exe',      PTPYTHON_TEMPLATE)
+                                , 'powerscript': ('powerscript.exe', PTPYTHON_TEMPLATE)
+                                , }
+        , }
+
     def log(msg):
+        u"""log to stderr"""
         sys.stderr.write(msg + "\n")
 
-    folder = FSPath(folder)
-    def_py = interpreter or 'powerscript.exe'
-
-    delete = ['python.exe', 'pythonw.exe'
-              , 'pip2.bat'   , 'pip2.exe'  , 'pip2-script.py'
-              , 'pip2.7.bat' , 'pip2.7.exe', 'pip2.7-script.py'
-              , 'activate.bat', 'deactivate.bat'
-              , 'ptpython.exe', 'ptpython.exe.manifest'
-              , 'ptipython.bat' , 'ptipython.exe'   , 'ptipython.exe.manifest' ,  'ptipython-script.py'
-              , 'ptpython2.bat' , 'ptpython2.exe'   , 'ptpython2.exe.manifest' ,  'ptpython2-script.py'
-              , 'ptipython2.bat', 'ptipython2.exe'  , 'ptipython2.exe.manifest',  'ptipython2-script.py'
-              , ]
-    map_py = {'pip'            : 'python.exe'
-              , 'pip2'         : 'python.exe'
-              , 'pip27'        : 'python.exe'
-              , 'wheel'        : 'python.exe'
-              , 'easy_install' : 'python.exe' # ?
-              , 'virtualenv'   : 'python.exe'
-              , 'which'        : 'python.exe'
-              , 'fspath'       : 'python.exe'
-              , }
-
-    for d in delete:
-        d = folder / d
-        if d.EXISTS:
-            log("delete: %s" % d)
-            d.delete()
-
-    for py_fname in folder.glob("*.py"):
-
-        fname = FSPath(re.sub(r'(-script\.pyw?)?$', '', py_fname)).relpath(folder)
-
-        interpreter = map_py.get(fname, def_py)
-
-        bat_fname  = folder / fname + '.bat'
-        exe_fname  = folder / fname + '.exe'
-        bat_script = bat_template % locals()
-
+    def _wrap_bat(py_fname, wrapper_name, interpreter, bat_script):
+        exe_fname  = wrapper_name + '.exe'
+        bat_fname  = wrapper_name + '.bat'
         log("generate: %s" % bat_fname)
         if bat_fname.EXISTS:
             log("          .bat file exits, try to remove ..")
@@ -109,8 +136,8 @@ def replace_exe_with_bat(folder, interpreter=None):
             new_script += l + u'\n'
 
         log("          prepare python script: '%s' " % py_fname)
-        with py_fname.openTextFile(mode="w") as py:
-            py.write(new_script)
+        with py_fname.openTextFile(mode="w") as pyf:
+            pyf.write(new_script)
 
         log("          create bat wrapper: '%s' " % bat_fname)
         with bat_fname.openTextFile(mode="w") as bat:
@@ -119,3 +146,28 @@ def replace_exe_with_bat(folder, interpreter=None):
             log("          %s OK" % bat_fname)
         else:
             log("          %s ERROR" % bat_fname)
+
+    # delete files
+    # ------------
+
+    for d in del_map:
+        d = folder / d
+        if d.EXISTS:
+            log("delete: %s" % d)
+            d.delete()
+
+    # create bat wrapper
+    # ------------------
+
+    for py_fname in folder.glob("*.py"):
+        fname = FSPath(re.sub(r'(-script\.pyw?|.pyw?)?$', '', py_fname)).relpath(folder)
+        wrappers = map_py.get(fname, (def_py, template))
+        if wrappers is None:
+            log("skip:     %s" % py_fname)
+            continue
+        if not isinstance(wrappers, dict):
+            wrappers = {fname : wrappers}
+
+        for wrapper_name, (interpreter, template) in wrappers.items():
+            bat_script = template % locals()
+            _wrap_bat(py_fname, folder/wrapper_name, interpreter, bat_script)
