@@ -47,7 +47,8 @@ CDB Komponenten
    - :ref:`Struktur Kundenpaket <struktur_kundenpaket>`
    - :ref:`Voraussetzungen <voraussetzungen>` + *repair* :ref:`Schema
      <schema_repair>` & :ref:`Konfiguration <config_repair>`
-   - :ref:`Updates & Konflikte <updates_und_konflikte>`
+   - :ref:`Updates & Konflikte <updates_und_konflikte>` + cdbpkg & SCM
+     :ref:`big picture <big_picture_cdbpkg_SCM>`
    - :ref:`Transport einer Änderung <transport_aenderung>`: Code & Config
      :ref:`Merge-Schaubild <merge_graph>`
    - :ref:`CDB & SCM-System <cdb_und_scm>`
@@ -55,7 +56,7 @@ CDB Komponenten
    - :ref:`Lieferantenanbindung <lieferantenanbindung>`: :ref:`Beauftragung
      <aenderung_beauftragen>` & :ref:`Auslieferung <aenderung_ausliefern>`
    - :ref:`Entwicklungszweige mergen <merge_dev_branches>`
-     
+
 
 
 .. _cdb_pakete_intro:
@@ -369,6 +370,36 @@ CDB Komponenten
       Konfliktpotential .. eigentlich logisch: *Neu* seit CDB 10 ist nur, dass
       der DB Content jetzt mit dazu gehört.
 
+
+.. _big_picture_cdbpkg_SCM:
+
+.. revealjs:: cdbpkg & SCM / big picture
+
+   ::
+
+     |   o       CDB-Konfig DB + Dateien im BLOB-Store
+     |  /=<   /~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
+     | /\     |   |                    |          |  Dev Patches
+              |  /|\ sync & install    |          |  Entwckleransicht
+     cdbpgk-->|   |                    |          |
+              |   |       build <pkg> \|/        \|/ commit <pkg>
+              |   |                    |          |
+     confi-   \===========================/~~~~\========| app_conf
+     guration     |                    |                  (baseline)
+                 /|\ git pull         \|/ git commit
+                  |                    |
+     .git     |===|=====================================|
+     Ordner       |                    |
+                 /|\ (git fetch)      \|/ git push <remote>:<branch>
+     git          |                    |
+     Server   |=========================================|
+
+   .. rv_small::
+
+      Nach Abschluss einer Konfiguration: ``cdbpkg build``, danach ``git
+      commit`` + ``cdbpkg commit``.  Die *commits* von SCM und CDB sollten immer
+      synchron angewendet werden.
+
 .. _transport_aenderung:
 
 .. revealjs:: Transport Source-Code & Konfiguration
@@ -571,7 +602,7 @@ CDB Komponenten
       * master 268a44e add 'cust.foo' to package 'cust.plm'
 
 .. _aenderung_beauftragen:
-        
+
 .. revealjs:: Änderung beauftragen (clone)
    :title-heading: h3
    :data-background: #332222
@@ -609,7 +640,7 @@ CDB Komponenten
    .. rv_code::
       :class: bash
 
-      (dev)$ cdbpkg sync      
+      (dev)$ cdbpkg sync
       (dev)$ cdbpkg import_blobs    # falls DB-Dump verwendet wurde
       (dev)$ cdbpkg commit cust.plm
 
@@ -722,7 +753,7 @@ CDB Komponenten
 .. revealjs:: Änderung ausliefern
    :title-heading: h3
    :data-background: #332222
-   
+
    .. rv_code::
       :class: bash
 
@@ -758,7 +789,7 @@ CDB Komponenten
    ``master``?
 
 .. _merge_dev_branches:
-   
+
 .. revealjs:: Entwicklungszweige mergen
 
    .. kernel-figure::  git-graph_001.dot
@@ -773,7 +804,7 @@ CDB Komponenten
    Änderungen aus Source-Code (``git merge``) und Konfiguration (``cdbpkg``) im
    ``master`` Branch zusammengeführt werden.
 
-                       
+
 .. revealjs:: Merge Strategie (cdbpkg diff)
    :title-heading: h3
 
@@ -874,7 +905,7 @@ CDB Komponenten
    - Der Transport zw. ``QS`` und ``PROD`` ist wieder vergleichbar, nur mit *anderem*
      Branch-Point und Merge-Point.
 
-     
+
 .. revealjs:: Merge ist immer gleich
 
    .. figure::  merge_graph.svg
