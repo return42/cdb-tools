@@ -2,25 +2,26 @@
 # requires
 # --------
 
-# pathnames are relative to $CDBTOOLS_HOME
-
--e subs/fspath
-
-# Aktuellere Versionen von PyLint haben Probleme mit dem RTE von CDB
-# da wirft pylint ein 'RuntimeError: Inconsistent hierarchy' s.a.:
+# ?? Aktuellere Versionen von PyLint haben Probleme mit dem RTE von CDB
+# ?? da wirft pylint ein 'RuntimeError: Inconsistent hierarchy' s.a.:
 #
-#   https://github.com/PyCQA/pylint/issues/1388#issuecomment-304524918
+# ??  https://github.com/PyCQA/pylint/issues/1388#issuecomment-304524918
 #
-pylint==1.5.2
+#pylint==1.5.2
+pylint
 
 # http://lxml.de/
-lxml==4.1.0 --only-binary=lxml
+#lxml==4.1.0
+lxml
 
 # http://docs.python-zeep.org
 zeep
 
 # https://github.com/jaraco/keyring
 keyring
+
+# http://www.python-requests.org
+requests
 
 # https://github.com/eliangcs/http-prompt/
 http-prompt
@@ -34,3 +35,27 @@ ptpython
 # more up to date fork: https://github.com/return42/ptpdb.git
 -e subs/ptpdb
 
+# http://jinja.pocoo.org/
+jinja2
+
+# http://flask.pocoo.org/  & http://flask-sqlalchemy.pocoo.org
+Flask
+Flask-SQLAlchemy
+
+# http://werkzeug.pocoo.org/
+Werkzeug
+
+# http://pygments.org/
+Pygments
+
+# http://www.sqlalchemy.org
+SQLAlchemy --only-binary=:none:
+
+# http://psutil.readthedocs.io
+psutil
+
+# # https://nicolargo.github.io/glances
+glances
+
+# http://jedi.readthedocs.io
+jedi

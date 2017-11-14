@@ -7,6 +7,8 @@ import os
 import time
 import zipfile
 import re
+import subprocess
+import platform
 
 from datetime import datetime
 from fspath import FSPath, CLI, OS_ENV, progressbar
@@ -14,10 +16,20 @@ from fspath import FSPath, CLI, OS_ENV, progressbar
 if OS_ENV.get("CDBTOOLS_HOME", None) is None:
     raise Exception("Missing CDBTOOLS_HOME environment, can't build cdbtools without!")
 
-CDBTOOLS_HOME  = FSPath(os.environ["CDBTOOLS_HOME"]).ABSPATH
-CDBTOOLS_DIST  = CDBTOOLS_HOME / "dist"
-CDBTOOLS_CACHE = CDBTOOLS_HOME / ".cache"
-SOFTWARE_CACHE = CDBTOOLS_CACHE / "software"
+# CDBTools environment
+
+CDBTOOLS_HOME         = FSPath(OS_ENV.CDBTOOLS_HOME).ABSPATH
+CDBTOOLS_PY27         = FSPath(OS_ENV.CDBTOOLS_PY27).ABSPATH
+CDBTOOLS_CACHE        = FSPath(OS_ENV.CDBTOOLS_CACHE).ABSPATH
+CDBTOOLS_DIST         = FSPath(OS_ENV.CDBTOOLS_DIST).ABSPATH
+CDBTOOLS_SW_DOWNLOAD  = FSPath(OS_ENV.CDBTOOLS_SW_DOWNLOAD).ABSPATH
+CDBTOOLS_PIP_DOWNLOAD = FSPath(OS_ENV.CDBTOOLS_PIP_DOWNLOAD).ABSPATH
+
+# python setup
+
+PIP_REQUIEMENTS = CDBTOOLS_HOME / 'bootstrap' / 'requirements.txt'
+PIP_PY_PLATFORM = 'win32'
+PIP_PY_VERSION  = '27'
 
 SOFTWARE_ARCHIVES = (
     ('win_bin/ConEmu', 'ConEmu.zip', 'https://storage/SoftwareDB/darmarIT/cdb-tools')
@@ -27,7 +39,6 @@ RE_SEP = re.escape(os.sep)
 RE_TOP = "^" + RE_SEP
 IGNORE_FOLDERS = [
     RE_SEP    + '__pycache__$'
-    #, RE_TOP + '.cache$'
     , RE_SEP  + '.cache$'
     , RE_SEP  + '.cvsignore$'
     , RE_SEP  + '.downloads$'
@@ -58,24 +69,59 @@ def main():
 
     u"""cdbtools -- build maintenance script"""
     cli = CLI(description=main.__doc__)
-    cli.addCMDParser(cli_build_install_software , cmdName='install-software')
+    cli.addCMDParser(cli_build_get_pypkgs       , cmdName='get-pypkgs')
+    cli.addCMDParser(cli_build_install_pypkgs   , cmdName='install-pypkgs')
     cli.addCMDParser(cli_build_get_software     , cmdName='get-software')
+    cli.addCMDParser(cli_build_install_software , cmdName='install-software')
     cli.addCMDParser(cli_dist                   , cmdName='dist')
     cli.addCMDParser(cli_zip_cdbtools           , cmdName='zip-cdbtools')
     cli.addCMDParser(cli_build_zip_software     , cmdName='zip-software')
     cli()
 
 def cli_build_install_software(cli):
-    u"""get software archieves (ZIP)"""
-    SOFTWARE_CACHE.makedirs()
+    u"""install software archieves (ZIP)"""
+    CDBTOOLS_SW_DOWNLOAD.makedirs()
     for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
         _install(src_folder, zip_fname, url)
 
 def cli_build_get_software(cli):
     u"""get software archieves (ZIP)"""
-    SOFTWARE_CACHE.makedirs()
+    CDBTOOLS_SW_DOWNLOAD.makedirs()
     for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
         _download(src_folder, zip_fname, url)
+
+def cli_build_install_pypkgs(cli):
+    u"""install python requirements (pip download)"""
+    pip  = FSPath(CDBTOOLS_PY27 / "bin" / "pip")
+    if platform.system() == 'Windows':
+        pip  = FSPath(CDBTOOLS_PY27 / "Scripts" / "pip.exe")
+    proc =  subprocess.Popen(
+        # https://pip.pypa.io/en/latest/reference/pip_download/#overview
+        [ pip, 'install'
+          , '--user'
+          , '--no-index'
+          , '--find-links', CDBTOOLS_PIP_DOWNLOAD
+          ,  '-r'   , PIP_REQUIEMENTS ]
+        , cwd = CDBTOOLS_HOME )
+    retVal = proc.wait()
+    return retVal
+
+def cli_build_get_pypkgs(cli):
+    u"""download python requirements (pip download)"""
+    pip  = FSPath(CDBTOOLS_PY27 / "bin" / "pip")
+    if platform.system() == 'Windows':
+        pip  = FSPath(CDBTOOLS_PY27 / "Scripts" / "pip.exe")
+    proc =  subprocess.Popen(
+        # https://pip.pypa.io/en/latest/reference/pip_download/#overview
+        [ pip, 'download'
+          , '--dest'           , CDBTOOLS_PIP_DOWNLOAD
+          , '--python-version' , PIP_PY_VERSION
+          , '--platform'       , PIP_PY_PLATFORM
+          , '--only-binary'    , ':all:'
+          , '--requirement'    , PIP_REQUIEMENTS ]
+        , cwd = CDBTOOLS_HOME )
+    retVal = proc.wait()
+    return retVal
 
 def cli_dist(cli):
     u"""build distribution"""
@@ -89,14 +135,22 @@ def cli_zip_cdbtools(cli):
 
 def cli_build_zip_software(cli):
     u"""build software archieves (ZIP)"""
+    # Software archives
     for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
-        _zip(CDBTOOLS_DIST / zip_fname, CDBTOOLS_HOME / src_folder, FSPath(src_folder))
+        _zip(CDBTOOLS_DIST / zip_fname
+             , CDBTOOLS_HOME / src_folder
+             , FSPath(src_folder))
+    # python packages
+    _zip(CDBTOOLS_DIST / 'pip-download.zip'
+         , CDBTOOLS_PIP_DOWNLOAD
+         , CDBTOOLS_PIP_DOWNLOAD.relpath(CDBTOOLS_HOME)
+         ,)
 
 def _download(src_folder, zip_fname, url):
 
     url = url + "/" + zip_fname
     print("download: %s ..." % url)
-    arch = SOFTWARE_CACHE / zip_fname
+    arch = CDBTOOLS_SW_DOWNLOAD / zip_fname
     if arch.EXISTS:
         print("  --> overwrite existing ZIP: %s" % zip_fname)
     arch.download(url, ticker=True)
@@ -105,7 +159,7 @@ def _install(src_folder, zip_fname, url):
 
     src_folder = FSPath(src_folder)
     print("install: %s" % src_folder)
-    arch = SOFTWARE_CACHE / zip_fname
+    arch = CDBTOOLS_SW_DOWNLOAD / zip_fname
     if not arch.EXISTS:
         print("  missing %s" % zip_fname)
         _download(src_folder, zip_fname, url)

@@ -14,6 +14,7 @@ IF NOT DEFINED CDBTOOLS_HOME (
 )
 
 if NOT EXIST "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" goto openCMD
+SET LC_ALL=de_DE.UTF-8
 
 if NOT '%1' == 'conemu' (
   START "ConEmu" "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" -reuse -run %0 conemu
@@ -24,6 +25,5 @@ REM ----------------------------------------------------------------------------
 :openCMD
 REM ----------------------------------------------------------------------------
 
-SET LC_ALL=de_DE.UTF-8
-
-"%CADDOK_RUNTIME%\cdbsh.exe" -v -db "%CADDOK_DEFAULT%" -c "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" --
+call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
+cdbsh.exe -v -db "%CADDOK_DEFAULT%"

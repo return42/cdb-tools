@@ -14,6 +14,7 @@ IF NOT DEFINED CDBTOOLS_HOME (
 )
 
 if NOT EXIST "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" goto openCMD
+SET LC_ALL=de_DE.UTF-8
 
 if NOT '%1' == 'conemu' (
   START "ConEmu" "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" -reuse -run %0 conemu
@@ -24,10 +25,8 @@ REM ----------------------------------------------------------------------------
 :openCMD
 REM ----------------------------------------------------------------------------
 
-SET LC_ALL=de_DE.UTF-8
-
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
-call cdbtools-python
+python.exe -m dm.cdbtools.run_ptpython
 
 REM ----------------------------------------------------------------------------
 :Exit

@@ -7,13 +7,13 @@ IF NOT DEFINED CDBTOOLS_HOME (
    GOTO Exit
 )
 
-SET "CDBTOOLS_PY27=%CDBTOOLS_HOME%\py27"
-SET "MYPYTHON_EXE=%CADDOK_RUNTIME%\python.exe"
+REM SET "CDBTOOLS_PY27=%CDBTOOLS_HOME%\py27"
+REM SET "MYPYTHON_EXE=%CADDOK_RUNTIME%\python.exe"
 
-SET PIP_INGNORE_INSTALLED=true
+REM SET PIP_INGNORE_INSTALLED=true
 
-echo fixing script wrapper ...
-"%MYPYTHON_EXE%" -c "import dm.cdbtools.bootstrap;dm.cdbtools.bootstrap.replace_exe_with_bat('%CDBTOOLS_PY27%\Scripts')"
+echo fix script wrappers in: "%CDBTOOLS_PY27%\Scripts"
+"%MYPYTHON_EXE%" -c "import dm.cdbtools.bootstrap;dm.cdbtools.bootstrap.fix_win_launcher('%CDBTOOLS_PY27%\Scripts')"
 
 REM ----------------------------------------------------------------------------
 :Exit
