@@ -5,13 +5,12 @@ from __future__ import absolute_import, unicode_literals
 
 from ptpython.repl import embed, enable_deprecation_warnings, run_config
 
-from fspath import FSPath
+from dm.cdbtools import CDBTOOLS_HOME, CDBTOOLS_CACHE
 
 def main():
     u"""start ptpython"""
-    cfg_dir  = FSPath('~/.ptpython').EXPANDUSER
-    cfg_dir.makedirs()
-    cfg_file = cfg_dir / 'config.py'
+    pt_dir   = CDBTOOLS_CACHE/'.ptpython'
+    cfg_file = CDBTOOLS_HOME/'bootstrap'/'ptpython_config.py'
 
     enable_deprecation_warnings()
 
@@ -21,7 +20,7 @@ def main():
         if cfg_file.EXISTS:
             run_config(repl, cfg_file)
     embed(
-        history_filename = cfg_dir/ 'history'
+        history_filename = pt_dir/'history'
         , configure      = configure )
 
 if __name__ == '__main__':

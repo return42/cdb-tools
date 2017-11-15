@@ -18,16 +18,12 @@ if OS_ENV.get("CDBTOOLS_HOME", None) is None:
 
 # CDBTools environment
 
-CDBTOOLS_HOME         = FSPath(OS_ENV.CDBTOOLS_HOME).ABSPATH
-CDBTOOLS_PY27         = FSPath(OS_ENV.CDBTOOLS_PY27).ABSPATH
-CDBTOOLS_CACHE        = FSPath(OS_ENV.CDBTOOLS_CACHE).ABSPATH
-CDBTOOLS_DIST         = FSPath(OS_ENV.CDBTOOLS_DIST).ABSPATH
-CDBTOOLS_SW_DOWNLOAD  = FSPath(OS_ENV.CDBTOOLS_SW_DOWNLOAD).ABSPATH
-CDBTOOLS_PIP_DOWNLOAD = FSPath(OS_ENV.CDBTOOLS_PIP_DOWNLOAD).ABSPATH
+from dm.cdbtools import (
+    CDBTOOLS_HOME, CDBTOOLS_PY27, CDBTOOLS_CACHE, CDBTOOLS_DIST
+    , CDBTOOLS_SW_DOWNLOAD, CDBTOOLS_PIP_DOWNLOAD, PIP_REQUIEMENTS )
 
 # python setup
 
-PIP_REQUIEMENTS = CDBTOOLS_HOME / 'bootstrap' / 'requirements.txt'
 PIP_PY_PLATFORM = 'win32'
 PIP_PY_VERSION  = '27'
 
@@ -100,6 +96,7 @@ def cli_build_install_pypkgs(cli):
         [ pip, 'install'
           , '--user'
           , '--no-index'
+          , '--ignore-installed'
           , '--find-links', CDBTOOLS_PIP_DOWNLOAD
           ,  '-r'   , PIP_REQUIEMENTS ]
         , cwd = CDBTOOLS_HOME )

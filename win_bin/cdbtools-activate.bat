@@ -54,7 +54,11 @@ SET "PATH=%CDBTOOLS_HOME%\win_bin;%PATH%"
 
 REM the user scheme
 REM ---------------
+REM
+REM https://www.python.org/dev/peps/pep-0370
 REM https://docs.python.org/2/install/index.html#inst-alt-install-user
+REM https://docs.python.org/2/library/site.html#site.USER_BASE
+REM https://docs.python.org/2/using/cmdline.html#envvar-PYTHONUSERBASE
 
 IF DEFINED PYTHONUSERBASE GOTO pythonUserInitOK
     SET "PYTHONUSERBASE=%APPDATA%\Python"

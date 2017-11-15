@@ -32,4 +32,10 @@ PHONY += clean
 clean: pyclean docs-clean
 	$(call cmd,common_clean)
 
+PHONY += clean-cdbtools
+clean-cdbtools:
+	rm -rf ./.cache
+	rm -rf ./dist
+	rm -rf ./py27
+
 .PHONY: $(PHONY)
