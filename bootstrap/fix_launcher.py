@@ -14,7 +14,7 @@ def log(msg):
     u"""log to stderr"""
     sys.stderr.write(str(msg) + "\n")
 
-launcher_python_template = ur"""#!%(interpreter)s
+python_ep_template = ur"""#!%(interpreter)s
 # -*- coding: utf-8; -*-
 # EASY-INSTALL-ENTRY-SCRIPT: '%(project_name)s==%(version)s','%(group)s','%(cmd)s'
 __requires__ = '%(project_name)s==%(version)s'
@@ -28,7 +28,7 @@ if __name__ == '__main__':
     )
 """
 
-launcher_powerscript_template = ur"""#!%(interpreter)s
+powerscript_ep_template = ur"""#!%(interpreter)s
 # -*- coding: utf-8; -*-
 # EASY-INSTALL-ENTRY-SCRIPT: '%(project_name)s==%(version)s','%(group)s','%(cmd)s'
 __requires__ = '%(project_name)s==%(version)s'
@@ -56,31 +56,43 @@ if __name__ == '__main__':
     )
 """
 
-def launcher_script(interpreter, distro, group, cmd, entry_point):
-    ctx = dict(
-        project_name  = distro.project_name
-        , version     = distro.version
-        , group       = group
-        , cmd         = cmd
-        , interpreter = interpreter )
+powerscript_prefix = ur"""#!%(interpreter)s
+# -*- coding: utf-8; -*-
 
-    if group == 'console_scripts':
-        if interpreter == 'powerscript.exe':
-            return launcher_powerscript_template % ctx
-        else:
-            return launcher_python_template % ctx
+# FIXME: this hack to build up powerscripts RTE is not very well tested
 
-    elif group == 'scripts':
-        # ToDo
-        sys.stderr.write(
-            "WARNING: handle group: %s not yet implemented, ignoring"
-            " --> distro: %s / cmd: %s / entry_point: %s\n"
-            % (group, distro, cmd, entry_point))
-    # else:
-    #     sys.stderr.write(
-    #         "WARNING: handle group: %s is unknown, ignoring"
-    #         " --> distro: %s / cmd: %s / entry_point: %s\n"
-    #         % (group, distro, cmd, entry_point))
+import os
+os.environ['CADDOK_TOOL'] = '%(cmd)s'
+
+from cdb import rte
+import cdbwrapc
+
+rte._set_mainmodule(cdbwrapc)
+rte.run_level1('%(project_name)s')
+rte.run_level2()
+rte.run_level3()
+rte.run_level4()
+rte.run_level5(os.environ.get("CADDOK_AUTH_PERSNO", "caddok"))
+
+"""
+
+run_ptpython = ur"""
+from dm.cdbtools.run_ptpython import main
+main()
+"""
+
+launcher_map = {
+    'pip2.7'       : None
+    , 'pip2'         : None
+    , 'ptipython2'   : None
+    , 'ptipython'    : None
+    , 'ptpython'     : {
+        'cdbtools-python'        : ('python.exe',      python_ep_template)
+        , 'cdbtools-powerscript' : ('powerscript.exe', powerscript_prefix + run_ptpython )
+        , }
+    , 'ptpython2'    : None
+}
+
 
 def find_entry_points(path_item):
     """Yield entry_points accessible via `path_item`
@@ -153,28 +165,19 @@ def create_script_exe(script, shebang = u"#!python.exe", exec_out=None):
         out.write(launcher + shebang + linesep + zip_data)
     return exec_out
 
-
-launcher_map = {
-    'pip2.7'       : None
-    , 'pip2'         : None
-    , 'ptipython2'   : None
-    , 'ptipython'    : None
-    , 'ptpython'     : {'cdbtools-python'        : 'python.exe'
-                        , 'cdbtools-powerscript' : 'powerscript.exe'
-                        , }
-    , 'ptpython2'    : None
-}
-
 def create_launchers(scripts_folder, path_item):
 
     def_py = 'python.exe'
 
     for (distro, group, cmd, entry_point) in find_entry_points(path_item):
+
         launchers = launcher_map.get(cmd, def_py)
         if not isinstance(launchers, dict):
+            if not isinstance(launchers, tuple):
+                launchers = (launchers, python_ep_template)
             launchers = {cmd : launchers}
 
-        for out_name, interpreter in launchers.items():
+        for out_name, (interpreter, my_template) in launchers.items():
 
             # drop not needed
             drop = [ cmd + "-script.py", out_name + "-script.py" ]
@@ -198,7 +201,30 @@ def create_launchers(scripts_folder, path_item):
                 log("  skip: %s" % out_name)
                 continue
 
-            script = launcher_script(interpreter, distro, group, cmd, entry_point)
+            ctx = dict(
+                project_name  = distro.project_name
+                , version     = distro.version
+                , group       = group
+                , cmd         = cmd
+                , interpreter = interpreter )
+
+            script = None
+
+            if group == 'console_scripts':
+                script = my_template % ctx
+
+            elif group == 'scripts':
+                # ToDo
+                sys.stderr.write(
+                    "WARNING: handle group: %s not yet implemented, ignoring"
+                    " --> distro: %s / cmd: %s / entry_point: %s\n"
+                    % (group, distro, cmd, entry_point))
+            # else:
+            #     sys.stderr.write(
+            #         "WARNING: handle group: %s is unknown, ignoring"
+            #         " --> distro: %s / cmd: %s / entry_point: %s\n"
+            #         % (group, distro, cmd, entry_point))
+
             if script is None:
                 #log("x%s no launcher for:: group: %s / cmd: %s / entry_point: %s"
                 #    % (distro, group, cmd, entry_point))
@@ -221,7 +247,6 @@ def create_launchers(scripts_folder, path_item):
                     script
                     , shebang  = shebang
                     , exec_out = exec_out )
-
 
 
 if __name__ == '__main__':
