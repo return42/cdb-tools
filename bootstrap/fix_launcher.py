@@ -1,20 +1,23 @@
 # -*- coding: utf-8; mode: python -*-
 u"""fix python's *Scripts* launchers"""
 
+# pylint: disable=invalid-name, too-many-branches
+
 import sys
 import os
 import io
-import six
+import platform
+
 import pkg_resources
 
 from fspath import FSPath
-from dm.cdbtools import CDBTOOLS_PY27
+from dm.cdbtools import CDBTOOLS_PY27, CDBTOOLS_HOME
 
 def log(msg):
     u"""log to stderr"""
     sys.stderr.write(str(msg) + "\n")
 
-python_ep_template = ur"""#!%(interpreter)s
+python_ep_template = r"""#!%(interpreter)s
 # -*- coding: utf-8; -*-
 # EASY-INSTALL-ENTRY-SCRIPT: '%(project_name)s==%(version)s','%(group)s','%(cmd)s'
 __requires__ = '%(project_name)s==%(version)s'
@@ -28,7 +31,7 @@ if __name__ == '__main__':
     )
 """
 
-powerscript_ep_template = ur"""#!%(interpreter)s
+powerscript_ep_template = r"""#!%(interpreter)s
 # -*- coding: utf-8; -*-
 # EASY-INSTALL-ENTRY-SCRIPT: '%(project_name)s==%(version)s','%(group)s','%(cmd)s'
 __requires__ = '%(project_name)s==%(version)s'
@@ -56,7 +59,7 @@ if __name__ == '__main__':
     )
 """
 
-powerscript_prefix = ur"""#!%(interpreter)s
+powerscript_prefix = r"""#!%(interpreter)s
 # -*- coding: utf-8; -*-
 
 # FIXME: this hack to build up powerscripts RTE is not very well tested
@@ -76,7 +79,7 @@ rte.run_level5(os.environ.get("CADDOK_AUTH_PERSNO", "caddok"))
 
 """
 
-run_ptpython = ur"""
+run_ptpython = r"""
 from dm.cdbtools.run_ptpython import main
 main()
 """
@@ -166,7 +169,7 @@ def create_script_exe(script, shebang = u"#!python.exe", exec_out=None):
     return exec_out
 
 def create_launchers(scripts_folder, path_item):
-
+    u"""create launchers in ``scripts_folder`` for entry points of ``path_item``"""
     def_py = 'python.exe'
 
     for (distro, group, cmd, entry_point) in find_entry_points(path_item):
@@ -178,7 +181,7 @@ def create_launchers(scripts_folder, path_item):
             launchers = {cmd : launchers}
 
         for out_name, (interpreter, my_template) in launchers.items():
-
+            # pylint: disable=protected-access, no-member
             # drop not needed
             drop = [ cmd + "-script.py", out_name + "-script.py" ]
             if os.name == 'posix' or (os.name == 'java' and os._name == 'posix'):
@@ -236,7 +239,7 @@ def create_launchers(scripts_folder, path_item):
                 with open(py_out, "w") as out:
                     out.write(script)
                 # Set the executable bits (owner, group, and world)
-                os.chmod(py_ut, 0o755)
+                os.chmod(py_out, 0o755)
             else:
                 exec_out = scripts_folder / out_name + ".exe"
                 log("  create: %s" % exec_out.BASENAME)
@@ -249,9 +252,57 @@ def create_launchers(scripts_folder, path_item):
                     , exec_out = exec_out )
 
 
-if __name__ == '__main__':
-    scripts_folder = CDBTOOLS_PY27/'Scripts'
-    path_item      = CDBTOOLS_PY27/'Python27/site-packages'
-    log("fix script wrappers in: %s" % scripts_folder)
-    create_launchers(scripts_folder, path_item)
+def fix_pth_files(path_item):
+    u"""fix *.pth files located in folder ``path_item``.
 
+    Replaces all absolute pathname in *.pth files with the relative pathname.
+    """
+    path_item = FSPath(path_item)
+    if platform.system() == 'Windows':
+        path_item = FSPath(path_item.lower())
+
+    scan_files = list(path_item.glob('*.pth')) + list(path_item.glob('*.egg-link'))
+    intro_flag = False
+    for pth_file in scan_files:
+        old_lines = pth_file.readFile().splitlines()
+        new_lines = []
+        for line in old_lines:
+            x = FSPath(line)
+            if not x.ISABSPATH:
+                new_lines.append(line)
+                continue
+            if platform.system() == 'Windows':
+                x = FSPath(line.lower())
+                prefix = CDBTOOLS_HOME.lower()
+            else:
+                prefix = CDBTOOLS_HOME
+
+            if x.startswith(prefix):
+                intro_flag or log("  %s .." % pth_file) # pylint: disable=expression-not-assigned
+                intro_flag = True
+                log("  -- %s" % line )
+                if platform.system() == 'Windows':
+                    line = x.relpath(path_item)
+                if platform.system() == 'Windows':
+                    line = line.replace('\\', '/')
+                log("  ++ %s" % line )
+            new_lines.append(line)
+        old_lines = "\n".join(old_lines)
+        new_lines = "\n".join(new_lines)
+        if new_lines != old_lines:
+            with pth_file.openTextFile(mode='w') as f:
+                f.write(new_lines)
+            #log(new_lines)
+        else:
+            pass
+            #log("  %s .." % pth_file)
+            #log("  --> nothing to do.")
+
+
+if __name__ == '__main__':
+    _scripts_folder = CDBTOOLS_PY27/'Scripts'
+    _path_item      = CDBTOOLS_PY27/'Python27/site-packages'
+    log("fix pathnames in *.pth files located at: %s" % _path_item)
+    fix_pth_files(_path_item)
+    log("fix script wrappers in: %s" % _scripts_folder)
+    create_launchers(_scripts_folder, _path_item)
