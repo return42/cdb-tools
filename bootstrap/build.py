@@ -46,6 +46,7 @@ IGNORE_FOLDERS = [
     , RE_SEP  + 'gh-pages$'
     , RE_SEP  + 'local$'
     , RE_SEP  + 'py_dist$'
+    , RE_SEP  + 'ConEmu.xml$'
     , ]
 
 IGNORE_FILES = [

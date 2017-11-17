@@ -13,8 +13,12 @@ IF NOT DEFINED CDBTOOLS_HOME (
    call "%~d0%~p0cdbEnv.bat"
 )
 
-if NOT EXIST "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" goto openCMD
-SET LC_ALL=de_DE.UTF-8
+IF NOT EXIST "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" goto openCMD
+  SET LC_ALL=de_DE.UTF-8
+  IF NOT EXIST "%CDBTOOLS_HOME%\win_bin\ConEmu" goto ConEmuOK
+  IF EXIST "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.xml" goto ConEmuOK
+    copy "%CDBTOOLS_HOME%\templates\ConEmu_darmarIT.xml" "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.xml"
+:ConEmuOK
 
 if NOT '%1' == 'conemu' (
   START "ConEmu" "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" -reuse -run %0 conemu
