@@ -25,5 +25,7 @@ REM ----------------------------------------------------------------------------
 :openCMD
 REM ----------------------------------------------------------------------------
 
+cd /D "%CDBTOOLS_HOME%"
+
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
 cdbsh.exe -v -db "%CADDOK_DEFAULT%"

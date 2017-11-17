@@ -33,7 +33,7 @@ def configure(repl):
     repl.show_meta_enter_message = True
 
     # Show completions. (NONE, POP_UP, MULTI_COLUMN or TOOLBAR)
-    repl.completion_visualisation = CompletionVisualisation.POP_UP
+    repl.completion_visualisation = CompletionVisualisation.MULTI_COLUMN
 
     # When CompletionVisualisation.POP_UP has been chosen, use this
     # scroll_offset in the completion menu.
@@ -102,7 +102,7 @@ def configure(repl):
 
     # Use this colorscheme for the code.
     # https://help.farbox.com/pygments.html
-    repl.use_code_colorscheme('monokai')
+    repl.use_code_colorscheme('default')
 
     # Enable 24bit True color. (Not all terminals support this. -- maybe check
     # $TERM before changing.)

@@ -10,8 +10,8 @@ from dm.cdbtools import CDBTOOLS_HOME, CDBTOOLS_CACHE
 def main():
     u"""start ptpython"""
     pt_dir   = CDBTOOLS_CACHE/'.ptpython'
+    pt_dir.makedirs()
     cfg_file = CDBTOOLS_HOME/'bootstrap'/'ptpython_config.py'
-
     enable_deprecation_warnings()
 
     # Apply config file
