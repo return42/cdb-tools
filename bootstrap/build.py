@@ -46,7 +46,6 @@ IGNORE_FOLDERS = [
     , RE_SEP  + 'gh-pages$'
     , RE_SEP  + 'local$'
     , RE_SEP  + 'py_dist$'
-    , RE_SEP  + 'ConEmu.xml$'
     , ]
 
 IGNORE_FILES = [
@@ -55,6 +54,7 @@ IGNORE_FILES = [
     , r'.DS_Store'
     , r'.*\.pyc$'
     #, r'.*\.elc$'
+    , re.escape(FSPath('win_bin/ConEmu/ConEmu.xml'))
     , ]
 
 RE_IGNORE_FOLDERS = [ re.compile(x) for x in IGNORE_FOLDERS]
@@ -128,7 +128,8 @@ def cli_dist(cli):
 
 def cli_zip_cdbtools(cli):
     u"""build complete zip"""
-    zip_fname  = CDBTOOLS_DIST / datetime.now().strftime("%Y%m%d_%H%M_cdb-tools.zip")
+    #zip_fname  = CDBTOOLS_DIST / datetime.now().strftime("%Y%m%d_%H%M_cdb-tools.zip")
+    zip_fname  = CDBTOOLS_DIST / "cdb-tools.zip"
     _zip(zip_fname, CDBTOOLS_HOME, FSPath("cdb-tools"))
 
 def cli_build_zip_software(cli):

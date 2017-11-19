@@ -104,7 +104,7 @@ IF ERRORLEVEL 2 GOTO launcherOK
 
 ECHO.
 ECHO ===============
-ECHO ZIP CDBTools
+ECHO ZIP CDB-Tools
 ECHO ===============
 ECHO.
 

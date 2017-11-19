@@ -1,7 +1,7 @@
 .. -*- coding: utf-8; mode: rst -*-
 
-.. _pdb: https://docs.python.org/3/library/pdb.html#debugger-commands
-.. _`PyDev Remote Debugger`: http://www.pydev.org/manual_adv_remote_debugger.html   
+.. include:: refs.txt
+
 .. _shortcuts:
 
 ============
@@ -26,13 +26,13 @@ findet sich in der Installationsanleitung im Kapitel :ref:`setup_cdbenv`.
 
 
 .. _cdb_shortcuts:
-  
+
 gewöhnliche CDB Umgebung
 ========================
 
 Die *normalen* CDB Prozesse laufen in der *normalen* Laufzeitumgebung von CDB,
-sie sollen keinen Zugriff auf die Erweiterungen aus den CDB-Tools haben. so
-gesehen sind die in diesem Abschnitt gelisteten *Shortcuts* ganz normale CDB
+sie sollen keinen Zugriff auf die Erweiterungen aus den CDB-Tools haben. So
+gesehen sind die, in diesem Abschnitt vorgestellten *Shortcuts* ganz normale CDB
 Anwendungen.
 
 - ``cdbPC.bat``:
@@ -68,7 +68,7 @@ Anwendungen.
 WEB-Links
 =========
 
-Die CDB-Links verweisen auf Seiten eines CDB Servers, wie er z.B. mittels
+Die CDB-Links verweisen auf WEB-Seiten eines CDB Servers, wie er z.B. mittels
 ``CDBSVCD-START.bat`` gestartet werden kann (alles *localhost*).
 
 - ``cdbPortal-localhost.url``:   http://localhost:81/
@@ -81,7 +81,7 @@ Die CDB-Links verweisen auf Seiten eines CDB Servers, wie er z.B. mittels
 erweiterete CDB-Tools Umgebung
 ==============================
 
-- ``cdbtools.bat``: 
+- ``tools-sh.bat``:
 
   Startet eine ``cdbsh`` mit der erweiterten Laufzeitumgebung der CDB-Tools. Zu
   erkennen auch an dem Prompt ``[CDB-Tools]`` und nicht zu verwechseln mit einer
@@ -90,10 +90,20 @@ erweiterete CDB-Tools Umgebung
   .. hint::
 
      Hier in der Anleitung wird der Prompt ``[CDB-Tools]`` weiter genutzt, um
-     anzuzeigen, wann ein Kommando **in einer CDB-Tools Umgebung** ausgeführt
-     werden muss (s.a. :ref:`cdbtools_env`).
+     anzuzeigen, wann ein Kommando **in einer CDB-Tools Umgebung ausgeführt
+     werden muss** (s.a. :ref:`cdbtools_rte`).
 
-- ``CDBSVCD-START-debug.bat``:
+- ``tools-python.bat``:
+
+  Startet den Python-Interpreter von CDB in der CDB-Tools Umgebung. Als REPL
+  kommt ptpython_ zum Einsatz.
+
+- ``tools-python.bat``:
+
+  Startet den Powerscript-Interpreter von CDB in der CDB-Tools Umgebung. Als
+  REPL kommt ptpython_ zum Einsatz.
+
+- ``tools-localhost-START.bat``:
 
   Eignet sich für remote Debug-Zwecke in einer Entwickler Installation (eine
   einfache Alternative zum `PyDev Remote Debugger`_).
@@ -127,3 +137,7 @@ erweiterete CDB-Tools Umgebung
   Regel wird man diese Art des Debugging nur in *lokalen* Entwickler Umgebungen
   nutzen. Dort kann es dann aber auch eine große Hilfe sein, wo man bisher nur
   die Möglichkeit hatte Logfiles zu lesen.
+
+- ``upkeep.bat``:
+
+  Ein Skript für :ref:`cdbtools-build`.

@@ -75,25 +75,7 @@ CDB Tools installieren
 Die Tools zum Initialisieren eines Spiegels werden in den CDB-Tools bereit
 gestellt, deshalb müssen diese nun eingerichtet werden, sofern das nicht eh
 bereits geschehen ist. Wie die CDB-Tools installiert werden ist detailliert im
-Kapitel :ref:`install_cdbtools` beschrieben, hier nochmal die wichtigsten
-Schritte zusammengefasst:
-
-1. die CDB-Tools klonen::
-
-     $ git clone --recursive https://github.com/return42/cdb-tools
-
-2. In der Datei ``winShortcuts/cdbEnv.bat`` die Umgebungen setzen (siehe
-   :ref:`setup_cdbenv`).
-
-3. In einer cdbsh den :ref:`*bootstrap* <bootstrap_cdbtools>` durchführen.
-
-   .. code-block:: dosbatch
-
-      [cdb:prod_copy] C:\> cdb-tools\bootstrap\install.bat
-
-Um Zugriff auf die Werkzeuge zu bekommen muss nun nur noch die CDB-Tools
-Umgebung gestartet werden, z.B. mit Doppelklick auf ``winShortcuts/cdbtools.bat``
-(s.a. :ref:`cdbtools_env`).
+Kapitel :ref:`install_cdbtools` beschrieben.
 
 
 Spiegel konfigurieren

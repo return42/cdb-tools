@@ -1,0 +1,12 @@
+.. -*- coding: utf-8; mode: rst -*-
+
+.. _`the user scheme`: https://docs.python.org/2/install/index.html#inst-alt-install-user
+.. _`PyPi`: https://pypi.python.org/pypi
+.. _`ConEmu`: https://conemu.github.io/
+.. _pdb: https://docs.python.org/3/library/pdb.html#debugger-commands
+.. _`PyDev Remote Debugger`: http://www.pydev.org/manual_adv_remote_debugger.html
+
+.. _prompt_toolkit: http://python-prompt-toolkit.readthedocs.io
+.. _ptpython: https://github.com/jonathanslenders/ptpython
+.. _ptpdb: https://github.com/return42/ptpdb.git
+

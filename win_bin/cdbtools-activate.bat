@@ -8,8 +8,7 @@ REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------
 
 IF NOT DEFINED CDBTOOLS_HOME (
-   echo ERROR: script %~n0 missing CDBTOOLS_HOME environment
-   goto Exit
+   call "%~d0%~p0..\winShortcuts\cdbEnv.bat"
 )
 
 REM CDBTools
@@ -32,7 +31,7 @@ IF DEFINED PROMPT GOTO promptInitOK
 IF DEFINED _OLD_CDBTOOLS_PROMPT goto SET_NEW_PROMPT
     SET "_OLD_CDBTOOLS_PROMPT=%PROMPT%"
 :SET_NEW_PROMPT
-SET "PROMPT=[CDBTools]$s$M$P$S$_$$$S"
+SET "PROMPT=$M$P$S$_[CDBTools]$$$S"
 
 REM PYTHONHOME
 REM ----------

@@ -1,12 +1,21 @@
 .. -*- coding: utf-8; mode: rst -*-
 
+.. include:: refs.txt
+
 ================================================================================
 CDB Tools
 ================================================================================
 
-In den CDB-Tools finden sich Skripte, Tools und Dokumente rund um die Wartung
-und Weiter-Entwicklung von CIM-DATABASE (CDB) Installationen. Sie richten sich
-an erfahrene CDB Entwickler und Administratoren.
+Die CDB-Tools sind eine :ref:`Laufzeitumgebung <cdbtools_rte>` die komfortabel
+auf jede bestehende CIM DATABASE (CDB) Instanz *aufgesattelt* werden kann, ohne
+dass die CDB Instanz dazu angepasst werden muss (*non invasiv*).
+
+Aus der CDB-Tools Umgebung werden Erweiterungen in CDB Prozessen bereit gestellt
+und über den :ref:`Paketmanagement der CDB-Tools <cdbtools_pckg>` steht die Welt
+der `PyPi`_ Pakete in CDB zur Verfügung ohne diese in der CDB Instanz
+installieren zu müssen.
+
+   Die CDB-Tools richten sich an erfahrene CDB Entwickler und Administratoren.
 
 - Dokumentation: http://return42.github.io/cdb-tools
 - Reposetorie:   `github return42/cdb-tools <https://github.com/return42/cdb-tools>`_
@@ -21,10 +30,14 @@ Inhalte
 
    hints
    install
+   cdbtools_rte
+   build
+   cdbtools_pckg
    winShortcuts
    cdbtools/index
    optimze_db
-   LICENSE   
+   LICENSE
+
 
 Foliensammlungen
 ================
