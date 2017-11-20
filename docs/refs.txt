@@ -1,12 +1,27 @@
 .. -*- coding: utf-8; mode: rst -*-
 
+.. _`pip.ini`: https://github.com/return42/cdb-tools/blob/master/bootstrap/pip.ini
+.. _`requirements.txt`: https://github.com/return42/cdb-tools/blob/master/bootstrap/requirements.txt
+
+
+.. _FQDN: https://en.wikipedia.org/wiki/Fully_qualified_domain_name
+
 .. _`the user scheme`: https://docs.python.org/2/install/index.html#inst-alt-install-user
 .. _`PyPi`: https://pypi.python.org/pypi
-.. _`ConEmu`: https://conemu.github.io/
 .. _pdb: https://docs.python.org/3/library/pdb.html#debugger-commands
 .. _`PyDev Remote Debugger`: http://www.pydev.org/manual_adv_remote_debugger.html
+
+
+.. _`ConEmu`: https://conemu.github.io/
+.. _clink: http://mridgers.github.io/clink/
 
 .. _prompt_toolkit: http://python-prompt-toolkit.readthedocs.io
 .. _ptpython: https://github.com/jonathanslenders/ptpython
 .. _ptpdb: https://github.com/return42/ptpdb.git
+.. _pylint: https://www.pylint.org/
 
+.. _`MS-SQL Transaction-log`: https://docs.microsoft.com/en-us/sql/relational-databases/logs/the-transaction-log-sql-server
+
+.. _`MS-SQL DB-Files`: https://docs.microsoft.com/en-us/sql/relational-databases/databases/database-files-and-filegroups
+
+.. _`MS-SQL shrink DB`: https://docs.microsoft.com/en-us/sql/relational-databases/databases/shrink-a-database

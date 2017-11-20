@@ -32,4 +32,5 @@ REM ----------------------------------------------------------------------------
 cd /D "%CDBTOOLS_HOME%"
 
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
+title tools-sh %CADDOK_DBNAME%
 cdbsh.exe -v -db "%CADDOK_DEFAULT%"

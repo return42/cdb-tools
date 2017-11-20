@@ -1,5 +1,7 @@
 .. -*- coding: utf-8; mode: rst -*-
 
+.. _cdbtools_hint:
+
 =================
 wichtige Hinweise
 =================

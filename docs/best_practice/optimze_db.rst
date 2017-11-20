@@ -1,4 +1,5 @@
 .. -*- coding: utf-8; mode: rst -*-
+.. include:: ../refs.txt
 
 .. _optimze_db:
 
@@ -8,12 +9,6 @@ DB optimieren
 
 MSSQL
 =====
-
-.. _`MS-SQL Transaction-log`: https://docs.microsoft.com/en-us/sql/relational-databases/logs/the-transaction-log-sql-server
-
-.. _`MS-SQL DB-Files`: https://docs.microsoft.com/en-us/sql/relational-databases/databases/database-files-and-filegroups
-
-.. _`MS-SQL shrink DB`: https://docs.microsoft.com/en-us/sql/relational-databases/databases/shrink-a-database
 
 Datenbank-Files
 ---------------

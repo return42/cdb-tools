@@ -30,6 +30,7 @@ REM ----------------------------------------------------------------------------
 REM ----------------------------------------------------------------------------
 
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
+title tools-powerscript %CADDOK_DBNAME%
 powerscript.exe -db "%CADDOK_DEFAULT%" -m dm.cdbtools.run_ptpython
 
 REM ----------------------------------------------------------------------------

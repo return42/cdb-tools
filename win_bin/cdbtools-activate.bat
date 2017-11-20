@@ -89,7 +89,7 @@ IF DEFINED _OLD_CDBTOOLS_PYTHONPATH GOTO SET_NEW_PYTHONPATH
 :SET_NEW_PYTHONPATH
 SET "PYTHONPATH=%CDBTOOLS_HOME%\lib;%PYTHONPATH%"
 
-title CDB-Tools shell
+title CDBTools
 echo ------------------------------------------------------------
 echo CDB-Tools environment
 echo ------------------------------------------------------------

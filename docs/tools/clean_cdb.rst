@@ -1,4 +1,5 @@
 .. -*- coding: utf-8; mode: rst -*-
+.. include:: ../refs.txt
 
 .. _clean_cdb:
 
@@ -23,12 +24,12 @@ nicht allgemein beantwortet werden.
 
 Für die Bereinigung steht das Tool ``clean-cdb`` zur Verfügung::
 
-  [CDB-Tools] $ clean-cdb --help
+  [CDBTools]$ clean-cdb --help
 
 Mit dem Tool können die unten beschriebenen Anwendungen aufgeräumt werden. Will
 man alle Aktionen nacheinander ausführen, so nutzt man dafür ``all``::
 
-  [CDB-Tools] $ clean-cdb all
+  [CDBTools]$ clean-cdb all
 
 .. caution::
 
@@ -59,7 +60,7 @@ vielen Benutzern ist die Statistik oftmals eine der größten Tabellen. Sofern
 die Statistik nicht ausgewertet wird, kann sie auch von Zeit zu Zeit mal
 gelöscht werden.::
 
-  [CDB-Tools] $ clean-cdb lstatistics --help
+  [CDBTools]$ clean-cdb lstatistics --help
 
 
 Bereinigen der MQ-Anwendungen (mq)
@@ -68,7 +69,7 @@ Bereinigen der MQ-Anwendungen (mq)
 Es werden alle Message-Queues aufgelistet und Vorschläge zum Reduzieren der
 MQ-Daten gemacht (inklusieve dem Löschen der Langtexte).::
 
-  [CDB-Tools] $ clean-cdb mq --help
+  [CDBTools]$ clean-cdb mq --help
 
 
 Reduzieren der ERP-Log-Einträge
@@ -87,7 +88,7 @@ sollten solche Diagnose Einstellungen aber nicht dauerhaft im produktiven System
 aktiviert sein, da das ERP Log die DB aufbläht.  Zum Löschen alter Meldungen
 eignet sich das Kommando::
 
-    [CDB-Tools] $ clean-cdb erplog --help
+    [CDBTools]$ clean-cdb erplog --help
 
 Auch wenn das Logging nur auf 'Results' steht, kann es passieren, dass das Log
 extrem anwächst, wenn z.B. SAP Abgleichvorgänge über lange Zeiträume

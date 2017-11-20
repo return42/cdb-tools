@@ -1,6 +1,5 @@
 .. -*- coding: utf-8; mode: rst -*-
-
-.. _FQDN: https://en.wikipedia.org/wiki/Fully_qualified_domain_name
+.. include:: ../refs.txt
 
 ================================================================================
 Initialisierung eines CDB Spiegel-Systems
@@ -89,7 +88,7 @@ DB einrichtet. Das kann sehr mühsam sein, Erleichterung verschafft das Skript
 
 .. code-block:: dosbatch
 
-  [CDB-Tools] C:\> init-cdb-mirror --help
+  [CDBTools]$ init-cdb-mirror --help
 
 Mit dem Skript werden die minimal erforderlichen CDB-Dienste eingerichtet um CDB
 starten zu können. Alle weiteren Dienste können danach in einer CDB Sitzung
@@ -107,7 +106,7 @@ eingerichtet. Diese Einstellungen sind nur für *Entwickler-Systeme* geeignet.
    Das Tool darf niemals in einer produktiven Umgebung ausgeführt werden.
 
 Nachdem der Spiegel mit dem ``init-cdb-mirror`` eingerichtet wurde, müsste es
-möglich sein den CDB-Server mit ``CDBSVCD-START`` (s. :ref:`cdb_shortcuts`) zu
+möglich sein, den CDB-Server z.B. mit :ref:`cdb_localhost_START_bat` zu
 starten. Die weiteren Dienste kann man dann nach Bedarf in einer CDB-Client
 Sitzung einrichten.
 

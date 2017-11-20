@@ -2,16 +2,10 @@
 # requires
 # --------
 
-# ?? Aktuellere Versionen von PyLint haben Probleme mit dem RTE von CDB
-# ?? da wirft pylint ein 'RuntimeError: Inconsistent hierarchy' s.a.:
-#
-# ??  https://github.com/PyCQA/pylint/issues/1388#issuecomment-304524918
-#
-#pylint==1.5.2
+# https://www.pylint.org/
 pylint
 
 # http://lxml.de/
-#lxml==4.1.0
 lxml
 
 # http://docs.python-zeep.org
