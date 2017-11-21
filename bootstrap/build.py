@@ -202,9 +202,8 @@ def _zip(src_folder, zip_fname, ignore_folders, ignore_files):
     arch_prefix = src_folder
     src_abspath = CDBTOOLS_HOME / src_folder
 
-    if src_folder.ABSPATH == CDBTOOLS_HOME:
+    if src_abspath == CDBTOOLS_HOME:
         arch_prefix = "cdb-tools"
-        src_abspath = CDBTOOLS_HOME
 
     zip_fname.DIRNAME.makedirs()
 
