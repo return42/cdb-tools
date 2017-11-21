@@ -18,7 +18,6 @@ Gruppe gibt es noch die :ref:`WEB-Links <cdblinks_winShortcuts>` die gar keine
 Umgebung benötigen, da sie nur Links auf die Seiten der (CDB) Dienste sind.
 
 .. toctree::
-   :maxdepth: 1
 
    cdb_winShortcuts
    cdbtools_winShortcuts

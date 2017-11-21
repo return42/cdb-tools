@@ -3,17 +3,14 @@
 
 .. _cdbtools_repo:
 
-=====================
-cdb-tools Reposetorie
-=====================
+=========================
+Build aus dem Reposetorie
+=========================
 
-Die Entwicklung der CDB-Tools findet in dem Reposetorie auf github statt. Will
-man die CDB-Tools selber bauen oder ein Update durchführen so muss man zunächst
-über einen Klon dieses Reposetories verfügen (Hinweis: im ``cdb-tools.zip`` ist
-das Reposetorie bereits enthalten).
-
-- `cdb-tools @github <https://github.com/return42/cdb-tools>`_
-
+Die Entwicklung der CDB-Tools findet in dem Reposetorie `cdb-tools@github
+<https://github.com/return42/cdb-tools>`_ statt. Will man die CDB-Tools selber
+bauen oder ein Update durchführen so muss man zunächst über einen Klon dieses
+Reposetories verfügen.
 
 .. _clone_cdbtools:
 
@@ -28,6 +25,11 @@ Wichtig ist der Schalter ``--recursive`` der sicherstellt, dass auch die
 Submodule der CDB-Tools *geklont* werden.  Spätere Aktualisierungen können
 mittels ``git pull`` erfolgen (:ref:`update_cdbtools`).  Die nächsten Schritte
 sind im Abschnitt :ref:`cdbtools_build` beschrieben.
+
+.. hint::
+
+   In dem ZIP ``cdb-tools.zip`` ist das Reposetorie bereits enthalten / kein
+   git-clone mehr erforderlich.
 
 
 .. _cdbtools_build:
@@ -61,8 +63,12 @@ Python Interpreter aus der CDB-Instanz bezogen (ansonsten muss man ein Python
 
 2. download
 
-  Beim Download werden alle Python-Pakete und Tools aus dem Internet geladen und
-  in dem ``dist`` Ordner abgelegt.
+  Beim Download werden alle Python-Pakete und *Tools* aus dem Internet geladen
+  und in dem ``dist`` Ordner abgelegt. Die Tools wie :ref:`cdbtools_ConEmu`
+  werden dabei aus dem Download bereich der CDB-Tools bezogen.
+
+  - Quelle der Python Pakete: PyPi_ (`requirements.txt`_)
+  - Quelle der *Tools*: :ref:`cdbtools_downloads`
 
 **offline**
 

@@ -15,9 +15,6 @@ richten sich an erfahrene CDB -Entwickler und -Administratoren.  Vor Benutzung
 bitte die :ref:`wichtigen Hinweise <cdbtools_hint>` lesen.
 
 
-Inhalte
-=======
-
 .. toctree::
    :maxdepth: 1
 
@@ -38,6 +35,15 @@ Foliensammlungen
 
 * `get git started <http://return42.github.io/handsOn/slides/git/index.html>`_
   (`zip <http://return42.github.io/handsOn/slides/git.zip>`__)
+
+
+.. _cdbtools_downloads:
+
+Downloads
+=========
+
+- :download:`cdb-tools.zip <../dist/cdb-tools.zip>` (siehe :ref:`install_cdbtools`)
+- :download:`ConEmu.zip <../dist/ConEmu.zip>` (siehe :ref:`cdbtools_ConEmu`)
 
 
 Projekt

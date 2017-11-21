@@ -8,7 +8,6 @@ best practice
 In diesem Abschnitt finden Sie Hinweise und Tipps rund um CDB.
 
 .. toctree::
-   :maxdepth: 1
 
    optimze_db
 

@@ -44,7 +44,7 @@ ECHO ===============
 ECHO.
 
 IF NOT EXIST "%CDBTOOLS_HOME%\py27\Python27" GOTO bootstrap
-CHOICE /C YN /M "Soll ein *Bootstap* durchgeführt werden?"
+CHOICE /C YN /M "Soll ein *Bootstap* durchgeführt werden"
 IF ERRORLEVEL 2 GOTO bootstrapOK
 
 :bootstrap
@@ -63,7 +63,7 @@ ECHO download
 ECHO ===============
 ECHO.
 
-CHOICE /C YN /M "Sollen die Software Pakete der CDBTools runtergeladen werden (download)?"
+CHOICE /C YN /M "Sollen die Software Pakete der CDBTools runtergeladen werden (download)"
 IF ERRORLEVEL 2 GOTO downloadOK
 
 :download
@@ -77,7 +77,7 @@ ECHO install
 ECHO ===============
 ECHO.
 
-CHOICE /C YN /M "Sollen die runtergeladenen Software Pakete eingerichtet werden?"
+CHOICE /C YN /M "Sollen die runtergeladenen Software Pakete eingerichtet werden"
 IF ERRORLEVEL 2 GOTO installOK
 
 :install
@@ -93,7 +93,7 @@ ECHO update launcher
 ECHO ===============
 ECHO.
 
-CHOICE /C YN /M "Sollen Launcher der Python Skripte aktualisiert werden?"
+CHOICE /C YN /M "Sollen Launcher der Python Skripte aktualisiert werden"
 IF ERRORLEVEL 2 GOTO launcherOK
 
 :launcher
@@ -108,7 +108,7 @@ ECHO ZIP CDB-Tools
 ECHO ===============
 ECHO.
 
-CHOICE /C YN /M "Soll aus den cdbtools ein ZIP gebaut werden?"
+CHOICE /C YN /M "Soll aus den cdbtools ein ZIP gebaut werden"
 IF ERRORLEVEL 2 GOTO zipOK
 
 :zip

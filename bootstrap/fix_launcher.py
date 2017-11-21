@@ -281,11 +281,13 @@ def fix_pth_files(path_item):
                 intro_flag or log("  %s .." % pth_file) # pylint: disable=expression-not-assigned
                 intro_flag = True
                 log("  -- %s" % line )
-                line = x.relpath(path_item)
+                new_l = x.relpath(path_item)
                 if platform.system() == 'Windows':
-                    line = line.replace('\\', '/')
-                log("  ++ %s" % line )
-            new_lines.append(line)
+                    new_l = new_l.replace('\\', '/')
+                log("  ++ %s" % new_l )
+                new_lines.append(new_l)
+            else:
+                new_lines.append(line)
 
         old_lines = "\n".join(old_lines)
         new_lines = "\n".join(new_lines)

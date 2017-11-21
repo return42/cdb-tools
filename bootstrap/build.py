@@ -28,7 +28,7 @@ PIP_PY_PLATFORM = 'win32'
 PIP_PY_VERSION  = '27'
 
 SOFTWARE_ARCHIVES = (
-    ('win_bin/ConEmu', 'ConEmu.zip', 'https://storage/SoftwareDB/darmarIT/cdb-tools')
+    ('win_bin/ConEmu', 'ConEmu.zip', 'https://storage/SoftwareDB/darmarIT/_downloads')
     , )
 
 RE_SEP = re.escape(os.sep)
@@ -140,10 +140,10 @@ def cli_build_zip_software(cli):
              , CDBTOOLS_HOME / src_folder
              , FSPath(src_folder))
     # python packages
-    _zip(CDBTOOLS_DIST / 'pip-download.zip'
-         , CDBTOOLS_PIP_DOWNLOAD
-         , CDBTOOLS_PIP_DOWNLOAD.relpath(CDBTOOLS_HOME)
-         ,)
+    #_zip(CDBTOOLS_DIST / 'pip-download.zip'
+    #     , CDBTOOLS_PIP_DOWNLOAD
+    #     , CDBTOOLS_PIP_DOWNLOAD.relpath(CDBTOOLS_HOME)
+    #     ,)
 
 def _download(src_folder, zip_fname, url):
 
@@ -233,7 +233,7 @@ def _zip(zip_fname, src_folder, arch_prefix, ignore_folders=None, ignore_files=N
                 myZIP.write(src_name, arc_name)
 
 
-    print("build: %s" % zip_fname)
+    print("  OK: %s" % zip_fname)
 
 if __name__ == '__main__':
     sys.exit(main())

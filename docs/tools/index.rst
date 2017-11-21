@@ -15,7 +15,6 @@ CDB Wartung und Pflege
 ======================
 
 .. toctree::
-   :maxdepth: 1
 
    init_cdb_mirror
    clean_cdb
@@ -24,6 +23,5 @@ Entwickler Tools
 ================
 
 .. toctree::
-   :maxdepth: 1
 
    console

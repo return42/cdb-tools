@@ -83,7 +83,7 @@ IF EXIST "%CDBTOOLS_PIP_DOWNLOAD%\%PIP_NAME%.tar.gz" GOTO downloadPipOK
     "%MYPYTHON_EXE%" -m fspath.main download "%CDBTOOLS_PIP_DOWNLOAD%\%PIP_NAME%.tar.gz" "%PIP_URL%"
 :downloadPipOK
 
-"%MYPYTHON_EXE%" -m fspath.main extract  "%CDBTOOLS_PIP_DOWNLOAD%\%PIP_NAME%.tar.gz" "%CDBTOOLS_CACHE%"
+"%MYPYTHON_EXE%" -m fspath.main extract "%CDBTOOLS_PIP_DOWNLOAD%\%PIP_NAME%.tar.gz" "%CDBTOOLS_CACHE%"
 
 PUSHD "%CDBTOOLS_CACHE%\%PIP_NAME%"
 "%MYPYTHON_EXE%" setup.py install --user

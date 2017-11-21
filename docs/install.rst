@@ -12,9 +12,8 @@ installiert.  Die Idee der CDB-Tools ist es, eine erweiterte Laufzeitumgebung
 für CDB bereit zu stellen ohne das dazu die CDB Installation *verändert* werden
 muss.  Mit dieser Eigenschaft können die CDB-Tools komfortabel auf jede
 bestehende CDB Instanz *aufgesattelt* werden. Die CDB-Tools können als ZIP
-*runter geladen* werden:
-
-- :download:`cdb-tools.zip <../dist/cdb-tools.zip>`
+*runter geladen* werden (siehe ``cdbtools-zip`` in den :ref:`Downloads
+<cdbtools_downloads>`).
 
 Der Ordner ``cdb-tools`` in der ZIP Datei muss *irgendwo - hin* ausgepackt
 werden.  Danach müssen nur noch ein paar ``CADDOK_*`` Variablen in der CDB-Tools
