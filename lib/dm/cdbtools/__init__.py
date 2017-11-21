@@ -1,8 +1,5 @@
 # -*- coding: utf-8; mode: python -*-
 
-__version__ = 'v0.0.1-alpha'
-__version_url__ = 'https://github.com/return42/cdb-tools/releases/download/' + __version__
-
 # -------------
 # sort sys.path
 # -------------

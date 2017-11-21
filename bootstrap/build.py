@@ -14,8 +14,10 @@ import platform
 
 from dm.cdbtools import (
     CDBTOOLS_HOME, CDBTOOLS_PY27, CDBTOOLS_CACHE, CDBTOOLS_DIST
-    , CDBTOOLS_SW_DOWNLOAD, CDBTOOLS_PIP_DOWNLOAD, PIP_REQUIEMENTS
-    , __version_url__ )
+    , CDBTOOLS_SW_DOWNLOAD, CDBTOOLS_PIP_DOWNLOAD, PIP_REQUIEMENTS)
+
+from dm import __pkginfo__ as pkginfo
+download_url = 'https://github.com/return42/cdb-tools/releases/download/' + pkginfo.version
 
 from fspath import FSPath, CLI, OS_ENV, progressbar
 
@@ -68,8 +70,8 @@ SOFTWARE_ARCHIVES = [
     #   , <RE_IGNORE_FOLDERS>, <RE_IGNORE_FILES>
     #   , <url without zip-file name>)
 
-    ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, __version_url__)
-    #, (_pip_download, 'pip-download.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, __version_url__)
+    ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
+    #, (_pip_download, 'pip-download.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
     , ]
 
 # ==============================================================================
