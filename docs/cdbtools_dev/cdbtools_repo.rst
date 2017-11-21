@@ -68,7 +68,7 @@ Python Interpreter aus der CDB-Instanz bezogen (ansonsten muss man ein Python
   werden dabei aus dem Download bereich der CDB-Tools bezogen.
 
   - Quelle der Python Pakete: PyPi_ (`requirements.txt`_)
-  - Quelle der *Tools*: :ref:`cdbtools_downloads`
+  - Quelle der *Tools*: https://github.com/return42/cdb-tools/releases/
 
 **offline**
 

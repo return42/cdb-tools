@@ -1,5 +1,7 @@
 .. -*- coding: utf-8; mode: rst -*-
 
+.. _Releases: https://github.com/return42/cdb-tools/releases
+
 .. _`pip.ini`: https://github.com/return42/cdb-tools/blob/master/bootstrap/pip.ini
 .. _`requirements.txt`: https://github.com/return42/cdb-tools/blob/master/bootstrap/requirements.txt
 

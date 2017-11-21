@@ -24,8 +24,7 @@ lediglich die ``cmd.exe`` und deren Konsole ist wohl eher eine Behinderung den
 eine Unterstützung bei der Arbeit .. um nicht zu sagen: sie ist echter Grumpf
 verglichen mit dem was man aus der Linx & Unix Welt kennt. Die CDB-Tools
 schließen diese Lücke nun auch in der Windows Welt, indem sie den
-Konsolen-Emulator `ConEmu`_ mit der clink_ Erweiterung bereit stellen
-(:ref:`cdbtools_downloads`).
+Konsolen-Emulator `ConEmu`_ mit der clink_ Erweiterung bereit stellen.
 
 Mit dem Konsolenemulator ConEmu hat man dann auch unter Windows die Möglichkeit
 Features wie *tab-complition* oder *auto-doc* in der Konsole abzubilden und

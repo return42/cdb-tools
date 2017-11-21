@@ -14,7 +14,8 @@ import platform
 
 from dm.cdbtools import (
     CDBTOOLS_HOME, CDBTOOLS_PY27, CDBTOOLS_CACHE, CDBTOOLS_DIST
-    , CDBTOOLS_SW_DOWNLOAD, CDBTOOLS_PIP_DOWNLOAD, PIP_REQUIEMENTS )
+    , CDBTOOLS_SW_DOWNLOAD, CDBTOOLS_PIP_DOWNLOAD, PIP_REQUIEMENTS
+    , __version_url__ )
 
 from fspath import FSPath, CLI, OS_ENV, progressbar
 
@@ -59,7 +60,6 @@ IGNORE_FILES = [
 RE_IGNORE_FOLDERS = [ re.compile(x) for x in IGNORE_FOLDERS]
 RE_IGNORE_FILES   = [ re.compile(x) for x in IGNORE_FILES]
 
-_download_url = 'https://storage/SoftwareDB/darmarIT/_downloads'
 _pip_download =  CDBTOOLS_PIP_DOWNLOAD.relpath(CDBTOOLS_HOME)
 
 SOFTWARE_ARCHIVES = [
@@ -68,8 +68,8 @@ SOFTWARE_ARCHIVES = [
     #   , <RE_IGNORE_FOLDERS>, <RE_IGNORE_FILES>
     #   , <url without zip-file name>)
 
-    ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, _download_url)
-    , (_pip_download, 'pip-download.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, _download_url)
+    ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, __version_url__)
+    #, (_pip_download, 'pip-download.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, __version_url__)
     , ]
 
 # ==============================================================================

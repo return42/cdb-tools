@@ -37,15 +37,6 @@ Foliensammlungen
   (`zip <http://return42.github.io/handsOn/slides/git.zip>`__)
 
 
-.. _cdbtools_downloads:
-
-Downloads
-=========
-
-- :download:`cdb-tools.zip <../dist/cdb-tools.zip>` (siehe :ref:`install_cdbtools`)
-- :download:`ConEmu.zip <../dist/ConEmu.zip>` (siehe :ref:`cdbtools_ConEmu`)
-
-
 Projekt
 =======
 
