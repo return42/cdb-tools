@@ -1,4 +1,6 @@
 # -*- coding: utf-8; mode: python -*-
+u"""just some build tools"""
+# pylint: disable=invalid-name
 
 from __future__ import print_function
 
@@ -10,7 +12,10 @@ import re
 import subprocess
 import platform
 
-from datetime import datetime
+from dm.cdbtools import (
+    CDBTOOLS_HOME, CDBTOOLS_PY27, CDBTOOLS_CACHE, CDBTOOLS_DIST
+    , CDBTOOLS_SW_DOWNLOAD, CDBTOOLS_PIP_DOWNLOAD, PIP_REQUIEMENTS )
+
 from fspath import FSPath, CLI, OS_ENV, progressbar
 
 if OS_ENV.get("CDBTOOLS_HOME", None) is None:
@@ -18,21 +23,15 @@ if OS_ENV.get("CDBTOOLS_HOME", None) is None:
 
 # CDBTools environment
 
-from dm.cdbtools import (
-    CDBTOOLS_HOME, CDBTOOLS_PY27, CDBTOOLS_CACHE, CDBTOOLS_DIST
-    , CDBTOOLS_SW_DOWNLOAD, CDBTOOLS_PIP_DOWNLOAD, PIP_REQUIEMENTS )
 
 # python setup
 
 PIP_PY_PLATFORM = 'win32'
 PIP_PY_VERSION  = '27'
 
-SOFTWARE_ARCHIVES = (
-    ('win_bin/ConEmu', 'ConEmu.zip', 'https://storage/SoftwareDB/darmarIT/_downloads')
-    , )
-
 RE_SEP = re.escape(os.sep)
 RE_TOP = "^" + RE_SEP
+
 IGNORE_FOLDERS = [
     RE_SEP    + '__pycache__$'
     , RE_SEP  + '.cache$'
@@ -54,11 +53,24 @@ IGNORE_FILES = [
     , r'.DS_Store'
     , r'.*\.pyc$'
     #, r'.*\.elc$'
-    , re.escape(FSPath('win_bin/ConEmu/ConEmu.xml'))
+    , RE_SEP + re.escape(FSPath('win_bin/ConEmu/ConEmu.xml'))
     , ]
 
 RE_IGNORE_FOLDERS = [ re.compile(x) for x in IGNORE_FOLDERS]
 RE_IGNORE_FILES   = [ re.compile(x) for x in IGNORE_FILES]
+
+_download_url = 'https://storage/SoftwareDB/darmarIT/_downloads'
+_pip_download =  CDBTOOLS_PIP_DOWNLOAD.relpath(CDBTOOLS_HOME)
+
+SOFTWARE_ARCHIVES = [
+
+    # ( <relpath CDBTOOLS_HOME>, <zip-file name>
+    #   , <RE_IGNORE_FOLDERS>, <RE_IGNORE_FILES>
+    #   , <url without zip-file name>)
+
+    ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, _download_url)
+    , (_pip_download, 'pip-download.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, _download_url)
+    , ]
 
 # ==============================================================================
 def main():
@@ -75,19 +87,19 @@ def main():
     cli.addCMDParser(cli_build_zip_software     , cmdName='zip-software')
     cli()
 
-def cli_build_install_software(cli):
+def cli_build_install_software(cli): # pylint: disable=unused-argument
     u"""install software archieves (ZIP)"""
     CDBTOOLS_SW_DOWNLOAD.makedirs()
-    for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
-        _install(src_folder, zip_fname, url)
+    for (src_folder, zip_fname, _x, _x, url) in SOFTWARE_ARCHIVES:
+        sw_install(src_folder, zip_fname, url)
 
-def cli_build_get_software(cli):
+def cli_build_get_software(cli):  # pylint: disable=unused-argument
     u"""get software archieves (ZIP)"""
     CDBTOOLS_SW_DOWNLOAD.makedirs()
-    for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
-        _download(src_folder, zip_fname, url)
+    for (_x, zip_fname, _x, _x, url) in SOFTWARE_ARCHIVES:
+        sw_download(zip_fname, url)
 
-def cli_build_install_pypkgs(cli):
+def cli_build_install_pypkgs(cli):  # pylint: disable=unused-argument
     u"""install python requirements (pip download)"""
     pip  = FSPath(CDBTOOLS_PY27 / "bin" / "pip")
     if platform.system() == 'Windows':
@@ -104,7 +116,7 @@ def cli_build_install_pypkgs(cli):
     retVal = proc.wait()
     return retVal
 
-def cli_build_get_pypkgs(cli):
+def cli_build_get_pypkgs(cli):  # pylint: disable=unused-argument
     u"""download python requirements (pip download)"""
     pip  = FSPath(CDBTOOLS_PY27 / "bin" / "pip")
     if platform.system() == 'Windows':
@@ -121,32 +133,26 @@ def cli_build_get_pypkgs(cli):
     retVal = proc.wait()
     return retVal
 
-def cli_dist(cli):
+def cli_dist(cli): # pylint: disable=unused-argument
     u"""build distribution"""
     cli_build_zip_software(cli)
     cli_zip_cdbtools(cli)
 
-def cli_zip_cdbtools(cli):
+def cli_zip_cdbtools(cli): # pylint: disable=unused-argument
     u"""build complete zip"""
-    #zip_fname  = CDBTOOLS_DIST / datetime.now().strftime("%Y%m%d_%H%M_cdb-tools.zip")
-    zip_fname  = CDBTOOLS_DIST / "cdb-tools.zip"
-    _zip(zip_fname, CDBTOOLS_HOME, FSPath("cdb-tools"))
+    # from datetime import datetime
+    #_zip('.', CDBTOOLS_DIST / datetime.now().strftime("%Y%m%d_%H%M_cdb-tools.zip"), RE_IGNORE_FOLDERS, RE_IGNORE_FILES)
+    _zip('.', CDBTOOLS_DIST / "cdb-tools.zip", RE_IGNORE_FOLDERS, RE_IGNORE_FILES)
 
-def cli_build_zip_software(cli):
+def cli_build_zip_software(cli): # pylint: disable=unused-argument
     u"""build software archieves (ZIP)"""
     # Software archives
-    for src_folder, zip_fname, url in SOFTWARE_ARCHIVES:
-        _zip(CDBTOOLS_DIST / zip_fname
-             , CDBTOOLS_HOME / src_folder
-             , FSPath(src_folder))
-    # python packages
-    #_zip(CDBTOOLS_DIST / 'pip-download.zip'
-    #     , CDBTOOLS_PIP_DOWNLOAD
-    #     , CDBTOOLS_PIP_DOWNLOAD.relpath(CDBTOOLS_HOME)
-    #     ,)
+    for (src_folder, zip_fname, ignore_folders, ignore_files, _x) in SOFTWARE_ARCHIVES:
+        _zip(src_folder, CDBTOOLS_DIST / zip_fname, ignore_folders, ignore_files)
+        print("")
 
-def _download(src_folder, zip_fname, url):
-
+def sw_download(zip_fname, url):
+    u"""download file from url into CDBTOOLS_SW_DOWNLOAD"""
     url = url + "/" + zip_fname
     print("download: %s ..." % url)
     arch = CDBTOOLS_SW_DOWNLOAD / zip_fname
@@ -154,14 +160,14 @@ def _download(src_folder, zip_fname, url):
         print("  --> overwrite existing ZIP: %s" % zip_fname)
     arch.download(url, ticker=True)
 
-def _install(src_folder, zip_fname, url):
-
+def sw_install(src_folder, zip_fname, url):
+    u"""Install zip_fname dwonloaded at CDBTOOLS_SW_DOWNLOAD into CDBTOOLS_HOME"""
     src_folder = FSPath(src_folder)
     print("install: %s" % src_folder)
     arch = CDBTOOLS_SW_DOWNLOAD / zip_fname
     if not arch.EXISTS:
         print("  missing %s" % zip_fname)
-        _download(src_folder, zip_fname, url)
+        sw_download(zip_fname, url)
     if (CDBTOOLS_HOME / src_folder).EXISTS:
         print("  %s already installed\n  --> to update first remove: %s\n  --> "
               % (zip_fname, CDBTOOLS_HOME / src_folder), end='')
@@ -185,20 +191,26 @@ def _unzip(arch, folder):
         myzip.extract(member, folder)
     print("")
 
-def _zip(zip_fname, src_folder, arch_prefix, ignore_folders=None, ignore_files=None):
+def _zip(src_folder, zip_fname, ignore_folders, ignore_files):
+    u"""zip a ``src_folder`` relative to CDBTOOLS_HOME"""
 
-    if ignore_files is None:
-        ignore_files   = RE_IGNORE_FILES
-    if ignore_folders is None:
-        ignore_folders = RE_IGNORE_FOLDERS
+    src_folder  = FSPath(src_folder)
+    zip_fname   = FSPath(zip_fname)
+
+    arch_prefix = src_folder
+    src_abspath = CDBTOOLS_HOME / src_folder
+
+    if src_folder.ABSPATH == CDBTOOLS_HOME:
+        arch_prefix = "cdb-tools"
+        src_abspath = CDBTOOLS_HOME
 
     zip_fname.DIRNAME.makedirs()
 
-    def ignore_folder(folder):
+    def _ign_folder(folder):
         retVal = [x for x in ignore_folders if x.search("/" + folder)]
         return bool(retVal)
 
-    def ignore_file(folder, fname):
+    def _ign_file(folder, fname):
         retVal = [x for x in ignore_files if x.search("/" + folder/fname)]
         return bool(retVal)
 
@@ -209,27 +221,24 @@ def _zip(zip_fname, src_folder, arch_prefix, ignore_folders=None, ignore_files=N
 
     with zipfile.ZipFile(zip_fname, 'w', zipfile.ZIP_DEFLATED) as myZIP:
         print("  compress folder: %s" % src_folder)
-
         ignored = []
-        for folder, dirnames, filenames in src_folder.ABSPATH.walk():
-            folder = folder.relpath(src_folder.ABSPATH)
+        for folder, _drinames, filenames in src_abspath.walk():
+
+            folder = folder.relpath(src_abspath)
             doIgn  = bool([x for x in ignored if folder[:len(x)] == x])
             if doIgn:
                 continue
-
-
-            if ignore_folder(folder):
-                print("    ignore folder  : %s"  % folder)
+            if _ign_folder(src_folder/folder):
+                print("    ignore folder  : %s"  % arch_prefix/folder)
                 ignored.append(folder)
                 continue
-
-            #print("    archive folder : %s" % arch_prefix / folder )
+            #print("    archive folder : %s" % arch_prefix/folder )
             for fname in filenames:
-                if ignore_file(folder, fname):
-                    #print("    ignore file    : %s"  % folder / fname)
+                if _ign_file(src_folder/folder, fname):
+                    #print("    ignore file    : %s" % arch_prefix/folder/fname)
                     continue
-                src_name = src_folder.ABSPATH / folder / fname
-                arc_name = arch_prefix / folder / fname
+                src_name = src_abspath/folder/fname
+                arc_name = arch_prefix/folder/fname
                 myZIP.write(src_name, arc_name)
 
 
