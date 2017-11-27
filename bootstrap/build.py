@@ -16,8 +16,10 @@ from dm.cdbtools import (
     CDBTOOLS_HOME, CDBTOOLS_PY27, CDBTOOLS_CACHE, CDBTOOLS_DIST
     , CDBTOOLS_SW_DOWNLOAD, CDBTOOLS_PIP_DOWNLOAD, PIP_REQUIEMENTS)
 
+# die Versionsnummer bei github entspricht dem Tag und das hat immer ein
+# führendes 'v' z.B. 'v1.0.0'
 from dm import __pkginfo__ as pkginfo
-download_url = 'https://github.com/return42/cdb-tools/releases/download/' + pkginfo.version
+download_url = 'https://github.com/return42/cdb-tools/releases/download/' + 'v' + pkginfo.version
 
 from fspath import FSPath, CLI, OS_ENV, progressbar
 

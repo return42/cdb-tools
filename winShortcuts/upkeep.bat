@@ -51,7 +51,6 @@ ECHO.
 ECHO ===============
 ECHO bootstrap
 ECHO ===============
-ECHO.
 
 IF NOT EXIST "%CDBTOOLS_HOME%\py27\Python27" GOTO bootstrap
 CHOICE /C YN /M "Soll ein *Bootstap* durchgeführt werden"
