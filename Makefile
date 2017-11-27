@@ -7,6 +7,9 @@ include utils/makefile.sphinx
 GIT_URL   = https://github.com/return42/cdb-tools.git
 SLIDES    = docs/slides
 
+quiet_cmd_cdbtools_clean = CLEAN     cdbtools-clean
+      cmd_cdbtools_clean = rm -rf ./.cache ./dist ./build ./py27 ./win_bin/ConEmu
+
 all: clean cdbtools docs
 
 PHONY += help
@@ -30,19 +33,13 @@ cdb-slide:  sphinx-doc
 	$(call cmd,sphinx,html,$(SLIDES)/cdb_comp,$(SLIDES)/cdb_comp,slides/cdb_comp)
 
 PHONY += clean
-clean: pyclean docs-clean cdbtools-clean
+clean: docs-clean pyclean
+	$(call cmd,cdbtools_clean)
 	$(call cmd,common_clean)
 
 # FIXME: works only on Windows ...
 PHONY += cdbtools
 cdbtools:
 	winShortcuts\upkeep.bat
-
-PHONY += cdbtools-clean
-cdbtools-clean:
-	rm -rf ./.cache
-	rm -rf ./dist
-	rm -rf ./py27
-	rm -rf ./win_bin/ConEmu
 
 .PHONY: $(PHONY)

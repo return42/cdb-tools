@@ -27,6 +27,16 @@ echo   CADDOK_DEFAULT: %CADDOK_DEFAULT%
 echo.
 echo ============================================================
 
+IF NOT EXIST "%CADDOK_RUNTIME%" (
+   echo WARNING: missing CADDOK_RUNTIME at "%CADDOK_RUNTIME%"
+   pause
+)
+
+IF NOT EXIST "%CADDOK_BASE%" (
+   echo WARNING: missing CADDOK_BASE at "%CADDOK_BASE%"
+   pause
+)
+
 SET "PATH=%CADDOK_RUNTIME%;%PATH%"
 
 REM check python available

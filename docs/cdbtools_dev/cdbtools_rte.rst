@@ -70,6 +70,45 @@ Konsolen Prompt der Umgebungen
    Hier in der Anleitung wird der Prompt ``[cdb:prod_copy]`` genutzt, um
    anzuzeigen, das ein Kommando **in einer cdb-Shell ausgeführt werden muss**.
 
+.. _setup_cdbenv:
+
+Setup cdbEnv
+============
+
+Damit die CDB-Tools und die CDB Installation *zueinander finden* müssen in der
+Datei ``winShortcuts/cdbEnv.bat`` folgende Umgebungen angepasst werden.
+
+.. code-block:: dosbatch
+
+   SET "CADDOK_DBNAME=prod_copy"
+   SET "CADDOK_RUNTIME=C:\share\cdb_sw"
+   SET "CADDOK_BASE=C:\share\customer\instance_prod_copy"
+
+Nachdem die Umgebung korrekt gesetzt wurde, ist es möglich mit
+``winShortcuts/cdb-sh.bat`` eine CDB-Shell zu starten:
+
+.. code-block:: dosbatch
+
+  $ C:\share\cdb-tools\winShortcuts\cdb-sh.bat
+  ...
+  [cdb:prod_copy] ...
+
+Den Prompt ``[cdb:prod_copy]`` setzt die CDB-Shell, er wird in der eigenen
+Instanz vermutlich etwas anders aussehen (s.a. :ref:`rte_prompt`).
+
+Um zu überprüfen ob die Umgebung korrekt gesetzt ist sollte man sich die
+``CADDOK_*`` Variablen anschauen::
+
+  [cdb:prod_copy] C:\> SET CADDOK
+  CADDOK_DEFAULT=prod_copy@:C:\share\customer\instance_prod_copy
+  CADDOK_TMPDIR=C:\share\customer\instance_prod_copy\tmp
+  CADDOK_LOGDIR=C:\share\customer\instance_prod_copy\tmp
+  ...
+
+Stimmen nicht alle Einstellungen, so muss man ggf. noch die ``etc/site.conf``
+oder eine der anderen ``etc/*.conf`` Dateien anpassen (normale CDB
+Konfiguration).
+
 
 .. _cdbtools_portable:
 

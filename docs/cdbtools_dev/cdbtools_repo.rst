@@ -23,8 +23,14 @@ Das Reposetorie der CDB-Tools wird mit ``git clone`` *geklont*.::
 
 Wichtig ist der Schalter ``--recursive`` der sicherstellt, dass auch die
 Submodule der CDB-Tools *geklont* werden.  Spätere Aktualisierungen können
-mittels ``git pull`` erfolgen (:ref:`update_cdbtools`).  Die nächsten Schritte
-sind im Abschnitt :ref:`cdbtools_build` beschrieben.
+mittels ``git pull`` erfolgen (:ref:`update_cdbtools`).
+
+- CDB in den CDB-Tools bekannt machen
+
+  In der CDB-Tools Umgebung müssen ein paar ``CADDOK_*`` Variablen angepasst
+  werden. Datei ``winShortcuts/cdbEnv.bat``, siehe :ref:`setup_cdbenv`.
+
+- Build Prozess durchführen, siehe :ref:`cdbtools_build`
 
 .. hint::
 

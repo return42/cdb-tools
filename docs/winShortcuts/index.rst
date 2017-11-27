@@ -28,6 +28,6 @@ Sonstiges
 =========
 
 ``cdbEnv.bat``
-  In dieser Datei werden die Umgebungsvariablen eingestellt, die erforderlich sind
-  um die CDB-Tools mit der CDB Instanz zusammenzubringen (:ref:`setup_cdbenv`).
+  In dieser Datei werden Variablen der CDB-Tools Umgebung eingestellt siehe
+  :ref:`setup_cdbenv`.
 

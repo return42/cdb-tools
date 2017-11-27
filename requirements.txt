@@ -2,6 +2,11 @@
 # requires
 # --------
 
+# These are the requirements needed by the cdb-tools development process.  This
+# is mostly not what you are looking for.  If you are looking for the
+# requirements which are needed within CDB-Tools environment, please take a look
+# at ./bootstrap/requirements.txt
+
 six
 #fspath
 
