@@ -16,6 +16,8 @@ from dm.cdbtools import (
     CDBTOOLS_HOME, CDBTOOLS_PY27, CDBTOOLS_CACHE, CDBTOOLS_DIST
     , CDBTOOLS_SW_DOWNLOAD, CDBTOOLS_PIP_DOWNLOAD, PIP_REQUIEMENTS)
 
+CDBTOOLS_TEMPLATES = CDBTOOLS_HOME/'templates'
+
 # die Versionsnummer bei github entspricht dem Tag und das hat immer ein
 # führendes 'v' z.B. 'v1.0.0'
 from dm import __pkginfo__ as pkginfo
@@ -58,7 +60,6 @@ IGNORE_FILES = [
     , r'.DS_Store'
     , r'.*\.pyc$'
     #, r'.*\.elc$'
-    , RE_SEP + re.escape(FSPath('win_bin/ConEmu/ConEmu.xml'))
     , ]
 
 RE_IGNORE_FOLDERS = [ re.compile(x) for x in IGNORE_FOLDERS]
@@ -71,9 +72,10 @@ SOFTWARE_ARCHIVES = [
     # ( <relpath CDBTOOLS_HOME>, <zip-file name>
     #   , <RE_IGNORE_FOLDERS>, <RE_IGNORE_FILES>
     #   , <url without zip-file name>)
-
-    ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
+    ('.', "cdb-tools.zip", RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
+    , ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
     #, (_pip_download, 'pip-download.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
+
     , ]
 
 # ==============================================================================
@@ -87,20 +89,24 @@ def main():
     cli.addCMDParser(cli_build_get_software     , cmdName='get-software')
     cli.addCMDParser(cli_build_install_software , cmdName='install-software')
     cli.addCMDParser(cli_dist                   , cmdName='dist')
-    cli.addCMDParser(cli_zip_cdbtools           , cmdName='zip-cdbtools')
-    cli.addCMDParser(cli_build_zip_software     , cmdName='zip-software')
     cli()
 
 def cli_build_install_software(cli): # pylint: disable=unused-argument
     u"""install software archieves (ZIP)"""
     CDBTOOLS_SW_DOWNLOAD.makedirs()
     for (src_folder, zip_fname, _x, _x, url) in SOFTWARE_ARCHIVES:
+        if zip_fname == "cdb-tools.zip":
+            # we are already in cdb-tools / no need to install once more
+            continue
         sw_install(src_folder, zip_fname, url)
 
 def cli_build_get_software(cli):  # pylint: disable=unused-argument
     u"""get software archieves (ZIP)"""
     CDBTOOLS_SW_DOWNLOAD.makedirs()
     for (_x, zip_fname, _x, _x, url) in SOFTWARE_ARCHIVES:
+        if zip_fname == "cdb-tools.zip":
+            # we are already in cdb-tools / no need to download once more
+            continue
         sw_download(zip_fname, url)
 
 def cli_build_install_pypkgs(cli):  # pylint: disable=unused-argument
@@ -139,17 +145,6 @@ def cli_build_get_pypkgs(cli):  # pylint: disable=unused-argument
 
 def cli_dist(cli): # pylint: disable=unused-argument
     u"""build distribution"""
-    cli_build_zip_software(cli)
-    cli_zip_cdbtools(cli)
-
-def cli_zip_cdbtools(cli): # pylint: disable=unused-argument
-    u"""build complete zip"""
-    # from datetime import datetime
-    #_zip('.', CDBTOOLS_DIST / datetime.now().strftime("%Y%m%d_%H%M_cdb-tools.zip"), RE_IGNORE_FOLDERS, RE_IGNORE_FILES)
-    _zip('.', CDBTOOLS_DIST / "cdb-tools.zip", RE_IGNORE_FOLDERS, RE_IGNORE_FILES)
-
-def cli_build_zip_software(cli): # pylint: disable=unused-argument
-    u"""build software archieves (ZIP)"""
     # Software archives
     for (src_folder, zip_fname, ignore_folders, ignore_files, _x) in SOFTWARE_ARCHIVES:
         _zip(src_folder, CDBTOOLS_DIST / zip_fname, ignore_folders, ignore_files)
@@ -242,6 +237,9 @@ def _zip(src_folder, zip_fname, ignore_folders, ignore_files):
                     continue
                 src_name = src_abspath/folder/fname
                 arc_name = arch_prefix/folder/fname
+                if (CDBTOOLS_TEMPLATES/src_folder/folder/fname).EXISTS:
+                    src_name = CDBTOOLS_TEMPLATES/src_folder/folder/fname
+                    print("    use template of: %s"  % src_folder/folder/fname)
                 myZIP.write(src_name, arc_name)
 
 
