@@ -5,7 +5,7 @@ python package meta informations
 """
 
 package      = 'dm'
-version      = '1.0.0'
+version      = '1.0.1'
 authors      = ['Markus Heiser', ]
 emails       = ['markus.heiser@darmarIT.de', ]
 copyright    = '2017 Markus Heiser'
