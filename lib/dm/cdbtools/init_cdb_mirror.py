@@ -151,7 +151,7 @@ def check_port(opts):
 
 def check_path(opts):
     for row in opts:
-        if not row.name in ('base_path', 'path'):
+        if not row.name in ('base_path', 'path', 'vault_path'):
             continue
         SUI.echo("")
         SUI.echo("Der Dienst benutzt den Pfad (%s): %s" % (row.name, row.value))
