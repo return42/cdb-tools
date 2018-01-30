@@ -5,7 +5,7 @@ REM Purpose:     Start des cdbsvcd Prozess
 REM ----------------------------------------------------------------------------
 
 call "%~d0%~p0cdbEnv.bat"
-call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" --
+call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
 
 color 0E
 title %~n0 (%CADDOK_DEFAULT%)
@@ -25,6 +25,12 @@ echo ============================================================
 @echo on
 START "%~n0 cdbtools (%CADDOK_DEFAULT%)" "%CADDOK_RUNTIME%\cdbsvcd.exe" -d -v -db "%CADDOK_DEFAULT%"
 @echo off
+echo.
+echo ============================================================
+echo CDBTools debugger listen to breakpoints
+echo ============================================================
+echo.
+echo hit CTRL-C to stop listening
 echo.
 "%CADDOK_RUNTIME%\python.exe" -c "from dm.cdbtools.debug import client;client(polltime=3)"
 pause
