@@ -27,6 +27,7 @@ six
 pip
 Sphinx
 sphinx_rtd_theme
+sphinx-autobuild
 
 # sphinxjp.themes.revealjs: slide-shows with revaljs
 #
@@ -37,3 +38,4 @@ git+https://github.com/return42/sphinxjp.themes.revealjs
 
 # linuxdoc for DOT support
 git+http://github.com/return42/linuxdoc.git
+
