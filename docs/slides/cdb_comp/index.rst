@@ -377,22 +377,23 @@ CDB Komponenten
 
    ::
 
-     |   o       CDB-Konfig DB + Dateien im BLOB-Store
-     |  /=<   /~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~|
-     | /\     |   |                    |          |  Dev Patches
-              |  /|\ sync & install    |          |  Entwckleransicht
+     CDB    o +-----------------------------------------------------+
+     Admin /=<|       CDB-Konfig DB + Dateien im BLOB-Store         |
+          /\  +-----------------------------------------------------+
+              |   *                    |          | Dev-Patches/Ent-
+              |  /|\ sync & install    |          | wickleransicht
      cdbpgk-->|   |                    |          |
               |   |       build <pkg> \|/        \|/ commit <pkg>
-              |   |                    |          |
-     confi-   \===========================/~~~~\========| app_conf
-     guration     |                    |                  (baseline)
+              |   |                    *      ~\--*-----| app_conf
+     confi-   \===========================/~~ ~\--*-----| (baseline)
+     guration     *                    |
                  /|\ git pull         \|/ git commit
-                  |                    |
-     .git     |===|=====================================|
-     Ordner       |                    |
+                  |                    *
+     .git     |===|=================================================|
+     Ordner       *                    |
                  /|\ (git fetch)      \|/ git push <remote>:<branch>
-     git          |                    |
-     Server   |=========================================|
+     git          |                    *
+     Server   |=====================================================|
 
    .. rv_small::
 
@@ -420,7 +421,7 @@ CDB Komponenten
      dem SCM *gemerged*.
 
    - **Konfiguration**: ist im Ordner ``configuration``. Der Ordner muss mit
-     ``cdpkg diff`` und ``cdpkg patch`` *gemerged* werden.
+     ``cdbpkg diff`` und ``cdbpkg patch`` *gemerged* werden.
 
 .. _merge_graph:
 
