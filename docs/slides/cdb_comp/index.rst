@@ -429,7 +429,7 @@ CDB Komponenten
    :title-heading: h3
 
    .. figure::  merge_graph.svg
-      :scale:   100 %
+      :width:   500px
 
    Typisches Schaubild für einen *Feature-Branch*, der in den *master* Branch
    gemerged wird. Der *master* Branch kann z.B. **QS** oder **PROD** sein.  Egal
@@ -573,7 +573,7 @@ CDB Komponenten
    :title-heading: h2
 
    .. figure::  clone_graph.svg
-      :scale:   100 %
+      :width:   500px
 
    Lieferantenanbindung erfolgt an einem Branch-Point (``foo``). Ob Branch-Point
    vom PROD- oder dem QS-System (aka. ``master``) genommen wird, muss durch die
@@ -661,10 +661,10 @@ CDB Komponenten
    Entwickler das DB-Schema für das 'foo' feature ein.
 
      .. figure:: dd_class_foo_1.png
-        :scale: 150 %
+        :scale: 150%
 
      .. figure:: dd_class_foo_2.png
-        :scale: 150 %
+        :scale: 150%
 
    In der Entwickler-Übersicht den Dev-Build anstoßen.  Doppel-Klick auf 'Dev
    Patches' zeigt die lokalen Änderungen.
@@ -714,7 +714,7 @@ CDB Komponenten
    und registriert den Voll qualifizierten Python Namen (FQN_).
 
    .. figure:: dd_class_foo_2.png
-      :scale: 150 %
+      :scale: 150%
 
 .. revealjs:: Änderung implementieren (2)
    :title-heading: h3
@@ -749,7 +749,7 @@ CDB Komponenten
    Auslieferung erfolgt in den Übergabepunkt; Branch ``foo`` des Auftraggebers.
 
    .. figure::  push_graph.svg
-      :scale:   100 %
+      :width:   500px
 
 .. revealjs:: Änderung ausliefern
    :title-heading: h3
@@ -798,7 +798,7 @@ CDB Komponenten
 .. revealjs:: Merge ist immer gleich
 
    .. figure::  merge_graph.svg
-      :scale:   100 %
+      :width:   500px
 
    Der Merge des Branch ``foo`` enspricht genau dem :ref:`Merge-Schaubild
    <merge_graph>`. Es gibt den Branch-Point und im Merge-Point sollen die
@@ -910,7 +910,7 @@ CDB Komponenten
 .. revealjs:: Merge ist immer gleich
 
    .. figure::  merge_graph.svg
-      :scale:   100 %
+      :width:   500px
 
    Für die Umsetzung eines *Features* (einer Anforderung) gibt es den
    Feature-Branch. Im Merge-Point werden die Änderungen aus Source-Code (``git
