@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="600" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg" style="vector-effect: non-scaling-stroke;">
+ <metadata style="vector-effect: non-scaling-stroke;" id="metadata45">image/svg+xmlimage/svg+xml</metadata>
+
+ <g id="g1">
+  <title>background</title>
+  <rect fill="#ffffff" x="-1" y="-1" width="900" height="600" id="canvas_background"/>
+  <g id="canvasGrid" display="none">
+   <rect fill="url(#gridpattern)" id="rect10" width="900" height="600" x="0" y="0"/>
+  </g>
+ </g>
+ <g id="g2">
+  <title>Template</title>
+  <line x1="30" y1="30" x2="465" y2="30" id="master_line_solid" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="5" stroke="#999999" fill="none"/>
+  <line x1="20" y1="75" x2="480" y2="75" id="master_line_dashed_red" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-dasharray="2, 2" stroke-width="5" stroke="#7f0000" fill="none"/>
+  <line x1="25" y1="55" x2="475" y2="55" id="master_line_dashed" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-dasharray="2, 2" stroke-width="5" stroke="#999999" fill="none"/>
+  <line transform="rotate(65, 227.362, 105.065)" id="svg_2" x1="200" y1="105" x2="250" y2="105" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="5" stroke="#999999" fill="none"/>
+  <ellipse cx="215" cy="75" id="master_bullte_gray" rx="10" ry="10" stroke-width="1.5" stroke="#7f0000" fill="#4c4c4c"/>
+  <ellipse style="vector-effect: non-scaling-stroke;" cx="95" cy="75" id="master_bullte_yellow" rx="10" ry="10" stroke-width="1.5" stroke="#7f0000" fill="#ffff00"/>
+  <text x="60" y="140" id="master_text" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif">Branch-Point</text>
+  <ellipse style="vector-effect: non-scaling-stroke;" id="svg_1" cx="315" cy="75" rx="10" ry="10" stroke-width="1.5" stroke="#7f0000" fill="#00ff00"/>
+  <line id="svg_3" x1="235" y1="125" x2="295" y2="125" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="5" stroke="#999999" fill="none"/>
+  <ellipse id="svg_4" cx="100" cy="30" rx="10" ry="10" stroke-width="1.5" stroke="#333333" fill="#4c4c4c"/>
+  <ellipse id="svg_5" cx="155" cy="30" rx="10" ry="10" stroke-width="1.5" stroke="#333333" fill="#4c4c4c"/>
+  <ellipse id="svg_6" cx="210" cy="30" rx="10" ry="10" stroke-width="1.5" stroke="#333333" fill="#4c4c4c"/>
+ </g>
+</svg>

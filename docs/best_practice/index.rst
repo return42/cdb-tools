@@ -9,6 +9,7 @@ In diesem Abschnitt finden Sie Hinweise und Tipps rund um CDB.
 
 .. toctree::
 
+   release_management
    optimze_db
 
 Wenn Sie hier gerne weitere Themen behandelt sehen möchten oder einen Beitrag
