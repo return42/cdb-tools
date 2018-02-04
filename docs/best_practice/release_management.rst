@@ -39,7 +39,21 @@ sind).
 Big Picture
 ===========
 
-.. _xref-figure-release_management-big_picture:
+Die Abbildung :ref:`figure-release_management-big_picture` zeigt den zeitlichen
+Verlauf zweier Änderungen (foo & bar). Hier in dem Beispiel wird von einer
+Infrastruktur mit nur einer Qualitätsicherung (QS) und dem produktievem System
+(PROD). In der Praxis wird man evtl. eine etwas größere Infrastruktur
+beispielsweise mit einem HotFix-System und einer gemeinsammen Entwickler
+Umgebung (DEV) vorfinden. 
+
+.. _figure-release_management-big_picture:
         
 .. figure:: release_management/big_picture.svg
    :alt:     Figure (big_picture.svg)
+
+   Feature-Branch: Änderungsverlauf mit QS und PROD 
+
+Links von t\ :sub:`0` ist die History und rechts der Planungsverlauf zu
+sehen. In der obersten Linie sieht man wie sich das *produktive* System (PROD)
+im Laufe der Zeit entwickelt, die letzte Änderung vor t\ :sub:`0` war ein
+*Hotfix*
