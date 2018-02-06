@@ -1,6 +1,10 @@
 .. -*- coding: utf-8; mode: rst -*-
 .. include:: ../refs.txt
 
+.. |HotFix| image:: release_management/hotfix-point.svg
+.. |branch-point| image:: release_management/branch-point.svg
+.. |merge-point| image:: release_management/merge-point.svg
+             
 .. _release_management:
 
 ======================================
@@ -84,7 +88,7 @@ beispielsweise mit einem HotFix-System und einer gemeinsamen Entwickler Umgebung
 (DEV) vorfinden. Ganz gleich wie aufwendig die Infrastruktur letztendlich ist,
 es wird eine koordinierende Instanz benötigt.
 
-.. admonition:: Maintainer koordiniert alle Änderungen (im SCM) 
+.. admonition:: Maintainer koordiniert alle Änderungen (im SCM)
    :class: tip
 
    Die Koordination der Änderungen im Entwicklerteam, den Anwendertests und den
@@ -97,22 +101,28 @@ eines Source-Code-Managment-Systems (SCM). Als SCM System empfiehlt es sich --
 aufgrund der hohen Flexibilität -- die Versionsverwaltung mit git_ abzubilden
 (s.a. Foliensammlung zur pragmatischen Einarbeitung: `get git started`_).
 
-Die Abbildung :ref:`big picture <figure-release_management-big_picture>` zeigt
-den zeitlichen Verlauf dreier Änderungen in einer Infrastruktur mit PROD und QS.
+Die Abbildung :ref:`big picture <figure-rm-big_picture>` zeigt den zeitlichen
+Verlauf dreier Änderungen in einer Infrastruktur mit PROD und QS. Jeder
+kreisförmige Punkt entspricht einer (Teil-) Änderung die im SCM festgestellt
+wird (kurz **commit**). Die Teil-Änderungen (Punkte) entlang einer
+Entwicklungslinie (z.B. ``foo``) beschreiben in ihrer Gesamtheit den
+Änderungsauftrag (das Feature) und werden allgemein auch als **Patch-Serie**
+bezeichnet.
 
-.. _figure-release_management-big_picture:
-        
-.. figure:: release_management/big_picture.svg
-   :alt:    Figure (big_picture.svg)
+.. _figure-rm-big_picture:
+
+.. figure:: release_management/big-picture.svg
+   :alt:    Figure (big-picture.svg)
    :align:  center
-           
-   big picture: Änderungsverlauf mit PROD & QS
 
-Links von t\ :sub:`0` ist die Historie und rechts der Planungsverlauf zu
-sehen. In oberster Linie ist der Verlauf des im Betrieb befindlichen PROD
-Systems zu sehen. Darunter der Verlauf des QS Systems. Desweiteren sind noch die
-Entwicklungslinien zweier Weiterentwicklungen zu sehen, die folgend nur mit den
-*Platzhaltern* ``foo`` und ``bar`` bezeichnet werden sollen.
+   big picture (t\ :sub:`0`): Änderungsverlauf mit PROD & QS
+
+Links von t\ :sub:`0` (*jetzt-Zeit*) ist die Historie und rechts der
+Planungsverlauf zu sehen. In oberster Linie ist der Verlauf des im Betrieb
+befindlichen PROD Systems zu sehen. Darunter der Verlauf des QS Systems.  Des
+weiteren sind noch die Entwicklungslinien zweier Weiterentwicklungen zu sehen,
+die folgend nur mit den *Platzhaltern* ``foo`` und ``bar`` bezeichnet werden
+sollen.
 
 - ``foo`` und ``bar``
 
@@ -143,6 +153,146 @@ werden.
    werden. Deswegen empfiehlt es sich, jede Änderungen immer vom *aktuellen*
    PROD ausgehend zu starten.
 
+.. _rm_merge_branch:
+
+Zusammenführung zweier Entwicklungslinien
+=========================================
+
+Die Zusammenführung zwei Entwicklungslinien wird allgemein auch als **merge**
+bezeichnet. Ziel ist es, die Änderungen aus der einen Entwicklungslinie mit
+denen aus einer anderen Entwicklungslinie zusammenzuführen. Im folgendem
+Beispiel sollen die vier Änderungen aus dem QS Branch in den PROD Branch
+gemischt werden. Die Abbildung :ref:`qs-merge <figure-rm-qs-merge>` zeigt die
+Entwicklungslinie des QS Branch bevor (obere Hälfte) und nachdem (untere Hälfte)
+die Änderungen aus diesem Branch in den **master** (PROD) gemerged wurden.
+
+.. _figure-rm-qs-merge:
+
+.. figure:: release_management/merge-qs.svg
+   :alt:    Figure (merge-qs.svg)
+   :align:  center
+
+   qs-merge: Zusammenführung der Änderungen aus QS mit PROD
+
+Die Vorgehensweise beim Mergen ist immer gleich, egal ob man einen (Feature-)
+Branch merged, oder wie hier eine Änderung aus dem QS übernehmen will. Die
+Abbildung :ref:`merge-qs <figure-rm-qs-merge>` ist von daher, für sich alleine
+erst mal nur abstrakt. Um das Beispiel etwas *konkreter* zu machen sei folgender
+Kontext gegeben:
+
+  Im PROD war ein Maskenfeld mit einem Auswahlbrowser konfiguriert. Dieser
+  Auswahlbrowser lieferte aber falsche Werte. Damit die Anwender erst mal weiter
+  arbeiten können wurde im PROD ein HotFix |HotFix| angebracht, mit dem die
+  Editierbarkeit des Maskenfeld von *'nur aus dem Katalog zu befüllen'*
+  (``catalog``) in *'frei editierbar'* (``free``) geändert wurde.  Anschließend
+  hat man das Problem mit dem Auswahlbrowser (zeitnah) in der QS
+  korrigiert. Dazu wurde keine neue QS aufgesetzt, sondern die bestehende
+  genutzt, die wurde allerdings bereits abgespalten (branch) als der HotFix noch
+  nicht im PROD war.
+
+Das Beispiel mag etwas *konstruiert* anmuten, es beschreibt aber einen typischen
+Fall (**conflict**), dem bei einem Merge besondere Beachtung geschenkt werden
+muss. Schon aus der Beschreibung oben wird klar, dass im PROD und im QS parallel
+und unabhängig voneinander an dem problematischen Maskenfeld (bzw.
+Auswahlbrowser) Änderungen vorgenommen wurden: im PROD ist das Feld ``free`` und
+im QS muss es -- mit dem korrigierten Auswahlbrowser -- auf ``catalog``
+konfiguriert sein.  Werden die beiden Entwicklungslinien nun zusammengeführt, so
+besteht ein *Konflikt* zw. dem HotFix |HotFix| und dem letztem Stand der QS, der
+*nun* gemerged werden soll.
+
+An welchem Commit der Konflikt mit der QS Entwicklungslinie auftritt brauchen
+wir nicht zu wissen, wir sollten nur wissen, dass es immer zu Konflikten kommen
+kann, wenn zwei Entwicklungslinien zusammengeführt werden. Konflikte müssen
+erkannt und dann *fachlich* aufgelöst werden, so dass aus der Summe der beiden
+Entwicklungslinien eine funktionierende und sinnvolle Anwendung entsteht.
+
+.. admonition:: Konflikte müssen fachlich/inhaltlich aufgelöst werden, dafür
+                gibt es keine Tools.
+   :class: tip
+
+   Vorausgesetzt die Entwicklungslinien sind sauber und bauen aufeinander auf,
+   so sind die meisten Konflikte eher inhaltlicher/fachlicher Natur. Tools
+   können helfen solche Konflikte zu erkennen, sie können aber keine fachlichen
+   Fragen beantworten und sind somit auch nicht in der Lage die detektierten
+   Konflikte selbständig aufzulösen.
+
+Bei Weiterentwicklungen auf Basis der CONTACT Elements gibt es zwei Arten von
+Konflikten:
+
+- Konflikte im Quellcode: meist werden diese schon durch das SCM System (git)
+  beim Merge erkannt. Der Merge Vorgang bleibt an der Stelle dann stehen und man
+  muss ggf. manuell noch korrigierend eingreifen.
+
+- Konflikte in der Konfiguration: Die Konfigurationen in der DB werden in JSON
+  Dateien exportiert und im (Kunden-) Paket transportiert. Die JSON Dateien kann
+  man nicht mit dem SCM mergen. Für die Zusammenführung zweier Konfigurationen
+  gibt es die Tools ``cdbpkg diff`` und ``cdbpkg patch``. Nach dem ``cdbpkg
+  patch`` kann man die Konflikte in CDB recherchieren und diese (fachlich) in
+  CDB interaktiv auflösen.
+
+Die Vorgehensweisen beim Merge werden im Abschnitt ":ref:`rm_merge_cdbpg_patch`"
+detailliert beschrieben. Egal ob mit oder ohne Änderungen an der Konfiguration,
+es gilt immer:
+
+.. admonition:: Der Merge zweier Entwicklungslinien wird immer mit SCM-Commit
+                abgeschlossen.
+   :class: tip
+
+   Beim Merge wird die **Patch-Serie** aus der einen Änderungslinie (QS) nahtlos
+   an die andere Entwicklungslinie (PROD/master) angehängt. Alle einzelnen
+   Commits aus QS sind jetzt Teil von PROD. Der merge-point |merge-point| ist
+   auch ein Commit, er trägt u.A. die Änderungen in sich, die im Rahmen des
+   Merge zur Konfliktauflösung vorgenommen wurden.
+
+Im unteren Teil der Abbildung ":ref:`figure-rm-qs-merge`" ist bereits die PROD
+Entwicklungslinie nach dem Merge dargestellt. Die Abb. ":ref:`rm-bp-merged-qs`"
+zeigt das Eingangs gezeigte :ref:`big picture <figure-rm-big_picture>` nach dem
+Merge.  In beiden Darstellungen ist zu sehen, dass sich die Commits, die vor dem
+Merge nur in der QS-Linie waren, nun in der PROD-Linie wiederzufinden sind. Der
+HotFix |HotFix| aus dem PROD verbleibt ebenfalls in der Historie, der
+ggf. vorhandene Konflikt wurde ja im merge-point |merge-point| aufgelöst.
+
+.. _rm-bp-merged-qs:
+
+.. figure:: release_management/big-picture-merged-qs.svg
+   :alt:    Figure (big-picture-merged-qs.svg)
+   :align:  center
+
+   big-picture (t\ :sub:`qs-merge`): Entwicklungslinien nach merge-qs 
+
+Schaut man auf die Abbildung, so kann man schon erahnen, wie ein Merge des
+Foo-branches aussehen würde. Ebenso wie eben beim Merge des QS in die PROD würde
+später (gestrichelte Linien) der ``foo`` Branch in die QS gemerged werden, wobei
+die Patch-Serie der grünen Linie (``foo``) an das Ende der QS angehängt würde.
+
+.. _rm_merge_cdbpg_patch:
+
+Merge mit SCM und cdbpkg Tools
+==============================
+
+Die Zusammenführung zweier Entwicklungslinien soll wieder am Beispiel
+:ref:`merge-qs <figure-rm-qs-merge>` erfolgen, bei dem der QS-Branch in den PROD
+gemerged wird.
+
+
+
+ToDo: https://return42.github.io/cdb-tools/slides/cdb_comp/index.html#/38
+
+- Dump & Commit des Ziel-Systems (cdbpkg-build/-commit & git commit)
+- git worktree add /tmp/foo-start <branch-point>
+- git checkout foo
+- cdbpkg diff cust.plm -p /tmp/foo-start -d /tmp
+- $ cd cust.plm
+- $ git checkout master
+- $ git merge foo                               # SCM-Merge
+- $ cdbpkg patch /tmp/patch_cust.fo_xx_yyyy     # CDB-Merge
+- cdbpkg build cust.plm
+- $ git add --all .
+- $ git commit -m "merged branch 'foo'"
+- $ cdbpkg commit cust.plm
+
+
+   
 .. _rm_create_branch:
 
 Branch anlegen
@@ -153,6 +303,19 @@ festzuhalten. Dieser *eingefrorene* Zustand wird später beim Merge benötigt um
 Konflikte der Weiterentwicklung mit den (letzten) Änderungen des Ziels seit dem
 Branch zu erkennen und manuell in CDB *aufzulösen* anstatt einfach nur mit dem
 Stand der Weiterentwicklung zu überspielen.
+
+Die Abbildung :ref:`branch point <figure-rm-branch-foo>` zeigt den zeitlichen
+Verlauf des Feature-Branch ``foo`` in einer Infrastruktur mit PROD und
+QS. Inital beginnt der Branch am Branch-Point zum Zeitpunkt t\ :sub:`foo`.
+
+.. _figure-rm-branch-foo:
+
+.. figure:: release_management/branch-foo.svg
+   :alt:    Figure (branch-foo.svg)
+   :align:  center
+
+   branch-point: Abzweigung für einen Feature-Branch
+
 
 Die Abspaltung von Entwicklungslinien sollte immer vom *aktuellen* PROD
 (**master**) aus erfolgen. Dort fangen alle Entwicklungen an, dort müssen sie am
@@ -223,28 +386,9 @@ ggf. Spiegel Systeme aufbauen zu können. Evtl. reicht aber auch schon die
 jeweilige System-Sicherung der DB für einen Import im Spiegel System aus. Egal,
 wie man es macht, man sollte sich den Export zum Branch-Point solange aufheben,
 bis die Änderung im PROD gemerged wurde (die Änderung also in Betrieb genommen
-wurde). Hilfreich können Namen oder Listen sein, die Datum des Exports und den
-Namen des Branch-Points erkennen lassen, wie z.B.::
+wurde). Hilfreich können Namen oder Listen sein, die das Datum des Exports und
+den Namen des Branch-Points erkennen lassen, wie z.B.::
 
-  PROD-EXP-<YYYYMMDD-HH:MM>-<branch-name>
+  PROD-EXP-<YYYYMMDD-HH:MM>-<branch-name>.
 
- 
-.. _rm_merge_branch:
 
-Änderungen zusammenführen
-=========================
-
-ToDo: https://return42.github.io/cdb-tools/slides/cdb_comp/index.html#/38
-
-- Dump & Commit des Ziel-Systems (cdbpkg-build/-commit & git commit)
-- git worktree add /tmp/foo-start <branch-point>
-- git checkout foo
-- cdbpkg diff cust.plm -p /tmp/foo-start -d /tmp
-- $ cd cust.plm
-- $ git checkout master
-- $ git merge foo                               # SCM-Merge
-- $ cdbpkg patch /tmp/patch_cust.fo_xx_yyyy     # CDB-Merge
-- cdbpkg build cust.plm
-- $ git add --all .
-- $ git commit -m "merged branch 'foo'"
-- $ cdbpkg commit cust.plm

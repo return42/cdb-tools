@@ -32,7 +32,7 @@
   <line fill="none" stroke="#999999" stroke-width="5" stroke-linecap="undefined" stroke-linejoin="undefined" y2="100" x2="265" y1="100" x1="210" transform="rotate(65, 237.5, 100)" id="svg_9" marker-end="url(#se_marker_end_svg_9)"/>
   <ellipse fill="#ffffaa" stroke="#7f0000" stroke-width="1.5" ry="10" rx="10" id="master_bullte_yellow" cy="75" cx="225"/>
   <line fill="none" stroke="#999999" stroke-width="5" stroke-dasharray="2, 2" stroke-linecap="undefined" stroke-linejoin="undefined" y2="75" x2="675" y1="75" x1="385" id="svg_12"/>
-  <text style="cursor: move;" font-family="Sans-serif" text-anchor="start" fill="#000000" stroke="#4c4c4c" stroke-width="0" xml:space="preserve" font-size="16px" y="80" x="685" id="svg_15">PROD (maser)</text>
+  <text style="cursor: move;" font-family="Sans-serif" text-anchor="start" fill="#000000" stroke="#4c4c4c" stroke-width="0" xml:space="preserve" font-size="16px" y="80" x="685" id="svg_15">PROD (master)</text>
   <text style="cursor: move;" font-family="Sans-serif" text-anchor="start" fill="#000000" stroke="#4c4c4c" stroke-width="0" xml:space="preserve" font-size="16px" y="130" x="690" id="svg_16">QS (qs)</text>
   <ellipse fill="#4c4c4c" stroke="#7f0000" stroke-width="1.5" ry="10" rx="10" cy="125" cx="285" id="svg_18"/>
   <line fill="none" stroke="#007f00" stroke-width="5" stroke-linecap="undefined" stroke-linejoin="undefined" y2="180" x2="390" y1="180" x1="190" id="svg_20" marker-end="url(#se_marker_end_svg_24)"/>
