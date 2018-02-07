@@ -4,6 +4,6 @@
 
  <g id="branch-point-container">
   <title>branch-point</title>
-  <ellipse cx="12" cy="12" rx="10" ry="10" stroke-width="1.5" fill="#ffffaa" stroke="#666666" id="branch-point"/>
+  <ellipse cx="12" cy="12" rx="10" ry="10" stroke-width="1.5" fill="#ffffaa" stroke="#7f0000" id="branch-point"/>
  </g>
 </svg>

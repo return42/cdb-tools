@@ -4,7 +4,7 @@
 .. |HotFix| image:: release_management/hotfix-point.svg
 .. |branch-point| image:: release_management/branch-point.svg
 .. |merge-point| image:: release_management/merge-point.svg
-             
+
 .. _release_management:
 
 ======================================
@@ -96,10 +96,21 @@ es wird eine koordinierende Instanz benötigt.
    Projekt-Terminen und den dadurch erforderlichen Planungen in der Entwicklung
    & im Test.
 
-Um die am System angebrachten (Teil-) Änderungen zu verwalten bedient man sich
-eines Source-Code-Managment-Systems (SCM). Als SCM System empfiehlt es sich --
-aufgrund der hohen Flexibilität -- die Versionsverwaltung mit git_ abzubilden
-(s.a. Foliensammlung zur pragmatischen Einarbeitung: `get git started`_).
+Um die am System angebrachten Teil-Änderungen zu verwalten bedient man sich
+eines Source-Code-Managment-Systems (SCM). Die parallelen Entwicklungen auf
+Basis der Komponentenarchitektur bedingen entsprechend viele parallele
+Entwicklungslinien, s.a. `SCM-Branching`_. Damit empfiehlt es sich git_ als
+SCM-System einzusetzen, das über ein besonders leichtes, schnellws und flexibles
+Branching-Model verfügt.
+
+.. admonition:: Als SCM-System bietet sich git_ an
+   :class: tip
+
+   Andere SCM-System insbesondere zentrale SCM-Systeme wie SVN eignen sich
+   weniger, da sie bei der Arbeit mit Branches zu schwach sind und kaum
+   brauchbare Unterstützung bieten.  *Sollten Sie noch SVN verwenden, dann
+   wechseln Sie JETZT zu* git_. Siehe auch Foliensammlung zur pragmatischen
+   Einarbeitung: `get git started`_.
 
 Die Abbildung :ref:`big picture <figure-rm-big_picture>` zeigt den zeitlichen
 Verlauf dreier Änderungen in einer Infrastruktur mit PROD und QS. Jeder
@@ -258,55 +269,245 @@ ggf. vorhandene Konflikt wurde ja im merge-point |merge-point| aufgelöst.
    :alt:    Figure (big-picture-merged-qs.svg)
    :align:  center
 
-   big-picture (t\ :sub:`qs-merge`): Entwicklungslinien nach merge-qs 
+   big-picture (t\ :sub:`qs-merge`): Entwicklungslinien nach merge-qs
 
 Schaut man auf die Abbildung, so kann man schon erahnen, wie ein Merge des
 Foo-branches aussehen würde. Ebenso wie eben beim Merge des QS in die PROD würde
 später (gestrichelte Linien) der ``foo`` Branch in die QS gemerged werden, wobei
-die Patch-Serie der grünen Linie (``foo``) an das Ende der QS angehängt würde.
+die Patch-Serie der grünen Linie (``foo``) an das Ende der QS angehängt werden
+würde.
 
 .. _rm_merge_cdbpg_patch:
 
-Merge mit SCM und cdbpkg Tools
+Merge mit git und cdbpkg Tools
 ==============================
 
 Die Zusammenführung zweier Entwicklungslinien soll wieder am Beispiel
-:ref:`merge-qs <figure-rm-qs-merge>` erfolgen, bei dem der QS-Branch in den PROD
-gemerged wird.
+:ref:`qs-merge <figure-rm-qs-merge>` erfolgen, bei dem der QS-Branch in die
+PROD-Linie gemerged wird.
+
+.. admonition:: Vor einem Merge oder Branch letzten Änderungsstand comitten.
+   :class: tip
+
+   Bevor eine Merge durchgeführt oder einen Branch abspaltet wird, sollte zuvor
+   sichergestellt werden, dass auch der aktuelle Stand im SCM commited wurde.
+
+Da bei CONTACT Elements Anpassungen auch in der DB vorhanden sein können, stellt
+man zuerst sicher, dass alle Änderungen im SCM-System comitted sind. Dazu geht
+man auf das Ziel-System -- hier im Beispiel ist das PROD (**master**) -- und
+leitet die Konfiguration in die JSON Dateien aus:
+
+.. code-block:: bash
+
+   # !!! Auf dem Ziel-System / im Ziel-Branch (z.B. master)  !!!
+   $ git checkout master
+   $ cdbpkg build cust.plm               # DB export
+
+Sollte danach ein ``git status`` eine Differenz anzeigen, so wird der nun im
+Dateisystem vorliegende letzte Änderungsstand als der *aktuelle* Stand im SCM
+(im **master** Branch) festgehalten:
+
+.. code-block:: bash
+
+   # Auf dem Ziel-System / im Ziel-Branch (z.B. master)
+   $ git add --all .          # SCM-Commit ..
+   $ git commit -m "retain last changes from PROD"
+   $ cdbpkg commit cust.plm   # CDB-Commit
+   $ git push                 # auf zentralem Server ablegen
+
+.. admonition:: Vor einem Merge muss das Diff der CDB-Konfigurationen ermittelt
+                werden.
+   :class: tip
+
+   Die Konfigurationen sind zwar in den JSON Dateien enthalten, für einen Merge
+   eignet sich dieses Format aber nicht. Für die Zusammenführung zweier
+   Konfigurationen erzeugt man mit ``cdbpkg diff`` einen Patch den man mit
+   ``cdbpkg patch`` einspielen kann. Anschließend kann man die Änderungen in CDB
+   recherchieren und ggf. vorhandene Konflikte auflösen..
+
+Das Kommando ``cdbpkg diff`` erechnet die Differenz zwischen zwei Ständen der
+Konfiguration eines Pakets. Um die Differenz des Kunden-Pakets (``cust.plm``) in
+der Änderungslinie (QS) zu berechnen wird dazu der Ausgangspunkt, also
+Branch-Point der QS Linie und der letzte Stand der Änderungslinie (QS)
+benötigt, siehe Abb. :ref:`rm-cdbpkg-diff-qs`:
+
+.. _rm-cdbpkg-diff-qs:
+
+.. figure:: release_management/cdbpkg-diff-qs.svg
+   :alt:    Figure (rm-cdbpkg-diff-qs)
+   :align:  center
+
+   merge: cdbpkg diff & cdbpkg patch
+
+Der Ausgangspunkt des Feature-Branch ist der branch-point |branch-point| an dem
+die Änderungslinie abzweigt. Den Commit der Abzweigung kann man mit folgendem
+Kommando ermitteln::
+
+  $ git log --oneline --decorate --graph --all
+  ...
+  | * 8e448cd (hello-world) hello-world: add changelog
+  | * 0dd2abe add hello-world script
+  * | c1ce07c add remark about 'hello world' order
+  |/
+  * 9af1a51 add README
+  * 849c175 inital boilerplate
+
+Obiges Log-Beispiel stammt aus der Foliensammlung `get git started`_, das
+Reposetory dazu ist `github.com/return42/git-teaching
+<https://github.com/return42/git-teaching/network>`__. Es soll hier ersatzweise
+als ein Beispiel dienen um den Commit zu *finden*, an dem der branch-point
+|branch-point| abzweigt, in dem Beispiel ist zu sehen, dass der
+``(hello-world)`` Branch bei Commit ``9af1a51`` abzweigt. Neben dem ``git log``
+kann man aber auch andere Werkzeuge wie z.B. die `Git Extensions
+<https://gitextensions.github.io/>`__ verwenden (s.a. `git GUI Clients
+<https://git-scm.com/downloads/guis>`__) um die Historie zu visualisieren.
+
+Im Beispiel Abb. :ref:`rm-cdbpkg-diff-qs` zweigt die QS Linie zum Zeitpunkt t\
+:sub:`qs` ab, wir nehmen an, dass der Branch-Point bei einem Commit ``4711``
+liegt. Damit wir den Diff anfertigen können muss der Stand zum Zeitpunkt t\
+:sub:`qs` (also commit ``4711``) nun in einen separaten Ordner ausgecheckt
+werden. Hier im Beispiel verwenden wir ``/tmp/qs-branch-point`` (kann später
+wieder gelöscht werden).
+
+.. code-block:: bash
+
+   # !!! Auf dem Quell-System / im Feature-Branch (z.B. foo oder qs)  !!!
+   $ git checkout qs
+   ...
+   # git worktree add <workspace-folder> <branch-point>
+   $ git worktree add /tmp/qs-branch-point 4711
+
+Nachdem Feature-Branch ``qs`` und der Branch-Point ausgecheckt wurden, kann nun
+mit ``cdbpkg diff`` die Differenz zwischen den beiden Konfigurationsständen des
+``cust.plm`` Pakets berechnet werden.
+
+.. code-block:: bash
+
+   $ cdbpkg diff -p /tmp/qs-branch-point -d /tmp/merge-qs-patch cust.plm
+   Writing changes to directory /tmp/merge-qs-patch
+
+Der cdbpkg-Patch liegt nun im Ordner ``/tmp/merge-qs-patch`` und man kann mit
+dem eigentlichen Merge anfangen. Als Erstes werden die Sourcen mit dem SCM
+gemerged. Dazu wechselt man in den Branch, in den man die Änderungen mergen
+will, wichtig ist wieder, dass die cdbpkg Tools auf einen BLOB-Store und die DB
+(des Ziel Systems) zugreifen können.
+
+.. admonition:: Die cdbpkg Tools müssen beim Merge Zugriff auf das Ziel System haben
+   :class: tip
+
+   Bei einem Merge z.B. von einem Feature-Branch in die QS wird man den Merge
+   direkt im QS System ausführen, da hier Ausfallzeiten i.d.R. nicht relevant
+   sind. Die im Betrieb befindliche PROD wird man kaum längere zeit ausfallen
+   lassen können, deshalb wird man sich i.d.R. ein Spiegel-System (Kopie der
+   PROD) aufsetzen und den Merge dort durchführen. Mit einem solchen
+   Spiegel-System kann der RollOut vorbereitet und getestet werden.
+
+Hier in den Beispielen *mergen* wir immer direkt in das Ziel System, in diesem
+Beispiel also direkt in die PROD (``master``). **Bei dem Merge muss man beachten,
+dass man nur den Source Code nicht aber die ganze Konfiguration in den JSON
+Dateien mergen darf**. Der Merge beginnt deshalb erst mal ganz normal:
+
+.. code-block:: bash
+
+   # !!! Auf dem Ziel-System / im Ziel-Branch (z.B. master)  !!!
+   $ git checkout master
+   ...
+   $ git merge qs --no-commit --no-ff     # SCM merge
+   Auto-merging cust.plm/cust/plm/module_metadata.json
+   ...
+   CONFLICT (content): Merge conflict in cust.plm/cust/plm/module_metadata.json
+   Automatic merge failed; fix conflicts and then commit the result.
+
+Ganz gleich ob man an dieser Stelle einen Conflict erhalten hat oder nicht, das
+merge Kommando hat (versucht) die JSON Dateien aus dem ``qs`` Branch in den
+``master`` Branch zu mergen und dass soll ja nicht sein.
+
+Deshalb muss nun der Merge für die JSON Dateien sozusagen wieder auf den Stand
+*zurück gespult* werden, der im ``master`` als Letztes eingecheckt ist. Am
+einfachsten geht das bei git mit ``checkout --ours``:
+
+.. code-block:: bash
+
+   $ cd cust.plm/cust/plm
+   ...
+   $ git checkout --ours configuration module_metadata.json
+   $ git checkout --ours content_metadata.json patches # ab CDB15 nicht mehr erforderlich
+   ...
+   $ git add configuration module_metadata.json
+   $ git add content_metadata.json patches             # ab CDB15 nicht mehr erforderlich
 
 
+.. admonition:: Konfiguration (JSON) darf nicht vom SCM-System gemerged werden.
+   :class: tip
 
-ToDo: https://return42.github.io/cdb-tools/slides/cdb_comp/index.html#/38
+   Die Konfigurationen in den JSON Dateien werden nicht gemerged! Für den Merge
+   der Konfiguration hat man sich mit ``cdbpkg diff`` einen Patch erzeugt, den
+   man einspielen muss. Anschließend kann man die Änderungen in CDB
+   recherchieren und ggf. vorhandene Konflikte auflösen..
 
-- Dump & Commit des Ziel-Systems (cdbpkg-build/-commit & git commit)
-- git worktree add /tmp/foo-start <branch-point>
-- git checkout foo
-- cdbpkg diff cust.plm -p /tmp/foo-start -d /tmp
-- $ cd cust.plm
-- $ git checkout master
-- $ git merge foo                               # SCM-Merge
-- $ cdbpkg patch /tmp/patch_cust.fo_xx_yyyy     # CDB-Merge
-- cdbpkg build cust.plm
-- $ git add --all .
-- $ git commit -m "merged branch 'foo'"
-- $ cdbpkg commit cust.plm
+Mit ``git status`` kann man nun überprüfen ob es auch Konflikte außerhalb der
+JSON Dateien im Source-Code gab. Wenn das der Fall ist, muss man diese Konflikte
+auflösen und die dabei angebrachten Änderungen mit ``git add`` in den *Stage*
+aufnehmen. Nachdem alle Konflikte aufgelöst sind sollte in der ``git status``
+Ausgabe ein Satz wie *All conflicts fixed but you are still merging.* zu finden
+sein, hier eine beispielhafte Ausgabe:
+
+.. code-block:: bash
+
+  On branch testmerge
+  All conflicts fixed but you are still merging.
+    (use "git commit" to conclude merge)
+
+  Changes to be committed:
+
+          modified:   cust/plm/configuration/misc/cdb_dialog.json
+          modified:   cust/plm/configuration/patches/cs.documents/classes/document.json
+          modified:   cust/plm/configuration/patches/cs.pcs.projects/classes/cdbpcs_project.json
+
+Sollte in der Ausgabe noch ein *Unmerged paths* auftauchen, so hat man noch
+nicht alle Konflikte im Source-Code aufgelöst.
+
+.. code-block:: bash
+
+   Unmerged paths:
+
+       both modified:   cust/plm/foo.py
+
+Erst wenn alle Konflikte im Source-Code aufgelöst sind hat man wieder eine
+*lauffähige* Instanz. In der kann als nächstes die Konfiguration eingespielt
+werden. Dazu nimmt man den zuvor erzeugten cdbpkg-Patch ``/tmp/merge-qs-patch``:
+
+.. code-block:: bash
+
+   $ cdbpkg patch /tmp/merge-qs-patch     # CDB-Merge
+
+Nun kann man in CDB die Änderungen recherchieren und und etwaige Konflikte
+auflösen. Der Merge ist abgeschlossen, sobald man der Überzeugung ist, dass alle
+Änderungen korrekt übernommen wurden. Man hat dann Änderungen im Dateisystem und
+an der Konfiguration in der DB die noch nicht ins SCM Commited wurden. Um den
+Merge zu vollziehen und im SCM aufzunehmen muss man wieder einen *build*
+erzeugen und dann alles ins SCM als auch in CDB (app_conf) *committen*:
+
+.. code-block:: bash
+
+   $ cdbpkg build cust.plm
+   ...
+   $ git add --all .
+   $ git commit -m "merged branch 'qs'"
+   $ cdbpkg commit cust.plm
 
 
-   
 .. _rm_create_branch:
 
 Branch anlegen
 ==============
 
-Die Aufgabe des Branch-Point ist es, einen klar definierten Zustand
-festzuhalten. Dieser *eingefrorene* Zustand wird später beim Merge benötigt um
-Konflikte der Weiterentwicklung mit den (letzten) Änderungen des Ziels seit dem
-Branch zu erkennen und manuell in CDB *aufzulösen* anstatt einfach nur mit dem
-Stand der Weiterentwicklung zu überspielen.
-
-Die Abbildung :ref:`branch point <figure-rm-branch-foo>` zeigt den zeitlichen
-Verlauf des Feature-Branch ``foo`` in einer Infrastruktur mit PROD und
-QS. Inital beginnt der Branch am Branch-Point zum Zeitpunkt t\ :sub:`foo`.
+Die Aufgabe des Branch-Point ist es, einen klar definierten Zustand festzuhalten
+(s.a. `Branches-in-a-Nutshell
+<https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell>`__) auf
+dem eine Änderungslinie aufbaut.  Dieser *eingefrorene* Zustand wird von CDB
+später beim Merge benötigt um die Differenz zwischen zwei Ständen der
+Konfig. (DB,JSON) eines Pakets zu berechnen, s.a. :ref:`rm-cdbpkg-diff-qs`.
 
 .. _figure-rm-branch-foo:
 
@@ -316,32 +517,37 @@ QS. Inital beginnt der Branch am Branch-Point zum Zeitpunkt t\ :sub:`foo`.
 
    branch-point: Abzweigung für einen Feature-Branch
 
-
-Die Abspaltung von Entwicklungslinien sollte immer vom *aktuellen* PROD
-(**master**) aus erfolgen. Dort fangen alle Entwicklungen an, dort müssen sie am
-Ende auch wieder hin führen.
-
-.. code-block:: bash
-
-   $ git checkout master
-
-Mit dem Aus-checken des ``master`` wird ein ``cdbsql`` Kommando dieser Instanz
-auch gleichzeitig gegen die PROD Datenbank verbinden (s. ``etc/dbtab``). Sofern
-man sich nicht bereits auf dem Applikation-Server befindet sollte man
-sicherstellen, dass die ``cdbpkg`` Kommandos, die im Folgenden abgesetzt werden,
-eine Verbindung zur Datenbank und dem BLOB-Store des PROD Systems aufbauen kann.
-
-Abspaltungen für Systeme wie z.B. QS werden regelmäßig (nach einem Merge oder
-test) aus der PROD aktualisiert. Die Aktualisierung eines Feature-Branch aus der
-PROD sollte i.d.R. nicht erforderlich sein, ist aber im Bedarfsfall
+Die Abbildung :ref:`branch point <figure-rm-branch-foo>` zeigt den zeitlichen
+Verlauf des Feature-Branch ``foo`` in einer Infrastruktur mit PROD und
+QS. Abspaltungen für Systeme wie z.B. QS werden regelmäßig (nach einem Merge
+oder Test) aus der PROD aktualisiert. Die Aktualisierung eines Feature-Branch
+aus der PROD sollte i.d.R. nicht erforderlich sein, ist aber im Bedarfsfall
 grundsätzlich möglich (s.a. `Merging vs. Rebasing
 <https://www.atlassian.com/git/tutorials/merging-vs-rebasing>`__ & `The Golden
 Rule of Rebasing
 <https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing>`__).
 
-Bevor der Branch angelegt werden kann, sollte der aktuelle Zustand der
-Konfigurationen in der DB gebaut und als letzte Version im SCM aufgenommen
-werden, von der aus dann der Branch erfolgen kann.
+Inital beginnt der foo-Branch am Branch-Point zum Zeitpunkt t\ :sub:`foo`.  Die
+Abspaltung von Entwicklungslinien sollte immer vom *aktuellen* PROD (**master**)
+aus erfolgen. Dort fangen alle Entwicklungen an, dort müssen sie am Ende auch
+wieder hin.
+
+Um sicherzustellen, dass alle Änderungen aus der DB bereits im SCM
+sind wird prophylaktisch ein ``build`` erzeugt:
+
+.. code-block:: bash
+
+   # !!! Auf dem master (PROD)  !!!
+   # sollte eigentlich schon ausgechekt sein ...
+   $ git checkout master 
+
+Wichtig ist wieder, dass die cdbpkg Tools auf einen BLOB-Store und die DB
+zugreifen können (hier im Beispiel ist das der Applikation Server der PROD).
+
+
+!!!!!!!!!!! hier gehts weiter !!!!!!!!!!!!
+
+
 
 .. code-block:: bash
 
@@ -392,3 +598,87 @@ den Namen des Branch-Points erkennen lassen, wie z.B.::
   PROD-EXP-<YYYYMMDD-HH:MM>-<branch-name>.
 
 
+Commit-Messages
+===============
+
+In der Praxis wird den Commit-Messages leider in viel zu vielen Projekten und
+leider auch von vielen Zulieferern noch zu wenig Beachtung geschenkt, dabei sind
+die Commit-Messages insbesondere bei langlebigen Projekten und wechselnden
+Projektteams von besonderem Wert.
+
+Saubere Commit-Messages sind erste Voraussetzung für eine Recherche.  Eine
+Commit-Message gibt Auskunft darüber, was eine Änderung bezwecken soll und was
+die Motivation zu dieser Änderung war. Die Historie eines Änderungsverlaufs wird
+durch die Summe der Commit-Messages beschrieben. In dieser Historie will man
+sich als Entwickler bewegen und einen Änderungsverlauf verstehen, ohne dass man
+dazu die einzelnen Teil-Änderungen im Detail anschaut. Es muss im Verlauf der
+Historie zumindest grob erkennbar werden, *was, wann, wo und warum* geändert
+wurde. Das wird z.B. deutlich wenn es um die Auflösung von Konflikten geht,
+dabei muss man (beim Merge) wissen, warum *diese Änderung hier im Branch* anders
+ausgefallen ist als *die gleiche Änderung im anderen Branch*. Ohne die
+inhaltlichen, fachlichen und ggf. auch technischen Hintergründe einer Änderung
+muss derjenige, der den Merge durchführt selber erahnen was die Gründe dafür
+waren und wie man den Konflikt am besten auflöst .. keine gute Voraussetzung.
+
+.. admonition:: Die Commit-Message sollte *einheitlich* und *ausdrucksstark*
+                sein.
+   :class: tip
+
+   In der Praxis hat sich ein einfaches Schema bewährt::
+
+      <tag>: <Zusammenfassung>
+
+      Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy
+      eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam
+      voluptua.
+
+Es hat sich bewährt die ersten Zeile am Anfang mit einem ``<tag>`` mit
+anschließendem Doppelpunkt zu beginnen. Das ``<tag>`` sollte einen Hinweis auf
+den Kontext geben, zu dem diese Änderung gehört. Z.B. ``FooFoo:`` für alle
+Commits (Beiträge), die das FooFoo-Feature implementieren und/oder korrigieren.
+Der Kontext kann eine Fehler-/Vorfall-nummer (z.B.: ``I004711:`` für *issue
+4711*), die Kurzbezeichnung eines Projekts, einer Sparte, eine Modulzuordnung
+(z.B. ``doc:`` für Korrekturen an der Doku) sein. Manchmal kann der Kontext aber
+auch ganz allgemeiner Natur sein, z.B. ``HotFix:``.
+
+Die erste Zeile sollte ein kompakter *one-liner* mit Kontext und Zusammenfassung
+sein, der aber auch nicht mehr als 80 oder 120 Zeichen haben sollte.  Darauf
+folgt eine Leerzeile und danach kann ein ausführlicherer Text kommen der die
+Hintergründe dieser Änderung beschreibt. Dabei beschreibt man nicht den
+Source-Code, sondern das, was die Änderung bezwecken soll.  Für das Beispiel von
+oben, bei dem ein HotFix angebracht wurde, könnte man beispielsweise schreiben::
+
+  HotFix: Maskenfeld XYZ auf 'free' gesetzt
+
+  Das Maskenfeld XYZ war mit einem defekten Auswahlbrowser XYZ konfiguriert, der
+  falsche Werte lieferte. Damit die Anwender erst mal weiter arbeiten können
+  wird dieser HotFix angebracht, mit dem die Editierbarkeit des Maskenfelds von
+  'catalog' (nur aus dem Katalog zu befüllen) in 'free' (frei editierbar)
+  geändert wird.
+
+  Eine Überarbeitung des Auswahlbrowser XYZ findet derzeit schon im QS statt und
+  soll später diesen HotFix ersetzen.
+
+Wenn man später (:ref:`so wie oben gezeigt <rm_merge_branch>`) dann die
+Überarbeitung aus dem QS in die PROD merged, dann weiß man aufgrund der
+ausführlichen Commit-Message genau, wie man mit dem Konflikt rund um das
+Maskenfeld XYZ umzugehen hat.
+
+Ohne eine derartige Commit-Message und ohne den Hinweis auf *HotFix* und
+*Überarbeitung im QS* wüsste man beim Merge nicht mehr warum die Änderung damals
+im Hotfix (der nicht als solcher bezeichnet wurde) in dieser Form angebracht
+wurde und man muss erahnen ob 'free' oder 'catalog' die richtige Auflösung für
+den Konflikt darstellen.
+
+Hier noch ein negativ-Beispiel::
+
+  BugFix: Maskenfeld XYZ auf 'free' gesetzt
+
+  Das Maskenfeld XYZ sollte auf 'free' gesetzt werden; ist hiermit
+  erledigt.
+
+Letztere Commit-Message hat für andere Entwickler als den Ersteller kaum
+Informationsgehalt. Es fehlt der Hinweis darauf, dass es sich eigentlich nur um
+einen HotFix handelt, das eigentlich der Auswahlbrowser kaputt ist und das
+dieser noch überarbeitet wird und das diese Überarbeitung diesen HotFix dann
+ersetzen wird.

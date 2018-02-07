@@ -6,7 +6,7 @@
 .. _git: https:/git-scm.com/
 .. _SVN: https://subversion.apache.org/
 .. _`Merge Strategien`: https://git-scm.com/docs/git-merge#_merge_strategies
-
+.. _SCM-Branching: https://en.wikipedia.org/wiki/Branching_(version_control)
 .. _Releases: https://github.com/return42/cdb-tools/releases
 
 .. _`pip.ini`: https://github.com/return42/cdb-tools/blob/master/bootstrap/pip.ini
