@@ -11,24 +11,37 @@
 Releasemanagement und CONTACT Elements
 ======================================
 
-Eine der wichtigen Voraussetzungen zur soliden Projektdurchführung ist ein
-*sauberes* Releasemanagement, das -- soweit als möglich -- parallele
-Weiterentwicklung an (Teil-) Projekten erlaubt. Softwareentwicklung ist immer
-eine Team Leistung bei der die Team-Mitglieder ihre Änderungs-Beiträge aus den
-Teil-Projekten in eine Infrastruktur einbringen. Diese Änderungs-Beiträge
-durchwandern i.d.R. noch (Anwender-) Tests und Bugfixing bevor sie
-schlussendlich in den *Rollout* gehen.
+  *Das Releasemanagement hat zur Aufgabe, sicherzustellen, dass eine erwartete
+  Anforderung an eine Veränderung in einem Prozess mit einem vertretbaren Risiko
+  in der geforderten Zeit erfolgreich umgesetzt werden kann.* `[ref]
+  <https://de.wikipedia.org/wiki/Releasemanagement>`__
 
-Das Releasemanagement ist nicht willkürlich, es wird bestimmt durch die
-Verfahren, mit denen eine Änderung durch eine Infrastruktur transportiert werden
-kann. Bei CONTACT Elements basiert der Transport von Änderungen auf der
-Komponentenarchitektur (s. a. Foliensammlung `CDB Komponenten & Entwicklung
-<slides/cdb_comp/index.html>`_) und die kennt eine Teilung **nur entlang der
-Pakete**. Damit ist gemeint, dass ein Transport immer alle Änderungen eines
-**ganzen Pakets** umfasst. Bei typischen Kunden-Entwicklungen werden also immer
-alle Änderungen in dem Kundenpaket (z.B. ``cust.pdm``) transportiert.
+Ein geordnetes Releasemanagement ist reproduzierbar, trägt zu einer Verkürzung
+der Durchlaufzeiten von Änderungen bei und mindert die Risiken in Projekten.
+*Kurzum;* das Releasemanagement ist ein wichtiger Baustein der Projekt-Planung
+und -Durchführung. Softwareentwicklung ist immer eine Team-Leistung bei der die
+Team-Mitglieder ihre Änderungen aus verschiedensten Projekten in EINE
+Infrastruktur einbringen. Diese Änderungs-Beiträge durchwandern i.d.R. noch
+(Anwender-) Tests und *BugFixing* bevor sie schlussendlich in den Rollout
+gehen. Aufgabe des Releasemanagement ist es, Entwicklungsprozesse über alle
+Phasen des Projekts hin zu erfassen und einem geordnetem Verfahren zu
+unterwerfen.
 
-.. admonition:: Der Scope einer Änderung umfasst immer das ganze Paket.
+Das Releasemanagement kann nicht willkürlich ausgelegt werden, es wird
+maßgeblich bestimmt durch die Verfahren, mit denen eine Änderung durch eine
+Infrastruktur transportiert werden kann. Bei CONTACT Elements basiert der
+Transport von Änderungen auf der Komponentenarchitektur (s.a. Foliensammlung
+`CDB Komponenten & Entwicklung <slides/cdb_comp/index.html>`_) und die kennt
+eine Teilung **nur entlang der Pakete**. Damit ist gemeint, dass ein Transport
+immer alle Änderungen eines **ganzen Pakets** umfasst. Die parallele Entwicklung
+an unterschiedlichen Paketen ist damit bereits durch die Komponentenarchitektur
+ausreichend entkoppelt. Dieser Artikel befasst sich also ausschließlich mit der
+Problematik die entsteht, wenn man parallel an ein und dem selbem Paket in
+verschieden Änderungs-Projekten parallel arbeiten will.
+
+.. _cs_elements_transport:
+
+.. admonition:: Der Transport einer Änderung umfasst immer das ganze Paket.
    :class: tip
 
    Ein (Kunden-) Paket kann immer nur als ganze Einheit transportiert werden. Es
@@ -36,21 +49,64 @@ alle Änderungen in dem Kundenpaket (z.B. ``cust.pdm``) transportiert.
    gleichzeitig aber doch für sich getrennt durch ein System (z.B. QS) zu
    transportieren.
 
-Aus Sicht der Weiterentwicklung von Kundenanpassungen (``cust.pdm``) wird hier
-schon die erste Einschränkung deutlich: Im Grunde können Kundenanpassungen in
-einem Paket nur *nacheinander* entwickelt, getestet und ausgerollt werden. In
-der Praxis ist das Verfahren jedoch kaum aufrecht zu erhalten, es müssen immer
-HOTFIXes angebracht und Änderungen parallel entwickelt werden können.
+Aus Sicht der Weiterentwicklung von Kundenanpassungen (``cust.plm``) wird hier
+schon die erste maßgebliche Einschränkung des Releasemanagement deutlich: Im
+Grunde können Weiterentwicklungen an einem (Kunden)-Paket nur *nacheinander*
+entwickelt, getestet und ausgerollt werden.
+
+In der Praxis wird man ein Releasemanagement finden müssen, dass einem unter den
+gegebenen Rahmenbedingungen mehr Flexibilität bietet: Es muss immer mal wieder
+ein HotFix angebracht werden und es muss ein Verfahren zur parallelen
+Entwicklung geben. Auch wenn dieses Verfahren nicht über eine so schöne
+Entkopplung wie die Pakete zueinander verfügt und deshalb auch etwas aufwendiger
+sein wird als in getrennten Paketen parallel zu entwickeln.
+
+Bei typischen CDB-Kunden existiert in der Kundenanpassung i.d.R. nur ein Paket
+(``cust.plm``) und es wird dafür ein geordnetes Releasemanagement benötigt.  Die
+hier im Artikel aufgezeichneten Entwicklungslinien aus Abbildungen wie :ref:`big
+picture <figure-rm-big_picture>` zeigen immer die Entwicklungslinie **eines**
+Pakets. An der Trennung der Pakete wird schon deutlich, dass auch die
+Architektur der Kundenanpassung einen maßgeblichen Einfluss auf die
+Projekt-Planung resp. das Releasemanagement haben kann.
+
+.. _cs_elements_package_design:
+
+.. admonition:: Exkursion: Design & Architektur der Kundenanpassung
+   :class: note
+
+   Auch eine Kundenanpassung kann in mehrere Pakete aufgeteilt werden. Die
+   eigentliche Herausforderung dabei ist es, geeignete *Schnittlinien* zu
+   finden, die der Projekt-Planung und dem Releasemanagement auch zukunftssicher
+   mehr Freiheiten einräumen.  Bei den sich heute rasch ändernden Unternehmen
+   sind *Schnittlinien* -- die auch in weiter Zukunft noch ihre Berechtigung
+   haben -- im Vorfeld schwer festzulegen. Eine mögliche *Schnittlinie* könnte
+   entlang der Sparten eines Unternehmens erfolgen, wenn man weiß, dass die
+   Sparten mit unterschiedlichen Geschwindigkeiten Änderungsanforderungen an die
+   *CONTACT Elements* Infrastruktur stellen werden. Es gibt dafür aber keine
+   *allgemeingültige* Regel, weshalb wir hier nicht weiter auf dieses Thema
+   eingehen wollen.
 
 Die hier vorgestellten Verfahren zum Releasemanagement basieren auf einem
-allgemein als **Feature Branch** bekanntem Workflow. Dieser wird auch im CDB
-Handbuch zur Komponentenarchitektur vorgestellt. Während die Beschreibung dort
-von *idealen* Bedingungen der *CONTACT Elements* Infrastruktur ausgeht sind die
-hier vorgestellten Verfahren robuster (da der Scope des Reposetory größer ist)
-und hoffentlich auch praxisgerechter (weil auch Nutzdaten im Spiegel System
-sind).
+allgemein als `Feature Branch
+<https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow>`__
+bekanntem Workflow. Dieser wird auch im CDB Handbuch zur Komponentenarchitektur
+vorgestellt.
 
-.. admonition:: komplette Instanz wird versioniert
+.. _scm_caddok_base:
+
+Die im CDB Handbuch zur Komponentenarchitektur vorgestellten Verfahren gehen von
+*idealen* Bedingungen der *CONTACT Elements* Infrastruktur aus. Unter solch
+*idealen* Bedingungen werden theoretisch alle Änderungen innerhalb eines Pakets
+auch vom Paket erfasst. Für Softwarepakete von CONTACT oder Drittanbietern mag
+das (inzwischen) auch stimmen. In der Praxis wird eine Weiterentwicklung an den
+Kundenpaketen jedoch von Faktoren geprägt sein, die über den *Scope* des Pakets
+hinaus gehen. Dazu gehören Objekte zum Testen, Objekte die ggf. noch nicht im
+Kundenpakt aufgenommen wurden (z.B. Bugs wie *'Zuordnung zum Paket fehlt'* /
+*'mangelhaftes DB-Schema'*) oder beispielsweise die Anbindung von
+(Unternehmens-) Software an die Kundeninstanz, welche nicht von CDB-Komponenten
+abgedeckt wird.
+
+.. admonition:: komplette Instanz wird SCM-System versioniert
    :class: tip
 
    Es werden alle Dateien aus ``$CADDOK_BASE`` in die Versionsverwaltung mit
@@ -59,14 +115,68 @@ sind).
    Konfigurationen (z.B. aus ``$CADDOK_BASE/etc``). Nicht dazu gehören der
    BLOB-Store und temporäre Speicher wie z.B. ``./tmp`` und ``./app_conf``.
 
-Die im CDB Handbuch zur Komponentenarchitektur vorgestellten Verfahren, gehen
-davon aus, dass es reicht, dass Kundenpaket zu versionieren. Theoretisch werden
-damit alle Änderungen des Pakets erfasst. Für Softwarepakte von Contact oder
-dritt-Anbietern mag das (inzwischen) auch noch stimmen in der Praxis wird eine
-Weiterentwicklung i.d.R. aber von weiteren Faktoren geprägt sein. Dazu gehören
-Objekte zum Testen, Objekte die ggf. (noch) nicht im Kundenpakt aufgenommen
-wurden oder beispielsweise die Anbindung von (Unternehms-) Software im
-Customizing.
+.. _db_export_at_branch_point:
+
+Eine CONTACT Elements Installation verfügt immer über Anpassungen:
+
+- im Source Code und
+- in der DB
+
+Da wir nicht sicher sein können, dass alle Konfigurationen auch im ``cust.plm``
+Paket enthalten sind (aus oben genannten Gründen) und weil wir auch die
+Nutzdaten im Rahmen einer Entwicklung brauchen gilt für das hier vorgeschlagene
+Releasemanagement zusätzlich noch:
+
+.. admonition:: DB Export zu jedem Branch-Point
+   :class: tip
+
+   Sobald eine Entwicklung abzweigt (branch) wird ein Export der DB gesichert.
+   Die Entwickler können sich dann ein Entwickler-System aus dem DB Export
+   aufbauen (s.a. :ref:`init_cdb_mirror`).
+
+Näheres zum DB-Export kann weiter unten im Abschnitt zum Anlegen des
+Branch-Point nachgelesen werden. Hier noch ein paar umgangssprachliche
+Nomenklaturen:
+
+Rollout
+  Markteinführung einer Änderung
+
+PROD
+  Im Betrieb befindliche CONTACT Elements Infrastruktur, Ziel aller
+  Weiterentwicklungen.
+
+QS
+  CONTACT Elements Infrastruktur die für die Anwendertests der Änderungen bereit
+  gestellt wird.
+
+Commit
+  Kleinste Einheit einer Änderung die im SCM-System versioniert werden kann auch
+  *atomare* Änderung genannt und in den Abbildungen mit einem Kreis dargestellt
+  (Hintergrundfarbe kann in den Abbildungen je nach Bedeutung des Commits
+  variieren)
+
+HotFix
+  Eine Fehlerbehebung (i.d.R.) im PROD-System um den Betrieb erst mal aufrecht
+  zu erhalten. Auch solche Änderungen müssen im Releasemanagement beachtet
+  werden und werden im SCM-System versioniert. Jeder HotFix ist auch ein commit,
+  in den Abbildungen mit einem Kreis dargestellt: |HotFix| 
+
+Merge
+  Die Zusammenführung zwei oder mehrerer Entwicklungen, meist aber die
+  Zusammenführung zweier Entwicklungslinien. Abgesehen von seltenen Ausnahmen
+  (fast-forward) ist der Merge auch immer eine Änderung, ein commit im
+  SCM-System der auch merge-point bezeichnet wird. In den Abbildungen mit einem
+  Kreis dargestellt: |merge-point|
+
+Branch: ``master``
+  Haupt-Entwicklungslinie und i.d.R. auch gleichzeitig Stand des PROD 
+
+Branch: ``qs``
+  Entwicklungslinie der QS
+
+Branch-Point
+  Abzweigung resp. Start-Punkt einer Entwicklungslinie. In den
+  Abbildungen durch einen gelben Kreis |branch-point| gekennzeichnet.
 
 
 Big Picture
@@ -74,36 +184,43 @@ Big Picture
 
 Bereits in der Einleitung wurde festgestellt, dass ein *sauberess*
 Releasemanagement nicht willkürlich sein kann; es muss kausalen Ketten folgen
-und unter den gegebenen Rahmenbedingungen (s.o. ) abbildbar sein. Welche
-**Rahmenbedingungen** im Einzelnen zu beachten sind soll im Weiterem erarbeitet
-werden. Als Gegenstand dient eine exemplarische Infrastruktur mit:
+und unter den gegebenen Rahmenbedingungen (s.o. *Transport*) abbildbar
+sein. Welche **Rahmenbedingungen** im Einzelnen zu beachten sind soll im
+Weiterem erarbeitet werden. Als Gegenstand dient eine exemplarische
+Infrastruktur mit:
 
 - einer PROD Instanz für den *Betrieb* der Anwendung im Unternehmen und
 - einer QS Instanz in der (Anwender-) Tests durchgeführt werden.
 
-Eine solche Infrastruktur ist sicherlich die *kleinst-mögliche*, sie reicht aber
-aus um die Anforderungen und Verfahren rund um das Releasemanagement zu
-erörtern.  In der Praxis wird man oftmals eine etwas größere Infrastruktur,
-beispielsweise mit einem HotFix-System und einer gemeinsamen Entwickler Umgebung
-(DEV) vorfinden. Ganz gleich wie aufwendig die Infrastruktur letztendlich ist,
-es wird eine koordinierende Instanz benötigt.
+Eine solche Infrastruktur (:ref:`big picture <figure-rm-big_picture>`) ist
+sicherlich die *kleinst-mögliche*, sie reicht aber aus um die Anforderungen und
+Verfahren rund um das Releasemanagement zu erörtern.  In der Praxis wird man
+oftmals eine etwas größere Infrastruktur, evtl. mit einem HotFix-System und
+einer gemeinsamen Entwickler Umgebung (DEV) vorfinden und für Planung und Test
+des Rollout wird man sich ggf. noch einen Spiegel des PROD Systems anlegen.
+Ganz gleich wie aufwendig die Infrastruktur letztendlich ist, es wird eine
+koordinierende Instanz benötigt; der **Maintainer**.
 
-.. admonition:: Maintainer koordiniert alle Änderungen (im SCM)
+.. _job_of_maintainer:
+
+.. admonition:: Der Maintainer koordiniert alle Änderungen (im SCM)
    :class: tip
 
    Die Koordination der Änderungen im Entwicklerteam, den Anwendertests und den
-   RollOuts übernimmt der *Maintainer*. Der Maintainer vermittelt zw. den
+   Rollouts übernimmt der *Maintainer*. Der Maintainer vermittelt zw. den
    Projekt-Terminen und den dadurch erforderlichen Planungen in der Entwicklung
    & im Test.
 
 Um die am System angebrachten Teil-Änderungen zu verwalten bedient man sich
 eines Source-Code-Managment-Systems (SCM). Die parallelen Entwicklungen auf
-Basis der Komponentenarchitektur bedingen entsprechend viele parallele
-Entwicklungslinien, s.a. `SCM-Branching`_. Damit empfiehlt es sich git_ als
-SCM-System einzusetzen, das über ein besonders leichtes, schnellws und flexibles
-Branching-Model verfügt.
+Basis der CDB Komponentenarchitektur bedingen entsprechend viele parallele
+Entwicklungslinien (a.k.a. Branches, s.a. `SCM-Branching`_). Damit empfiehlt es
+sich git_ als SCM-System einzusetzen, da es über ein besonders leichtes,
+schnelles und flexibles Branching-Model verfügt.
 
-.. admonition:: Als SCM-System bietet sich git_ an
+.. _recommend_git:
+
+.. admonition:: Als SCM-System bietet sich git an
    :class: tip
 
    Andere SCM-System insbesondere zentrale SCM-Systeme wie SVN eignen sich
@@ -114,7 +231,7 @@ Branching-Model verfügt.
 
 Die Abbildung :ref:`big picture <figure-rm-big_picture>` zeigt den zeitlichen
 Verlauf dreier Änderungen in einer Infrastruktur mit PROD und QS. Jeder
-kreisförmige Punkt entspricht einer (Teil-) Änderung die im SCM festgestellt
+kreisförmige Punkt entspricht einer (Teil-) Änderung die im SCM-System erfasst
 wird (kurz **commit**). Die Teil-Änderungen (Punkte) entlang einer
 Entwicklungslinie (z.B. ``foo``) beschreiben in ihrer Gesamtheit den
 Änderungsauftrag (das Feature) und werden allgemein auch als **Patch-Serie**
@@ -130,39 +247,38 @@ bezeichnet.
 
 Links von t\ :sub:`0` (*jetzt-Zeit*) ist die Historie und rechts der
 Planungsverlauf zu sehen. In oberster Linie ist der Verlauf des im Betrieb
-befindlichen PROD Systems zu sehen. Darunter der Verlauf des QS Systems.  Des
+befindlichen PROD Systems zu sehen. Darunter der Verlauf des QS-Systems.  Des
 weiteren sind noch die Entwicklungslinien zweier Weiterentwicklungen zu sehen,
 die folgend nur mit den *Platzhaltern* ``foo`` und ``bar`` bezeichnet werden
 sollen.
 
-- ``foo`` und ``bar``
+``foo`` & ``bar``
+  Zwei exemplarische Weiterentwicklungen die z.B. an einen Lieferanten
+  beauftragt wurden oder aber im eigenen Haus abgewickelt werden. Beide
+  Entwicklungslinien wurden, wie die QS vom PROD abgespalten (**branch**) und
+  beide werden später wieder mit der PROD zusammengeführt (**merge**).
 
-Zwei exemplarische Weiterentwicklungen die z.B. an einen Lieferanten beauftragt
-wurden oder aber im eigenen Haus abgewickelt werden. Beide Entwicklungslinien
-wurden, wie die QS vom PROD abgespalten (**branch**) und beide werden später
-wieder mit der PROD zusammengeführt (**merge**).
+PROD
+  Die letzte Änderung vor t\ :sub:`0` war ein *HotFix*. Planmäßig sollen als
+  Nächstes (in der Reihenfolge) die letzten Änderungen aus QS, aus ``foo`` und aus
+  ``bar`` in den Betrieb genommen werden.
 
-- PROD
+QS
+  Zum Zeitpunkt t\ :sub:`0` befindet sich eine Änderung in der QS, die in der
+  Projektplanung als nächstes ausgerollt werden soll. Für den Rollout muss die
+  QS mit dem PROD zusammengeführt werden (**merge**). Etwaige Konflikte aus den
+  Änderungen aus dem HotFix mit den letzten Änderungen aus dem QS müssen
+  aufgelöst werden.
 
-Die letzte Änderung vor t\ :sub:`0` war ein *Hotfix*. Planmäßig sollen als
-Nächstes (in der Reihenfolge) die letzten Änderungen aus QS, aus ``foo`` und aus
-``bar`` in den Betrieb genommen werden.
-
-- QS
-
-Zum Zeitpunkt t\ :sub:`0` befindet sich eine Änderung in der QS, die in der
-Projektplanung als nächstes ausgerollt werden soll. Für den RollOut muss die QS
-mit dem PROD zusammengeführt werden (**merge**). Etwaige Konflikte aus den
-Änderungen aus dem HotFix mit den letzten Änderungen aus dem QS müssen aufgelöst
-werden.
-
-.. admonition:: Abspaltung immer von der Entwicklungslinie des PROD
+.. _always_branch_from_master:
+  
+.. admonition:: Abspaltung immer von der Entwicklungslinie des PROD (**master**)
    :class: tip
 
-   Ob und in welcher Form eine *aktuelle* Änderung z.B. aus dem QS System
-   überhaupt in Betrieb genommen wird, kann nie mit absoluter Sicherheit gesagt
-   werden. Deswegen empfiehlt es sich, jede Änderungen immer vom *aktuellen*
-   PROD ausgehend zu starten.
+   Ob und in welcher Form eine *aktuelle* Änderung z.B. aus dem QS-System
+   überhaupt in Betrieb genommen wird, kann im Vorfeld nie mit absoluter
+   Sicherheit gesagt werden. Deswegen empfiehlt es sich, jede Änderungen immer
+   direkt vom *aktuellen* PROD ausgehend zu starten.
 
 .. _rm_merge_branch:
 
@@ -170,8 +286,9 @@ Zusammenführung zweier Entwicklungslinien
 =========================================
 
 Die Zusammenführung zwei Entwicklungslinien wird allgemein auch als **merge**
-bezeichnet. Ziel ist es, die Änderungen aus der einen Entwicklungslinie mit
-denen aus einer anderen Entwicklungslinie zusammenzuführen. Im folgendem
+bezeichnet. Der Merge ist die eigentliche Herausforderung im Rahmen des
+Releasemanagement. Ziel ist es, die Änderungen aus der einen Entwicklungslinie
+mit denen aus einer anderen Entwicklungslinie zusammenzuführen. Im Folgendem
 Beispiel sollen die vier Änderungen aus dem QS Branch in den PROD Branch
 gemischt werden. Die Abbildung :ref:`qs-merge <figure-rm-qs-merge>` zeigt die
 Entwicklungslinie des QS Branch bevor (obere Hälfte) und nachdem (untere Hälfte)
@@ -208,27 +325,29 @@ und unabhängig voneinander an dem problematischen Maskenfeld (bzw.
 Auswahlbrowser) Änderungen vorgenommen wurden: im PROD ist das Feld ``free`` und
 im QS muss es -- mit dem korrigierten Auswahlbrowser -- auf ``catalog``
 konfiguriert sein.  Werden die beiden Entwicklungslinien nun zusammengeführt, so
-besteht ein *Konflikt* zw. dem HotFix |HotFix| und dem letztem Stand der QS, der
-*nun* gemerged werden soll.
+besteht ein *Konflikt* zw. dem HotFix |HotFix| und dem letztem Stand der QS
+|merge-point|, der *nun* gemerged werden soll.
 
 An welchem Commit der Konflikt mit der QS Entwicklungslinie auftritt brauchen
-wir nicht zu wissen, wir sollten nur wissen, dass es immer zu Konflikten kommen
-kann, wenn zwei Entwicklungslinien zusammengeführt werden. Konflikte müssen
-erkannt und dann *fachlich* aufgelöst werden, so dass aus der Summe der beiden
-Entwicklungslinien eine funktionierende und sinnvolle Anwendung entsteht.
+wir nicht zu wissen, wir sollten nur wissen, **dass es immer zu Konflikten
+kommen kann, wenn zwei Entwicklungslinien zusammengeführt werden.** Konflikte
+müssen erkannt und dann *fachlich* aufgelöst werden, so dass aus der Summe der
+beiden Entwicklungslinien eine funktionierende und sinnvolle Anwendung entsteht.
 
 .. admonition:: Konflikte müssen fachlich/inhaltlich aufgelöst werden, dafür
                 gibt es keine Tools.
    :class: tip
 
-   Vorausgesetzt die Entwicklungslinien sind sauber und bauen aufeinander auf,
-   so sind die meisten Konflikte eher inhaltlicher/fachlicher Natur. Tools
-   können helfen solche Konflikte zu erkennen, sie können aber keine fachlichen
-   Fragen beantworten und sind somit auch nicht in der Lage die detektierten
-   Konflikte selbständig aufzulösen.
+   Vorausgesetzt die Entwicklungslinien sind kurz und bauen aufeinander auf, so
+   sind die meisten Konflikte eher inhaltlicher/fachlicher Natur. Tools können
+   helfen solche Konflikte zu erkennen, sie können aber keine fachlichen Fragen
+   beantworten und sind somit auch nicht in der Lage die detektierten Konflikte
+   selbständig aufzulösen.
+
+.. _cs_elements_conflicts:
 
 Bei Weiterentwicklungen auf Basis der CONTACT Elements gibt es zwei Arten von
-Konflikten:
+potentiellen Konflikten:
 
 - Konflikte im Quellcode: meist werden diese schon durch das SCM System (git)
   beim Merge erkannt. Der Merge Vorgang bleibt an der Stelle dann stehen und man
@@ -286,44 +405,33 @@ Die Zusammenführung zweier Entwicklungslinien soll wieder am Beispiel
 :ref:`qs-merge <figure-rm-qs-merge>` erfolgen, bei dem der QS-Branch in die
 PROD-Linie gemerged wird.
 
-.. admonition:: Vor einem Merge oder Branch letzten Änderungsstand comitten.
+.. admonition:: Vor einem Merge oder Branch den letzten Änderungsstand comitten.
    :class: tip
 
-   Bevor eine Merge durchgeführt oder einen Branch abspaltet wird, sollte zuvor
-   sichergestellt werden, dass auch der aktuelle Stand im SCM commited wurde.
+   Bevor ein Merge durchgeführt oder einen Branch abspaltet wird, muss
+   sichergestellt sein, dass der aktuelle Stand im SCM commited wurde.
+   Insbesondere die Konfiguration aus der DB sollte dabei nicht vergessen
+   werden, hierzu siehe :ref:`rm_dump_into_scm`.
 
-Da bei CONTACT Elements Anpassungen auch in der DB vorhanden sein können, stellt
-man zuerst sicher, dass alle Änderungen im SCM-System comitted sind. Dazu geht
-man auf das Ziel-System -- hier im Beispiel ist das PROD (**master**) -- und
-leitet die Konfiguration in die JSON Dateien aus:
+Sobald der aktuelle Stand im SCM-System ist, kann mit dem eigentlichen Merge
+angefangen werden. Ein Merge in CONTACT Elements besteht dabei immer aus zwei
+Teilen (s.a. :ref:`potentielle Konflikte beim Merge <cs_elements_conflicts>`):
 
-.. code-block:: bash
+- Source Code: wird mit SCM (git) gemerged
+- Konfiguration in der DB: wird mit ``cdbpkg diff & patch`` in CDB gemerged.
 
-   # !!! Auf dem Ziel-System / im Ziel-Branch (z.B. master)  !!!
-   $ git checkout master
-   $ cdbpkg build cust.plm               # DB export
-
-Sollte danach ein ``git status`` eine Differenz anzeigen, so wird der nun im
-Dateisystem vorliegende letzte Änderungsstand als der *aktuelle* Stand im SCM
-(im **master** Branch) festgehalten:
-
-.. code-block:: bash
-
-   # Auf dem Ziel-System / im Ziel-Branch (z.B. master)
-   $ git add --all .          # SCM-Commit ..
-   $ git commit -m "retain last changes from PROD"
-   $ cdbpkg commit cust.plm   # CDB-Commit
-   $ git push                 # auf zentralem Server ablegen
-
+Die Konfiguration ist zwar in den JSON Dateien und somit im SCM-System
+enthalten, für einen Merge mit dem SCM-System eignet sich das JSON Format aber
+nicht.
+   
 .. admonition:: Vor einem Merge muss das Diff der CDB-Konfigurationen ermittelt
                 werden.
    :class: tip
 
-   Die Konfigurationen sind zwar in den JSON Dateien enthalten, für einen Merge
-   eignet sich dieses Format aber nicht. Für die Zusammenführung zweier
-   Konfigurationen erzeugt man mit ``cdbpkg diff`` einen Patch den man mit
-   ``cdbpkg patch`` einspielen kann. Anschließend kann man die Änderungen in CDB
-   recherchieren und ggf. vorhandene Konflikte auflösen..
+   Für die Zusammenführung zweier Konfigurationen erzeugt man mit ``cdbpkg
+   diff`` einen Patch den man mit ``cdbpkg patch`` einspielen kann. Anschließend
+   kann man die Änderungen in CDB recherchieren und ggf. vorhandene Konflikte
+   auflösen.
 
 Das Kommando ``cdbpkg diff`` erechnet die Differenz zwischen zwei Ständen der
 Konfiguration eines Pakets. Um die Differenz des Kunden-Pakets (``cust.plm``) in
@@ -353,21 +461,21 @@ Kommando ermitteln::
   * 849c175 inital boilerplate
 
 Obiges Log-Beispiel stammt aus der Foliensammlung `get git started`_, das
-Reposetory dazu ist `github.com/return42/git-teaching
+Repository dazu ist `github.com/return42/git-teaching
 <https://github.com/return42/git-teaching/network>`__. Es soll hier ersatzweise
 als ein Beispiel dienen um den Commit zu *finden*, an dem der branch-point
-|branch-point| abzweigt, in dem Beispiel ist zu sehen, dass der
+|branch-point| abzweigt. In dem Beispiel ist zu erkennen, dass der
 ``(hello-world)`` Branch bei Commit ``9af1a51`` abzweigt. Neben dem ``git log``
 kann man aber auch andere Werkzeuge wie z.B. die `Git Extensions
-<https://gitextensions.github.io/>`__ verwenden (s.a. `git GUI Clients
-<https://git-scm.com/downloads/guis>`__) um die Historie zu visualisieren.
+<https://gitextensions.github.io/>`__ verwenden um die Historie zu visualisieren
+(s.a. `git GUI Clients <https://git-scm.com/downloads/guis>`__).
 
-Im Beispiel Abb. :ref:`rm-cdbpkg-diff-qs` zweigt die QS Linie zum Zeitpunkt t\
-:sub:`qs` ab, wir nehmen an, dass der Branch-Point bei einem Commit ``4711``
-liegt. Damit wir den Diff anfertigen können muss der Stand zum Zeitpunkt t\
-:sub:`qs` (also commit ``4711``) nun in einen separaten Ordner ausgecheckt
-werden. Hier im Beispiel verwenden wir ``/tmp/qs-branch-point`` (kann später
-wieder gelöscht werden).
+Im Beispiel der Abb. :ref:`rm-cdbpkg-diff-qs` zweigt die QS Linie zum Zeitpunkt
+t\ :sub:`qs` ab, hier im Beispiel nehmen wir mal an, dass der Commit zu diesem
+Stand die ID ``4711`` trägt. Damit wir den Diff anfertigen können muss der Stand
+zum Zeitpunkt t\ :sub:`qs` (also Commit ``4711``) nun in einen separaten Ordner
+ausgecheckt werden. Hier im Beispiel verwenden wir ``/tmp/qs-branch-point``
+(kann später wieder gelöscht werden).
 
 .. code-block:: bash
 
@@ -385,27 +493,40 @@ mit ``cdbpkg diff`` die Differenz zwischen den beiden Konfigurationsständen des
 
    $ cdbpkg diff -p /tmp/qs-branch-point -d /tmp/merge-qs-patch cust.plm
    Writing changes to directory /tmp/merge-qs-patch
+   ...
 
-Der cdbpkg-Patch liegt nun im Ordner ``/tmp/merge-qs-patch`` und man kann mit
-dem eigentlichen Merge anfangen. Als Erstes werden die Sourcen mit dem SCM
-gemerged. Dazu wechselt man in den Branch, in den man die Änderungen mergen
-will, wichtig ist wieder, dass die cdbpkg Tools auf einen BLOB-Store und die DB
-(des Ziel Systems) zugreifen können.
+Der cdbpkg-Patch liegt nun im Ordner ``/tmp/merge-qs-patch``. Der Workingtree
+``/tmp/qs-branch-point`` wird nicht mehr benötigt, er kann jetzt (oder auch
+später) aus dem ``/tmp`` gelöscht werden. Mit ``prune`` löscht man ihn dann auch
+aus dem lokalem git Repository:
+
+.. code-block:: bash
+
+   $ rm -r /tmp/qs-branch-point    # Worktree im Dateisystem löschen
+   $ git worktree prune
+
+Nachdem der cdbpkg-Patch vorbereitet ist, kann mit dem eigentlichen Merge
+anfangen werden.  Als Erstes werden die Sourcen mit dem SCM-System gemerged.
+Dazu wechselt man in den Branch, in dem man die Änderungen mergen
+will. **Wichtig ist wieder, dass die cdbpkg Tools auf einen BLOB-Store und die
+DB (des Ziel Systems) zugreifen können**.
 
 .. admonition:: Die cdbpkg Tools müssen beim Merge Zugriff auf das Ziel System haben
    :class: tip
 
    Bei einem Merge z.B. von einem Feature-Branch in die QS wird man den Merge
-   direkt im QS System ausführen, da hier Ausfallzeiten i.d.R. nicht relevant
-   sind. Die im Betrieb befindliche PROD wird man kaum längere zeit ausfallen
-   lassen können, deshalb wird man sich i.d.R. ein Spiegel-System (Kopie der
-   PROD) aufsetzen und den Merge dort durchführen. Mit einem solchen
-   Spiegel-System kann der RollOut vorbereitet und getestet werden.
+   meist direkt im QS-System ausführen, da hier die Ausfallzeiten flexibler
+   sind.  Die im Betrieb befindliche PROD bietet nur kurze Wartungsfenster für
+   den Rollout, weshalb dieser dezidiert vorbereitet werden muss.  I.d.R. findet
+   die Vorbereitung und der Test des Rollouts *zeitnah* in einem Spiegel-System
+   der PROD statt. Die PROD darf dann bis zum Rollout gegenüber dem Spiegel
+   keine Änderung an den Sourcen oder der Konfiguration erfahren.
 
 Hier in den Beispielen *mergen* wir immer direkt in das Ziel System, in diesem
-Beispiel also direkt in die PROD (``master``). **Bei dem Merge muss man beachten,
-dass man nur den Source Code nicht aber die ganze Konfiguration in den JSON
-Dateien mergen darf**. Der Merge beginnt deshalb erst mal ganz normal:
+Beispiel also direkt in die PROD (``master``). Bereits oben wurde erwähnt: **Bei
+einem Merge muss beachtet werden, dass nur der Source-Code nicht aber die ganze
+Konfiguration in den JSON Dateien gemerged werden**. Der Merge beginnt deshalb
+erst mal ganz normal:
 
 .. code-block:: bash
 
@@ -418,23 +539,31 @@ Dateien mergen darf**. Der Merge beginnt deshalb erst mal ganz normal:
    CONFLICT (content): Merge conflict in cust.plm/cust/plm/module_metadata.json
    Automatic merge failed; fix conflicts and then commit the result.
 
-Ganz gleich ob man an dieser Stelle einen Conflict erhalten hat oder nicht, das
-merge Kommando hat (versucht) die JSON Dateien aus dem ``qs`` Branch in den
-``master`` Branch zu mergen und dass soll ja nicht sein.
-
-Deshalb muss nun der Merge für die JSON Dateien sozusagen wieder auf den Stand
-*zurück gespult* werden, der im ``master`` als Letztes eingecheckt ist. Am
-einfachsten geht das bei git mit ``checkout --ours``:
+Ganz gleich ob man an dieser Stelle (wie hier im Beispiel) einen ``CONFLICT``
+erhalten hat oder nicht, das ``merge`` Kommando eines SCM-System führt
+i.d.R. immer alle Dateien im Workingtree zusammen. Es werden also auch immer die
+JSON Dateien mit dem Kommando gemerged.  Hier im Beispiel gab es dabei einen
+``CONFLICT``, das muss aber nicht unbedingt der Fall sein: manchmal *merged* das
+SCM-Merge auch irgendwas zusammen, was es für *richtig* hält und dann meldet es
+keinen Konflikt. Egal wie, **ein SCM-Merge ist nicht für die JSON Dateien**
+geeignet und wir müssen diesen Teil wieder *zurück spulen* zu dem, was im
+Ziel-Branch (hier der **master**) versioniert wurde.  Am einfachsten geht das im
+Rahmen eines git-Merge mit ``checkout --ours``:
 
 .. code-block:: bash
 
    $ cd cust.plm/cust/plm
-   ...
    $ git checkout --ours configuration module_metadata.json
-   $ git checkout --ours content_metadata.json patches # ab CDB15 nicht mehr erforderlich
-   ...
    $ git add configuration module_metadata.json
-   $ git add content_metadata.json patches             # ab CDB15 nicht mehr erforderlich
+
+Bei älteren CDB Versionen (10.x) müssen noch zwei weitere Objekte *zurück
+gespult* werden:
+
+.. code-block:: bash
+
+   $ cd cust.plm/cust/plm
+   $ git checkout --ours content_metadata.json patches # ab CDB 15 nicht mehr erforderlich
+   $ git add content_metadata.json patches             # ab CDB 15 nicht mehr erforderlich
 
 
 .. admonition:: Konfiguration (JSON) darf nicht vom SCM-System gemerged werden.
@@ -446,15 +575,24 @@ einfachsten geht das bei git mit ``checkout --ours``:
    recherchieren und ggf. vorhandene Konflikte auflösen..
 
 Mit ``git status`` kann man nun überprüfen ob es auch Konflikte außerhalb der
-JSON Dateien im Source-Code gab. Wenn das der Fall ist, muss man diese Konflikte
-auflösen und die dabei angebrachten Änderungen mit ``git add`` in den *Stage*
-aufnehmen. Nachdem alle Konflikte aufgelöst sind sollte in der ``git status``
-Ausgabe ein Satz wie *All conflicts fixed but you are still merging.* zu finden
-sein, hier eine beispielhafte Ausgabe:
+JSON Dateien im Source-Code gab. Sollte in der Ausgabe noch ein *Unmerged paths*
+auftauchen, so hat man noch nicht alle Konflikte im Source-Code aufgelöst.
 
 .. code-block:: bash
 
-  On branch testmerge
+   Unmerged paths:
+
+       both modified:   cust/plm/foo.py
+
+Wenn das der Fall ist, muss man diese Konflikte auflösen und die dabei
+angebrachten Änderungen wieder mit ``git add`` in den *Stage* aufnehmen.
+Nachdem alle Konflikte aufgelöst sind sollte in der ``git status`` Ausgabe ein
+Satz wie *All conflicts fixed but you are still merging.* zu finden sein, hier
+eine beispielhafte Ausgabe:
+
+.. code-block:: bash
+
+  On branch master
   All conflicts fixed but you are still merging.
     (use "git commit" to conclude merge)
 
@@ -463,30 +601,27 @@ sein, hier eine beispielhafte Ausgabe:
           modified:   cust/plm/configuration/misc/cdb_dialog.json
           modified:   cust/plm/configuration/patches/cs.documents/classes/document.json
           modified:   cust/plm/configuration/patches/cs.pcs.projects/classes/cdbpcs_project.json
+          modified:   cust/plm/foo.py
 
-Sollte in der Ausgabe noch ein *Unmerged paths* auftauchen, so hat man noch
-nicht alle Konflikte im Source-Code aufgelöst.
-
-.. code-block:: bash
-
-   Unmerged paths:
-
-       both modified:   cust/plm/foo.py
+Der merge der Dateien ist damit abgeschlossen und wir kommen zum zweiten Teil
+des Merge, bei dem die Konfiguration gemerged wird.  Dazu spielt man den
+cdbpkg-Patch ein und nach Prüfung in CDB wird nochmal ein ``build`` erzeugt.
 
 Erst wenn alle Konflikte im Source-Code aufgelöst sind hat man wieder eine
-*lauffähige* Instanz. In der kann als nächstes die Konfiguration eingespielt
-werden. Dazu nimmt man den zuvor erzeugten cdbpkg-Patch ``/tmp/merge-qs-patch``:
+*lauffähige* Instanz! In deren DB nun der zuvor erzeugte cdbpkg-Patch
+``/tmp/merge-qs-patch`` eingespielt wird:
 
 .. code-block:: bash
 
    $ cdbpkg patch /tmp/merge-qs-patch     # CDB-Merge
 
-Nun kann man in CDB die Änderungen recherchieren und und etwaige Konflikte
-auflösen. Der Merge ist abgeschlossen, sobald man der Überzeugung ist, dass alle
-Änderungen korrekt übernommen wurden. Man hat dann Änderungen im Dateisystem und
-an der Konfiguration in der DB die noch nicht ins SCM Commited wurden. Um den
-Merge zu vollziehen und im SCM aufzunehmen muss man wieder einen *build*
-erzeugen und dann alles ins SCM als auch in CDB (app_conf) *committen*:
+Nun kann man in CDB die Änderungen recherchieren und etwaige Konflikte auflösen.
+Der Merge ist abgeschlossen, sobald man der Überzeugung ist, dass alle
+Änderungen aus dem Branch korrekt übernommen wurden. Man hat dann Änderungen im
+Dateisystem und an der Konfiguration in der DB, die beide noch nicht ins SCM
+Commited wurden (der Merge ins SCM ist noch nicht abgeschlossen). Um den Merge
+abzuschließen und ins SCM-System aufzunehmen, muss man wieder einen *build*
+erzeugen und dann alles im SCM-System als auch in CDB (app_conf) *committen*:
 
 .. code-block:: bash
 
@@ -496,6 +631,13 @@ erzeugen und dann alles ins SCM als auch in CDB (app_conf) *committen*:
    $ git commit -m "merged branch 'qs'"
    $ cdbpkg commit cust.plm
 
+Die Änderungen sind (der Merge ist) jetzt im lokalem Klone des Repository. Er
+muss *irgendwann* dann auch mal an den SCM-Server gepusht werden. Bei einem
+Feature-Branch oder der QS wird man den Push vermutlich gleich durchführen. Bei
+der PROD (**master**) gehört dieser Push allerdings zum Rollout und sollte
+deshalb ggf. für später -- am besten kurz vor dem Rollout Termin -- eingeplant
+werden.
+   
 
 .. _rm_create_branch:
 
@@ -507,7 +649,7 @@ Die Aufgabe des Branch-Point ist es, einen klar definierten Zustand festzuhalten
 <https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell>`__) auf
 dem eine Änderungslinie aufbaut.  Dieser *eingefrorene* Zustand wird von CDB
 später beim Merge benötigt um die Differenz zwischen zwei Ständen der
-Konfig. (DB,JSON) eines Pakets zu berechnen, s.a. :ref:`rm-cdbpkg-diff-qs`.
+Konfiguration (JSON) eines Pakets zu berechnen, s.a. :ref:`rm-cdbpkg-diff-qs`.
 
 .. _figure-rm-branch-foo:
 
@@ -530,24 +672,84 @@ Rule of Rebasing
 Inital beginnt der foo-Branch am Branch-Point zum Zeitpunkt t\ :sub:`foo`.  Die
 Abspaltung von Entwicklungslinien sollte immer vom *aktuellen* PROD (**master**)
 aus erfolgen. Dort fangen alle Entwicklungen an, dort müssen sie am Ende auch
-wieder hin.
+wieder hin (:ref:`siehe oben <always_branch_from_master>`).
 
-Um sicherzustellen, dass alle Änderungen aus der DB bereits im SCM
-sind wird prophylaktisch ein ``build`` erzeugt:
+
+Branch mit git anlegen
+======================
+
+Für das Anlegen eines Branch-Points braucht man kein CDB-Tool und keinen
+CDB-Dienst.  Ein Branch-Point lässt sich sehr einfach auf einem Klone des git
+Repository anlegen, den man sich beispielsweise auf seinem Desktop PC erzeugt
+hat.  Dennoch sollte sichergestellt sein, dass sich auch *letzte* Änderungen
+bereits im SCM-System befinden. Insbesondere die Konfiguration aus der DB sollte
+dabei nicht vergessen werden, hierzu siehe :ref:`rm_dump_into_scm`. Ist das
+erledigt kann der Branch-Point ohne CDB angelegt werden. Hier im Beispiel soll
+der Branch-Point vom letzten Commit des PROD (**master**) ausgehen:
 
 .. code-block:: bash
 
-   # !!! Auf dem master (PROD)  !!!
-   # sollte eigentlich schon ausgechekt sein ...
-   $ git checkout master 
+   $ git clone http://gitserver/cust_plm # falls nicht eh schon vorhanden
+   $ git checkout -b master              # falls nicht bereits ausgecheckt
+   $ git pull                            # falls nicht eh schon aktuell
 
-Wichtig ist wieder, dass die cdbpkg Tools auf einen BLOB-Store und die DB
-zugreifen können (hier im Beispiel ist das der Applikation Server der PROD).
+Mit Letzterem hat man den aktuellen Stand des **masters** ausgecheckt (was
+i.d.R. auf dem PROD-Server ohnehin immer der Fall sein sollte).  Der
+Branch-Point kann nun auf dem aktuellen Stand des **master** angelegt werden,
+das geschieht immer erst mal lokal und dann schiebt man diesen Branch-Point auf
+den git-Server:
 
+.. code-block:: bash
 
-!!!!!!!!!!! hier gehts weiter !!!!!!!!!!!!
+   $ git branch <branch-name>         # Branch lokal anlegen aber nicht aus-checken
+   $ git push -u origin <branch-name> # Branch auf dem zentralem Server bereitstellen
 
+Vergleicht man die bisherige Vorgehensweise mit dem im CDB Handbuch zur
+Komponentenarchitektur vorgestellt Verfahren, so wird man merken, dass die
+Verfahren dort an diesem Punkt enden und nicht über das Paket hinaus gehen.  In
+der Praxis wird man aber bei der Weiterentwicklung auf Nutzdaten angewiesen
+sein, für die man sich nun ein Transport-Mechanismus ausdenken müsste. Diesen
+und anderen Problemen (:ref:`s.o. <scm_caddok_base>`) geht man am einfachsten
+aus dem Weg, indem man zu jedem Branch-Point einen Export der DB erstellt.
 
+.. admonition:: DB Export zu jedem Branch-Point
+   :class: tip
+
+   Das Spiegelsystem für die Entwicklung der geplanten Änderung wird aus dem DB
+   Export aufgebaut (s.a. :ref:`init_cdb_mirror`).
+
+Der DB Export wird im jeweiligen Management Tool des DB-Systems erstellt.  Für
+die Ablage eignet sich ein Share auf den die Entwickler zugreifen können um sich
+ggf. Spiegel-Systeme aufbauen zu können. Evtl. reicht aber auch schon die
+tagesaktuelle Sicherung des DB-Managment für einen Import im Spiegel-System
+aus. Egal, wie man es macht, man sollte sich den Export zum Branch-Point solange
+aufheben, bis die Änderung im PROD gemerged wurde (die Änderung also in Betrieb
+genommen wurde). Hilfreich können Namen oder Listen sein, die das Datum des
+Exports und den Namen des Branch-Points erkennen lassen, wie z.B.::
+
+  PROD-EXP-<YYYYMMDD-HH:MM>-<branch-name>.
+
+.. _rm_dump_into_scm:
+
+Dump der Konfiguration ins SCM
+==============================
+
+Bevor man einen Branch-Point anlegt oder einen Merge durchführt, muss der
+aktuelle Stand der Konfiguration -- der sich ggf. noch in der DB befindet -- in
+die JSON Dateien exportiert und in das SCM-System commited werden. Hierfür
+empfiehlt es sich prophylaktisch einen ``build`` zu erzeugen. Im folgendem
+Beispiel soll ein Dump der Konfigurationen des PROD Systems (**master**)
+erfolgen, also wird der ``build`` auch dort im PROD-System ausgeführt, der Dump
+von QS oder einem Feature-Branch wäre analog, nur hald' im jeweiligen Syystem:
+
+.. code-block:: bash
+
+   # !!! Auf dem jeweiligen System, hier z.B. dem master (PROD)      !!!
+   # !!! sollte der richtige Branch eigentlich schon ausgechekt sein !!!
+   $ git checkout master
+
+Wichtig ist, dass die cdbpkg Tools auf einen BLOB-Store und die DB zugreifen
+können, hier im Beispiel ist das der Applikation Server der PROD.
 
 .. code-block:: bash
 
@@ -558,52 +760,22 @@ Dateisystem vorliegende Stand als der *aktuelle* Stand im SCM festgehalten:
 
 .. code-block:: bash
 
-   $ git add --all .          # SCM-Commit ..
+   $ git add --all .                     # SCM-Commit ..
    $ git commit -m "retain last changes from PROD"
-   $ cdbpkg commit cust.plm   # CDB-Commit
-   $ git push                 # auf zentralem Server ablegen
+   $ cdbpkg commit cust.plm              # CDB-Commit
+   $ git push                            # auf SCM-Server ablegen
 
-Der Branch-Point kann nun auf dem aktuellen Stand des **master** angelegt
-werden, das geschieht immer erst mal lokal und dann schiebt man diesen
-Branch-Point auf den git-Server:
+Die hier in den Beispielen verwendeten Commit-Messages sind exemplarisch und für
+die Praxis ungeeignet, hierzu siehe Abschnitt :ref:`recommend_commit_msg`.
 
-.. code-block:: bash
-
-   $ git branch <branch-name>         # Branch lokal anlegen aber nicht aus-checken
-   $ git push -u origin <branch-name> # Branch auf dem zentralem Server bereitstellen
-
-Vergleicht man die bisherige Vorgehensweise mit denen im CDB Handbuch zur
-Komponentenarchitektur vorgestellt Verfahren, so wird man merken, dass die
-Verfahren dort an diesem Punkt enden. In der Praxis wird man aber bei der
-Weiterentwicklung auf Nutzdaten angewiesen sein, für die man sich nun ein
-Transport-Mechanismus ausdenken müsste. Diesen und anderen Problemen geht man am
-einfachsten aus dem Weg, indem man zu jedem Branch-Point einen Export der DB
-erstellt.
-
-.. admonition:: DB Export zu jedem Branch-Point
-   :class: tip
-
-   Das Spiegelsystem für die Entwicklung der geplanten Änderung wird aus dem DB
-   Export aufgebaut (s.a. :ref:`init_cdb_mirror`).
-
-Der DB Export wird im jeweiligen Management Tool des DB Anbieters erstellt.  Für
-die Ablage eignet sich ein Share auf den die Entwickler zugreifen können um sich
-ggf. Spiegel Systeme aufbauen zu können. Evtl. reicht aber auch schon die
-jeweilige System-Sicherung der DB für einen Import im Spiegel System aus. Egal,
-wie man es macht, man sollte sich den Export zum Branch-Point solange aufheben,
-bis die Änderung im PROD gemerged wurde (die Änderung also in Betrieb genommen
-wurde). Hilfreich können Namen oder Listen sein, die das Datum des Exports und
-den Namen des Branch-Points erkennen lassen, wie z.B.::
-
-  PROD-EXP-<YYYYMMDD-HH:MM>-<branch-name>.
-
+.. _recommend_commit_msg:
 
 Commit-Messages
 ===============
 
-In der Praxis wird den Commit-Messages leider in viel zu vielen Projekten und
-leider auch von vielen Zulieferern noch zu wenig Beachtung geschenkt, dabei sind
-die Commit-Messages insbesondere bei langlebigen Projekten und wechselnden
+In der Praxis wird den Commit-Messages in viel zu vielen Projekten und leider
+auch von vielen Zulieferern noch zu wenig Beachtung geschenkt, dabei sind die
+Commit-Messages insbesondere bei langlebigen Projekten und wechselnden
 Projektteams von besonderem Wert.
 
 Saubere Commit-Messages sind erste Voraussetzung für eine Recherche.  Eine
@@ -613,12 +785,15 @@ durch die Summe der Commit-Messages beschrieben. In dieser Historie will man
 sich als Entwickler bewegen und einen Änderungsverlauf verstehen, ohne dass man
 dazu die einzelnen Teil-Änderungen im Detail anschaut. Es muss im Verlauf der
 Historie zumindest grob erkennbar werden, *was, wann, wo und warum* geändert
-wurde. Das wird z.B. deutlich wenn es um die Auflösung von Konflikten geht,
-dabei muss man (beim Merge) wissen, warum *diese Änderung hier im Branch* anders
-ausgefallen ist als *die gleiche Änderung im anderen Branch*. Ohne die
-inhaltlichen, fachlichen und ggf. auch technischen Hintergründe einer Änderung
-muss derjenige, der den Merge durchführt selber erahnen was die Gründe dafür
-waren und wie man den Konflikt am besten auflöst .. keine gute Voraussetzung.
+wurde.
+
+Wie wichtig *gut gewählte* Commit Messages sind wird z.B. deutlich wenn es um
+die Auflösung von Konflikten geht. Dabei (beim Merge) muss man wissen, warum
+*diese Änderung hier im Branch* anders ausgefallen ist als *die gleiche Änderung
+im anderen Branch*. Ohne die inhaltlichen, fachlichen und ggf. auch technischen
+Hintergründe einer Änderung muss derjenige, der den Merge durchführt selber
+**erahnen** was die Gründe dafür waren und wie man den Konflikt am besten
+auflöst .. etwas zu **erahnen** ist keine solide Basis für eine Entscheidung.
 
 .. admonition:: Die Commit-Message sollte *einheitlich* und *ausdrucksstark*
                 sein.
@@ -634,27 +809,35 @@ waren und wie man den Konflikt am besten auflöst .. keine gute Voraussetzung.
 
 Es hat sich bewährt die ersten Zeile am Anfang mit einem ``<tag>`` mit
 anschließendem Doppelpunkt zu beginnen. Das ``<tag>`` sollte einen Hinweis auf
-den Kontext geben, zu dem diese Änderung gehört. Z.B. ``FooFoo:`` für alle
-Commits (Beiträge), die das FooFoo-Feature implementieren und/oder korrigieren.
-Der Kontext kann eine Fehler-/Vorfall-nummer (z.B.: ``I004711:`` für *issue
-4711*), die Kurzbezeichnung eines Projekts, einer Sparte, eine Modulzuordnung
-(z.B. ``doc:`` für Korrekturen an der Doku) sein. Manchmal kann der Kontext aber
-auch ganz allgemeiner Natur sein, z.B. ``HotFix:``.
+den Kontext geben, zu dem diese Änderung gehört. Der Kontext kann sein:
+
+- Eine Fehler- oder Vorfallnummer wie z.B.: ``I004711:`` für *issue 4711*
+
+- Die Kurzbezeichnung des Projekts, z.B. ``FooFoo:`` für alle Commits
+  (Beiträge), die das FooFoo-Feature implementieren und/oder korrigieren.
+
+- Eine Sparte oder eine Modulzuordnung, wie z.B. ``doc:`` für Korrekturen an der
+  Dokumentation
+
+- Manchmal kann der Kontext aber auch ganz allgemeiner Natur sein wie
+  z.B. ``HotFix:``
 
 Die erste Zeile sollte ein kompakter *one-liner* mit Kontext und Zusammenfassung
 sein, der aber auch nicht mehr als 80 oder 120 Zeichen haben sollte.  Darauf
 folgt eine Leerzeile und danach kann ein ausführlicherer Text kommen der die
 Hintergründe dieser Änderung beschreibt. Dabei beschreibt man nicht den
 Source-Code, sondern das, was die Änderung bezwecken soll.  Für das Beispiel von
-oben, bei dem ein HotFix angebracht wurde, könnte man beispielsweise schreiben::
+oben, bei dem ein HotFix angebracht wurde, könnte man beispielsweise schreiben:
+
+.. code-block:: none
 
   HotFix: Maskenfeld XYZ auf 'free' gesetzt
 
-  Das Maskenfeld XYZ war mit einem defekten Auswahlbrowser XYZ konfiguriert, der
-  falsche Werte lieferte. Damit die Anwender erst mal weiter arbeiten können
-  wird dieser HotFix angebracht, mit dem die Editierbarkeit des Maskenfelds von
-  'catalog' (nur aus dem Katalog zu befüllen) in 'free' (frei editierbar)
-  geändert wird.
+  Das Maskenfeld XYZ war mit einem defekten Auswahlbrowser XYZ konfiguriert,
+  welcher falsche Werte lieferte. Damit die Anwender erst mal weiter arbeiten
+  können wird dieser HotFix angebracht, mit dem die Editierbarkeit des
+  Maskenfelds von 'catalog' (nur aus dem Katalog zu befüllen) in 'free' (frei
+  editierbar) geändert wird.
 
   Eine Überarbeitung des Auswahlbrowser XYZ findet derzeit schon im QS statt und
   soll später diesen HotFix ersetzen.
@@ -664,21 +847,44 @@ Wenn man später (:ref:`so wie oben gezeigt <rm_merge_branch>`) dann die
 ausführlichen Commit-Message genau, wie man mit dem Konflikt rund um das
 Maskenfeld XYZ umzugehen hat.
 
-Ohne eine derartige Commit-Message und ohne den Hinweis auf *HotFix* und
+Ohne eine derartige Commit-Message und ohne die Hinweise auf *HotFix* &
 *Überarbeitung im QS* wüsste man beim Merge nicht mehr warum die Änderung damals
-im Hotfix (der nicht als solcher bezeichnet wurde) in dieser Form angebracht
-wurde und man muss erahnen ob 'free' oder 'catalog' die richtige Auflösung für
-den Konflikt darstellen.
+angebracht hatte. Hier noch das negativ-Beispiel dazu:
 
-Hier noch ein negativ-Beispiel::
+.. code-block:: none
 
   BugFix: Maskenfeld XYZ auf 'free' gesetzt
 
   Das Maskenfeld XYZ sollte auf 'free' gesetzt werden; ist hiermit
   erledigt.
 
-Letztere Commit-Message hat für andere Entwickler als den Ersteller kaum
+Letztere Commit-Message hat für andere Personen als den Ersteller kaum einen
 Informationsgehalt. Es fehlt der Hinweis darauf, dass es sich eigentlich nur um
 einen HotFix handelt, das eigentlich der Auswahlbrowser kaputt ist und das
 dieser noch überarbeitet wird und das diese Überarbeitung diesen HotFix dann
-ersetzen wird.
+ersetzen wird. Wie soll ein Maintainer der den Merge dazu durchführen will mit
+dem Kontext aber evtl. nicht vertraut ist, wie soll der wissen welche
+Entscheidungen er bei der Konfliktauflösung treffen soll. Ohne stundenlange
+Recherchen und Nachfragen ist es bei derart schlechten Commit-Messages oftmals
+kaum möglich vernünftige Entscheidungen treffen.
+
+.. admonition:: Schlechte Commit-Messages kosten Geld
+   :class: tip
+
+   Hört endlich auf damit und schreibt Eure Commit Message aus der Perspektive
+   des Maintainers, der Euer Projekt nicht im Detail kennen kann!!!!
+
+
+Common Pitfalls
+===============
+
+Ein paar Hinweise zu *gern* gemachten Fehlern:
+
+**Branch im laufendem Prozess wechseln**
+  Man darf auf einem System, auf dem CDB Prozesse laufen nicht einfach den
+  Workingtree ändern, indem man z.B. ein **checkout** eines anderen Branches
+  macht. Zum Einen mögen es die gerade aktiven Prozesse nicht, wenn man ihnen
+  den Workingtree *unter dem Arsch* wegreißt und zum Anderen hat jeder Branch
+  seine eigene DB .. im schlimmsten Fall wird dann noch gegen die falsche DB
+  Verbunden und diese dann sabotiert!
+
