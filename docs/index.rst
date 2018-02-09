@@ -30,11 +30,10 @@ bitte die :ref:`wichtigen Hinweise <cdbtools_hint>` lesen.
 Foliensammlungen
 ================
 
-* `CDB Komponenten & Entwicklung <slides/cdb_comp/index.html>`_
+* `CDB Komponenten & Entwicklung <slides/cdb_comp/index.html>`__
   (`zip <slides/cdb_comp.zip>`__)
 
-* `get git started <http://return42.github.io/handsOn/slides/git/index.html>`_
-  (`zip <http://return42.github.io/handsOn/slides/git.zip>`__)
+* `get git started`_ (`zip <http://return42.github.io/handsOn/slides/git.zip>`__)
 
 
 Projekt

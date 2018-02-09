@@ -2,7 +2,7 @@
 .. include:: ../refs.txt
 
 =============
-best practice
+Best practice
 =============
 
 In diesem Abschnitt finden Sie Hinweise und Tipps rund um CDB.

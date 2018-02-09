@@ -31,13 +31,17 @@ Das Releasemanagement kann nicht willkürlich ausgelegt werden, es wird
 maßgeblich bestimmt durch die Verfahren, mit denen eine Änderung durch eine
 Infrastruktur transportiert werden kann. Bei CONTACT Elements basiert der
 Transport von Änderungen auf der Komponentenarchitektur (s.a. Foliensammlung
-`CDB Komponenten & Entwicklung <slides/cdb_comp/index.html>`_) und die kennt
-eine Teilung **nur entlang der Pakete**. Damit ist gemeint, dass ein Transport
-immer alle Änderungen eines **ganzen Pakets** umfasst. Die parallele Entwicklung
-an unterschiedlichen Paketen ist damit bereits durch die Komponentenarchitektur
-ausreichend entkoppelt. Dieser Artikel befasst sich also ausschließlich mit der
-Problematik die entsteht, wenn man parallel an ein und dem selbem Paket in
-verschieden Änderungs-Projekten parallel arbeiten will.
+`CDB Komponenten & Entwicklung <../slides/cdb_comp/index.html>`__). Die
+Komponentenarchitektur kennt eine Teilung **nur entlang der Pakete**. Damit ist
+gemeint, dass ein Transport immer alle Änderungen eines **ganzen Pakets**
+umfasst, die Pakete zueinander aber entkoppelt sind.
+
+  Die parallele Entwicklung an unterschiedlichen Paketen ist durch
+  die Komponentenarchitektur ausreichend entkoppelt.
+
+Dieser Artikel befasst sich ausschließlich mit der Problematik die entsteht,
+wenn mehrere Veränderungsprojekte in einem Paket parallel umgesetzt werden
+müssen (was quasi für alle Kunden-Pakete der Fall ist).
 
 .. _cs_elements_transport:
 
@@ -115,12 +119,23 @@ abgedeckt wird.
    Konfigurationen (z.B. aus ``$CADDOK_BASE/etc``). Nicht dazu gehören der
    BLOB-Store und temporäre Speicher wie z.B. ``./tmp`` und ``./app_conf``.
 
-.. _db_export_at_branch_point:
 
 Eine CONTACT Elements Installation verfügt immer über Anpassungen:
 
 - im Source Code und
 - in der DB
+
+.. admonition:: Sourcen und Konfiguration in der DB bilden eine Einheit.
+   :class: tip
+
+   Jede Änderung und sei es nur eine kleine Änderung an der Konfiguration muss
+   dem Releasemanagement untergeordnet werden! Man sollte nicht einfach irgendwo
+   in einem uralten System was konfigurieren und davon ausgehen, man könne diese
+   Änderung *mal eben kurz ausrollen* und dabei das Releasemanagement umgehen.
+   Jede Änderung steht potentiell im Konflikt mit anderen, parallelen
+   Entwicklungslinien und muss eingeplant werden.
+
+.. _db_export_at_branch_point:
 
 Da wir nicht sicher sein können, dass alle Konfigurationen auch im ``cust.plm``
 Paket enthalten sind (aus oben genannten Gründen) und weil wir auch die
@@ -149,6 +164,8 @@ QS
   CONTACT Elements Infrastruktur die für die Anwendertests der Änderungen bereit
   gestellt wird.
 
+.. _rm_commit_def:
+
 Commit
   Kleinste Einheit einer Änderung die im SCM-System versioniert werden kann auch
   *atomare* Änderung genannt und in den Abbildungen mit einem Kreis dargestellt
@@ -160,6 +177,8 @@ HotFix
   zu erhalten. Auch solche Änderungen müssen im Releasemanagement beachtet
   werden und werden im SCM-System versioniert. Jeder HotFix ist auch ein commit,
   in den Abbildungen mit einem Kreis dargestellt: |HotFix| 
+
+.. _rm_merge_def:
 
 Merge
   Die Zusammenführung zwei oder mehrerer Entwicklungen, meist aber die
@@ -178,7 +197,29 @@ Branch-Point
   Abzweigung resp. Start-Punkt einer Entwicklungslinie. In den
   Abbildungen durch einen gelben Kreis |branch-point| gekennzeichnet.
 
+.. _rm_system_branch_def:
+  
+System-Branch
+  Entwicklungslinie einer Instanzen wie QS oder PROD. Zu diesen Branches gibt es
+  **immer** eine aktive Instanz an der sich Anwender & Entwickler anmelden
+  können. Beispiele hierfür sind die QS zum Testen und die PROD für den regulären
+  Betrieb. Diese Instanzen verfügen über eine voll ausgebaute und *lauffähige*
+  CONTACT Elements Infrastruktur inklusive der Kopplungen zu externen Systemen
+  wie beispielsweise SAP oder Konvertierungs-Diensten.
 
+.. _rm_feature_branch_dev:
+
+Feature-Branch
+  Entwicklungslinie eines Veränderungsprojekts. Wird z.T. auch als Dev-Branch
+  bezeichnet.  I.d.R. sind die Instanzen zu solchen Branches nur für die
+  Entwickler zugänglich.  Sie verfügen auch nur über einen, für die Änderung
+  minimal erforderlichen Ausbau.  Fremdsysteme wie SAP werden beispielsweise nur
+  dann angebunden, wenn dies für die Umsetzung des Feature erforderlich ist.
+  Die Instanzen zu dem Feature-Branch existieren teilweise nur beim Lieferanten
+  und nur für die Zeit der Entwicklung bis zum Rollout, danach können die
+  Instanzen wieder verworfen werden.
+
+  
 Big Picture
 ===========
 
@@ -207,9 +248,9 @@ koordinierende Instanz benötigt; der **Maintainer**.
    :class: tip
 
    Die Koordination der Änderungen im Entwicklerteam, den Anwendertests und den
-   Rollouts übernimmt der *Maintainer*. Der Maintainer vermittelt zw. den
-   Projekt-Terminen und den dadurch erforderlichen Planungen in der Entwicklung
-   & im Test.
+   Rollouts übernimmt der *Maintainer*. Der Maintainer verwaltet das zentrale
+   Repository und vermittelt zw. den Projekt-Terminen und den dadurch
+   erforderlichen Planungen in der Entwicklung & im Test.
 
 Um die am System angebrachten Teil-Änderungen zu verwalten bedient man sich
 eines Source-Code-Managment-Systems (SCM). Die parallelen Entwicklungen auf
@@ -230,12 +271,24 @@ schnelles und flexibles Branching-Model verfügt.
    Einarbeitung: `get git started`_.
 
 Die Abbildung :ref:`big picture <figure-rm-big_picture>` zeigt den zeitlichen
-Verlauf dreier Änderungen in einer Infrastruktur mit PROD und QS. Jeder
-kreisförmige Punkt entspricht einer (Teil-) Änderung die im SCM-System erfasst
-wird (kurz **commit**). Die Teil-Änderungen (Punkte) entlang einer
-Entwicklungslinie (z.B. ``foo``) beschreiben in ihrer Gesamtheit den
-Änderungsauftrag (das Feature) und werden allgemein auch als **Patch-Serie**
-bezeichnet.
+Verlauf dreier Änderungen in einer Infrastruktur mit PROD und QS.  Der gezeigte
+verlauf ist **exemplarisch**. In den *eigenen* Projekten wird der Verlauf von
+der Projekt-Leitung und dem :ref:`Maintainer <job_of_maintainer>` gemeinsam
+geplant. Insbesondere wenn es zu Verzögerungen im Verlauf eines
+Veränderungsprojekts kommt, besteht ein hoher Abstimmungsbedarf zw.
+Projekt-Planung und Release-Planung. Dabei wird die Projekt-Planung dominiert
+von den Faktoren *Resourcen* und *Terminen* und die Release-Planung muss
+abschätzen in wie weit sie die Entwicklungslinien insbesondere der
+:ref:`System-Branches <rm_system_branch_def>` unter den gegebenen
+Rahmenbedingungen (s.o. *Transport*) möglichst ohne Verluste und mit
+vertretbarem Aufwand der Projekt-Planung entsprechend anpassen kann.
+
+Jeder kreisförmige Punkt in der Abbildung :ref:`big picture
+<figure-rm-big_picture>` entspricht einer Teil-Änderung die im SCM-System
+erfasst wird (:ref:`commit <rm_commit_def>`). Die Teil-Änderungen entlang einer
+Entwicklungslinie wie z.B. ``foo`` beschreiben in ihrer Gesamtheit die
+Implementierung eines Änderungsauftrags resp. des *Features*. Eine Linie von
+Teil-Änderungen wird auch als **Patch-Serie** bezeichnet.
 
 .. _figure-rm-big_picture:
 
@@ -246,11 +299,51 @@ bezeichnet.
    big picture (t\ :sub:`0`): Änderungsverlauf mit PROD & QS
 
 Links von t\ :sub:`0` (*jetzt-Zeit*) ist die Historie und rechts der
-Planungsverlauf zu sehen. In oberster Linie ist der Verlauf des im Betrieb
-befindlichen PROD Systems zu sehen. Darunter der Verlauf des QS-Systems.  Des
-weiteren sind noch die Entwicklungslinien zweier Weiterentwicklungen zu sehen,
-die folgend nur mit den *Platzhaltern* ``foo`` und ``bar`` bezeichnet werden
-sollen.
+Planungsverlauf zu sehen. In oberster Linie ist die Entwicklungslinie des im
+Betrieb befindlichen PROD Systems zu sehen. Darunter die Entwicklungslinie des
+QS-Systems.  Des Weiteren sind noch die Entwicklungslinien zweier
+Weiterentwicklungen (:ref:`Feature-Branch <rm_feature_branch_dev>`) zu sehen,
+die im Folgenden nur mit den Platzhaltern ``foo`` und ``bar`` unterschieden
+werden sollen.  In der Projekt-Planung ist vorgesehen, die aktuellen Änderungen
+aus dem QS noch in den Rollout zu bringen, danach soll der ``foo`` Branch in die
+QS gemerged werden und dann ebenfalls in den Rollout gehen. Die Planung für den
+Feature-Branch ``bar`` ist nur bis zum Merge in die QS dargestellt.  So
+zumindest die Planung zum Zeitpunkt t\ :sub:`0`.  Der hier gezeigte Verlauf ist
+exemplarisch; er soll u.A. erkennen lassen:
+
+1. Die Abspaltung von Entwicklungslinien sollte immer vom *aktuellen* PROD
+   (**master**) aus erfolgen.
+
+.. _always_branch_from_master:
+  
+.. admonition:: Abspaltung immer von der Entwicklungslinie des PROD (**master**)
+   :class: tip
+
+   Ob und in welcher Form eine *aktuelle* Änderung z.B. aus dem QS-System
+   überhaupt in Betrieb genommen wird, kann im Vorfeld nie mit absoluter
+   Sicherheit gesagt werden. Deswegen empfiehlt es sich, jede Änderungen immer
+   direkt vom *aktuellen* PROD ausgehend zu starten (s.a. :ref:`rm_create_branch`).
+   
+2. In der Praxis wird die Entwicklungslinie eines :ref:`System-Branch
+   <rm_system_branch_def>` wie QS etwas anders ausgeprägt sein als die
+   Entwicklungslinie eines :ref:`Feature-Branch <rm_feature_branch_dev>` wie
+   ``foo``.
+
+.. _always_update_sys_branch:
+
+.. admonition:: System-Branches regelmäßig aus PROD aktualisieren
+   :class: tip
+
+   Abspaltungen für Systeme wie z.B. QS werden regelmäßig aus der PROD
+   aktualisiert, z.B. nach Abschluss eines Rollouts. Um Konflikte beim Merge in
+   die PROD zu reduzieren sollte die *Distanz* der aktuellen Zustände von PROD
+   und anderen Branches, insbesondere der System-Branches so klein wie möglich
+   gehalten werden.
+
+
+Zusammenfassung der Entwicklungslinien aus der Abbildung :ref:`big picture
+<figure-rm-big_picture>`:
+
 
 ``foo`` & ``bar``
   Zwei exemplarische Weiterentwicklungen die z.B. an einen Lieferanten
@@ -270,15 +363,6 @@ QS
   Änderungen aus dem HotFix mit den letzten Änderungen aus dem QS müssen
   aufgelöst werden.
 
-.. _always_branch_from_master:
-  
-.. admonition:: Abspaltung immer von der Entwicklungslinie des PROD (**master**)
-   :class: tip
-
-   Ob und in welcher Form eine *aktuelle* Änderung z.B. aus dem QS-System
-   überhaupt in Betrieb genommen wird, kann im Vorfeld nie mit absoluter
-   Sicherheit gesagt werden. Deswegen empfiehlt es sich, jede Änderungen immer
-   direkt vom *aktuellen* PROD ausgehend zu starten.
 
 .. _rm_merge_branch:
 
@@ -360,7 +444,7 @@ potentiellen Konflikten:
   patch`` kann man die Konflikte in CDB recherchieren und diese (fachlich) in
   CDB interaktiv auflösen.
 
-Die Vorgehensweisen beim Merge werden im Abschnitt ":ref:`rm_merge_cdbpg_patch`"
+Die Vorgehensweisen beim Merge werden im Abschnitt :ref:`rm_merge_cdbpg_patch`
 detailliert beschrieben. Egal ob mit oder ohne Änderungen an der Konfiguration,
 es gilt immer:
 
@@ -374,8 +458,8 @@ es gilt immer:
    auch ein Commit, er trägt u.A. die Änderungen in sich, die im Rahmen des
    Merge zur Konfliktauflösung vorgenommen wurden.
 
-Im unteren Teil der Abbildung ":ref:`figure-rm-qs-merge`" ist bereits die PROD
-Entwicklungslinie nach dem Merge dargestellt. Die Abb. ":ref:`rm-bp-merged-qs`"
+Im unteren Teil der Abbildung :ref:`figure-rm-qs-merge` ist bereits die PROD
+Entwicklungslinie nach dem Merge dargestellt. Die Abb. :ref:`rm-bp-merged-qs`
 zeigt das Eingangs gezeigte :ref:`big picture <figure-rm-big_picture>` nach dem
 Merge.  In beiden Darstellungen ist zu sehen, dass sich die Commits, die vor dem
 Merge nur in der QS-Linie waren, nun in der PROD-Linie wiederzufinden sind. Der
@@ -403,7 +487,7 @@ Merge mit git und cdbpkg Tools
 
 Die Zusammenführung zweier Entwicklungslinien soll wieder am Beispiel
 :ref:`qs-merge <figure-rm-qs-merge>` erfolgen, bei dem der QS-Branch in die
-PROD-Linie gemerged wird.
+PROD-Linie gemerged wird (PROD ist das Ziel).
 
 .. admonition:: Vor einem Merge oder Branch den letzten Änderungsstand comitten.
    :class: tip
@@ -641,15 +725,17 @@ werden.
 
 .. _rm_create_branch:
 
-Branch anlegen
-==============
+Branch-Point
+============
 
 Die Aufgabe des Branch-Point ist es, einen klar definierten Zustand festzuhalten
 (s.a. `Branches-in-a-Nutshell
 <https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell>`__) auf
-dem eine Änderungslinie aufbaut.  Dieser *eingefrorene* Zustand wird von CDB
-später beim Merge benötigt um die Differenz zwischen zwei Ständen der
-Konfiguration (JSON) eines Pakets zu berechnen, s.a. :ref:`rm-cdbpkg-diff-qs`.
+dem eine Änderungslinie aufbaut.  Dieser *gesicherte* Zustand wird später beim
+Merge von CDB benötigt um die Differenz zwischen zwei Konfigurationsständen
+(JSON) eines Pakets zu berechnen (vgl. :ref:`rm-cdbpkg-diff-qs`). Die Abbildung
+:ref:`branch point <figure-rm-branch-foo>` zeigt die Entwicklungslinie eines
+exemplarischen Feature-Branch ``foo`` in einer Infrastruktur mit PROD und QS.
 
 .. _figure-rm-branch-foo:
 
@@ -659,20 +745,48 @@ Konfiguration (JSON) eines Pakets zu berechnen, s.a. :ref:`rm-cdbpkg-diff-qs`.
 
    branch-point: Abzweigung für einen Feature-Branch
 
-Die Abbildung :ref:`branch point <figure-rm-branch-foo>` zeigt den zeitlichen
-Verlauf des Feature-Branch ``foo`` in einer Infrastruktur mit PROD und
-QS. Abspaltungen für Systeme wie z.B. QS werden regelmäßig (nach einem Merge
-oder Test) aus der PROD aktualisiert. Die Aktualisierung eines Feature-Branch
-aus der PROD sollte i.d.R. nicht erforderlich sein, ist aber im Bedarfsfall
-grundsätzlich möglich (s.a. `Merging vs. Rebasing
-<https://www.atlassian.com/git/tutorials/merging-vs-rebasing>`__ & `The Golden
-Rule of Rebasing
+Inital beginnt der foo-Branch am Branch-Point zum Zeitpunkt t\ :sub:`foo`.  Die
+Abspaltung von Entwicklungslinien sollte immer vom *aktuellen* PROD **master**
+aus erfolgen. Dort fangen alle Entwicklungen an, dort müssen sie am Ende auch
+wieder hin: :ref:`Abspaltung immer von der Entwicklungslinie des PROD
+<always_branch_from_master>`. Ebenfalls in Abbildung :ref:`branch point
+<figure-rm-branch-foo>` zu sehen ist, dass ein :ref:`System-Branch
+<rm_system_branch_def>` wie QS regelmäßig aus der PROD aktualisiert wird:
+:ref:`System-Branches regelmäßig aus PROD aktualisieren
+<always_update_sys_branch>`.
+
+Die Aktualisierung eines Feature-Branch aus der PROD sollte nach Möglichkeit nur
+selten erforderlich sein, ist aber im Bedarfsfall grundsätzlich möglich. Eine
+Aktualisierung des Feature-Branch ``foo`` ist z.B. dann erforderlich, wenn man
+im Verlauf des Projekts feststellt, dass eine andere Änderung, die erst nach der
+Abspaltung von ``foo`` implementiert wurde (z.B. die Änderungen aus der QS) nun
+doch in ``foo`` benötigt wird. In diesen Fällen muss man sich die benötigte
+Änderung (Patch-Serie) in den ``foo`` Branch *holen*, was einem :ref:`Merge
+<rm_merge_cdbpg_patch>` entspricht, bei dem **'foo' das Ziel ist**. Alternativ
+kann man aber auch einen sogenannten **Rebase** durchführen, sofern der Feature
+noch nicht schon von anderer Stelle aus geclonet wurde (s.a. `Merging
+vs. Rebasing <https://www.atlassian.com/git/tutorials/merging-vs-rebasing>`__ &
+`The Golden Rule of Rebasing
 <https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing>`__).
 
-Inital beginnt der foo-Branch am Branch-Point zum Zeitpunkt t\ :sub:`foo`.  Die
-Abspaltung von Entwicklungslinien sollte immer vom *aktuellen* PROD (**master**)
-aus erfolgen. Dort fangen alle Entwicklungen an, dort müssen sie am Ende auch
-wieder hin (:ref:`siehe oben <always_branch_from_master>`).
+Ein anders Beispiel ist der Fall, bei dem man ``foo`` ins QS gemerged hat und
+beim Testen dann weitere Änderungen angebracht hat die man nicht verlieren will,
+man aber gleichzeitig feststellt, dass es noch weiterer und ausführlicher
+Nacharbeiten bedarf, die nicht mehr im QS -- sondern wieder *zurück* -- im
+``foo`` Branch umgesetzt werden müssen, weil *jetzt* erst mal eine andere
+Änderung durch die QS *gezogen* werden soll.
+
+.. admonition:: Vorausschauende Planung hält den Aufwand für Merges klein. 
+   :class: tip
+
+   Egal was die Gründe sind, ein Merge ist immer mit einem gewissen Aufwand
+   verbunden, der um so größer wird, um so weiter sich zwei Entwicklungslinien
+   voneinander entfernen.  Insbesondere *Langläufer* die sich unnötig früh von
+   der PROD abspalten sollten schon in der Projekt-/Release-Planung vermieden
+   werden. Dennoch muss man aber immer flexibel reagieren können: Ein Plan ist
+   ein Plan und man weiß nie, wann im Projektverlauf einem die Risiken
+   schlussendlich *um die Ohren fliegen*.
+
 
 
 Branch mit git anlegen
@@ -705,12 +819,15 @@ den git-Server:
    $ git push -u origin <branch-name> # Branch auf dem zentralem Server bereitstellen
 
 Vergleicht man die bisherige Vorgehensweise mit dem im CDB Handbuch zur
-Komponentenarchitektur vorgestellt Verfahren, so wird man merken, dass die
-Verfahren dort an diesem Punkt enden und nicht über das Paket hinaus gehen.  In
-der Praxis wird man aber bei der Weiterentwicklung auf Nutzdaten angewiesen
-sein, für die man sich nun ein Transport-Mechanismus ausdenken müsste. Diesen
-und anderen Problemen (:ref:`s.o. <scm_caddok_base>`) geht man am einfachsten
-aus dem Weg, indem man zu jedem Branch-Point einen Export der DB erstellt.
+Komponentenarchitektur vorgestelltem Verfahren, so wird man merken, dass die
+Verfahren dort, an diesem Punkt enden und nicht über das (Kunde-) Paket hinaus
+gehen.  In der Praxis wird man aber bei der Weiterentwicklung auf Nutzdaten
+angewiesen sein, die nicht im Paket enthalten sind und für die man sich nun ein
+Transport-Mechanismus ausdenken müsste.
+
+Diesen und anderen Problemen (s.o. :ref:`Scope des Pakets <scm_caddok_base>`)
+geht man am einfachsten aus dem Weg, indem man zu jedem Branch-Point einen
+Export der DB erstellt.
 
 .. admonition:: DB Export zu jedem Branch-Point
    :class: tip
@@ -720,9 +837,9 @@ aus dem Weg, indem man zu jedem Branch-Point einen Export der DB erstellt.
 
 Der DB Export wird im jeweiligen Management Tool des DB-Systems erstellt.  Für
 die Ablage eignet sich ein Share auf den die Entwickler zugreifen können um sich
-ggf. Spiegel-Systeme aufbauen zu können. Evtl. reicht aber auch schon die
+Spiegel-Systeme aufbauen zu können. Evtl. reicht aber auch schon die
 tagesaktuelle Sicherung des DB-Managment für einen Import im Spiegel-System
-aus. Egal, wie man es macht, man sollte sich den Export zum Branch-Point solange
+aus. Egal wie man es macht, man sollte sich den Export zum Branch-Point solange
 aufheben, bis die Änderung im PROD gemerged wurde (die Änderung also in Betrieb
 genommen wurde). Hilfreich können Namen oder Listen sein, die das Datum des
 Exports und den Namen des Branch-Points erkennen lassen, wie z.B.::
@@ -735,12 +852,12 @@ Dump der Konfiguration ins SCM
 ==============================
 
 Bevor man einen Branch-Point anlegt oder einen Merge durchführt, muss der
-aktuelle Stand der Konfiguration -- der sich ggf. noch in der DB befindet -- in
+aktuelle Stand der Konfiguration -- der sich u.U. nur in der DB befindet -- in
 die JSON Dateien exportiert und in das SCM-System commited werden. Hierfür
-empfiehlt es sich prophylaktisch einen ``build`` zu erzeugen. Im folgendem
+empfiehlt es sich prophylaktisch einen ``build`` zu erzeugen. Im dem folgendem
 Beispiel soll ein Dump der Konfigurationen des PROD Systems (**master**)
-erfolgen, also wird der ``build`` auch dort im PROD-System ausgeführt, der Dump
-von QS oder einem Feature-Branch wäre analog, nur hald' im jeweiligen Syystem:
+erfolgen, also wird der ``build`` auch dort im PROD-System ausgeführt.  Der Dump
+von QS oder einem Feature-Branch wäre analog, nur eben im jeweiligen System:
 
 .. code-block:: bash
 
@@ -755,8 +872,8 @@ können, hier im Beispiel ist das der Applikation Server der PROD.
 
    $ cdbpkg build cust.plm               # DB export
 
-Sollte ein ``git status`` eine Differenz anzeigen, so wird der nun im
-Dateisystem vorliegende Stand als der *aktuelle* Stand im SCM festgehalten:
+Sollte ein ``git status`` eine Differenz anzeigen, so muss der *aktuelle* Stand
+noch in das SCM-System commited werden:
 
 .. code-block:: bash
 
