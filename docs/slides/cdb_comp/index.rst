@@ -19,7 +19,7 @@ CDB Komponenten
 .. _`Git Attributen`: https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes#Merge-Strategies
 .. _`.gitattributes`: https://git-scm.com/docs/gitattributes
 .. _`Contact Software GmbH`: https://www.contact-software.com/
-
+.. _`Releasemanagement und CONTACT Elements`: https://return42.github.io/cdb-tools/best_practice/release_management.html
 .. raw:: html
 
    <aside id="logo" style="height:8vh; width:8vw; position:absolute; bottom:2vh; left:2vw; ">
@@ -375,31 +375,15 @@ CDB Komponenten
 
 .. revealjs:: cdbpkg & SCM / big picture
 
-   ::
-
-     CDB    o +-----------------------------------------------------+
-     Admin /=<|       CDB-Konfig DB + Dateien im BLOB-Store         |
-          /\  +-----------------------------------------------------+
-              |   *                    |          | Dev-Patches/Ent-
-              |  /|\ sync & install    |          | wickleransicht
-     cdbpgk-->|   |                    |          |
-              |   |       build <pkg> \|/        \|/ commit <pkg>
-              |   |                    *      ~\--*-----| app_conf
-     confi-   \===========================/~~ ~\--*-----| (baseline)
-     guration     *                    |
-                 /|\ git pull         \|/ git commit
-                  |                    *
-     .git     |===|=================================================|
-     Ordner       *                    |
-                 /|\ (git fetch)      \|/ git push <remote>:<branch>
-     git          |                    *
-     Server   |=====================================================|
+   .. figure::  cdbpkg_scm_big_picture.svg
+      :width:   500px
 
    .. rv_small::
 
       Nach Abschluss einer Konfiguration: ``cdbpkg build``, danach ``git
       commit`` + ``cdbpkg commit``.  Die *commits* von SCM und CDB sollten immer
       synchron angewendet werden.
+
 
 .. _transport_aenderung:
 
@@ -476,9 +460,9 @@ CDB Komponenten
    - Paket ``cust.plm`` wird im SCM-System versioniert.  Besteht aus
      Source-Code + ``configuration``
 
-   - Abgleich zw. DB & ``configuration`` machen die CDB-Tools
+   - Abgleich zw. DB & ``configuration`` machen die ``cdbpkg`` -Tools
 
-   - CDB-Tools und SCM-System müssen synchron verlaufen (siehe
+   - ``cdbpkg`` -Tools und SCM-System müssen synchron verlaufen (siehe
      :ref:`Merge-Schaubild <merge_graph>`)
 
    - Einfach mal ins SCM committen ist vorbei!  wer **das** ``pull``\ 't hat
@@ -575,10 +559,10 @@ CDB Komponenten
    .. figure::  clone_graph.svg
       :width:   500px
 
-   Lieferantenanbindung erfolgt an einem Branch-Point (``foo``). Ob Branch-Point
-   vom PROD- oder dem QS-System (aka. ``master``) genommen wird, muss durch die
-   Projektplanung entschieden werden.  Die Auslieferung an den Lieferanten ist
-   ein *Clone*.
+   Lieferantenanbindung erfolgt an einem Branch-Point (``foo``).  Die
+   Auslieferung an den Lieferanten ist ein *Clone*. Siehe auch
+   `Releasemanagement und CONTACT Elements`_.
+   
 
 .. revealjs:: Änderung einplanen (master)
    :title-heading: h3
@@ -601,6 +585,8 @@ CDB Komponenten
       $ git branch -v
         foo    268a44e add 'cust.foo' to package 'cust.plm'
       * master 268a44e add 'cust.foo' to package 'cust.plm'
+
+   Siehe auch `Releasemanagement und CONTACT Elements`_.
 
 .. _aenderung_beauftragen:
 
@@ -787,7 +773,7 @@ CDB Komponenten
      sie wieder an den Übergabepunkt aus.
 
    Bisher nicht betrachtet, wie bekommt der Auftrageber die Änderung in seinen
-   ``master``?
+   ``master``? Dazu siehe auch `Releasemanagement und CONTACT Elements`_.
 
 .. _merge_dev_branches:
 
