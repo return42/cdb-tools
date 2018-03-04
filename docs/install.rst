@@ -35,7 +35,7 @@ bestehende CDB Instanz *aufgesattelt* werden.
 
      Wenn die CDB-Tools in mehreren Instanzen genutzt werden sollen, dann
      kopiert man am besten den ``winShortcuts`` Ordner in die Instanzen und
-     passt zusätzlich noch ``CDBTOOLS_HOME`` an::
+     passt zusätzlich noch ``CDBTOOLS_HOME`` an.
 
   .. code-block:: dosbatch
 
