@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="300" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <metadata id="metadata45">image/svg+xmlimage/svg+xml</metadata>
+ <defs>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_end_svg_9">
+   <circle stroke-width="10" stroke="#999999" fill="#999999" cy="50" cx="50" r="30" id="svg_1"/>
+  </marker>
+  <marker id="se_marker_end_svg_45" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5" refX="50" refY="50">
+   <path id="svg_34" d="m100,50l-100,40l30,-40l-30,-40l100,40z" fill="#000000" stroke="#000000" stroke-width="10"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_end_svg_2">
+   <path stroke-width="10" stroke="#003f7f" fill="#003f7f" d="m100,50l-100,40l30,-40l-30,-40l100,40z" id="svg_13"/>
+  </marker>
+  <marker refY="50" refX="50" markerHeight="5" markerWidth="5" viewBox="0 0 100 100" orient="auto" markerUnits="strokeWidth" id="se_marker_start_svg_2">
+   <path stroke-width="10" stroke="#003f7f" fill="#003f7f" d="m0,50l100,40l-30,-40l30,-40l-100,40z" id="svg_17"/>
+  </marker>
+  <marker id="se_marker_end_svg_19" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5" refX="50" refY="50">
+   <path id="svg_22" d="m100,50l-100,40l30,-40l-30,-40l100,40z" fill="#003f7f" stroke="#003f7f" stroke-width="10"/>
+  </marker>
+  <marker id="se_marker_start_svg_19" markerUnits="strokeWidth" orient="auto" viewBox="0 0 100 100" markerWidth="5" markerHeight="5" refX="50" refY="50">
+   <path id="svg_23" d="m0,50l100,40l-30,-40l30,-40l-100,40z" fill="#003f7f" stroke="#003f7f" stroke-width="10"/>
+  </marker>
+ </defs>
+ <g id="g1">
+  <title>background</title>
+  <rect fill="#ffffff" x="-1" y="-1" width="900" height="300" id="canvas_background"/>
+  <g id="canvasGrid" display="none">
+   <rect fill="url(#gridpattern)" id="rect10" width="900" height="300" x="0" y="0"/>
+  </g>
+ </g>
+ <g id="g2">
+  <title>Template</title>
+  <line fill="none" stroke="#000000" stroke-dasharray="null" stroke-linejoin="undefined" stroke-linecap="undefined" x1="435" y1="45" x2="435" y2="263.00001" id="svg_8"/>
+  <line x1="65" y1="70" x2="435" y2="70" id="master_line_solid" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="5" stroke="#999999" fill="none"/>
+  <ellipse id="svg_4" cx="110" cy="70" rx="10" ry="10" stroke-width="1.5" stroke="#333333" fill="#4c4c4c"/>
+  <line id="svg_14" x1="270.000001" y1="190" x2="430.999998" y2="190" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="5" stroke="#7f0000" fill="none"/>
+  <line marker-end="url(#se_marker_end_svg_9)" id="svg_9" transform="rotate(80, 257.781, 134.95)" x1="200" y1="135" x2="315" y2="135" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="5" stroke="#999999" fill="none"/>
+  <ellipse cx="245" cy="70" id="master_bullte_yellow" rx="10" ry="10" stroke-width="1.5" stroke="#7f0000" fill="#ffffaa"/>
+  <line id="svg_12" x1="435" y1="70" x2="535" y2="70" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-dasharray="2, 2" stroke-width="5" stroke="#999999" fill="none"/>
+  <text id="svg_15" x="540" y="75" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif">PROD (master) / vor merge QS</text>
+  <text id="svg_16" x="545" y="195" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif">QS (qs)</text>
+  <ellipse id="svg_18" cx="310" cy="190" rx="10" ry="10" stroke-width="1.5" stroke="#7f0000" fill="#4c4c4c"/>
+  <ellipse id="svg_10" cx="320" cy="70" rx="10" ry="10" stroke-width="1.5" stroke="#4c4c4c" fill="#ffd4aa"/>
+  <line transform="rotate(-80, 447.5, 130)" id="svg_33" x1="395" y1="130" x2="500" y2="130" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-dasharray="2, 2" stroke-width="5" stroke="#7f0000" fill="none"/>
+  <ellipse id="svg_31" cx="350" cy="190" rx="10" ry="10" stroke-width="1.5" stroke="#7f0000" fill="#4c4c4c"/>
+  <ellipse id="svg_32" cx="460" cy="70" rx="10" ry="10" stroke-width="1.5" stroke="#7f0000" fill="#007fff"/>
+  <ellipse cx="435" cy="190" rx="10" ry="10" stroke-width="1.5" stroke="#7f0000" fill="#4c4c4c" id="svg_3"/>
+  <ellipse cx="390" cy="190" rx="10" ry="10" stroke-width="1.5" stroke="#7f0000" fill="#4c4c4c" id="svg_11"/>
+  <line fill="none" stroke="#000000" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="430" y1="55" x2="460" y2="55" id="svg_45" marker-end="url(#se_marker_end_svg_45)"/>
+  <text x="435" y="40" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif" id="svg_46">t</text>
+  <text x="440" y="40" font-size="8px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif" id="svg_47">0</text>
+  <ellipse id="svg_6" cx="200" cy="70" rx="10" ry="10" stroke-width="1.5" stroke="#7f7f00" fill="#ffffaa"/>
+  <ellipse id="svg_48" cx="155" cy="70" rx="10" ry="10" stroke-width="1.5" stroke="#3f7f00" fill="#ffffaa"/>
+  <ellipse cx="710" cy="145" rx="10" ry="10" stroke-width="1.5" stroke="#666666" fill="#ffffaa" id="svg_49"/>
+  <text x="735" y="150" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif" id="svg_50">branch-point</text>
+  <ellipse cx="710" cy="175" rx="10" ry="10" stroke-width="1.5" stroke="#666666" fill="#007fff" id="svg_51"/>
+  <text x="735" y="180" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif" id="svg_52">merge-point</text>
+  <ellipse cx="710" cy="115" rx="10" ry="10" stroke-width="1.5" stroke="#4c4c4c" fill="#ffd4aa" id="svg_54"/>
+  <text x="735" y="120" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif" id="svg_55">HotFix</text>
+  <text id="svg_5" x="240" y="40" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif">t</text>
+  <text id="svg_53" x="250" y="40" font-size="8px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Sans-serif">qs</text>
+  <line fill="none" stroke="#000000" stroke-dasharray="null" stroke-linejoin="undefined" stroke-linecap="undefined" x1="245" y1="45" x2="245" y2="275" id="svg_60"/>
+  <line fill="none" stroke="#000000" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x1="240" y1="55" x2="270" y2="55" marker-end="url(#se_marker_end_svg_45)" id="svg_61"/>
+  <line marker-start="url(#se_marker_start_svg_2)" marker-end="url(#se_marker_end_svg_2)" id="svg_2" y2="170" x2="415" y1="85" x1="270" stroke-linecap="undefined" stroke-linejoin="undefined" stroke-width="3" stroke="#003f7f" fill="none"/>
+  <line fill="none" stroke="#003f7f" stroke-width="3" stroke-dasharray="null" stroke-linejoin="undefined" stroke-linecap="undefined" x1="480" y1="85" x2="465" y2="185" id="svg_19" marker-end="url(#se_marker_end_svg_19)" marker-start="url(#se_marker_start_svg_19)"/>
+  <text x="275" y="145" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Monospace" id="svg_20" transform="rotate(30, 330, 139.5)">cdbpkg diff</text>
+  <text x="440" y="145" font-size="16px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Monospace" id="svg_21" transform="rotate(-80, 500, 139.5)">cdbpkg patch</text>
+ </g>
+</svg>

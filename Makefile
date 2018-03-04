@@ -14,15 +14,22 @@ all: clean cdbtools docs
 
 PHONY += help
 help:
-	@echo  '  docs     - build documentation'
-	@echo  '  clean    - remove most generated files'
-	@echo  '  cdbtools - bootstrap & build CDB-Tools'
+	@echo  '  docs      - build documentation'
+	@echo  '  docs-live - autobuild HTML documentation while editing'
+	@echo  '  slides    - build reveal.js slide presentation / use e.g.' 
+	@echo  '              cdb-slide-live to autobuild a presentation'
+	@echo  '  clean     - remove most generated files'
+	@echo  '  cdbtools  - bootstrap & build CDB-Tools'
 	@echo  ''
 	@$(MAKE) -s -f utils/makefile.sphinx docs-help
 
 PHONY += docs
 docs:  sphinx-doc slides
 	$(call cmd,sphinx,html,docs,docs)
+
+PHONY += doc-live
+docs-live: sphinx-live
+	$(call cmd,sphinx_autobuild,html,docs,docs)
 
 PHONY += slides
 slides: cdb-slide
@@ -31,6 +38,10 @@ slides: cdb-slide
 PHONY += cdb-slide
 cdb-slide:  sphinx-doc
 	$(call cmd,sphinx,html,$(SLIDES)/cdb_comp,$(SLIDES)/cdb_comp,slides/cdb_comp)
+
+PHONY += cdb-slide-live
+cdb-slide-live: sphinx-live
+	$(call cmd,sphinx_autobuild,html,$(SLIDES)/cdb_comp,$(SLIDES)/cdb_comp,slides/cdb_comp)
 
 PHONY += clean
 clean: docs-clean pyclean

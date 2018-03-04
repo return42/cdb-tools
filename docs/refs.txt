@@ -1,10 +1,16 @@
 .. -*- coding: utf-8; mode: rst -*-
 
+.. _darmarIT: http://www.darmarit.de
+.. _`Contact Software GmbH`: https://www.contact-software.com/
+.. _`get git started`: https://return42.github.io/handsOn/slides/git/index.html
+.. _git: https:/git-scm.com/
+.. _SVN: https://subversion.apache.org/
+.. _`Merge Strategien`: https://git-scm.com/docs/git-merge#_merge_strategies
+.. _SCM-Branching: https://en.wikipedia.org/wiki/Branching_(version_control)
 .. _Releases: https://github.com/return42/cdb-tools/releases
 
 .. _`pip.ini`: https://github.com/return42/cdb-tools/blob/master/bootstrap/pip.ini
 .. _`requirements.txt`: https://github.com/return42/cdb-tools/blob/master/bootstrap/requirements.txt
-
 
 .. _FQDN: https://en.wikipedia.org/wiki/Fully_qualified_domain_name
 
@@ -12,7 +18,6 @@
 .. _`PyPi`: https://pypi.python.org/pypi
 .. _pdb: https://docs.python.org/3/library/pdb.html#debugger-commands
 .. _`PyDev Remote Debugger`: http://www.pydev.org/manual_adv_remote_debugger.html
-
 
 .. _`ConEmu`: https://conemu.github.io/
 .. _clink: http://mridgers.github.io/clink/
