@@ -24,5 +24,7 @@ echo   CADDOK_DEFAULT: %CADDOK_DEFAULT%
 echo.
 echo ============================================================
 
+cd /d %CADDOK_BASE%
+
 @echo on
 "%CADDOK_RUNTIME%\cdbsh.exe" -v -db "%CADDOK_DEFAULT%"

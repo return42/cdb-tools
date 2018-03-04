@@ -23,7 +23,7 @@ echo   CADDOK_DEFAULT: %CADDOK_DEFAULT%
 echo.
 echo ============================================================
 @echo on
-START "%~n0 cdbtools (%CADDOK_DEFAULT%)" "%CADDOK_RUNTIME%\cdbsvcd.exe" -d -v -db "%CADDOK_DEFAULT%"
+START "%~n0 CDBTools (%CADDOK_DEFAULT%)" "%CADDOK_RUNTIME%\cdbsvcd.exe" -d -v -db "%CADDOK_DEFAULT%"
 @echo off
 echo.
 echo ============================================================
