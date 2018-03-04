@@ -11,7 +11,7 @@ REM ----------------------------------------------------------------------------
 
 IF NOT DEFINED CDBTOOLS_PIP_DOWNLOAD (
    echo.
-   echo ERROR: this command needs a CDBTools environment tu run!
+   echo ERROR: this command needs a CDBTools environment to run!
    echo.
    pause
    exit 42

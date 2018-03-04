@@ -16,7 +16,7 @@ PHONY += help
 help:
 	@echo  '  docs      - build documentation'
 	@echo  '  docs-live - autobuild HTML documentation while editing'
-	@echo  '  slides    - build reveal.js slide presentation / use e.g.' 
+	@echo  '  slides    - build reveal.js slide presentation / use e.g.'
 	@echo  '              cdb-slide-live to autobuild a presentation'
 	@echo  '  clean     - remove most generated files'
 	@echo  '  cdbtools  - bootstrap & build CDB-Tools'
@@ -52,5 +52,13 @@ clean: docs-clean pyclean
 PHONY += cdbtools
 cdbtools:
 	winShortcuts\upkeep.bat
+
+PHONY += bootstrap download dist
+bootstrap:
+	winShortcuts\upkeep.bat bootstrap
+download:
+	winShortcuts\upkeep.bat download
+dist:
+	winShortcuts\upkeep.bat dist
 
 .PHONY: $(PHONY)

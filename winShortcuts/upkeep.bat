@@ -47,6 +47,10 @@ goto Exit
 
 :pythonOK
 
+IF x%1 EQU xbootstrap GOTO bootstrap
+IF x%1 EQU xdownload GOTO download
+IF x%1 EQU xdist GOTO zip
+
 ECHO.
 ECHO ===============
 ECHO bootstrap
@@ -59,6 +63,7 @@ IF ERRORLEVEL 2 GOTO bootstrapOK
 :bootstrap
     START /B /WAIT "bootstrap" "%CDBTOOLS_HOME%\bootstrap\bootstrap.bat"
     IF NOT %ERRORLEVEL% EQU 0 GOTO Exit
+    if x%1 EQU xbootstrap goto Exit
     CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" >NUL 2>NUL
     GOTO download
 
@@ -77,6 +82,7 @@ IF ERRORLEVEL 2 GOTO downloadOK
 
 :download
     CALL "%CDBTOOLS_HOME%\bootstrap\download-all.bat"
+    if x%1 EQU xdownload goto Exit
 
 :downloadOK
 
@@ -122,6 +128,7 @@ IF ERRORLEVEL 2 GOTO zipOK
 
 :zip
     python.exe "%CDBTOOLS_HOME%\bootstrap\build.py" dist
+    if x%1 EQU xdist goto Exit
 :zipOK
 
 

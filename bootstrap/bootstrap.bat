@@ -30,19 +30,25 @@ IF NOT DEFINED CADDOK_RUNTIME GOTO noCDBRTE
 IF NOT EXIST "%CADDOK_RUNTIME%\python.exe" GOTO noCDBRTE
 ECHO using CDB's python from: %CADDOK_RUNTIME%\python.exe
 SET "MYPYTHON_EXE=%CADDOK_RUNTIME%\python.exe"
+"%MYPYTHON_EXE%" --version
 GOTO pythonOK
 
 :noCDBRTE
 WHERE python.exe >NUL  2>NUL
-IF %ERRORLEVEL% EQU 0 GOTO pythonOK
+IF %ERRORLEVEL% EQU 0 GOTO pythonExists
 ECHO ERROR: no python.exe available / Python 2.7.9 is needed !!!
 exit 42
+:pythonExists
 FOR /f %%i IN ('WHERE python.exe') DO SET "MYPYTHON_EXE=%%i"
 ECHO found: %MYPYTHON_EXE%
-GOTO pythonOK
+ECHO.
+"%MYPYTHON_EXE%" --version
+CHOICE /C NY /M "Mit dieser Python Version fortfahren? (nur Python2.7.9)"
+IF ERRORLEVEL 2 GOTO pythonOK
+PAUSE
+exit
 
 :pythonOK
-"%MYPYTHON_EXE%" --version
 PAUSE
 
 REM source CDBTools environment
