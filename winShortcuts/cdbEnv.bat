@@ -9,7 +9,7 @@ REM ----------------------------------------------------------------------------
 REM Purpose:     general CDB setup
 REM ----------------------------------------------------------------------------
 
-color 0E
+REM color 0E
 
 REM CDB setup
 REM ---------------
@@ -35,3 +35,24 @@ REM SET "CDBTOOLS_HOME=C:\share\cdb-tools"
 
 SET "CDBTOOLS_DEBUG_ADDR=127.0.0.1"
 SET "CDBTOOLS_DEBUG_PORT=4444"
+
+
+goto checkEnv
+
+:errorEnv
+echo.
+echo CADDOK_RUNTIME: %CADDOK_RUNTIME%
+echo CADDOK_BASE:    %CADDOK_BASE%
+echo CADDOK_DEFAULT: %CADDOK_DEFAULT%
+echo.
+ECHO ERROR: Die Umgebungsvariablen in der Datei::
+ECHO ERROR:   %~d0%~p0cdbEnv.bat
+ECHO ERROR: Sind (noch) nicht richtig konfiguriert!
+pause
+START notepad %~d0%~p0cdbEnv.bat
+exit
+
+:checkEnv
+
+IF NOT EXIST %CADDOK_RUNTIME% goto errorEnv
+IF NOT EXIST %CADDOK_BASE% goto errorEnv
