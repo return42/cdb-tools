@@ -13,28 +13,36 @@ für CDB bereit zu stellen ohne das dazu die CDB Installation *verändert* werde
 muss.  Mit dieser Eigenschaft können die CDB-Tools komfortabel auf jede
 bestehende CDB Instanz *aufgesattelt* werden.
 
-- download ``cdbtools-zip`` `Releases`_
+1. download & install (`Releases`_.)
 
-  Die CDB-Tools können als fertiges ZIP *runter geladen* werden (siehe
-  ``cdbtools-zip`` in den `Releases`_)
+  Die CDB-Tools können als fertiges ZIP *runter geladen* werden. Siehe aktuelle
+  ``cdb-tools.zip`` in den `Releases`_. Der Ordner ``cdb-tools`` in der ZIP
+  Datei muss *irgendwo - hin* ausgepackt werden (s.a. :ref:`Hinweise
+  <cdbtools_portable>` ).
 
-- entpacken ``cdbtools-zip``
-
-  Der Ordner ``cdb-tools`` in der ZIP Datei muss *irgendwo - hin* ausgepackt
-  werden (s.a. :ref:`Hinweise <cdbtools_portable>` ).
-
-- CDB in den CDB-Tools bekannt machen
+2. CDB in den CDB-Tools bekannt machen
 
   In der CDB-Tools Umgebung müssen ein paar ``CADDOK_*`` Variablen angepasst
   werden (s.a. :ref:`setup_cdbenv`). Datei ``winShortcuts/cdbEnv.bat``:
 
   .. code-block:: dosbatch
 
-   SET "CADDOK_DBNAME=prod_copy"
-   SET "CADDOK_RUNTIME=C:\share\cdb_sw"
-   SET "CADDOK_BASE=C:\share\customer\instance_prod_copy"
+     SET "CADDOK_DBNAME=prod_copy"
+     SET "CADDOK_RUNTIME=C:\share\cdb_sw"
+     SET "CADDOK_BASE=C:\share\customer\instance_prod_copy"
 
-- cdbtools-fix-launcher
+  .. tip::
+
+     Wenn die CDB-Tools in mehreren Instanzen genutzt werden sollen, dann
+     kopiert man am besten den ``winShortcuts`` Ordner in die Instanzen und
+     passt zusätzlich noch ``CDBTOOLS_HOME`` an::
+
+  .. code-block:: dosbatch
+
+     SET "CDBTOOLS_HOME=C:\share\cdb-tools"
+
+
+3. cdbtools-fix-launcher
 
   Initial sollte noch einmal das Skript:
 
