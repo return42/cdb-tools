@@ -74,7 +74,7 @@ SOFTWARE_ARCHIVES = [
     #   , <url without zip-file name>)
     ('.', "cdb-tools.zip", RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
     , ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
-    #, (_pip_download, 'pip-download.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
+    , (_pip_download, 'pip-download.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
 
     , ]
 
