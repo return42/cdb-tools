@@ -6,8 +6,9 @@ u"""Bastelecke
 # ==============================================================================
 
 import os
+import sys
 
-from ptpdb import set_trace as BREAK
+#from ptpdb import set_trace as BREAK
 
 from fspath import FSPath
 from fspath.sui import SUI
@@ -46,7 +47,7 @@ def cli_collect_pdf(cli):
 # ==============================================================================
 def main():
 # ==============================================================================
-
+    u"""main"""
     cli = CLI(description=__doc__)
 
     parser = cli.addCMDParser(cli_collect_pdf, cmdName='collect-pdf')
