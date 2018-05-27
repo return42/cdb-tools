@@ -94,10 +94,10 @@ echo ------------------------------------------------------------
 echo CDB-Tools environment
 echo ------------------------------------------------------------
 echo.
-echo  CADDOK_RUNTIME: %CADDOK_RUNTIME%
-echo  CADDOK_BASE:    %CADDOK_BASE%
-echo  CDBTOOLS_HOME:  %CDBTOOLS_HOME%
-echo  HOME:           %HOME%
+echo   CADDOK_RUNTIME: %CADDOK_RUNTIME%
+echo   CADDOK_BASE:    %CADDOK_BASE%
+echo   CADDOK_DEFAULT: %CADDOK_DEFAULT%
+echo   HOME:           %HOME%
 echo.
 
 IF [%1]==[] goto Exit
