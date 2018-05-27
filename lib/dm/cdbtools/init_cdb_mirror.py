@@ -15,16 +15,21 @@ sollten nur von Personen durchgeführt werden, die wissen, was sie machen!
 """
 
 import sys
-import os
 import socket
 
 from fspath.sui import SUI
 from fspath.cli import CLI
 from fspath import FSPath
 
+# pylint: disable=import-error
 from cdb import sqlapi
+from cdb import version
+# pylint: enable=import-error
 
 from dm.cdbtools.helper import port_is_free
+
+ELEMENTS_MAJOR = int(version.getVersionDescription().split(" ")[0].split(".")[0])
+ELEMENTS_MINOR = int(version.getVersionDescription().split(" ")[0].split(".")[1])
 
 FQDN = socket.getfqdn()
 
@@ -66,6 +71,19 @@ def takeover_service():
            , 'cdb.uberserver.services.blobstore.BlobStore' )
    GROUP BY hostname ORDER BY COUNT(hostname) DESC
 """
+
+    if ELEMENTS_MAJOR == 15 and ELEMENTS_MINOR > 1:
+        query = """
+  SELECT hostname FROM cdbus_svcs
+   WHERE svcname IN (
+           'cdb.uberserver.Uberserver'
+           , 'cdb.uberserver.services.apache.Apache'
+           , 'cdb.uberserver.services.authentication.GateKeeper'
+           , 'cdb.uberserver.services.authentication.SessionCache'
+           , 'cdb.uberserver.services.blobstore.BlobStore' )
+   GROUP BY hostname ORDER BY COUNT(hostname) DESC
+"""
+
     hostnames = [ x.hostname for x in sqlapi.RecordSet2(sql=query) ]
     orig_host = SUI.ask_choice(
         u"Von welchem Application Server soll die Konfiguration übernommen werden?", hostnames)
@@ -86,6 +104,16 @@ def takeover_service():
            'cdb.uberserver.Uberserver'
            , 'cdb.uberserver.services.apache.Apache'
            , 'cdb.uberserver.services.server.Launcher'
+           , 'cdb.uberserver.services.blobstore.BlobStore' )""" % (FQDN)
+
+    if ELEMENTS_MAJOR == 15 and ELEMENTS_MINOR > 1:
+        sql = """
+  UPDATE cdbus_svcs SET active=1, autostart=1, site='default'
+   WHERE hostname='%s' AND svcname IN (
+           'cdb.uberserver.Uberserver'
+           , 'cdb.uberserver.services.apache.Apache'
+           , 'cdb.uberserver.services.authentication.GateKeeper'
+           , 'cdb.uberserver.services.authentication.SessionCache'
            , 'cdb.uberserver.services.blobstore.BlobStore' )""" % (FQDN)
 
     SUI.echo("Aktivierung der Basis-Dienste:: \n%s" % sql)
@@ -168,7 +196,7 @@ def check_path(opts):
             try:
                 new_path.makedirs()
                 break
-            except OSError, exc:
+            except OSError:
                 SUI.rst_p("Pfad kann nicht angelegt werden!")
                 SUI.wait_key()
 
@@ -183,15 +211,16 @@ def check_login(opts):
             SUI.echo(u"- setze Dienst-Option: %s = %s" % (row.name, username))
             sql = ("update cdbus_svcopts SET value='%s' WHERE svcid='%s' AND name='%s' AND value='%s'"
                    % (username, row.svcid, row.name, row.value))
-            rows = sqlapi.SQL(sql)
+            rows = sqlapi.SQL(sql) # pylint: disable=unused-variable
 
         if row.name in ('password',):
             x=True
             SUI.echo(u"- setze Dienst-Option: %s = %s" % (row.name, password))
             sql = ("update cdbus_svcopts SET value='%s' WHERE svcid='%s' AND name='%s' AND value='%s'"
                    % (password, row.svcid, row.name, row.value))
-            rows = sqlapi.SQL(sql)
-    x and SUI.echo('')
+            rows = sqlapi.SQL(sql) # pylint: disable=unused-variable
+    if x:
+        SUI.echo('')
 
 def reset_password():
     sql = "angestellter set password='welcome', password_rule='Unsafe'"
@@ -245,20 +274,33 @@ def setup_basic_services():
     opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     print_opts(opts)
 
-    svcname  = 'cdb.uberserver.services.server.Launcher'
-    SUI.rst_title(svcname)
-    assert_service(svcname, hostname)
-    opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
-    check_login(opts)
-    check_port(opts)
-    opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
-    print_opts(opts)
+    if ELEMENTS_MAJOR == 15 and ELEMENTS_MINOR > 1:
+        for svcname in ['cdb.uberserver.services.authentication.GateKeeper'
+                        , 'cdb.uberserver.services.authentication.SessionCache']:
+            SUI.rst_title(svcname)
+            assert_service(svcname, hostname)
+            opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
+            check_login(opts)
+            check_port(opts)
+            opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
+            print_opts(opts)
+
+    else:
+        svcname  = 'cdb.uberserver.services.server.Launcher'
+        SUI.rst_title(svcname)
+        assert_service(svcname, hostname)
+        opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
+        check_login(opts)
+        check_port(opts)
+        opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
+        print_opts(opts)
 
 
-def _main(cliArgs):
+def _main(cliArgs): # pylint: disable=unused-argument
     _doc = __doc__.strip().split('\n')
     SUI.rst_title(_doc[0], level='part')
     SUI.rst_p('\n'.join(_doc[1:]))
+    SUI.rst_p('ELEMENTS Version %s.%s' % (ELEMENTS_MAJOR, ELEMENTS_MINOR))
     if not SUI.ask_yes_no(u"Soll die DB initialisiert werden?", default='n'):
         SUI.echo("\nEND")
         return 42
