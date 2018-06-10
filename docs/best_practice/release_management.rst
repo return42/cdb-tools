@@ -507,7 +507,7 @@ Teilen (s.a. :ref:`potentielle Konflikte beim Merge <cs_elements_conflicts>`):
 Die Konfiguration ist zwar in den JSON Dateien und somit im SCM-System
 enthalten, für einen Merge mit dem SCM-System eignet sich das JSON Format aber
 nicht.
-   
+
 .. admonition:: Vor einem Merge muss das Diff der CDB-Konfigurationen ermittelt
                 werden.
    :class: tip
@@ -564,7 +564,7 @@ ausgecheckt werden. Hier im Beispiel verwenden wir ``/tmp/qs-branch-point``
 .. code-block:: bash
 
    # !!! Auf dem Quell-System / im Feature-Branch (z.B. foo oder qs)  !!!
-   $ git checkout qs
+   # $ git checkout qs   # sollte i.d.R. bereits ausgechekt sein
    ...
    # git worktree add <workspace-folder> <branch-point>
    $ git worktree add /tmp/qs-branch-point 4711
@@ -575,7 +575,7 @@ mit ``cdbpkg diff`` die Differenz zwischen den beiden Konfigurationsständen des
 
 .. code-block:: bash
 
-   $ cdbpkg diff -p /tmp/qs-branch-point -d /tmp/merge-qs-patch cust.plm
+   $ cdbpkg diff -p /tmp/qs-branch-point/cust.plm -d /tmp/merge-qs-patch cust.plm
    Writing changes to directory /tmp/merge-qs-patch
    ...
 
@@ -614,8 +614,8 @@ erst mal ganz normal:
 
 .. code-block:: bash
 
-   # !!! Auf dem Ziel-System / im Ziel-Branch (z.B. master)  !!!
-   $ git checkout master
+   # !!! Auf dem Ziel-System / im Ziel-Branch (z.B. master) !!!
+   # $ git checkout master  # sollte i.d.R. bereits ausgechekt sein
    ...
    $ git merge qs --no-commit --no-ff     # SCM merge
    Auto-merging cust.plm/cust/plm/module_metadata.json
@@ -637,8 +637,8 @@ Rahmen eines git-Merge mit ``checkout --ours``:
 .. code-block:: bash
 
    $ cd cust.plm/cust/plm
+   $ git reset configuration module_metadata.json
    $ git checkout --ours configuration module_metadata.json
-   $ git add configuration module_metadata.json
 
 Bei älteren CDB Versionen (10.x) müssen noch zwei weitere Objekte *zurück
 gespult* werden:
@@ -646,8 +646,8 @@ gespult* werden:
 .. code-block:: bash
 
    $ cd cust.plm/cust/plm
+   $ git reset content_metadata.json patches           # ab CDB 15 nicht mehr erforderlich
    $ git checkout --ours content_metadata.json patches # ab CDB 15 nicht mehr erforderlich
-   $ git add content_metadata.json patches             # ab CDB 15 nicht mehr erforderlich
 
 
 .. admonition:: Konfiguration (JSON) darf nicht vom SCM-System gemerged werden.
@@ -682,9 +682,6 @@ eine beispielhafte Ausgabe:
 
   Changes to be committed:
 
-          modified:   cust/plm/configuration/misc/cdb_dialog.json
-          modified:   cust/plm/configuration/patches/cs.documents/classes/document.json
-          modified:   cust/plm/configuration/patches/cs.pcs.projects/classes/cdbpcs_project.json
           modified:   cust/plm/foo.py
 
 Der merge der Dateien ist damit abgeschlossen und wir kommen zum zweiten Teil
@@ -699,7 +696,13 @@ Erst wenn alle Konflikte im Source-Code aufgelöst sind hat man wieder eine
 
    $ cdbpkg patch /tmp/merge-qs-patch     # CDB-Merge
 
-Nun kann man in CDB die Änderungen recherchieren und etwaige Konflikte auflösen.
+Nun kann man in CDB die Änderungen recherchieren und etwaige Konflikte auflösen
+(Dazu einen build erstellen, alternativ Dev-Build in CDB).
+
+.. code-block:: bash
+
+   $ cdbpkg build cust.plm
+
 Der Merge ist abgeschlossen, sobald man der Überzeugung ist, dass alle
 Änderungen aus dem Branch korrekt übernommen wurden. Man hat dann Änderungen im
 Dateisystem und an der Konfiguration in der DB, die beide noch nicht ins SCM
@@ -711,7 +714,7 @@ erzeugen und dann alles im SCM-System als auch in CDB (app_conf) *committen*:
 
    $ cdbpkg build cust.plm
    ...
-   $ git add --all .
+   $ git add --all cust.plm/cust/plm
    $ git commit -m "merged branch 'qs'"
    $ cdbpkg commit cust.plm
 
@@ -721,7 +724,6 @@ Feature-Branch oder der QS wird man den Push vermutlich gleich durchführen. Bei
 der PROD (**master**) gehört dieser Push allerdings zum Rollout und sollte
 deshalb ggf. für später -- am besten kurz vor dem Rollout Termin -- eingeplant
 werden.
-   
 
 .. _rm_create_branch:
 
