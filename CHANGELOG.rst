@@ -1,4 +1,4 @@
-2018-11-27 Release 1.1 <markus.heiser@darmarit.de>
+2018-03-04 Release 1.1 <markus.heiser@darmarit.de>
 
   * slides: cdbpkg & SCM / big picture als SVG erstellt
   * doc: Artikel 'Releasemanagement und CONTACT Elements'
@@ -10,12 +10,12 @@
   * CDB15: CADDOK_INSTALLDIR ist in CDB-15 erforderlich
   * init_cdb_mirror: Prüfung des vault_path Arguments (BLOB-Storage)
 
-2018-11-27 Release 1.0.1 <markus.heiser@darmarit.de>
+2017-11-27 Release 1.0.1 <markus.heiser@darmarit.de>
 
   * build: dist (ZIP) unter Einbeziehung des ./templates Ordners
   * build: bugfix der download URL
   * docs: Intsalaltionsprozess etwas vereinfacht beschrieben
 
-2018-11-27 Release 1.0 <markus.heiser@darmarit.de>
+2017-11-21 Release 1.0 <markus.heiser@darmarit.de>
 
   * inital
