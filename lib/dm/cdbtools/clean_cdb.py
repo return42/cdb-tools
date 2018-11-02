@@ -141,7 +141,7 @@ def cli_clean_mq(cliArgs):
 
     if cliArgs.days != 0:
         d = datetime.now() - timedelta(days=cliArgs.days)
-        clause.append("cdbmq_enqtime < '%s'" % d.strftime('%Y.%m.%d %H:%M:%S'))
+        clause.append("cdbmq_enqtime < %s" % sqlapi.SQLdbms_date(d))
 
     if clause:
         clause = "WHERE " + " AND ".join(clause)
@@ -222,9 +222,9 @@ def cli_clean_erplog(cliArgs):
 
     if cliArgs.days != 0:
         d = datetime.now() - timedelta(days=cliArgs.days)
-        clause.append("log_date < '%s'" % d.strftime('%Y.%m.%d %H:%M:%S'))
+        clause.append("log_date < %s" % sqlapi.SQLdbms_date(d))
 
-    if cliArgs.keep_result:
+    if not cliArgs.drop_result:
         clause.append(r"log_text NOT LIKE '%Result:%'")
 
     clause = " AND ".join(clause)
@@ -290,7 +290,7 @@ def main():
         '--sap-system', default = 'all'
         , help = 'SAP-System dessen Logs bereinigt werden sollen.')
     erplog.add_argument(
-        '--keep-result', action = 'store_false'
+        '--drop-result', action = 'store_true'
         , help = "Die 'Result' Meldungen des SAP-GW sollen auch gelöscht werden")
 
 
@@ -300,7 +300,7 @@ def main():
         '--sap-system', default='all'
         , help = 'SAP-System dessen Logs bereinigt werden sollen.')
     aio.add_argument(
-        '--keep-result', action = 'store_false'
+        '--drop-result', action = 'store_true'
         , help = "Die 'Result' Meldungen des SAP-GW sollen auch gelöscht werden")
 
     cli()
