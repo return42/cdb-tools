@@ -179,6 +179,48 @@ def check_port(opts):
             rows = sqlapi.SQL(sql)
             SUI.rst_p(u"--> %s rows updated" % rows)
 
+def auth_method():
+    SUI.rst_title("Authentifizierung")
+    opt_query = """
+   SELECT svcid, name, value
+     FROM cdbus_svcopts WHERE svcid IN (
+           SELECT svcid FROM cdbus_svcs
+            WHERE svcname='%s'
+             AND hostname='%s')"""
+    hostname = FQDN
+    svcname  = 'cdb.uberserver.services.apache.Apache'
+    opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
+
+    row_wsgi_auth_method = None
+
+    for row in opts:
+        if row.name == "wsgi_auth_method":
+            row_wsgi_auth_method = row
+            break
+
+    if row_wsgi_auth_method is None:
+        return
+
+    SUI.rst_p("Aktuelle Methode zur Authentifizierung: %s" % row_wsgi_auth_method.value)
+
+    x = sqlapi.RecordSet2('cdb_auth_plugin', "name = 'password'")
+
+    if x and row_wsgi_auth_method.value != 'password':
+        pwd_plugin = x[0]
+        if SUI.ask_yes_no(u"Soll die Authentifizierung auf CDB-Passwörter umgestellt werden?") == SUI.YES:
+            if not pwd_plugin.active:
+                SUI.rst_p("Das Plugin zur Authentifizierung wird aktiviert ..")
+                SUI.rst_p(u"--> %s rows updated"
+                          % pwd_plugin.updated(active = 1))
+            SUI.rst_p(u"Setze die Dienst-Option des Apache: %s = 'password' (es werden die CDB Passwörter genutzt)"
+                      % (row_wsgi_auth_method.name, ))
+            sql = ("update cdbus_svcopts SET value='password' WHERE svcid='%s' AND name='%s' AND value='%s'"
+                   % (row_wsgi_auth_method.svcid, row_wsgi_auth_method.name, row_wsgi_auth_method.value))
+            SUI.rst_p(u"--> %s rows updated" % sqlapi.SQL(sql))
+
+    if row_wsgi_auth_method.value == 'password':
+        reset_password()
+
 def check_path(opts):
     for row in opts:
         if not row.name in ('base_path', 'path', 'vault_path'):
@@ -311,7 +353,7 @@ def _main(cliArgs): # pylint: disable=unused-argument
     deactivate_services()
     takeover_service()
     setup_basic_services()
-    reset_password()
+    auth_method()
     SUI.rst_p(u"""\
 Ein minimales Setup wurde eingerichtet. Es kann der CDBSVCD gestartet werden.
 Alle weiteren Einstellungen sollten von nun an in CDB möglich sein.""")
