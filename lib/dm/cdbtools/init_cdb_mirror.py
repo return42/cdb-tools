@@ -72,7 +72,7 @@ def takeover_service():
    GROUP BY hostname ORDER BY COUNT(hostname) DESC
 """
 
-    if ELEMENTS_MAJOR == 15 and ELEMENTS_MINOR > 1:
+    if ELEMENTS_MAJOR == 15 and ELEMENTS_MINOR >= 1:
         query = """
   SELECT hostname FROM cdbus_svcs
    WHERE svcname IN (
@@ -106,7 +106,7 @@ def takeover_service():
            , 'cdb.uberserver.services.server.Launcher'
            , 'cdb.uberserver.services.blobstore.BlobStore' )""" % (FQDN)
 
-    if ELEMENTS_MAJOR == 15 and ELEMENTS_MINOR > 1:
+    if ELEMENTS_MAJOR == 15 and ELEMENTS_MINOR >= 1:
         sql = """
   UPDATE cdbus_svcs SET active=1, autostart=1, site='default'
    WHERE hostname='%s' AND svcname IN (
@@ -274,7 +274,7 @@ def setup_basic_services():
     opts = sqlapi.RecordSet2(sql = opt_query % (svcname, hostname))
     print_opts(opts)
 
-    if ELEMENTS_MAJOR == 15 and ELEMENTS_MINOR > 1:
+    if ELEMENTS_MAJOR == 15 and ELEMENTS_MINOR >= 1:
         for svcname in ['cdb.uberserver.services.authentication.GateKeeper'
                         , 'cdb.uberserver.services.authentication.SessionCache']:
             SUI.rst_title(svcname)
