@@ -126,31 +126,33 @@ def assert_service(svcname, hostname):
     cdbus_svcs = sqlapi.RecordSet2(
         sql="SELECT svcid FROM cdbus_svcs WHERE svcname='%s' AND hostname='%s'"
         % (svcname, hostname))
-    if not cdbus_svcs:
+    query = ("SELECT hostname FROM cdbus_svcs WHERE svcname='%s' "
+             " GROUP BY hostname ORDER BY COUNT(hostname) DESC") % (svcname)
+    hostnames = [ x.hostname for x in sqlapi.RecordSet2(sql=query) ]
+    if not cdbus_svcs and len(hostnames):
         SUI.rst_p((u"Dienst '%s' ist nicht für Host '%s' eingerichtet!"
                   u" Es stehen folgende Konfigurationen zur Verfügung,"
                   u" suchen Sie sich eine aus, die sie für %s "
                   u" verwenden möchten.") % (svcname, hostname, hostname))
-        query = ("SELECT hostname FROM cdbus_svcs WHERE svcname='%s' "
-                 " GROUP BY hostname ORDER BY COUNT(hostname) DESC") % (svcname)
-        hostnames = [ x.hostname for x in sqlapi.RecordSet2(sql=query) ]
         orig_host = SUI.ask_choice(
             u"Welche Server-Konfiguration soll übernommen werden?", hostnames)
         sql = """
   UPDATE cdbus_svcs
      SET hostname='%s', active=1, autostart=1, site='default'
-   WHERE hostname='%s' AND svcname='%s'
-""" % (FQDN, orig_host, svcname)
+   WHERE hostname='%s' AND svcname='%s' """ % (FQDN, orig_host, svcname)
         rows = sqlapi.SQL(sql)
         SUI.echo(u"\n--> %s rows updated" % rows)
+    elif not len(hostnames):
+        SUI.rst_p(u"Der Dienst %s existiert in dieser Umgebung nicht." % svcname)
+
     else:
         SUI.rst_p(u"Der Dienst %s ist bereits für den Host %s eingerichtet."
                   % (svcname, hostname))
 
 def print_opts(opts):
-    SUI.echo("\nDienst-Optionen:")
+    SUI.rst_p("Dienst-Optionen:")
     if not opts:
-        SUI.write('  keine')
+        SUI.echo('  keine')
     for row in opts:
         SUI.echo("* %-12s --> '%s'" % (row.name, row.value))
 
