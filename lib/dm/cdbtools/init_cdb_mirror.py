@@ -267,6 +267,13 @@ def check_login(opts):
         SUI.echo('')
 
 def reset_password():
+    # FIXME: es sollte verhindert werden, dass auch die Passwörter der Logins
+    # geändert werden, die zu einem Modul gehören.  Das ist immer dann der Fall,
+    # wenn cdb_object_id in der Relation cdbfolder_content enthalten ist.::
+    #
+    #   select cdb_object_id from angestellter where personalnummer='aspostingqueue';
+    #   select * from cdbfolder_content where cdb_content_id='4bf9a5a1-7e59-11e6-bf58-78acc0a55b77';
+
     sql = "angestellter set password='welcome', password_rule='Unsafe'"
     SUI.rst_title(u"Zurücksetzen der Benutzer-Passwörter")
     SUI.rst_p(u"Folgendes Statement setzt die Passwörter (welcome) der Benutzer in CDB::")
@@ -356,7 +363,20 @@ def _main(cliArgs): # pylint: disable=unused-argument
     auth_method()
     SUI.rst_p(u"""\
 Ein minimales Setup wurde eingerichtet. Es kann der CDBSVCD gestartet werden.
-Alle weiteren Einstellungen sollten von nun an in CDB möglich sein.""")
+Alle weiteren Einstellungen sollten von nun an in CDB möglich sein.
+
+ACHTUNG:
+
+   Es kann sein, dass Teile der soeben vorgenommenen Änderungen an der
+   Konfiguration zu Modulen in CDB gehören.  Es muss ein::
+
+      cdbpkg build cust.plm
+
+   durchgeführt werden.  In CDB in der Entwickleransicht zum cust.plm Modul kann
+   man solche Änderungen sehen.  Wenn diese Änderungen später nicht in den
+   Transport (Patch) müssen sie in CDB zurück gesetzt werden (Revert Button).
+
+""")
     return 0
 
 def main():
