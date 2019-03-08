@@ -1,15 +1,13 @@
 @REM -*- coding: windows-1252; mode: bat -*-
 @echo off
 REM ----------------------------------------------------------------------------
-REM --                             --  File:     maintain.bat
-REM -- Copyright (C) 2017 darmarIT --  Author:   Markus Heiser
+REM --                             --  File:     upkeep.bat
+REM -- Copyright (C) 2019 darmarIT --  Author:   Markus Heiser
 REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------
-REM Purpose:     script for CDB-Tools maintenance
-REM ----------------------------------------------------------------------------
 
-call "%~d0%~p0cdbEnv.bat"
+CALL "%~d0%~p0cdbEnv.bat"
 
 chcp 1252 >NUL
 
@@ -43,96 +41,125 @@ REM check python available
 WHERE python.exe >NUL  2>NUL
 IF %ERRORLEVEL% EQU 0 goto pythonOK
 echo ERROR: Python 2.7.9 is needed !!!
-goto Exit
-
+GOTO Exit
 :pythonOK
 
-IF x%1 EQU xbootstrap GOTO bootstrap
-IF x%1 EQU xdownload GOTO download
-IF x%1 EQU xdist GOTO zip
 
-ECHO.
-ECHO ===============
-ECHO bootstrap
-ECHO ===============
+:main
 
-IF NOT EXIST "%CDBTOOLS_HOME%\py27\Python27" GOTO bootstrap
-CHOICE /C YN /M "Soll ein *Bootstap* durchgeführt werden"
-IF ERRORLEVEL 2 GOTO bootstrapOK
-
-:bootstrap
-    START /B /WAIT "bootstrap" "%CDBTOOLS_HOME%\bootstrap\bootstrap.bat"
-    IF NOT %ERRORLEVEL% EQU 0 GOTO Exit
-    if x%1 EQU xbootstrap goto Exit
+  echo.
+  CALL :askYN "Do you like to download/update the devTools libraries?"
+  IF %_result%==Y (
+    CALL :downloadPackages
+  ) ELSE (
     CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" >NUL 2>NUL
-    GOTO download
+    call :INFO "download skiped"
+  )
 
-:bootstrapOK
-    ECHO bootstrap OK
-    call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" >NUL 2>NUL
+  CALL :askYN "Do you like to (re-) install the devTools libraries?"
+  IF %_result%==Y (
+    CALL :installPackages
+  ) ELSE (
+    call :INFO "installation skiped"
+  )
 
-ECHO.
-ECHO ===============
-ECHO download
-ECHO ===============
-ECHO.
+  CALL :askYN "Do you like to fix the python script launcher?"
+  IF %_result%==Y (
+    CALL :fixLauncher
+  ) ELSE (
+    call :INFO "fix-launcher skiped"
+  )
 
-CHOICE /C YN /M "Sollen die Software Pakete der CDBTools runtergeladen werden (download)"
-IF ERRORLEVEL 2 GOTO downloadOK
+  CALL :askYN "Do you like to built a ZIP from the CDB-Tools?"
+  IF %_result%==Y (
+    CALL :buildZIP
+  ) ELSE (
+    call :INFO "zipping CDB-Tools skiped"
+  )
 
-:download
-    CALL "%CDBTOOLS_HOME%\bootstrap\download-all.bat"
-    if x%1 EQU xdownload goto Exit
+  echo "-- END --"
+  GOTO EXIT_OK
 
-:downloadOK
+:downloadPackages
 
-ECHO.
-ECHO ===============
-ECHO install
-ECHO ===============
-ECHO.
+  CALL :header "bootstrap devTools"
 
-CHOICE /C YN /M "Sollen die runtergeladenen Software Pakete eingerichtet werden"
-IF ERRORLEVEL 2 GOTO installOK
+  START /B /WAIT "bootstrap" "%CDBTOOLS_HOME%\bootstrap\bootstrap.bat"
+  IF NOT %ERRORLEVEL% EQU 0 (
+     CALL :RAISE_ERROR "bootstrap exit with %ERRORLEVEL%"
+     )
 
-:install
-    CALL "%CDBTOOLS_HOME%\bootstrap\install-all.bat"
-    CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-fix-launcher.bat"
-    GOTO launcherOK
+  CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" >NUL 2>NUL
 
-:installOK
+  CALL :header "Download packages"
+  python "%CDBTOOLS_HOME%\bootstrap\build.py" get-pypkgs
+  IF NOT %ERRORLEVEL% EQU 0 (
+     CALL :RAISE_ERROR "download exit with %ERRORLEVEL%"
+     )
+  EXIT /B 0
 
-ECHO.
-ECHO ===============
-ECHO update launcher
-ECHO ===============
-ECHO.
+:installPackages
 
-CHOICE /C YN /M "Sollen Launcher der Python Skripte aktualisiert werden"
-IF ERRORLEVEL 2 GOTO launcherOK
+  CALL :header "install python requirements"
+  python "%CDBTOOLS_HOME%\bootstrap\build.py" install-pypkgs
+  IF NOT %ERRORLEVEL% EQU 0 (
+     CALL :RAISE_ERROR "installation exit with %ERRORLEVEL%"
+     )
 
-:launcher
-    CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-fix-launcher.bat"
+  CALL :header "install software"
+  python "%CDBTOOLS_HOME%\bootstrap\build.py" install-software
+  IF NOT %ERRORLEVEL% EQU 0 (
+     CALL :RAISE_ERROR "installation exit with %ERRORLEVEL%"
+     )
+  EXIT /B 0
 
-:launcherOK
+:fixLauncher
+
+  CALL :header "fix python launcher"
+  python "%CDBTOOLS_HOME%\bootstrap\fix_launcher.py"
+  IF NOT %ERRORLEVEL% EQU 0 (
+    CALL :RAISE_ERROR "fix-launcher exit with %ERRORLEVEL%"
+  )
+  EXIT /B 0
+
+:buildZIP
+
+  CALL :header "build CDB-Tools ZIP"
+  python.exe "%CDBTOOLS_HOME%\bootstrap\build.py" dist
+  IF NOT %ERRORLEVEL% EQU 0 (
+    CALL :RAISE_ERROR "build CDB-Tools ZIP exit with %ERRORLEVEL%"
+  )
+  EXIT /B 0
 
 
-ECHO.
-ECHO ===============
-ECHO ZIP CDB-Tools
-ECHO ===============
-ECHO.
+:askYN
+  SET _result=Y
+  CHOICE /C YN /M %1
+  IF %ERRORLEVEL%==2  (
+    SET _result=N
+    )
+  EXIT /B 0
 
-CHOICE /C YN /M "Soll aus den cdbtools ein ZIP gebaut werden"
-IF ERRORLEVEL 2 GOTO zipOK
+:header
+  echo.
+  echo ==============================
+  echo %~1
+  echo ==============================
+  EXIT /B 0
 
-:zip
-    python.exe "%CDBTOOLS_HOME%\bootstrap\build.py" dist
-    if x%1 EQU xdist goto Exit
-:zipOK
+:INFO
+  echo INFO: %~1
+  EXIT /B 0
 
+:WARN
+  echo WARN: %~1
+  EXIT /B 0
 
-:Exit
-pause
-exit 0
+:RAISE_ERROR
+  call :ERROR "%~1"
+  pause
+  exit 42
 
+:EXIT_OK
+  pause
+  exit 0

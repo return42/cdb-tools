@@ -78,35 +78,63 @@ SOFTWARE_ARCHIVES = [
 
     , ]
 
+dummy_id = object()
+DEVTOOLS_PACKAGES = {}
+for (src_folder, zip_fname, _x, _x, url) in SOFTWARE_ARCHIVES:
+    if zip_fname == "cdb-tools.zip":
+        # we are already in cdb-tools / no need to install once more
+        continue
+    if not DEVTOOLS_PACKAGES.get(zip_fname, dummy_id) == dummy_id:
+        raise Exception("name %s is used twice" % zip_fname)
+    else:
+        DEVTOOLS_PACKAGES[zip_fname] = src_folder, url
+
 # ==============================================================================
 def main():
 # ==============================================================================
 
     u"""cdbtools -- build maintenance script"""
     cli = CLI(description=main.__doc__)
-    cli.addCMDParser(cli_build_get_pypkgs       , cmdName='get-pypkgs')
-    cli.addCMDParser(cli_build_install_pypkgs   , cmdName='install-pypkgs')
-    cli.addCMDParser(cli_build_get_software     , cmdName='get-software')
-    cli.addCMDParser(cli_build_install_software , cmdName='install-software')
-    cli.addCMDParser(cli_dist                   , cmdName='dist')
+
+    subparser = cli.addCMDParser(cli_build_get_pypkgs, cmdName='get-pypkgs')
+    subparser = cli.addCMDParser(cli_build_install_pypkgs, cmdName='install-pypkgs')
+
+    subparser = cli.addCMDParser(cli_build_get_software, cmdName='get-software')
+    subparser.add_argument(
+        "pkg"
+        , nargs = "*"
+        , help = "name of the devTools package"
+        , choices = ['all'] + DEVTOOLS_PACKAGES.keys()
+        , default = 'all'
+   )
+
+    subparser = cli.addCMDParser(cli_build_install_software , cmdName='install-software')
+    subparser.add_argument(
+        "pkg"
+        , nargs = "*"
+        , help = "name of the devTools package"
+        , choices = ['all'] + DEVTOOLS_PACKAGES.keys()
+        , default = 'all'
+    )
+
+    subparser = cli.addCMDParser(cli_dist, cmdName='dist')
     cli()
 
 def cli_build_install_software(cli): # pylint: disable=unused-argument
     u"""install software archieves (ZIP)"""
-    CDBTOOLS_SW_DOWNLOAD.makedirs()
-    for (src_folder, zip_fname, _x, _x, url) in SOFTWARE_ARCHIVES:
-        if zip_fname == "cdb-tools.zip":
-            # we are already in cdb-tools / no need to install once more
-            continue
+    if cli.pkg == 'all':
+        cli.pkg = DEVTOOLS_PACKAGES.keys()
+    for zip_fname in cli.pkg:
+        src_folder, url = DEVTOOLS_PACKAGES[zip_fname]
         sw_install(src_folder, zip_fname, url)
 
 def cli_build_get_software(cli):  # pylint: disable=unused-argument
     u"""get software archieves (ZIP)"""
     CDBTOOLS_SW_DOWNLOAD.makedirs()
-    for (_x, zip_fname, _x, _x, url) in SOFTWARE_ARCHIVES:
-        if zip_fname == "cdb-tools.zip":
-            # we are already in cdb-tools / no need to download once more
-            continue
+    if cli.pkg == 'all':
+        cli.pkg = DEVTOOLS_PACKAGES.keys()
+    for zip_fname in cli.pkg:
+        src_folder, url = DEVTOOLS_PACKAGES[zip_fname]
         sw_download(zip_fname, url)
 
 def cli_build_install_pypkgs(cli):  # pylint: disable=unused-argument

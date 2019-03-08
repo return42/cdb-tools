@@ -2,15 +2,15 @@
 @ECHO off
 REM ----------------------------------------------------------------------------
 REM --                             --  File:     cdbtools.bat
-REM -- Copyright (C) 2017 darmarIT --  Author:   Markus Heiser
+REM -- Copyright (C) 2019 darmarIT --  Author:   Markus Heiser
 REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------
 REM Purpose:     bootstrap CDBTools
 REM ----------------------------------------------------------------------------
 
-SET "PIP_URL=https://pypi.python.org/packages/11/b6/abcb525026a4be042b486df43905d6893fb04f05aac21c32c638e939e447/pip-9.0.1.tar.gz#md5=35f01da3300"
-SET "PIP_NAME=pip-9.0.1"
+SET "PIP_URL=https://files.pythonhosted.org/packages/36/fa/51ca4d57392e2f69397cd6e5af23da2a8d37884a605f9e3f2d3bfdc48397/pip-19.0.3.tar.gz"
+SET "PIP_NAME=pip-19.0.3"
 
 ECHO.
 ECHO bootstrap CDBTools package management
@@ -49,7 +49,6 @@ PAUSE
 exit
 
 :pythonOK
-PAUSE
 
 REM source CDBTools environment
 REM ----------------------------

@@ -2,7 +2,7 @@
 @echo off
 REM ----------------------------------------------------------------------------
 REM --                             --  File:     cdbtools-wrapper.bat
-REM -- Copyright (C) 2017 darmarIT --  Author:   Markus Heiser
+REM -- Copyright (C) 2019 darmarIT --  Author:   Markus Heiser
 REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------
@@ -29,4 +29,4 @@ cd /d %CADDOK_BASE%
 
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
 title tools-sh %CADDOK_DBNAME%
-cdbsh.exe -v -db "%CADDOK_DEFAULT%"
+"%CADDOK_RUNTIME%\cdbsh.exe" -v -db "%CADDOK_DEFAULT%"

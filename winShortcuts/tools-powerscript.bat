@@ -2,7 +2,7 @@
 @echo off
 REM ----------------------------------------------------------------------------
 REM --                             --  File:     cdbtools-wrapper.bat
-REM -- Copyright (C) 2017 darmarIT --  Author:   Markus Heiser
+REM -- Copyright (C) 2019 darmarIT --  Author:   Markus Heiser
 REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------
@@ -27,7 +27,7 @@ REM ----------------------------------------------------------------------------
 
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
 title tools-powerscript %CADDOK_DBNAME%
-powerscript.exe -db "%CADDOK_DEFAULT%" -m dm.cdbtools.run_ptpython
+"%CADDOK_RUNTIME%\powerscript.exe" -db "%CADDOK_DEFAULT%" -m dm.cdbtools.run_ptpython
 
 REM ----------------------------------------------------------------------------
 :Exit
