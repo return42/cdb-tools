@@ -7,48 +7,54 @@ REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------
 
+REM upkeep need some special tests for the environment
+SET _CHECK_ENV=N
+
 CALL "%~d0%~p0cdbEnv.bat"
-
-chcp 1252 >NUL
-
-title %~n0 (%CADDOK_DEFAULT%)
-REM cd /D %CADDOK_BASE%
 
 echo ============================================================
 echo %~n0 CDB-Tools
 echo ============================================================
 echo.
-echo   CDBTOOLS_HOME:  %CDBTOOLS_HOME%
-echo   CADDOK_RUNTIME: %CADDOK_RUNTIME%
-echo   CADDOK_BASE:    %CADDOK_BASE%
-echo   CADDOK_DEFAULT: %CADDOK_DEFAULT%
-echo.
-echo ============================================================
 
 IF NOT EXIST "%CADDOK_RUNTIME%" (
-   echo WARNING: missing CADDOK_RUNTIME at "%CADDOK_RUNTIME%"
-   pause
+  SET _MISSING_CDB=Y
+  CALL :WARN "missing CADDOK_RUNTIME at %CADDOK_RUNTIME%"
 )
 
 IF NOT EXIST "%CADDOK_BASE%" (
-   echo WARNING: missing CADDOK_BASE at "%CADDOK_BASE%"
-   pause
+  SET _MISSING_CDB=Y
+  CALL :WARN "missing CADDOK_BASE at %CADDOK_BASE%"
 )
 
-SET "PATH=%CADDOK_RUNTIME%;%PATH%"
+IF %_MISSING_CDB%==Y (
+  echo.
+  echo running upkeep without CDB ^(use this only ^for bootstrap and download purposes^)
+) ELSE (
+  SET "PATH=%CADDOK_RUNTIME%;%PATH%"
+  echo   CDBTOOLS_HOME:  %CDBTOOLS_HOME%
+  echo   CADDOK_RUNTIME: %CADDOK_RUNTIME%
+  echo   CADDOK_BASE:    %CADDOK_BASE%
+  echo   CADDOK_DEFAULT: %CADDOK_DEFAULT%
+  echo.
+)
 
-REM check python available
 WHERE python.exe >NUL  2>NUL
-IF %ERRORLEVEL% EQU 0 goto pythonOK
-echo ERROR: Python 2.7.9 is needed !!!
-GOTO Exit
-:pythonOK
+IF %ERRORLEVEL% EQU 0 goto main
 
+IF EXIST C:\Python27 SET "PATH=C:\Python27;C:\Python27\Scripts;%PATH%"
+WHERE python.exe >NUL  2>NUL
+IF %ERRORLEVEL% EQU 0 goto main
+
+echo ERROR: ^at least a Python 2.7.9 installation is needed !!!
+echo ERROR: first install python 2.7 from https://www.python.org/downloads/
+pause
+exit 42
 
 :main
 
   echo.
-  CALL :askYN "Do you like to download/update the devTools libraries?"
+  CALL :askYN "Do you like to download/update the CDB-Tools libraries?"
   IF %_result%==Y (
     CALL :downloadPackages
   ) ELSE (
@@ -56,7 +62,12 @@ GOTO Exit
     call :INFO "download skiped"
   )
 
-  CALL :askYN "Do you like to (re-) install the devTools libraries?"
+  IF %_MISSING_CDB%==Y (
+    call :INFO "to continue a CDB instalation is needed"
+    exit 0
+  )
+
+  CALL :askYN "Do you like to (re-) install the CDB-Tools libraries?"
   IF %_result%==Y (
     CALL :installPackages
   ) ELSE (
@@ -82,12 +93,13 @@ GOTO Exit
 
 :downloadPackages
 
-  CALL :header "bootstrap devTools"
+  CALL :header "bootstrap CDB-Tools"
+  echo.
 
   START /B /WAIT "bootstrap" "%CDBTOOLS_HOME%\bootstrap\bootstrap.bat"
   IF NOT %ERRORLEVEL% EQU 0 (
      CALL :RAISE_ERROR "bootstrap exit with %ERRORLEVEL%"
-     )
+  )
 
   CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" >NUL 2>NUL
 
@@ -95,7 +107,7 @@ GOTO Exit
   python "%CDBTOOLS_HOME%\bootstrap\build.py" get-pypkgs
   IF NOT %ERRORLEVEL% EQU 0 (
      CALL :RAISE_ERROR "download exit with %ERRORLEVEL%"
-     )
+  )
   EXIT /B 0
 
 :installPackages
@@ -104,13 +116,13 @@ GOTO Exit
   python "%CDBTOOLS_HOME%\bootstrap\build.py" install-pypkgs
   IF NOT %ERRORLEVEL% EQU 0 (
      CALL :RAISE_ERROR "installation exit with %ERRORLEVEL%"
-     )
+  )
 
   CALL :header "install software"
   python "%CDBTOOLS_HOME%\bootstrap\build.py" install-software
   IF NOT %ERRORLEVEL% EQU 0 (
      CALL :RAISE_ERROR "installation exit with %ERRORLEVEL%"
-     )
+  )
   EXIT /B 0
 
 :fixLauncher
@@ -137,7 +149,7 @@ GOTO Exit
   CHOICE /C YN /M %1
   IF %ERRORLEVEL%==2  (
     SET _result=N
-    )
+  )
   EXIT /B 0
 
 :header
@@ -156,7 +168,7 @@ GOTO Exit
   EXIT /B 0
 
 :RAISE_ERROR
-  call :ERROR "%~1"
+  echo ERROR: %~1
   pause
   exit 42
 

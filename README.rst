@@ -20,3 +20,17 @@ Bitte beachten:
 
 - wichtige Hinweise: https://return42.github.io/cdb-tools/hints.html
 - Installation:      https://return42.github.io/cdb-tools/install.html
+
+
+.. hint::
+
+   Die CDB-Tools verfügen über git Submodule.  Zum Clonen sollte::
+
+     git clone --recursive https://github.com/return42/cdb-tools
+
+   verwendet werden.  Falls man das vergessen hat, kann man das mit::
+
+     git submodule init
+     git submodule update
+
+   nachholen.

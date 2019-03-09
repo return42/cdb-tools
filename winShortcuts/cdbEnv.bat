@@ -2,7 +2,7 @@
 @echo off
 REM ----------------------------------------------------------------------------
 REM --                             --  File:     cdbEnv.bat
-REM -- Copyright (C) 2017 darmarIT --  Author:   Markus Heiser
+REM -- Copyright (C) 2019 darmarIT --  Author:   Markus Heiser
 REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------
@@ -53,6 +53,7 @@ START notepad %~d0%~p0cdbEnv.bat
 exit
 
 :checkEnv
-
-IF NOT EXIST %CADDOK_RUNTIME% goto errorEnv
-IF NOT EXIST %CADDOK_BASE% goto errorEnv
+IF NOT %_CHECK_ENV%==N (
+  IF NOT EXIST %CADDOK_RUNTIME% goto errorEnv
+  IF NOT EXIST %CADDOK_BASE% goto errorEnv
+)

@@ -22,8 +22,14 @@ Das Reposetorie der CDB-Tools wird mit ``git clone`` *geklont*.::
   $ git clone --recursive https://github.com/return42/cdb-tools
 
 Wichtig ist der Schalter ``--recursive`` der sicherstellt, dass auch die
-Submodule der CDB-Tools *geklont* werden.  Spätere Aktualisierungen können
-mittels ``git pull`` erfolgen (:ref:`update_cdbtools`).
+Submodule der CDB-Tools *geklont* werden.  Falls man das beim initalen Clonen
+vergessen hat, kann man das wie folgt nachholen::
+
+  $ git submodule init
+  $ git submodule update
+
+Spätere Aktualisierungen können mittels ``git pull`` erfolgen
+(:ref:`update_cdbtools`).
 
 - CDB in den CDB-Tools bekannt machen
 
