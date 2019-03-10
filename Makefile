@@ -48,6 +48,10 @@ clean: docs-clean pyclean
 	$(call cmd,cdbtools_clean)
 	$(call cmd,common_clean)
 
+purge:  clean
+	git clean -xfd
+
+
 # FIXME: works only on Windows ...
 PHONY += cdbtools
 cdbtools:

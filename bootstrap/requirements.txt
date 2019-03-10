@@ -18,7 +18,8 @@ keyring
 requests
 
 # https://github.com/eliangcs/http-prompt/
-http-prompt
+# HINT: http-prompt 1.0.0 has requirement prompt-toolkit<2.0.0,>=1.0.0, but you'll have prompt-toolkit 2.0.9 which is incompatible.
+# http-prompt
 
 # http://python-prompt-toolkit.readthedocs.io
 prompt_toolkit

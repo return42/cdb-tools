@@ -41,6 +41,13 @@ bestehende CDB Instanz *aufgesattelt* werden.
 
      SET "CDBTOOLS_HOME=C:\share\cdb-tools"
 
+  Ab Version 11.3 verwendet CDB ELEMENTS die ``win_amd64`` (default in den
+  CDB-Tools), weshalb für ältere Versionen noch die Umgebungsvariable
+  ``PIP_PY_PLATFORM`` gesetzt (*aus-kommentiert*) werden muss:
+
+  .. code-block:: dosbatch
+
+     SET PIP_PY_PLATFORM=win32
 
 3. cdbtools-fix-launcher
 

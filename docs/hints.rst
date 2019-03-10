@@ -15,11 +15,11 @@ wichtige Hinweise
   ein produktives System anwenden!
 
 - Die Tools zur (Datenbank-) Optimierung basieren i.d.R. darauf, Daten zu
-  reduzieren (löschen). Ob Optimierungen solcher Art für Ihre konkreten
+  reduzieren (löschen).  Ob Optimierungen solcher Art für Ihre konkreten
   Anwendungsszenarien überhaupt geeignet sind oder ob dabei ggf. noch benötigte
-  Daten gelöscht oder Beziehungen gebrochen werden kann nicht allgemein
-  beantwortet werden. Die Optimierungen / das Löschen von Daten muss immer gegen
-  die eigenen Anwendungsszenarien geprüft werden!
+  Daten gelöscht oder Beziehungen gebrochen werden, kann nicht allgemein
+  beantwortet werden.  Die Optimierungen / das Löschen von Daten muss immer
+  gegen die eigenen Anwendungsszenarien geprüft werden!
 
 - Die CDB-Tools sollten nur von erfahrenen CDB Entwicklern genutzt werden, die
   wissen was die Tools machen und einschätzen können ob diese überhaupt geeignet

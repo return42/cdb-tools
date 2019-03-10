@@ -27,11 +27,11 @@ IF NOT EXIST "%CADDOK_BASE%" (
   CALL :WARN "missing CADDOK_BASE at %CADDOK_BASE%"
 )
 
-IF %_MISSING_CDB%==Y (
+IF [%_MISSING_CDB%]==[Y] (
   echo.
   echo running upkeep without CDB ^(use this only ^for bootstrap and download purposes^)
 ) ELSE (
-  SET "PATH=%CADDOK_RUNTIME%;%PATH%"
+  SET "PATH=%CADDOK_RUNTIME%;%CADDOK_RUNTIME%\Scripts;%PATH%"
   echo   CDBTOOLS_HOME:  %CDBTOOLS_HOME%
   echo   CADDOK_RUNTIME: %CADDOK_RUNTIME%
   echo   CADDOK_BASE:    %CADDOK_BASE%
@@ -53,36 +53,47 @@ exit 42
 
 :main
 
+  REM bootsrap and download (with or without CDB installation)
+
   echo.
   CALL :askYN "Do you like to download/update the CDB-Tools libraries?"
-  IF %_result%==Y (
+  IF [%_result%]==[Y] (
     CALL :downloadPackages
   ) ELSE (
-    CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" >NUL 2>NUL
     call :INFO "download skiped"
   )
 
-  IF %_MISSING_CDB%==Y (
-    call :INFO "to continue a CDB instalation is needed"
+  call :header "bootsrap and download of packages completed"
+
+  IF [%_MISSING_CDB%]==[Y] (
+    echo.
+    call :INFO "To continue a CDB installation is needed."
+    pause
     exit 0
   )
 
+  REM !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+  REM From here on you have to have an CDB installation
+  REM !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+
+  CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
+
   CALL :askYN "Do you like to (re-) install the CDB-Tools libraries?"
-  IF %_result%==Y (
+  IF [%_result%]==[Y] (
     CALL :installPackages
   ) ELSE (
     call :INFO "installation skiped"
   )
 
   CALL :askYN "Do you like to fix the python script launcher?"
-  IF %_result%==Y (
+  IF [%_result%]==[Y] (
     CALL :fixLauncher
   ) ELSE (
     call :INFO "fix-launcher skiped"
   )
 
   CALL :askYN "Do you like to built a ZIP from the CDB-Tools?"
-  IF %_result%==Y (
+  IF [%_result%]==[Y] (
     CALL :buildZIP
   ) ELSE (
     call :INFO "zipping CDB-Tools skiped"
@@ -94,7 +105,6 @@ exit 42
 :downloadPackages
 
   CALL :header "bootstrap CDB-Tools"
-  echo.
 
   START /B /WAIT "bootstrap" "%CDBTOOLS_HOME%\bootstrap\bootstrap.bat"
   IF NOT %ERRORLEVEL% EQU 0 (
@@ -104,10 +114,17 @@ exit 42
   CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat" >NUL 2>NUL
 
   CALL :header "Download packages"
+
   python "%CDBTOOLS_HOME%\bootstrap\build.py" get-pypkgs
   IF NOT %ERRORLEVEL% EQU 0 (
      CALL :RAISE_ERROR "download exit with %ERRORLEVEL%"
   )
+
+  python "%CDBTOOLS_HOME%\bootstrap\build.py" get-software
+  IF NOT %ERRORLEVEL% EQU 0 (
+     CALL :RAISE_ERROR "download exit with %ERRORLEVEL%"
+  )
+
   EXIT /B 0
 
 :installPackages
@@ -154,9 +171,9 @@ exit 42
 
 :header
   echo.
-  echo ==============================
   echo %~1
-  echo ==============================
+  echo ============================================================
+  echo.
   EXIT /B 0
 
 :INFO

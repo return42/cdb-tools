@@ -10,9 +10,9 @@ authors      = ['Markus Heiser', ]
 emails       = ['markus.heiser@darmarIT.de', ]
 copyright    = '2017 Markus Heiser'
 url          = 'https://github.com/return42/cdb-tools'
-description  = 'Sammlung von Tools & Skripten zur Wartung einer CIM DATABASE Installation. '
+description  = 'Sammlung von Tools & Skripten zur Wartung einer CIM DATABASE Installation.'
 license      = 'GPLv2'
-keywords     = "CDB CIM DATABASE"
+keywords     = "CDB CIM DATABASE CONTACT ELEMENTS"
 
 def get_entry_points():
     """get entry points of the python package"""

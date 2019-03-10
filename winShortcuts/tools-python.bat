@@ -14,9 +14,7 @@ IF NOT DEFINED CDBTOOLS_HOME (
 )
 
 IF NOT EXIST "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" goto openCMD
-  SET LC_ALL=de_DE.UTF-8
-
-  IF NOT '%1' == 'conemu' (
+  IF NOT [%1]==[conemu] (
     START "ConEmu" "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" -reuse -run %0 conemu
     GOTO Exit
   )

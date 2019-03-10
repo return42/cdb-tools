@@ -6,11 +6,11 @@ REM ----------------------------------------------------------------------------
 
 call "%~d0%~p0cdbEnv.bat"
 
-title %~n0 (%CADDOK_DEFAULT%)
+title %~n0 ^(%CADDOK_DEFAULT%^)
 cd /D %CADDOK_BASE%
 
 echo ============================================================
-echo %~n0 (%CADDOK_DEFAULT%)
+echo %~n0 ^(%CADDOK_DEFAULT%^)
 echo ============================================================
 echo.
 echo   CADDOK_RUNTIME: %CADDOK_RUNTIME%

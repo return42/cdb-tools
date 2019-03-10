@@ -11,6 +11,9 @@ REM ----------------------------------------------------------------------------
 
 REM color 0E
 
+REM LC_ALL is used by ConEmu
+SET LC_ALL=de_DE.UTF-8
+
 REM CDB setup
 REM ---------------
 
@@ -36,6 +39,9 @@ REM SET "CDBTOOLS_HOME=C:\share\cdb-tools"
 SET "CDBTOOLS_DEBUG_ADDR=127.0.0.1"
 SET "CDBTOOLS_DEBUG_PORT=4444"
 
+SET PIP_PY_PLATFORM=win_amd64
+REM CDB ELEMENTS prior 15.3 need 'win32'
+REM SET PIP_PY_PLATFORM=win32
 
 goto checkEnv
 
@@ -47,13 +53,13 @@ echo CADDOK_DEFAULT: %CADDOK_DEFAULT%
 echo.
 ECHO ERROR: Die Umgebungsvariablen in der Datei::
 ECHO ERROR:   %~d0%~p0cdbEnv.bat
-ECHO ERROR: Sind (noch) nicht richtig konfiguriert!
+ECHO ERROR: Sind noch nicht richtig konfiguriert!
 pause
 START notepad %~d0%~p0cdbEnv.bat
 exit
 
 :checkEnv
-IF NOT %_CHECK_ENV%==N (
+IF NOT [%_CHECK_ENV%]==[N] (
   IF NOT EXIST %CADDOK_RUNTIME% goto errorEnv
   IF NOT EXIST %CADDOK_BASE% goto errorEnv
 )

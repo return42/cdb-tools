@@ -8,11 +8,11 @@ call "%~d0%~p0cdbEnv.bat"
 call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
 
 color 0E
-title %~n0 (%CADDOK_DEFAULT%)
+title %~n0 ^(%CADDOK_DEFAULT%^)
 cd /D "%CADDOK_BASE%"
 
 echo ============================================================
-echo %~n0 (%CADDOK_DEFAULT%) debug mode!!
+echo %~n0 ^(%CADDOK_DEFAULT%^) debug mode!!
 echo ============================================================
 echo.
 echo   CDBTOOLS_HOME:  %CDBTOOLS_HOME%

@@ -33,7 +33,7 @@ if OS_ENV.get("CDBTOOLS_HOME", None) is None:
 
 # python setup
 
-PIP_PY_PLATFORM = 'win32'
+PIP_PY_PLATFORM = os.environ['PIP_PY_PLATFORM']
 PIP_PY_VERSION  = '27'
 
 RE_SEP = re.escape(os.sep)
@@ -72,22 +72,30 @@ SOFTWARE_ARCHIVES = [
     # ( <relpath CDBTOOLS_HOME>, <zip-file name>
     #   , <RE_IGNORE_FOLDERS>, <RE_IGNORE_FILES>
     #   , <url without zip-file name>)
+
+    # elementary software
     ('.', "cdb-tools.zip", RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
-    , ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
     , (_pip_download, 'pip-download.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
+
+    # devTools packages
+    , ('win_bin/ConEmu', 'ConEmu.zip', RE_IGNORE_FOLDERS, RE_IGNORE_FILES, download_url)
 
     , ]
 
 dummy_id = object()
+ELEMENTARY_PACKAGES = {}
 DEVTOOLS_PACKAGES = {}
 for (src_folder, zip_fname, _x, _x, url) in SOFTWARE_ARCHIVES:
-    if zip_fname == "cdb-tools.zip":
-        # we are already in cdb-tools / no need to install once more
-        continue
-    if not DEVTOOLS_PACKAGES.get(zip_fname, dummy_id) == dummy_id:
+    if not (DEVTOOLS_PACKAGES.get(zip_fname, dummy_id) == dummy_id
+            and ELEMENTARY_PACKAGES.get(zip_fname, dummy_id) == dummy_id
+    ):
         raise Exception("name %s is used twice" % zip_fname)
+
+    if zip_fname in  ("cdb-tools.zip", 'pip-download.zip'):
+        ELEMENTARY_PACKAGES[zip_fname] = src_folder, url
     else:
         DEVTOOLS_PACKAGES[zip_fname] = src_folder, url
+
 
 # ==============================================================================
 def main():
@@ -103,7 +111,7 @@ def main():
     subparser.add_argument(
         "pkg"
         , nargs = "*"
-        , help = "name of the devTools package"
+        , help = "name of the CDB-Tools package"
         , choices = ['all'] + DEVTOOLS_PACKAGES.keys()
         , default = 'all'
    )
@@ -112,7 +120,7 @@ def main():
     subparser.add_argument(
         "pkg"
         , nargs = "*"
-        , help = "name of the devTools package"
+        , help = "name of the CDB-Tools package"
         , choices = ['all'] + DEVTOOLS_PACKAGES.keys()
         , default = 'all'
     )
@@ -120,22 +128,22 @@ def main():
     subparser = cli.addCMDParser(cli_dist, cmdName='dist')
     cli()
 
-def cli_build_install_software(cli): # pylint: disable=unused-argument
-    u"""install software archieves (ZIP)"""
-    if cli.pkg == 'all':
-        cli.pkg = DEVTOOLS_PACKAGES.keys()
-    for zip_fname in cli.pkg:
-        src_folder, url = DEVTOOLS_PACKAGES[zip_fname]
-        sw_install(src_folder, zip_fname, url)
-
 def cli_build_get_software(cli):  # pylint: disable=unused-argument
     u"""get software archieves (ZIP)"""
     CDBTOOLS_SW_DOWNLOAD.makedirs()
-    if cli.pkg == 'all':
+    if cli.pkg in ('all', ['all']):
         cli.pkg = DEVTOOLS_PACKAGES.keys()
     for zip_fname in cli.pkg:
         src_folder, url = DEVTOOLS_PACKAGES[zip_fname]
         sw_download(zip_fname, url)
+
+def cli_build_install_software(cli): # pylint: disable=unused-argument
+    u"""install software archieves (ZIP)"""
+    if cli.pkg in ('all', ['all']):
+        cli.pkg = DEVTOOLS_PACKAGES.keys()
+    for zip_fname in cli.pkg:
+        src_folder, url = DEVTOOLS_PACKAGES[zip_fname]
+        sw_install(src_folder, zip_fname, url)
 
 def cli_build_install_pypkgs(cli):  # pylint: disable=unused-argument
     u"""install python requirements (pip download)"""
@@ -190,10 +198,11 @@ def sw_download(zip_fname, url):
 def sw_install(src_folder, zip_fname, url):
     u"""Install zip_fname dwonloaded at CDBTOOLS_SW_DOWNLOAD into CDBTOOLS_HOME"""
     src_folder = FSPath(src_folder)
-    print("install: %s" % src_folder)
+    print("install:  %s" % src_folder)
     arch = CDBTOOLS_SW_DOWNLOAD / zip_fname
+    print("          %s" % arch)
     if not arch.EXISTS:
-        print("  missing %s" % zip_fname)
+        print("  missing: %s" % zip_fname)
         sw_download(zip_fname, url)
     if (CDBTOOLS_HOME / src_folder).EXISTS:
         print("  %s already installed\n  --> to update first remove: %s\n  --> "

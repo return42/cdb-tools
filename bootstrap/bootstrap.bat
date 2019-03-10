@@ -9,8 +9,25 @@ REM ----------------------------------------------------------------------------
 REM Purpose:     bootstrap CDBTools
 REM ----------------------------------------------------------------------------
 
+SET PIP_CMD=pip2.exe
+SET PYTHON_CMD=python.exe
+
 FOR %%A IN ("%~dp0\..") DO SET "CDBTOOLS_HOME=%%~fA"
 IF %CDBTOOLS_HOME:~-1%==\ SET CDBTOOLS_HOME=%CDBTOOLS_HOME:~0,-1%
+
+SET "CDBTOOLS_ENV=%CDBTOOLS_HOME%"
+SET "CDBTOOLS_PY27=%CDBTOOLS_HOME%\py27"
+SET "CDBTOOLS_CACHE=%CDBTOOLS_HOME%\.cache"
+SET "CDBTOOLS_DIST=%CDBTOOLS_HOME%\dist"
+SET "CDBTOOLS_SW_DOWNLOAD=%CDBTOOLS_DIST%\sw-download"
+
+IF NOT EXIST "%CDBTOOLS_PY27%" goto CDBTOOLS_PY27_removed
+echo ERROR: To bootstrap, first remove (or rename) folder:
+echo ERROR:
+echo ERROR:   %CDBTOOLS_PY27%
+echo.
+exit 42
+:CDBTOOLS_PY27_removed
 
 IF EXIST "%CDBTOOLS_HOME%\subs\fspath\setup.py" GOTO foundSubs
 echo ERROR: missing %CDBTOOLS_HOME%\subs\fspath\setup.py
@@ -23,9 +40,15 @@ echo.
 exit 42
 :foundSubs
 
+IF NOT [%PIP_PY_PLATFORM%]==[] GOTO PIP_PY_PLATFORM_OK
+echo ERROR: missing environment PIP_PY_PLATFORM in cdbEnv
+echo.
+exit 42
+:PIP_PY_PLATFORM_OK
+
+
 IF EXIST "%CADDOK_RUNTIME%" (
   echo using CDB's python from: %CADDOK_RUNTIME%\python.exe
-  SET "MYPYTHON_EXE=%CADDOK_RUNTIME%\python.exe"
   goto :main
 )
 
@@ -39,19 +62,19 @@ REM ----------------------------------------------------------------------------
 REM ---- START
 REM ----------------------------------------------------------------------------
 
-WHERE python.exe >NUL  2>NUL
+WHERE %PYTHON_CMD% >NUL  2>NUL
 IF %ERRORLEVEL% EQU 0 GOTO pythonExists
-echo ERROR: no python.exe available / Python 2.7.9 is needed !!!
+echo ERROR: no %PYTHON_CMD% available / Python 2.7.9 is needed !!!
 exit 42
 :pythonExists
 
-WHERE pip2.exe >NUL  2>NUL
+WHERE %PIP_CMD% >NUL  2>NUL
 IF %ERRORLEVEL% EQU 0 GOTO pipExists
-echo ERROR: no pip2.exe available
+echo ERROR: no %PIP_CMD% available
 exit 42
 :pipExists
 
-FOR /f %%i IN ('WHERE python.exe') DO SET "MYPYTHON_EXE=%%i"
+FOR /f %%i IN ('WHERE %PYTHON_CMD%') DO SET "MYPYTHON_EXE=%%i"
 echo found: %MYPYTHON_EXE%
 echo.
 "%MYPYTHON_EXE%" --version
@@ -69,13 +92,6 @@ REM ----------------------------------------------------------------------------
 
 :main
 
-SET "CDBTOOLS_ENV=%CDBTOOLS_HOME%"
-SET "CDBTOOLS_PY27=%CDBTOOLS_HOME%\py27"
-SET "CDBTOOLS_CACHE=%CDBTOOLS_HOME%\.cache"
-SET "CDBTOOLS_DIST=%CDBTOOLS_HOME%\dist"
-SET "CDBTOOLS_SW_DOWNLOAD=%CDBTOOLS_DIST%\sw-download"
-SET "CDBTOOLS_PIP_DOWNLOAD=%CDBTOOLS_DIST%\pip-download"
-
 REM create needed folders
 REM ---------------------
 
@@ -83,11 +99,11 @@ MD "%CDBTOOLS_PY27%"            >NUL 2>NUL
 MD "%CDBTOOLS_CACHE%"           >NUL 2>NUL
 MD "%CDBTOOLS_DIST%"            >NUL 2>NUL
 MD "%CDBTOOLS_SW_DOWNLOAD%"     >NUL 2>NUL
-MD "%CDBTOOLS_PIP_DOWNLOAD%"    >NUL 2>NUL
 
 REM usercustomize.py
 REM ----------------
 
+MD "%CDBTOOLS_PY27%\Python27\site-packages"
 echo import dm.cdbtools>"%CDBTOOLS_PY27%\Python27\site-packages\usercustomize.py"
 
 REM init PYTHONUSERBASE
@@ -97,12 +113,13 @@ MD "%CDBTOOLS_PY27%\Scripts"                  >NUL 2>NUL
 MD "%CDBTOOLS_PY27%\Python27\site-packages"   >NUL 2>NUL
 
 SET "PYTHONUSERBASE=%CDBTOOLS_PY27%"
-echo pip will install into: %PYTHONUSERBASE%
+echo %PIP_CMD% will install into: %PYTHONUSERBASE%
 echo.
 
 PUSHD "%CDBTOOLS_HOME%"
-pip install --ignore-installed --user subs\fspath
-pip install --ignore-installed --user pip
+WHERE %PIP_CMD%
+%PIP_CMD% install --ignore-installed --user subs\fspath
+%PIP_CMD% install --ignore-installed --user pip
 POPD
 
 REM ========
