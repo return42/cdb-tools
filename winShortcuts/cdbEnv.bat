@@ -17,14 +17,15 @@ SET LC_ALL=de_DE.UTF-8
 REM CDB setup
 REM ---------------
 
-SET "CADDOK_DBNAME=prod_copy"
-SET "CADDOK_RUNTIME=C:\share\cdb10_1_sl48"
-SET "CADDOK_BASE=C:\share\customer\instance_prod_copy"
+SET "CADDOK_BASE=c:\share\cdb_cust_dev"
+SET "CADDOK_DBNAME=cust_dev"
+
+SET "CADDOK_RUNTIME=C:\share\contact\cdbsrv-11.3.10"
+SET "CADDOK_CLIENT_HOME=C:\share\contact\cdbpc-11.3.0.10"
 
 SET "CADDOK_INSTALLDIR=%CADDOK_RUNTIME%"
 SET "CADDOK_LOGDIR=%CADDOK_BASE%\tmp"
 SET "CADDOK_DEFAULT=%CADDOK_DBNAME%@%CADDOK_BASE%"
-SET "CADDOK_CLIENT_HOME=%CADDOK_RUNTIME%"
 
 REM CDB-Tools setup
 REM ---------------
