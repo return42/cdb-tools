@@ -13,7 +13,7 @@ call "%~d0%~p0cdbEnv.bat"
 
 title %~n0 ^(%CADDOK_DEFAULT%^)
 REM cd /D %CADDOK_BASE%
-pause
+
 echo ============================================================
 echo %~n0 ^(%CADDOK_DEFAULT%^)
 echo ============================================================
