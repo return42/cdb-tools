@@ -17,7 +17,7 @@ SET LC_ALL=de_DE.UTF-8
 REM CDB setup
 REM ---------------
 
-SET "CADDOK_BASE=c:\share\cdb_cust_dev"
+SET "CADDOK_BASE=C:\share\cdb_cust_dev"
 SET "CADDOK_DBNAME=cust_dev"
 
 SET "CADDOK_RUNTIME=C:\share\contact\cdbsrv-11.3.10"

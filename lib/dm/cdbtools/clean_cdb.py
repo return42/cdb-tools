@@ -1,10 +1,10 @@
 # -*- mode: python; coding: utf-8 -*-
 # pylint: disable=wrong-import-position, missing-docstring, invalid-name, unused-argument
-"""
-Bereinigung der Datenbank
+# pylint: disable=too-many-statements, too-many-branches
+"""Bereinigung der Datenbank
 
-In CDB sammeln sich z.T. DB Einträge z.B. aus Message-Queue Anwendungen oder
-dem ERP-Log die nicht alle immer benötigt werden. Nicht benötigte Einträge
+In CDB sammeln sich z.T. DB Einträge aus z.B. Message-Queue Anwendungen oder
+dem ERP-Log die nicht alle immer benötigt werden.  Nicht benötigte Einträge
 sollten von Zeit zu Zeit aufgeräumt werden um die DB *schlank* und damit
 performant zu halten.
 
@@ -14,12 +14,13 @@ bis zu 60% der DB Resourcen auf *unnütze* Einträge verschwendet (z.B. eine
 über mehrere Jahre angesammelte Lizenzstatistik).
 
 Ob Optimierungen solcher Art für Ihre konkreten Anwendungszenarien überhaupt
-geeignet sind oder ob dabei ggf. noch benötigte Daten gelöscht werden kann
-nicht allgemein beantwortet werden. Das Löschen von Daten muss immer gegen
-die eigenen Anwendungszenarien geprüft werden! Testen Sie die Tools sorgfältig
-in einer Entwickler-Kopie bevor Sie diese auf ein produktives System anwenden!
+geeignet sind oder ob dabei ggf. noch benötigte Daten gelöscht werden kann nicht
+allgemein beantwortet werden.  Das Löschen von Daten muss immer gegen die
+eigenen Anwendungszenarien geprüft werden! Testen Sie die Tools sorgfältig in
+einer Entwickler-Kopie bevor Sie diese auf ein produktives System anwenden!
 
 ACHTUNG:  ES WERDEN DATEN GELÖSCHT!
+
 """
 
 # ==============================================================================
@@ -27,9 +28,6 @@ ACHTUNG:  ES WERDEN DATEN GELÖSCHT!
 # ==============================================================================
 
 import sys
-import os
-import re
-import time
 from datetime import datetime, timedelta
 
 from fspath.sui import SUI
@@ -158,12 +156,23 @@ def cli_clean_mq(cliArgs):
             else:
                 mq_tables.append(r.table_name)
 
+    mq_tables.sort()
     for mq in mq_tables:
 
         SUI.rst_title(mq, level='section')
 
         c = count_db_rows(mq)
         SUI.rst_p("Anzahl Jobs total: %s" % c)
+
+        if mq in ('mq_cad_job_server_param'
+                  , 'mq_cad_job_server'
+                  , 'mq_cad_job_server_cmd'
+                  , 'mq_cad_job_server_log'
+        ):
+            SUI.rst_p("Muss manuell gelöscht werden, da diese MQ kein Standard ist.")
+            continue
+#        if c == 0:
+#            continue
 
         if cliArgs.truncate:
             truncate_table(mq)
@@ -274,7 +283,8 @@ def main():
         )
         cmd.add_argument(
             '--truncate', action = 'store_true'
-            , help = "Tabelle komplett leeren. ACHTUNG: Es werden ALLE Einträge in der Tabelle mit SQL-TRUNCATE gelöscht")
+            , help = ("Tabelle komplett leeren. ACHTUNG: Es werden ALLE"
+                      " Einträge in der Tabelle mit SQL-TRUNCATE gelöscht"))
 
     cli = CLI(description=__doc__)
 

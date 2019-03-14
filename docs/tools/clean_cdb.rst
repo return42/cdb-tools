@@ -9,24 +9,25 @@ Bereinigung der Datenbank
 
 In CDB sammeln sich z.T. Daten an, die u.U. nicht länger benötigt werden.  Gute
 Beispiele sind *uralt* Einträge in der Lizenzstatistik, abgeschlossene Jobs in
-den MQ-Anwendungen oder ein Überbordendes ERP-Log. Es kann sich lohnen solche
+den MQ-Anwendungen oder ein Überbordendes ERP-Log.  Es kann sich lohnen solche
 Einträge von Zeit zu Zeit mal aufzuräumen, resp. nicht länger benötigte Daten zu
-löschen. In *unaufgeräumten* Installationen die seit Jahren laufen können schon
+löschen. In *unaufgeräumten* Installationen die seit Jahren laufen, können schon
 mal bis zu 30% oder 50% der DB-Resourcen auf solche obsoleten Objekte entfallen.
 
 Ob Optimierungen solcher Art für Ihre konkreten Anwendungsszenarien überhaupt
-geeignet sind oder ob dabei ggf. noch benötigte Daten gelöscht werden kann
-nicht allgemein beantwortet werden.
+geeignet sind oder ob dabei ggf. noch benötigte Daten gelöscht werden kann nicht
+allgemein beantwortet werden.  Beim Erstellen von Spiegel-System für die
+Entwicklung ist eine Optimierung i.d.R. zu empfehlen.
 
   Das Löschen von Daten muss immer gegen die eigenen Anwendungsszenarien geprüft
-  werden! Testen Sie die Tools sorgfältig in einer Entwickler-Kopie bevor Sie
+  werden!  Testen Sie die Tools sorgfältig in einer Entwickler-Kopie bevor Sie
   diese auf ein produktives System anwenden!
 
 Für die Bereinigung steht das Tool ``clean-cdb`` zur Verfügung::
 
   [CDBTools]$ clean-cdb --help
 
-Mit dem Tool können die unten beschriebenen Anwendungen aufgeräumt werden. Will
+Mit dem Tool können die unten beschriebenen Anwendungen aufgeräumt werden.  Will
 man alle Aktionen nacheinander ausführen, so nutzt man dafür ``all``::
 
   [CDBTools]$ clean-cdb all
@@ -38,16 +39,16 @@ man alle Aktionen nacheinander ausführen, so nutzt man dafür ``all``::
 Kommando clean-cdb
 ==================
 
-Wenn in einem System, das schon lange läuft zum Ersten mal aufgeräumt wird,
-können die Transaktionen zum Löschen gewaltig sein. Um das Transaktions-Log
-nicht zum bersten zu bringen kann es sinnvoll sein, zuerst die ganz alten
+Wenn in einem System, das schon länger im Betrieb ist zum Ersten mal aufgeräumt
+wird, können die Transaktionen zum Löschen gewaltig sein.  Um das Transaktions
+LOG nicht zum Bersten zu bringen kann es sinnvoll sein, zuerst die ganz alten
 Einträge (meist gibt es eine Option ``--days`` ) zu löschen und sich sukzessive
 zum gewünschten Erhalt-Datum nach vorne zu arbeiten.
 
 Wenn die Inhalte der zu bereinigenden DB-Tabellen komplett gelöscht werden
 können, dann kann das i.d.R. über die Option ``--truncate`` erreicht werden.
 Die DB Tabellen werden dann mit dem SQL ``TRUNCATE`` Statement geleert, welches
-kein Trnsaction-Log erstellt. Diese Option ist oftmals für Spiegel-Systeme
+kein Transaktions LOG erstellt.  Diese Option ist oftmals für Spiegel-Systeme
 geeignet, die man auf einfache weise *schlank* halten will (z.B. ``clean_cdb all
 --truncate``).
 
@@ -55,8 +56,8 @@ geeignet, die man auf einfache weise *schlank* halten will (z.B. ``clean_cdb all
 Löschen der Lizenz-Statistik (lstatistics)
 ==========================================
 
-Die Lizenzstatistik wächst kontinuierlich an. In lang laufenden Systemen mit
-vielen Benutzern ist die Statistik oftmals eine der größten Tabellen. Sofern
+Die Lizenzstatistik wächst kontinuierlich an. In *lang laufenden* Systemen mit
+vielen Benutzern ist die Statistik oftmals eine der größten Tabellen.  Sofern
 die Statistik nicht ausgewertet wird, kann sie auch von Zeit zu Zeit mal
 gelöscht werden.::
 
@@ -75,7 +76,7 @@ MQ-Daten gemacht (inklusieve dem Löschen der Langtexte).::
 Reduzieren der ERP-Log-Einträge
 ===============================
 
-Das Kontext bezogene ERP-Log (Reiter ERP-Log im Info Dialog) wird über über die
+Das Kontext bezogene ERP-Log (Reiter ERP-Log im Info Dialog) wird über die
 CAD-Konfig-Schalter gesteuert:
 
 - "ERP Logging" bzw. "SAP Logging": ``AN`` oder ``AUS``
@@ -90,12 +91,12 @@ eignet sich das Kommando::
 
     [CDBTools]$ clean-cdb erplog --help
 
-Auch wenn das Logging nur auf 'Results' steht, kann es passieren, dass das Log
-extrem anwächst, wenn z.B. SAP Abgleichvorgänge über lange Zeiträume
+Auch wenn das Logging nur auf ``Results`` steht, kann es passieren, dass das
+ERP-Log extrem anwächst, wenn z.B. SAP Abgleichvorgänge über lange Zeiträume
 fehlschlagen, diese aber permanent wiederholt werden.
 
-Folgendes SQL Statement kann einen Eindruck vermitteln ob es angebracht ist das
-Log mal zu bereinigen.
+Folgendes SQL Statement kann einen Eindruck darüber vermitteln ob es angebracht
+ist das ERP-Log mal zu bereinigen.
 
 .. code-block:: sql
 
@@ -114,11 +115,12 @@ eine Bereinigung des Logs lohnen.
 Sollte das letzte Statement mehr als 200.000 Einträge zählen, kann man auch mal
 überlegen aufzuräumen.
 
+
 DB-Management System
 ====================
 
 Räumt man eine DB nach langer Zeit zum ersten mal auf, so können die gelöschten
-Daten z.T. sehr groß sein und es kann Sinn machen die Datenbank-Files zu
-*shrinken* als auch das Transaction Log zu löschen und/oder nach bedarf zu
+Datenmengen z.T. sehr groß sein und es kann Sinn machen die Datenbank-Files zu
+*shrinken* und auch das Transaction Log zu löschen und/oder nach Bedarf zu
 konfigurieren (s.a. :ref:`optimze_db`).
 
