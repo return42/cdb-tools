@@ -280,7 +280,7 @@ Der ``vault.path`` Wert muss entsprechend dem Spiegel neu gesetzt werden.  M
 
 .. code-block:: sql
 
-  sqlite> update vaults set path='X:\storage\to\my\vault\'
+  sqlite> update vaults set path='X:\to\my\blobstore\vault\'
      ...> where vault_id = 1;
 
 

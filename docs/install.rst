@@ -13,54 +13,58 @@ für CDB bereit zu stellen ohne das dazu die CDB Installation *verändert* werde
 muss.  Mit dieser Eigenschaft können die CDB-Tools komfortabel auf jede
 bestehende CDB Instanz *aufgesattelt* werden.
 
-1. download & install (`Releases`_.)
+1. Die CDB-Tools können als fertiges ZIP *runter geladen* werden.  Siehe aktuelle
+   ``cdb-tools.zip`` in den `Releases`_.
 
-  Die CDB-Tools können als fertiges ZIP *runter geladen* werden. Siehe aktuelle
-  ``cdb-tools.zip`` in den `Releases`_. Der Ordner ``cdb-tools`` in der ZIP
-  Datei muss *irgendwo - hin* ausgepackt werden (s.a. :ref:`Hinweise
-  <cdbtools_portable>` ).
+2. Der Ordner ``cdb-tools`` in der ZIP Datei muss *irgendwo - hin* ausgepackt
+   werden (s.a. :ref:`Hinweise <cdbtools_portable>` ).
 
-2. CDB in den CDB-Tools bekannt machen
+3. CDB in den CDB-Tools bekannt machen.  In der CDB-Tools Umgebung müssen ein
+   paar ``CADDOK_*`` Variablen angepasst werden
+   (s.a. :ref:`setup_cdbenv`). Datei ``winShortcuts/cdbEnv.bat``:
 
-  In der CDB-Tools Umgebung müssen ein paar ``CADDOK_*`` Variablen angepasst
-  werden (s.a. :ref:`setup_cdbenv`). Datei ``winShortcuts/cdbEnv.bat``:
+.. code-block:: dosbatch
 
-  .. code-block:: dosbatch
+   SET "CADDOK_BASE=C:\share\cdb_cust_dev"
+   SET "CADDOK_DBNAME=cust_dev"
 
-     SET "CADDOK_DBNAME=prod_copy"
-     SET "CADDOK_RUNTIME=C:\share\cdb_sw"
-     SET "CADDOK_BASE=C:\share\customer\instance_prod_copy"
+   SET "CADDOK_RUNTIME=C:\share\contact\cdbsrv-11.3.10"
+   SET "CADDOK_CLIENT_HOME=C:\share\contact\cdbpc-11.3.0.10"
 
-  .. tip::
+Damit ist die Installation bereits abgeschlossen.
 
-     Wenn die CDB-Tools in mehreren Instanzen genutzt werden sollen, dann
-     kopiert man am besten den ``winShortcuts`` Ordner in die Instanzen und
-     passt zusätzlich noch ``CDBTOOLS_HOME`` an.
+.. tip::
 
-  .. code-block:: dosbatch
+   Wenn die CDB-Tools in mehreren Instanzen genutzt werden sollen, dann
+   kopiert man am besten den ``winShortcuts`` Ordner in die Instanzen und
+   passt zusätzlich noch ``CDBTOOLS_HOME`` an.
 
-     SET "CDBTOOLS_HOME=C:\share\cdb-tools"
+   .. code-block:: dosbatch
 
-  Ab Version 11.3 verwendet CDB ELEMENTS die ``win_amd64`` (default in den
-  CDB-Tools), weshalb für ältere Versionen noch die Umgebungsvariable
-  ``PIP_PY_PLATFORM`` gesetzt (*aus-kommentiert*) werden muss:
+      SET "CDBTOOLS_HOME=C:\share\cdb-tools"
 
-  .. code-block:: dosbatch
+
+Hinweise
+========
+
+
+Ab Version 11.3 verwendet CDB ELEMENTS die ``win_amd64`` (default in den
+CDB-Tools), weshalb für ältere Versionen noch die Umgebungsvariable
+``PIP_PY_PLATFORM`` gesetzt (*aus-kommentiert*) werden muss:
+
+.. code-block:: dosbatch
 
      SET PIP_PY_PLATFORM=win32
 
-3. cdbtools-fix-launcher
+Initial sollte noch einmal das folgende Skript in einer CDB-Tools Shell
+ausgeführt werden (siehe Hinweise Abschnitt :ref:`Portable
+<cdbtools_portable>`):
 
-  Initial sollte noch einmal das Skript:
+.. code-block:: dosbatch
 
-  .. code-block:: dosbatch
-
-     [CDBTools]$ cdbtools-fix-launcher
-
-  in einer CDB-Tools Shell ausgeführt werden (siehe Hinweise Abschnitt
-  :ref:`Portable <cdbtools_portable>`).
+   [CDBTools]$ cdbtools-fix-launcher
 
 Bezüglich Aktualisierung der CDB-Tools siehe :ref:`update_cdbtools`.  Eine
-alternative Installation, ist im Abschhnitt :ref:`clone_cdbtools` beschrieben.
+alternative Installation, ist im Abschhnitt ":ref:`cdbtools_repo`" beschrieben.
 Sie basiert auf dem selben git-Reposetorie, welches bereits in dem obigen ZIP
 download enthalten ist.
