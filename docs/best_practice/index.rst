@@ -9,6 +9,7 @@ In diesem Abschnitt finden Sie Hinweise und Tipps rund um CDB.
 
 .. toctree::
 
+   build_cdb_mirror
    release_management
    optimze_db
    snippets

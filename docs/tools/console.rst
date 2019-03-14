@@ -2,10 +2,11 @@
 .. include:: ../refs.txt
 
 .. _cdbtools_console:
+.. _cdbtools_ConEmu:
 
-=======
-Konsole
-=======
+================
+Konsole & ConEmu
+================
 
 Features wie *tab-complition* oder *auto-doc*, wie man sie z.B. aus dem
 Powerscript Studio kennt hat man bisher auf der Konsole vermisst. Die CDB-Tools
@@ -13,11 +14,6 @@ bringen Pakete wie ptpython_ und ptpdb_ mit, die solche Features auch in einer
 Py-Konsole bereit stellen. Diese sind auf Linux & Unix Konsolen direkt nutzbar,
 darüber hinaus haben Linux Konsolen schon immer *tab-completion* für die
 Shell.
-
-.. _cdbtools_ConEmu:
-
-ConEmu
-======
 
 Während es auf Linux & Unix komfortable Konsolen gibt, gibt es auf Windows
 lediglich die ``cmd.exe`` und deren Konsole ist wohl eher eine Behinderung den

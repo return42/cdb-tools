@@ -3,13 +3,14 @@
 # pylint: disable=wrong-import-position, missing-docstring
 """Initialisierung eines CDB Spiegel-Systems
 
-Zum Anlegen eines solchen Spiegels werden ein DB-Export und eine (Clone-) Kopie
-des CADDOK_BASE Ordners benötigt (ohne BLOB storage).  Die Initialisierung einer
-CDB Instanz ist für Entwickler-Systeme gedacht, die aus einem DB-Dump und einem
-Abzug der Sourcen aufgebaut werden.
+Zum Anlegen eines solchen Spiegels werden ein DB-Export und eine (Clone-)
+Kopie des CADDOK_BASE Ordners benötigt (ohne BlobStore).
 
-Die Änderungen aus einer solchen Initialisierung sind unumkehrbar und
-sollten nur von Personen durchgeführt werden, die wissen, was sie machen!
+Die Initialisierung einer CDB Instanz ist für Entwickler-Systeme gedacht, die
+aus einem DB-Dump und einem Abzug der Sourcen aufgebaut werden.
+
+Die Änderungen aus einer solchen Initialisierung sind unumkehrbar und sollten
+nur von Personen durchgeführt werden, die wissen, was sie machen!
 
 """
 
