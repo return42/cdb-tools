@@ -176,7 +176,7 @@ HotFix
   Eine Fehlerbehebung (i.d.R.) im PROD-System um den Betrieb erst mal aufrecht
   zu erhalten. Auch solche Änderungen müssen im Releasemanagement beachtet
   werden und werden im SCM-System versioniert. Jeder HotFix ist auch ein commit,
-  in den Abbildungen mit einem Kreis dargestellt: |HotFix| 
+  in den Abbildungen mit einem Kreis dargestellt: |HotFix|
 
 .. _rm_merge_def:
 
@@ -188,7 +188,7 @@ Merge
   Kreis dargestellt: |merge-point|
 
 Branch: ``master``
-  Haupt-Entwicklungslinie und i.d.R. auch gleichzeitig Stand des PROD 
+  Haupt-Entwicklungslinie und i.d.R. auch gleichzeitig Stand des PROD
 
 Branch: ``qs``
   Entwicklungslinie der QS
@@ -198,7 +198,7 @@ Branch-Point
   Abbildungen durch einen gelben Kreis |branch-point| gekennzeichnet.
 
 .. _rm_system_branch_def:
-  
+
 System-Branch
   Entwicklungslinie einer Instanzen wie QS oder PROD. Zu diesen Branches gibt es
   **immer** eine aktive Instanz an der sich Anwender & Entwickler anmelden
@@ -219,7 +219,7 @@ Feature-Branch
   und nur für die Zeit der Entwicklung bis zum Rollout, danach können die
   Instanzen wieder verworfen werden.
 
-  
+
 Big Picture
 ===========
 
@@ -315,7 +315,7 @@ exemplarisch; er soll u.A. erkennen lassen:
    (**master**) aus erfolgen.
 
 .. _always_branch_from_master:
-  
+
 .. admonition:: Abspaltung immer von der Entwicklungslinie des PROD (**master**)
    :class: tip
 
@@ -323,7 +323,7 @@ exemplarisch; er soll u.A. erkennen lassen:
    überhaupt in Betrieb genommen wird, kann im Vorfeld nie mit absoluter
    Sicherheit gesagt werden. Deswegen empfiehlt es sich, jede Änderungen immer
    direkt vom *aktuellen* PROD ausgehend zu starten (s.a. :ref:`rm_create_branch`).
-   
+
 2. In der Praxis wird die Entwicklungslinie eines :ref:`System-Branch
    <rm_system_branch_def>` wie QS etwas anders ausgeprägt sein als die
    Entwicklungslinie eines :ref:`Feature-Branch <rm_feature_branch_dev>` wie
@@ -778,7 +778,7 @@ Nacharbeiten bedarf, die nicht mehr im QS -- sondern wieder *zurück* -- im
 ``foo`` Branch umgesetzt werden müssen, weil *jetzt* erst mal eine andere
 Änderung durch die QS *gezogen* werden soll.
 
-.. admonition:: Vorausschauende Planung hält den Aufwand für Merges klein. 
+.. admonition:: Vorausschauende Planung hält den Aufwand für Merges klein.
    :class: tip
 
    Egal was die Gründe sind, ein Merge ist immer mit einem gewissen Aufwand
@@ -1006,4 +1006,3 @@ Ein paar Hinweise zu *gern* gemachten Fehlern:
   den Workingtree *unter dem Arsch* wegreißt und zum Anderen hat jeder Branch
   seine eigene DB .. im schlimmsten Fall wird dann noch gegen die falsche DB
   Verbunden und diese dann sabotiert!
-

@@ -33,6 +33,12 @@ extensions = [
     #, 'sphinx.ext.mathjax'
     , 'sphinx.ext.viewcode'
     , 'sphinx.ext.intersphinx'
+    , 'linuxdoc.rstFlatTable'    # Implementation of the 'flat-table' reST-directive.
+    , 'linuxdoc.rstKernelDoc'    # Implementation of the 'kernel-doc' reST-directive.
+    , 'linuxdoc.kernel_include'  # Implementation of the 'kernel-include' reST-directive.
+    , 'linuxdoc.manKernelDoc'    # Implementation of the 'kernel-doc-man' builder
+    , 'linuxdoc.cdomain'         # Replacement for the sphinx c-domain.
+    #, 'linuxdoc.kfigure'         # Sphinx extension which implements scalable image handling.
 ]
 
 intersphinx_mapping  = {}
@@ -43,6 +49,8 @@ extlinks = {}
 # usage:    :man:`make`
 #extlinks['man']       = ('http://manpages.ubuntu.com/cgi-bin/search.py?q=%s', ' ')
 #extlinks['rfc']       = ('https://tools.ietf.org/html/rfc%s', 'RFC ')
+extlinks['origin']    = ('https://github.com/return42/cdb-tools/blob/master/%s', 'cdb-tools/')
+extlinks['commit']    = ('https://github.com/return42/cdb-tools/commit/%s', '#')
 
 html_search_language = 'de'
 html_theme           = "sphinx_rtd_theme"

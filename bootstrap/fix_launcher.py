@@ -197,11 +197,11 @@ def create_launchers(scripts_folder, path_item):
             for d in drop:
                 d = scripts_folder / d
                 if d.EXISTS:
-                    log("  delete: %s" % d.BASENAME)
+                    log("  delete: %s" % d)
                     d.delete()
 
             if interpreter is None:
-                log("  skip: %s" % out_name)
+                log("  skip:   %s" % (scripts_folder / out_name))
                 continue
 
             ctx = dict(
@@ -235,14 +235,14 @@ def create_launchers(scripts_folder, path_item):
 
             if os.name == 'posix' or (os.name == 'java' and os._name == 'posix'):
                 py_out = scripts_folder / out_name # + "-script.py"
-                log("  create: %s" % py_out.BASENAME)
+                log("  create: %s" % py_out)
                 with open(py_out, "w") as out:
                     out.write(script)
                 # Set the executable bits (owner, group, and world)
                 os.chmod(py_out, 0o755)
             else:
                 exec_out = scripts_folder / out_name + ".exe"
-                log("  create: %s" % exec_out.BASENAME)
+                log("  create: %s" % exec_out)
                 shebang = u"#!%s" % interpreter
                 if interpreter == 'powerscript.exe':
                     shebang = u"#!python.exe"
@@ -292,13 +292,12 @@ def fix_pth_files(path_item):
         old_lines = "\n".join(old_lines)
         new_lines = "\n".join(new_lines)
         if new_lines != old_lines:
+            log("  fixed: %s" % pth_file)
             with pth_file.openTextFile(mode='w') as f:
                 f.write(new_lines)
             #log(new_lines)
         else:
-            pass
-            #log("  %s .." % pth_file)
-            #log("  --> nothing to do.")
+            log("  checked: %s" % pth_file)
 
 
 if __name__ == '__main__':

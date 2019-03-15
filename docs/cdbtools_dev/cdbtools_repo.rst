@@ -66,7 +66,7 @@ download
   und in dem ``dist`` Ordner abgelegt.  Die Tools wie :ref:`cdbtools_ConEmu`
   werden dabei aus dem Download bereich der CDB-Tools bezogen.
 
-  - Quelle der Python Pakete: PyPi_ (`requirements.txt`_)
+  - Quelle der Python Pakete: PyPi_ (:origin:`bootstrap/requirements.txt`)
   - Quelle der *Tools*: https://github.com/return42/cdb-tools/releases/
 
 

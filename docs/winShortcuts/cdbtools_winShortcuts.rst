@@ -27,10 +27,29 @@ anbietet:
 ``tools-sh.bat``
 ================
 
-Startet eine ``cdbsh`` mit der erweiterten Laufzeitumgebung der CDB-Tools. Zu
+Startet eine Shaell mit der erweiterten Laufzeitumgebung der CDB-Tools.  Zu
 erkennen auch an dem Prompt ``[CDBTools]`` und nicht zu verwechseln mit einer
-gewöhnlichen CDB Umgebung ``[cdb:prod_copy]`` oder ähnlich
+gewöhnlichen CDB Umgebung ``[cdbsrv-11.3.10:cust_dev]`` oder ähnlich
 (s.a. :ref:`rte_prompt`).
+
+.. code-block:: none
+
+   ------------------------------------------------------------
+   CDB-Tools environment
+   ------------------------------------------------------------
+
+   CADDOK_RUNTIME: C:\share\contact\cdbsrv-11.3.10
+   CADDOK_BASE:    C:\share\cdb_cust_dev
+   CADDOK_DEFAULT: cust_dev@C:\share\cdb_cust_dev
+   HOME:           C:\Users\user
+
+   Microsoft Windows [Version 6.3.9600]
+   (c) 2013 Microsoft Corporation. Alle Rechte vorbehalten.
+   Clink v0.4.8 [git:d565ad] Copyright (c) 2012-2016 Martin Ridgers
+   http://mridgers.github.io/clink
+
+   C:\share\cdb_cust_dev
+   [CDBTools]$
 
 
 .. _tools_python_bat:

@@ -9,13 +9,11 @@
 .. _SCM-Branching: https://en.wikipedia.org/wiki/Branching_(version_control)
 .. _Releases: https://github.com/return42/cdb-tools/releases
 
-.. _`pip.ini`: https://github.com/return42/cdb-tools/blob/master/bootstrap/pip.ini
-.. _`requirements.txt`: https://github.com/return42/cdb-tools/blob/master/bootstrap/requirements.txt
-
 .. _FQDN: https://en.wikipedia.org/wiki/Fully_qualified_domain_name
 
 .. _`the user scheme`: https://docs.python.org/2/install/index.html#inst-alt-install-user
 .. _`PyPi`: https://pypi.python.org/pypi
+.. _pip: https://pip.pypa.io
 .. _pdb: https://docs.python.org/3/library/pdb.html#debugger-commands
 .. _`PyDev Remote Debugger`: http://www.pydev.org/manual_adv_remote_debugger.html
 

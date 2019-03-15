@@ -20,12 +20,12 @@ Umgebungsvariablen:
   Python-Pfade ``sys.path`` als auch die Umgebung ``PATH`` an.
 
 In der CDB-Tools Umgebung steht ein Paketmanager bereit mit dem Python Pakete in
-das User-Scheme installiert werden (:ref:`cdbtools_pckg`).  Durch die
+das User-Scheme installiert werden (siehe ":ref:`cdbtools_pip`").  Durch die
 Installation *in* bzw. durch die Bereitstellung von Werkzeugen *aus* den
-CDB-Tools wird die CDB-Instanz selbst, nachhaltig *schlank* gehalten.  In der
-CDB-Tools Umgebung kann neben den `PyPi`_ Paketen auch zusätzliche Software
-bereit gestellt werden.  So steht z.B. eine komfortable Konsole
-(:ref:`cdbtools_console`) zur Verfügung.
+CDB-Tools wird die CDB-Instanz selbst nachhaltig *schlank* gehalten.
+
+In der CDB-Tools Umgebung kann neben den `PyPi`_ Paketen auch zusätzliche
+Software bereit gestellt werden (:ref:`cdbtools_software`).
 
 Die CDB-Tools Umgebung kann in einer Shell über die Skripte
 
@@ -33,8 +33,8 @@ Die CDB-Tools Umgebung kann in einer Shell über die Skripte
 - ``cdbtools-deactivate`` deaktiviert werden.
 
 I.d.R. wird man unter Windows meist über ein Doppelklick auf eine der ``.bat``
-Dateien in den :ref:`winShortcuts` die Umgebung starten.  Für eine CDB-Shell mit
-CDB-Tools Umgebung sieht das in etwa so aus:
+Dateien in den :ref:`winShortcuts` die Umgebung starten.  Für eine Shell mit
+CDB-Tools Umgebung sieht das in etwa so aus (:ref:`tools_sh_bat`):
 
 .. code-block:: dosbatch
 
@@ -46,14 +46,10 @@ CDB-Tools Umgebung sieht das in etwa so aus:
      CADDOK_BASE:    C:\share\cdb_cust_dev
      CADDOK_DEFAULT: cust_dev@C:\share\cdb_cust_dev
      HOME:           C:\Users\user
+   ...
 
-   Microsoft Windows [Version 6.3.9600]
-   (c) 2013 Microsoft Corporation. Alle Rechte vorbehalten.
-   Clink v0.4.8 [git:d565ad] Copyright (c) 2012-2016 Martin Ridgers
-   http://mridgers.github.io/clink
-
-   [cdbsrv-11.3.10:cust_dev] C:\share\cdb_cust_dev
-   [CDBTools]$ ...
+   C:\share\cdb_cust_dev
+   [CDBTools]$
 
 
 .. _rte_prompt:
@@ -63,11 +59,12 @@ Konsolen Prompt der Umgebungen
 
 ``[CDBTools]``
   Hier in der Anleitung wird der Prompt ``[CDBTools]`` genutzt, um anzuzeigen,
-  wann ein Kommando **in einer CDB-Tools Umgebung ausgeführt werden muss**.
+  das ein Kommando **in einer CDB-Tools Umgebung ausgeführt werden muss**.
 
-``[cdb:prod_copy]``
+``[cdbsrv-11.3.10:cust_dev]``
    Hier in der Anleitung wird der Prompt ``[cdb:prod_copy]`` genutzt, um
-   anzuzeigen, das ein Kommando **in einer cdb-Shell ausgeführt werden muss**.
+   anzuzeigen, das ein Kommando **in einer Standard CDB-Installation ageführt
+   werden muss**.
 
 .. _setup_cdbenv:
 

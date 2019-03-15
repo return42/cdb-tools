@@ -39,9 +39,19 @@ Foliensammlungen
 Projekt
 =======
 
-- Dokumentation: http://return42.github.io/cdb-tools
-- Reposetorie:   `github return42/cdb-tools <https://github.com/return42/cdb-tools>`_
-- Author e-mail: markus.heiser@darmarit.de
+.. flat-table::
+
+   - - Dokumentation
+     - http://return42.github.io/cdb-tools
+
+   - - Reposetorie
+     - `github return42/cdb-tools <https://github.com/return42/cdb-tools>`_
+
+   - - Author e-mail
+     - markus.heiser@darmarIT.de
+
+   - - ..
+     - :ref:`todo-list`
 
 Aktuell wurden die CDB-Tools lediglich auf Windows getestet, grundsätzlich sind
 sie aber auch unter Linux lauffähig. Im weiteren Verlauf werden die CDB-Tools

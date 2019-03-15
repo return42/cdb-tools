@@ -2,7 +2,7 @@
 @echo off
 REM ----------------------------------------------------------------------------
 REM --                             --  File:     cdbtools-activate.bat
-REM -- Copyright (C) 2017 darmarIT --  Author:   Markus Heiser
+REM -- Copyright (C) 2019 darmarIT --  Author:   Markus Heiser
 REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------

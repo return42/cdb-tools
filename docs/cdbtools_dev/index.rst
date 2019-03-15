@@ -6,6 +6,7 @@ Aufbau der CDB-Tools
 ====================
 
 .. toctree::
+   :maxdepth: 2
 
    cdbtools_rte
    cdbtools_repo
