@@ -35,8 +35,8 @@ Damit ist die Installation bereits abgeschlossen.
 
 .. tip::
 
-   Wenn die CDB-Tools in mehreren Instanzen genutzt werden sollen, dann
-   kopiert man am besten den ``winShortcuts`` Ordner in die Instanzen und
+   Wenn die CDB-Tools in mehreren Instanzen genutzt werden sollen, dann kopiert
+   man am besten den :origin:`winShortcuts` Ordner in die CDB-Instanzen und
    passt zusätzlich noch ``CDBTOOLS_HOME`` an.
 
    .. code-block:: dosbatch
@@ -47,9 +47,8 @@ Damit ist die Installation bereits abgeschlossen.
 Hinweise
 ========
 
-
-Ab Version 11.3 verwendet CDB ELEMENTS die ``win_amd64`` (default in den
-CDB-Tools), weshalb für ältere Versionen noch die Umgebungsvariable
+Ab Version 11.3 verwendet CDB ELEMENTS die 64bit Bibliotheken (``win_amd64`` ist
+der Default in den CDB-Tools), weshalb für ältere Versionen noch die Variable
 ``PIP_PY_PLATFORM`` gesetzt (*aus-kommentiert*) werden muss:
 
 .. code-block:: dosbatch

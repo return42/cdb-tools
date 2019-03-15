@@ -20,7 +20,7 @@ Anwendungen.
 Startet eine ``cdbsh`` in einer Standard CDB-Umgebung (ohne CDB-Tools
 Erweiterungen).  Zu erkennen auch an dem Prompt ``[cdbsrv-11.3.10:cust_dev]``
 (oder ähnlich) und nicht zu verwechseln mit einer ``[CDBTools]`` Umgebung
-(s.a. :ref:`rte_prompt`).
+(siehe ":ref:`rte_prompt`").
 
 .. code-block:: none
 

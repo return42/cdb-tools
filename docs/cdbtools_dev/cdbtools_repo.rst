@@ -95,8 +95,8 @@ ZIP CDB-Tools
 
 .. _update_cdbtools:
 
-Update
-======
+Update der CDB-Tools
+====================
 
 Die Aktualisierung der CDB-Tools erfolgt über das Reposetorie.  Für das Update
 muss ``git`` und ein online Zugang zur Verfügung stehen::
