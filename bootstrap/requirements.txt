@@ -27,9 +27,6 @@ prompt_toolkit
 # https://github.com/jonathanslenders/ptpython
 ptpython
 
-# more up to date fork: https://github.com/return42/ptpdb.git
--e subs/ptpdb
-
 # http://jinja.pocoo.org/
 jinja2
 

@@ -8,8 +8,6 @@ u"""Bastelecke
 import os
 import sys
 
-#from ptpdb import set_trace as BREAK
-
 from fspath import FSPath
 from fspath.sui import SUI
 from fspath.cli import CLI
