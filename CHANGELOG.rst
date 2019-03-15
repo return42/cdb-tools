@@ -1,4 +1,4 @@
-2019-03-15 Release 2.0pre
+2019-03-15 Release 2.0
 
   * CDB ELEMENTS 15.3 getestet
   * CDB-Tools Umgebung entschlackt
