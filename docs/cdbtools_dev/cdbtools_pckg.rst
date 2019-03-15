@@ -105,6 +105,66 @@ empfehlen, das pip aus den CDB-Tools zu verwenden, siehe ":ref:`cdbtools_pip`".
 Softwarepakete der CDB-Tools
 ============================
 
-.. todo::
+Die CDB-Tools stellen über die Releases_ ergänzende Software Pakete zur
+Verfügung.  Um diese Pakete zu installieren muss die CDB-Tools Umgebung aktiv
+sein (entweder über ``tools-sh`` oder in einer normalen Shell aktivieren):
 
-   Die Doku zu den Softwarepaketen aus den CDB-Tools muss noch erstellt werden.
+.. code-block:: dosbatch
+
+   C:\share\cdb-tools> win_bin\cdbtools-activate.bat
+   ...
+
+Der Download und die Installation der Pakete wird mit dem Skript
+:origin:`bootstrap/build.py` durchgeführt, hier ein Beispiel bei dem das
+``ConEmu.zip`` Paket aus den Releases_ heruntergeladen und installiert wird:
+
+
+.. code-block:: dosbatch
+
+   C:\share\cdb-tools
+   [CDBTools]$ python bootstrap/build.py install-software ConEmu.zip
+   install:  win_bin\ConEmu
+             C:\share\cdb-tools\dist\sw-download\ConEmu.zip
+   missing: ConEmu.zip
+   download: https://github.com/return42/cdb-tools/releases/download/v1.1/ConEmu.zip ...
+   download: ConEmu.zip[7.8 MB][======================================================] 100%
+     ConEmu.zip already installed
+     --> to update first remove: C:\share\cdb-tools\win_bin\ConEmu
+     --> ..........
+     --> ConEmu.zip: pe.t64.map          [============================================] 100%
+   install: win_bin\ConEmu OK
+
+.. hint::
+
+   Das ``ConEmu.zip`` Paket ist bereits in dem ``cdb-tools.zip`` der Releases_
+   enthalten und braucht i.d.R. nicht nochmal installiert werden.  Es soll hier
+   lediglich als *ein* Beispiel dienen.
+
+In dem Beispiel ist zu sehen, dass zuerst der Download erfolgt, danach wird
+versucht das Paket zu installieren.  Sofern bereits ein solches Paket
+installiert ist muss dieses erst entfernt werden (einfach löschen oder
+umbenennen).  Der Download erfolgt in den Ordner ``dist/sw-download`` und kann
+auch separat ausgeführt werden (siehe command: ``get-software``).
+
+.. code-block:: dosbatch
+
+   [CDBTools]$ python bootstrap/build.py --help
+
+   usage: build.py [-h] [--debug] [--verbose] [--quiet]  <command> ...
+
+   CDB-Tools build maintenance script
+
+   optional arguments:
+     -h, --help            show this help message and exit
+     --debug               run in debug mode (default: False)
+     --verbose             run in verbose mode (default: False)
+     --quiet               run in quiet mode (default: False)
+
+   <command>:
+
+       get-pypkgs          download python requirements (pip download)
+       install-pypkgs      install python requirements (pip download)
+       get-software        get software archieves (ZIP)
+       install-software    install software archieves (ZIP)
+       dist                build distribution
+

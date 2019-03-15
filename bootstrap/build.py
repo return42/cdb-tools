@@ -101,7 +101,7 @@ for (src_folder, zip_fname, _x, _x, url) in SOFTWARE_ARCHIVES:
 def main():
 # ==============================================================================
 
-    u"""cdbtools -- build maintenance script"""
+    u"""CDB-Tools build maintenance script"""
     cli = CLI(description=main.__doc__)
 
     subparser = cli.addCMDParser(cli_build_get_pypkgs, cmdName='get-pypkgs')
