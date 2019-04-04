@@ -101,6 +101,7 @@ echo   HOME:           %HOME%
 echo.
 
 IF [%1]==[] goto Exit
-  %ComSpec% %*
+  %ComSpec% /C %*
+  cdbtools-deactivate.bat
 
 :Exit
