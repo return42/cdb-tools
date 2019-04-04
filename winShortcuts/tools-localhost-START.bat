@@ -4,12 +4,24 @@ REM ----------------------------------------------------------------------------
 REM Purpose:     Start des cdbsvcd Prozess
 REM ----------------------------------------------------------------------------
 
-call "%~d0%~p0cdbEnv.bat"
-call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
+IF NOT DEFINED CDBTOOLS_HOME (
+   call "%~d0%~p0cdbEnv.bat"
+)
 
-color 0E
-title %~n0 ^(%CADDOK_DEFAULT%^)
+IF NOT EXIST "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" goto openCMD
+  IF NOT [%1]==[conemu] (
+    START "ConEmu" "%CDBTOOLS_HOME%\win_bin\ConEmu\ConEmu.exe" -reuse -run %0 conemu
+    GOTO Exit
+  )
+
+REM ----------------------------------------------------------------------------
+:openCMD
+REM ----------------------------------------------------------------------------
+
 cd /D "%CADDOK_BASE%"
+
+call "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
+title %~n0 ^(%CADDOK_DEFAULT%^)
 
 echo ============================================================
 echo %~n0 ^(%CADDOK_DEFAULT%^) debug mode!!
