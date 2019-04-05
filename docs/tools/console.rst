@@ -26,11 +26,11 @@ Features wie *tab-complition* oder *auto-doc* in der Konsole abzubilden und
 Interaktive Konsolen wie ptpython_ können ihre volle Leistungsfähigkeit
 entfallten.
 
-.. figure:: CunEmu-sh-completion.png
+.. figure:: console/CunEmu-sh-completion.png
 
    Beispiel für eine Windows Shell in dem ConEmu
 
-.. figure:: CunEmu-python-completion.png
+.. figure:: console/CunEmu-python-completion.png
 
    Beispiel für einen Python oder Powerscript Interpreter mit ptpython_ in dem
    ConEmu.

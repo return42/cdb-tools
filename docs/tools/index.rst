@@ -28,3 +28,4 @@ Entwickler Tools
    :maxdepth: 1
 
    console
+   eclipse

@@ -17,13 +17,15 @@
 .. _pip: https://pip.pypa.io
 .. _pdb: https://docs.python.org/3/library/pdb.html#debugger-commands
 .. _`PyDev Remote Debugger`: http://www.pydev.org/manual_adv_remote_debugger.html
+.. _Eclipse: https://www.eclipse.org/
+.. _PyDev: http://www.pydev.org
+.. _Pylint: https://www.pylint.org
 
 .. _`ConEmu`: https://conemu.github.io/
 .. _clink: http://mridgers.github.io/clink/
 
 .. _prompt_toolkit: http://python-prompt-toolkit.readthedocs.io
 .. _ptpython: https://github.com/jonathanslenders/ptpython
-.. _pylint: https://www.pylint.org/
 
 .. _`MS-SQL Transaction-log`: https://docs.microsoft.com/en-us/sql/relational-databases/logs/the-transaction-log-sql-server
 
