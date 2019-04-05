@@ -7,8 +7,23 @@
 DB optimieren
 =============
 
+
 MSSQL
 =====
+
+TOP 10
+------
+
+Auflistung der zehn größten Tabellen.
+
+.. code-block:: sql
+
+   SELECT TOP 10 OBJECT_NAME(OBJECT_ID) TableName, st.row_count
+     FROM sys.dm_db_partition_stats st
+    WHERE index_id < 2
+    ORDER BY st.row_count DESC
+
+
 
 Datenbank-Files
 ---------------
@@ -25,7 +40,10 @@ MSSQL-Transaction
 
 Die Dateigrößen des `MS-SQL Transaction-log`_ können u.U. stark anwachsen,
 insbesondere nach größeren SQL-UPDATE Statements die große Tabellen komplett
-ändern oder leeren.
+ändern oder leeren.  In einem Entwickler-System sollte es ausreichen, das
+`Wiederherstellungsmodell "Einfach"
+<https://docs.microsoft.com/de-de/sql/relational-databases/backup-restore/recovery-models-sql-server?view=sql-server-2017>`_
+zu wählen.
 
 Um das Transaction-log und damit die Größe der DB Instanz zu optimieren kann man
 im *MS-SQL Server Management Studio* folgendes ausführen::
