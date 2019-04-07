@@ -4,7 +4,7 @@
 .. _cdb_winShortcuts:
 
 ========================
-gewöhnliche CDB Umgebung
+Gewöhnliche CDB Umgebung
 ========================
 
 Die *normalen* CDB Prozesse laufen in der *normalen* Laufzeitumgebung von CDB,
@@ -52,7 +52,7 @@ Startet einen gewöhnlichen CDB-Client, mit Anmeldedialog.
 ``cdb-studio.bat``
 ==================
 
-Startet das CDB Powerscript Studio (aka. eclipse) in einer Standard
+Startet das CDB PowerScript Studio (aka. eclipse) in einer Standard
 CDB-Umgebung.
 
 .. _cdb_localhost_START_bat:

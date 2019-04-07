@@ -3,9 +3,9 @@
 
 .. _cdbtools_winShortcuts:
 
-==============================
-erweiterete CDB-Tools Umgebung
-==============================
+=============================
+Erweiterte CDB-Tools Umgebung
+=============================
 
 .. _upkeep_bat:
 
@@ -91,15 +91,23 @@ das ``lxml`` Paket aus der CDB-Tools Umgebung bezogen wird:
    Programme, die im Kontext der CDB-Instanz arbeiten müssen immer mit dem
    ``powerscript.exe`` Interpreter gestartet werden.
 
+
+``tools-studio.bat``
+====================
+
+Startet das CDB PowerScript Studio (aka. eclipse) von CDB in der CDB-Tools
+Umgebung.
+
+
 .. _tools_powerscript_bat:
 
 ``tools-powerscript.bat``
 =========================
 
-Startet den Powerscript-Interpreter von CDB in der CDB-Tools Umgebung. Als REPL_
+Startet den PowerScript Interpreter von CDB in der CDB-Tools Umgebung. Als REPL_
 kommt ptpython_ zum Einsatz.  Hier ein Beispiel, bei dem zu erkennen ist, dass
 das ``lxml`` Paket aus der CDB-Tools Umgebung bezogen wird.  Da es sich im
-Powerscript handelt können auch die Pakete aus der CDB-Instanz importiert
+PowerScript handelt können auch die Pakete aus der CDB-Instanz importiert
 werden:
 
 .. code-block:: none
@@ -160,3 +168,20 @@ anderen Benutzern oder Prozessen erreicht werden (können). In der Regel wird ma
 diese Art des Debugging nur in *lokalen* Entwickler Umgebungen nutzen.  Dort
 kann es dann aber u.U. auch eine große Hilfe sein, wo man bisher nur die
 Möglichkeit hatte Logfiles zu lesen.
+
+.. _cdbtools-activate_bat:
+
+``cdbtools-activate.bat``
+=========================
+
+Mit dem Scripten:
+
+- ``win_bin/cdbtools-activate.bat`` und
+- ``win_bin/cdbtools-deactivate.bat``
+
+kann die CDB-Tools Umgebung aktiviert resp. deaktiviert werden.  Will man nur
+ein Kommando aus den CDB-Tools ausführen, nicht aber die ganze Umgebung in der
+Shell aktiveren, so kann man das Skript auch als Wrapper nutzen.  Hier ein
+Beispiel für den Aufruf von Pylint::
+
+  C:\share\cdb-tools\win_bin\cdbtools-activate.bat pylint

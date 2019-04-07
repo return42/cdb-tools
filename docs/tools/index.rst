@@ -29,3 +29,4 @@ Entwickler Tools
 
    console
    eclipse
+   pylint

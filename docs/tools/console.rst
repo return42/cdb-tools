@@ -9,7 +9,7 @@ Konsole & ConEmu
 ================
 
 Features wie *tab-complition* oder *auto-doc*, wie man sie z.B. aus dem
-Powerscript Studio kennt hat man bisher auf der Konsole vermisst. Die CDB-Tools
+PowerScript Studio kennt hat man bisher auf der Konsole vermisst. Die CDB-Tools
 bringen Pakete wie ptpython_ mit, die solche Features auch in einer Py-Konsole
 bereit stellen.  Diese sind auf Linux & Unix Konsolen direkt nutzbar, darüber
 hinaus haben Linux Konsolen schon immer *tab-completion* für die Shell.
@@ -32,5 +32,5 @@ entfallten.
 
 .. figure:: console/CunEmu-python-completion.png
 
-   Beispiel für einen Python oder Powerscript Interpreter mit ptpython_ in dem
+   Beispiel für einen Python oder PowerScript Interpreter mit ptpython_ in dem
    ConEmu.

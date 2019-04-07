@@ -2,6 +2,7 @@
 
 .. _darmarIT: http://www.darmarit.de
 .. _`Contact Software GmbH`: https://www.contact-software.com/
+
 .. _`get git started`: https://return42.github.io/handsOn/slides/git/index.html
 .. _git: https:/git-scm.com/
 .. _SVN: https://subversion.apache.org/
@@ -16,10 +17,17 @@
 .. _`PyPi`: https://pypi.python.org/pypi
 .. _pip: https://pip.pypa.io
 .. _pdb: https://docs.python.org/3/library/pdb.html#debugger-commands
-.. _`PyDev Remote Debugger`: http://www.pydev.org/manual_adv_remote_debugger.html
+
 .. _Eclipse: https://www.eclipse.org/
 .. _PyDev: http://www.pydev.org
+.. _`PyDev Remote Debugger`: http://www.pydev.org/manual_adv_remote_debugger.html
 .. _Pylint: https://www.pylint.org
+
+.. _Emacs: https://www.gnu.org/software/emacs
+.. _.dir-locals.el: https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html#Directory-Variables
+.. _MELPA: https://stable.melpa.org
+.. _flycheck: https://www.flycheck.org/
+.. _flycheck-pos-tip: https://github.com/flycheck/flycheck-pos-tip
 
 .. _`ConEmu`: https://conemu.github.io/
 .. _clink: http://mridgers.github.io/clink/
@@ -28,7 +36,5 @@
 .. _ptpython: https://github.com/jonathanslenders/ptpython
 
 .. _`MS-SQL Transaction-log`: https://docs.microsoft.com/en-us/sql/relational-databases/logs/the-transaction-log-sql-server
-
 .. _`MS-SQL DB-Files`: https://docs.microsoft.com/en-us/sql/relational-databases/databases/database-files-and-filegroups
-
 .. _`MS-SQL shrink DB`: https://docs.microsoft.com/en-us/sql/relational-databases/databases/shrink-a-database
