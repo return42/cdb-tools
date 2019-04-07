@@ -50,6 +50,7 @@ clean: docs-clean pyclean
 
 purge:  clean
 	git clean -xfd
+	git gc --aggressive --prune=all
 
 
 # FIXME: works only on Windows ...
