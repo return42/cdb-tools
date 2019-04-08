@@ -40,9 +40,10 @@ Emacs_:
          ))
      (python-mode
       . ((indent-tabs-mode . nil)
-        (flycheck-pylintrc . "pylintrc")
-        (python-shell-interpreter . "c:/share/cdb-tools/win_bin/cdbtools-activate.bat")
-        (python-shell-interpreter-args . "powerscript")
+         (flycheck-pylintrc . "pylintrc")
+         (flycheck-python-pylint-executable . "c:/share/cdb_cust_dev/winShortcuts/tools-pylint.bat")
+         (python-shell-interpreter . "c:/share/cdb_cust_dev/winShortcuts/tools-wrapper.bat")
+         (python-shell-interpreter-args . "powerscript")
         ))
     )
 

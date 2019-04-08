@@ -88,10 +88,9 @@ man in Eclipse die Einstellungen unter :menuselection:`Window / Preferences`.
    PyDev Preferences (Pylint)
 
 Unter :menuselection:`PyDev / Pylint` muss das Häkchen bei :guilabel:`Use
-Pylint` gesetzt werden.  Als Launcher trägt man ``cdbtools-activate`` ein und
-unten in den Argumenten ruft man dann das eigentliche ``pylint`` Kommando auf,
-dem man noch ein Profil mitgeben kann, hier im Beispiel wird das Profil aus den
-Vorlagen der CDB-Tools genutzt.
+Pylint` gesetzt werden.  Als Launcher trägt man ``tools-pylint`` ein und unten
+in den Argumenten wird noch ein Profil mitgeben, hier im Beispiel wird das
+Profil aus den Vorlagen der CDB-Tools genutzt:
 
 .. tip::
 
