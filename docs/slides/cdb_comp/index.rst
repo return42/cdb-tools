@@ -49,7 +49,7 @@ CDB Komponenten
      <schema_repair>` & :ref:`Konfiguration <config_repair>`
    - :ref:`Updates & Konflikte <updates_und_konflikte>` + cdbpkg & SCM
      :ref:`big picture <big_picture_cdbpkg_SCM>`
-   - :ref:`Transport einer Änderung <transport_aenderung>`: Code & Config
+   - :ref:`Transport <transport_aenderung>`: Code & Config
      :ref:`Merge-Schaubild <merge_graph>`
    - :ref:`CDB & SCM-System <cdb_und_scm>`
    - :ref:`Merge Strategien <merge_strategien>`
