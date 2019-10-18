@@ -61,5 +61,4 @@ werden. In einer Entwickler Installation sollte ein Limit von 2GB genug sein.
 Oracle
 ======
 
-comming soon ...
-
+Siehe http://return42.github.io/handsOn/oracle/
