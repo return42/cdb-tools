@@ -149,6 +149,17 @@ def assert_service(svcname, hostname):
         SUI.rst_p(u"Der Dienst %s ist bereits für den Host %s eingerichtet."
                   % (svcname, hostname))
 
+def set_service_interface():
+    sql = """
+UPDATE cdbus_svcs
+   SET interface='localhost'
+ WHERE interface LIKE '__%'
+   AND interface not in ('127.0.0.1', 'localhost')"""
+    SUI.rst_p(sql)
+    rows = sqlapi.SQL(sql)
+    SUI.rst_p(u"--> %s rows updated" % rows)
+    SUI.wait_key()
+
 def print_opts(opts):
     SUI.rst_p("Dienst-Optionen:")
     if not opts:
@@ -360,6 +371,8 @@ def _main(cliArgs): # pylint: disable=unused-argument
     deactivate_services()
     takeover_service()
     setup_basic_services()
+    SUI.rst_title("Normalisierung INTERFACE auf 'localhost'")
+    set_service_interface()
     auth_method()
     SUI.rst_p(u"""\
 Ein minimales Setup wurde eingerichtet. Es kann der CDBSVCD gestartet werden.
