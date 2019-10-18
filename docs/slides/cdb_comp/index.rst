@@ -376,7 +376,7 @@ CDB Komponenten
 .. revealjs:: cdbpkg & SCM / big picture
 
    .. figure::  cdbpkg_scm_big_picture.svg
-      :width:   500px
+      :width:   60%
 
    .. rv_small::
 
