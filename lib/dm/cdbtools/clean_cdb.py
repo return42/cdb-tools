@@ -3,23 +3,28 @@
 # pylint: disable=too-many-statements, too-many-branches
 """Bereinigung der Datenbank
 
-In CDB sammeln sich z.T. DB Einträge aus z.B. Message-Queue Anwendungen oder
-dem ERP-Log die nicht alle immer benötigt werden.  Nicht benötigte Einträge
-sollten von Zeit zu Zeit aufgeräumt werden um die DB *schlank* und damit
-performant zu halten.
+In CDB sammeln sich z.T. DB Einträge die nicht alle immer benötigt werden.
+Nicht benötigte Einträge sollten von Zeit zu Zeit aufgeräumt werden um die DB
+*schlank* und damit performant zu halten.
 
-Das Aufräumen dieser Einträge lohnt sich insbesondere in schon lang laufenden
-Systemen die bisher nicht aufgeräumt wurden. In solchen Systemen werden z.T.
-bis zu 60% der DB Resourcen auf *unnütze* Einträge verschwendet (z.B. eine
-über mehrere Jahre angesammelte Lizenzstatistik).
+Das Aufräumen dieser Einträge lohnt sich insbesondere in Systemen die schon
+länger im Betrieb sind und die bisher nicht aufgeräumt wurden.  In solchen
+Systemen werden z.T. bis zu 60% der DB Resourcen auf *unnütze* Einträge
+verschwendet.  Beispiele hierfür sind eine über mehrere Jahre angesammelte
+Lizenzstatistik, alte ERP-Logs oder auch Message-Queue Einträge aus der
+Historie.
 
 Ob Optimierungen solcher Art für Ihre konkreten Anwendungszenarien überhaupt
 geeignet sind oder ob dabei ggf. noch benötigte Daten gelöscht werden kann nicht
-allgemein beantwortet werden.  Das Löschen von Daten muss immer gegen die
-eigenen Anwendungszenarien geprüft werden! Testen Sie die Tools sorgfältig in
-einer Entwickler-Kopie bevor Sie diese auf ein produktives System anwenden!
+allgemein beantwortet werden.
 
 ACHTUNG:  ES WERDEN DATEN GELÖSCHT!
+
+  Das Löschen von Daten muss immer gegen die eigenen Anwendungszenarien geprüft
+  werden! Testen Sie die Tools sorgfältig in einer Entwickler-Kopie bevor Sie
+  diese auf ein produktives System anwenden!
+
+  Weitere Infos: https://return42.github.io/cdb-tools/tools/clean_cdb.html
 
 """
 
@@ -34,10 +39,13 @@ from fspath.sui import SUI
 from fspath.cli import CLI
 
 from cdb import sqlapi
+from cdb import util
+from cdb.platform.tools import CDBObjectIDFixer
+from cdb import progress
 
 print_info_once_flag = False
 
-def print_info_once():
+def print_info_once(cliArgs):
     # pylint: disable=global-statement
     global print_info_once_flag
     if print_info_once_flag:
@@ -51,21 +59,29 @@ def print_info_once():
 
     SUI.rst_p(u"Lesen Sie die Hinweise auf:")
     SUI.rst_p(u"https://return42.github.io/cdb-tools", level=1)
-    SUI.wait_key()
+    if not SUI.ask_yes_no(u"Es werden Daten geändert, fortfahren?", default='n'):
+        raise cliArgs.Error(42, "Abbruch durch den Benutzer")
 
 def count_db_rows(table_name, condition=""):
     t = sqlapi.SQLselect("COUNT(*) FROM %s %s" % (table_name, condition))
     return sqlapi.SQLinteger(t, 0, 0)
 
 def truncate_table(table_name):
-    SUI.rst_p(u"ACHTUNG::")
-    SUI.rst_p(u"ES WERDEN ALLE EINTRÄGE IN DER TABELLE::", level=1)
+    c = count_db_rows(table_name)
+    if not c:
+        SUI.rst_p("Tabelle %s enthält keine Datensätze." % table_name)
+        return
+
+    SUI.rst_p(u"ACHTUNG, ES WERDEN ALLE EINTRÄGE IN DER TABELLE::", level=1)
     SUI.rst_p(table_name, level=2)
     SUI.rst_p(u"GELÖSCHT!!!", level=1)
 
     if SUI.ask_yes_no(u"Sollen ALLE Einträge jetzt gelöscht werden?", default='n'):
         sqlapi.SQL("TRUNCATE TABLE %s" % table_name)
         SUI.rst_p("Tabelle %s wurde geleert." % table_name)
+        SUI.echo("fixing object dict ...")
+        util.ObjectDictionary.repair(table_name, SUI.echo, progress)
+
     else:
         SUI.rst_p("Kein Daten gelöscht")
 
@@ -78,7 +94,7 @@ def cli_clean_lstatistics(cliArgs):
     die Statistik nicht ausgewertet wird, kann sie auch von Zeit zu Zeit mal
     gelöscht werden.
     """
-    print_info_once()
+    print_info_once(cliArgs)
     _doc = cli_clean_lstatistics.__doc__.strip().split('\n')
     SUI.rst_title(_doc[0])
     SUI.rst_p('\n'.join(_doc[1:]))
@@ -130,7 +146,7 @@ def cli_clean_mq(cliArgs):
             "FROM %s_txt WHERE cdbmq_id NOT IN (SELECT cdbmq_id FROM %s)" % (mq, mq))
         SUI.rst_p("%s Langtext-Zeilen (%s) gelöscht." % (c, mq+'_txt'))
 
-    print_info_once()
+    print_info_once(cliArgs)
     _doc = cli_clean_mq.__doc__.strip().split('\n')
     SUI.rst_title(_doc[0])
     SUI.rst_p('\n'.join(_doc[1:]))
@@ -213,7 +229,7 @@ def cli_clean_erplog(cliArgs):
     ERP-Log gelöscht werden.
 
     """
-    print_info_once()
+    print_info_once(cliArgs)
     _doc = cli_clean_erplog.__doc__.strip().split('\n')
     SUI.rst_title(_doc[0])
     SUI.rst_p('\n'.join(_doc[1:]))
@@ -259,7 +275,7 @@ def cli_clean_erplog(cliArgs):
 def cli_clean_all(cliArgs):
     u"""Alle Bereinigungen nacheinander durchführen."""
 
-    print_info_once()
+    print_info_once(cliArgs)
     _doc = cli_clean_all.__doc__.strip().split('\n')
     SUI.rst_title(_doc[0], level='part')
 
@@ -268,11 +284,38 @@ def cli_clean_all(cliArgs):
     cli_clean_erplog(cliArgs)
     SUI.wait_key()
     cli_clean_mq(cliArgs)
+    SUI.wait_key()
+    cli_clean_object_dict(cliArgs)
+
+
+def cli_clean_object_dict(cliArgs):
+    u"""Bereinigung des Object-Dictionary (cdb_object).
+
+    Ruft die Methode util.ObjectDictionary.repair zum Bereinigen der Object-IDs
+    für alle Basisklassen (Relationen) auf.
+
+    Alternative:
+
+      powerscript $CADDOK_INSTALLDIR/cdb/schema/updates/tools/repair-cdbobjid.py
+
+    """
+    print_info_once(cliArgs)
+    _doc = cli_clean_object_dict.__doc__.strip().split('\n')
+    SUI.rst_title(_doc[0])
+    SUI.rst_p('\n'.join(_doc[1:]))
+
+    id_fixer = CDBObjectIDFixer(SUI.echo, progress)
+    for rel in id_fixer.find_affected_relations():
+        SUI.echo("fixing %s ..." % rel)
+        util.ObjectDictionary.repair(rel, SUI.echo, progress)
+
 
 # Noch zu klären:
 #
 # - kann 'cdbwf_role_cache' geleert werden?
 # - Kriterien um 'cdb_evlog' Einträge zu löschen?
+# - Die Relation cdbqc_history (Kennzalen, Historie) ist ein Resourcenfresser
+
 
 def main():
 
@@ -303,6 +346,7 @@ def main():
         '--drop-result', action = 'store_true'
         , help = "Die 'Result' Meldungen des SAP-GW sollen auch gelöscht werden")
 
+    object_dict = cli.addCMDParser(cli_clean_object_dict, cmdName='object-dict')
 
     aio = cli.addCMDParser(cli_clean_all, cmdName='all')
     add_common_options(aio)
