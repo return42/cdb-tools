@@ -7,50 +7,65 @@
 Bereinigung der Datenbank
 =========================
 
+.. sidebar::  ES WERDEN DATEN GELÖSCHT!
+
+   Das Löschen von Daten muss immer gegen die eigenen Anwendungsszenarien
+   geprüft werden!  Die Bereinigung der DB sollte an einem Spiegel-System (DUMP)
+   getestet werden, bevor diese auf ein produktives System angewendet wird.
+
 In CDB sammeln sich z.T. Daten an, die u.U. nicht länger benötigt werden.  Gute
 Beispiele sind *uralt* Einträge in der Lizenzstatistik, abgeschlossene Jobs in
-den MQ-Anwendungen oder ein Überbordendes ERP-Log.  Es kann sich lohnen solche
-Einträge von Zeit zu Zeit mal aufzuräumen, resp. nicht länger benötigte Daten zu
-löschen. In *unaufgeräumten* Installationen die seit Jahren laufen, können schon
-mal bis zu 30% oder 50% der DB-Resourcen auf solche obsoleten Objekte entfallen.
+den MQ-Anwendungen oder ein überbordendes ERP-Log.  In *unaufgeräumten*
+Installationen die seit Jahren im Betrieb sind, können 30% bis 60% der
+DB-Resourcen auf solche obsoleten Objekte entfallen.  Ob Optimierungen solcher
+Art für Ihre konkreten Anwendungsszenarien überhaupt geeignet sind oder ob dabei
+ggf. noch benötigte Daten gelöscht werden kann nicht allgemein beantwortet
+werden.  Beim Erstellen von Spiegel-System für die Entwicklung ist eine
+Optimierung i.d.R. zu empfehlen.
 
-Ob Optimierungen solcher Art für Ihre konkreten Anwendungsszenarien überhaupt
-geeignet sind oder ob dabei ggf. noch benötigte Daten gelöscht werden kann nicht
-allgemein beantwortet werden.  Beim Erstellen von Spiegel-System für die
-Entwicklung ist eine Optimierung i.d.R. zu empfehlen.
+Kommando clean-cdb
+==================
 
-  Das Löschen von Daten muss immer gegen die eigenen Anwendungsszenarien geprüft
-  werden!  Testen Sie die Tools sorgfältig in einer Entwickler-Kopie bevor Sie
-  diese auf ein produktives System anwenden!
+.. sidebar:: Massen-Änderung
+
+   Die gelöschten Daten selbst einzelner Relationen können gewaltig sein und
+   u.U. das Transaktions-LOG des DB Systems sprengen.  Die Optionen
+   ``--truncate`` und ``--days`` können ggf. helfen.
 
 Für die Bereinigung steht das Tool ``clean-cdb`` zur Verfügung::
 
   [CDBTools]$ clean-cdb --help
 
-Mit dem Tool können die unten beschriebenen Anwendungen aufgeräumt werden.  Will
-man alle Aktionen nacheinander ausführen, so nutzt man dafür ``all``::
+Mit dem Tool können die unten beschriebenen Anwendungen aufgeräumt werden.
+Mit dem Parameter ``all`` werden alle Aktionen nacheinander ausgeführt. ::
 
   [CDBTools]$ clean-cdb all
 
-.. caution::
+``--day`` (default 30 Tage)
+  Wenn in Installationen die seit Jahren im Betrieb sind zum ersten Mal
+  aufgeräumt wird, können die Transaktionen zum Löschen gewaltig sein.  Um das
+  Transaktions LOG nicht zum Bersten zu bringen kann es sinnvoll sein, zuerst
+  die ganz alten Einträge zu löschen und sich sukzessive zum gewünschten
+  Erhalt-Datum nach vorne zu arbeiten.
 
-   ACHTUNG:  ES WERDEN DATEN GELÖSCHT!
+``--truncate`` (default False)
+  Wenn die Inhalte der zu bereinigenden DB-Tabellen komplett gelöscht werden
+  können, dann kann das über diese Option erreicht werden.  Die DB Tabellen
+  werden mit dem SQL-TRUNCATE Statement geleert, welches kein Transaktions-LOG
+  erstellt.  Nach dem TRUNCATE wird noch eine Bereinigung des Object-Dictionary
+  (``cdb_objects``) durchgeführt.
 
-Kommando clean-cdb
-==================
+  Diese Option ist oftmals für Spiegel-Systeme geeignet, die man auf einfache
+  weise *schlank* halten will (z.B. ``clean-cdb all --truncate``).
 
-Wenn in einem System, das schon länger im Betrieb ist zum Ersten mal aufgeräumt
-wird, können die Transaktionen zum Löschen gewaltig sein.  Um das Transaktions
-LOG nicht zum Bersten zu bringen kann es sinnvoll sein, zuerst die ganz alten
-Einträge (meist gibt es eine Option ``--days`` ) zu löschen und sich sukzessive
-zum gewünschten Erhalt-Datum nach vorne zu arbeiten.
 
-Wenn die Inhalte der zu bereinigenden DB-Tabellen komplett gelöscht werden
-können, dann kann das i.d.R. über die Option ``--truncate`` erreicht werden.
-Die DB Tabellen werden dann mit dem SQL ``TRUNCATE`` Statement geleert, welches
-kein Transaktions LOG erstellt.  Diese Option ist oftmals für Spiegel-Systeme
-geeignet, die man auf einfache weise *schlank* halten will (z.B. ``clean_cdb all
---truncate``).
+Bereinigen des Object-Dictionary
+================================
+
+Bereinigung des Object-Dictionary (cdb_object).  Kann nach SQL Update-Skripten,
+insbesondere nach einem SQL-TRUNCATE sinnvoll sein. Wird automatisch auf die
+bereinigten Relationen angewendet, die mit der Option ``clean-cdb --truncate``
+aufgerufen wurden.
 
 
 Löschen der Lizenz-Statistik (lstatistics)
@@ -91,12 +106,17 @@ eignet sich das Kommando::
 
     [CDBTools]$ clean-cdb erplog --help
 
+``--sap-system SAP_SYSTEM`` (default: all)
+  SAP-System dessen Logs bereinigt werden sollen.
+
+``--drop-result`` (default: False)
+  Die ``Results`` Meldungen des SAP-GW sollen auch gelöscht werden.
+
 Auch wenn das Logging nur auf ``Results`` steht, kann es passieren, dass das
 ERP-Log extrem anwächst, wenn z.B. SAP Abgleichvorgänge über lange Zeiträume
-fehlschlagen, diese aber permanent wiederholt werden.
-
-Folgendes SQL Statement kann einen Eindruck darüber vermitteln ob es angebracht
-ist das ERP-Log mal zu bereinigen.
+fehlschlagen, diese aber permanent wiederholt werden.  Folgendes SQL Statement
+kann einen Eindruck darüber vermitteln ob es angebracht ist das ERP-Log mal zu
+bereinigen.
 
 .. code-block:: sql
 
@@ -114,6 +134,13 @@ eine Bereinigung des Logs lohnen.
 
 Sollte das letzte Statement mehr als 200.000 Einträge zählen, kann man auch mal
 überlegen aufzuräumen.
+
+Historie der Kennzahlen in CDB
+==============================
+
+Für die Bereinigung der Relation ``CDBQC_HISTORY`` bieten die CDB-Tools aktuell
+keine Lösung.  Jedoch sollte der CDB-Admin diese genau im Auge behalten, denn
+auch sie wird oftmals nicht benötigt.
 
 
 DB-Management System

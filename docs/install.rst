@@ -20,10 +20,11 @@ bestehende CDB Instanz *aufgesattelt* werden.
    werden (s.a. :ref:`Hinweise <cdbtools_portable>` ).
 
 3. CDB in den CDB-Tools bekannt machen.  In der CDB-Tools Umgebung müssen ein
-   paar ``CADDOK_*`` Variablen angepasst werden
-   (s.a. :ref:`setup_cdbenv`). Datei ``winShortcuts/cdbEnv.bat``:
+   paar ``CADDOK_*`` Variablen angepasst werden (s.a. :ref:`setup_cdbenv`).
 
 .. code-block:: dosbatch
+
+   REM Datei winShortcuts/cdbEnv.bat
 
    SET "CADDOK_BASE=C:\share\cdb_cust_dev"
    SET "CADDOK_DBNAME=cust_dev"
