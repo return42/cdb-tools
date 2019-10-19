@@ -1,0 +1,333 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Laufzeitumgebung &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="Build aus dem Reposetorie" href="cdbtools_repo.html" />
+    <link rel="prev" title="Aufbau der CDB-Tools" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Aufbau der CDB-Tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Laufzeitumgebung</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#konsolen-prompt-der-umgebungen">Konsolen Prompt der Umgebungen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#setup-cdbenv">Setup cdbEnv</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#portable">Portable</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdbtools_repo.html">Build aus dem Reposetorie</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdbtools_pckg.html">Paketmanagement der CDB-Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Werkzeuge der CDB-Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../best_practice/index.html">Best practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Aufbau der CDB-Tools</a> &raquo;</li>
+        
+      <li>Laufzeitumgebung</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cdbtools_dev/cdbtools_rte.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="laufzeitumgebung">
+<span id="cdbtools-rte"></span><h1>Laufzeitumgebung<a class="headerlink" href="#laufzeitumgebung" title="Link zu dieser Überschrift">¶</a></h1>
+<p>Zur Erweiterung der Laufzeitumgebung von CDB Prozessen nutzen die CDB-Tools die
+Umgebungsvariablen:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">PATH</span></code></dt><dd><p>In den Shell-Umgebungen werden zusätzliche Kommandos zur Verfügung gestellt.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">PYTHONUSERBASE</span></code></dt><dd><p>Über die Umgebungsvariable wird ein User-Scheme (<a class="reference external" href="https://docs.python.org/2/install/index.html#inst-alt-install-user">the user scheme</a>)
+aktiviert.  Das User-Scheme liegt in den CDB-Tools.  Während der
+Initialisierung eines Python Prozess passt es (u.a.) die Liste der
+Python-Pfade <code class="docutils literal notranslate"><span class="pre">sys.path</span></code> als auch die Umgebung <code class="docutils literal notranslate"><span class="pre">PATH</span></code> an.</p>
+</dd>
+</dl>
+<p>In der CDB-Tools Umgebung steht ein Paketmanager bereit mit dem Python Pakete in
+das User-Scheme installiert werden (siehe „<a class="reference internal" href="cdbtools_pckg.html#cdbtools-pip"><span class="std std-ref">Python Pakte der CDB-Tools</span></a>“).  Durch die
+Installation <em>in</em> bzw. durch die Bereitstellung von Werkzeugen <em>aus</em> den
+CDB-Tools wird die CDB-Instanz selbst nachhaltig <em>schlank</em> gehalten.</p>
+<p>In der CDB-Tools Umgebung kann neben den <a class="reference external" href="https://pypi.python.org/pypi">PyPi</a> Paketen auch zusätzliche
+Software bereit gestellt werden (<a class="reference internal" href="cdbtools_pckg.html#cdbtools-software"><span class="std std-ref">Softwarepakete der CDB-Tools</span></a>).</p>
+<p>Die CDB-Tools Umgebung kann in einer Shell über die Skripte</p>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">cdbtools-activate</span></code>   aktiviert und mit</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cdbtools-deactivate</span></code> deaktiviert werden.</p></li>
+</ul>
+<p>I.d.R. wird man unter Windows meist über ein Doppelklick auf eine der <code class="docutils literal notranslate"><span class="pre">.bat</span></code>
+Dateien in den <a class="reference internal" href="../winShortcuts/index.html#winshortcuts"><span class="std std-ref">winShortcuts</span></a> die Umgebung starten.  Für eine Shell mit
+CDB-Tools Umgebung sieht das in etwa so aus (<a class="reference internal" href="../winShortcuts/cdbtools_winShortcuts.html#tools-sh-bat"><span class="std std-ref">tools-sh.bat</span></a>):</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>------------------------------------------------------------
+CDB-Tools environment
+------------------------------------------------------------
+
+  CADDOK_RUNTIME: C:\share\contact\cdbsrv-11.3.10
+  CADDOK_BASE:    C:\share\cdb_cust_dev
+  CADDOK_DEFAULT: cust_dev@C:\share\cdb_cust_dev
+  HOME:           C:\Users\user
+...
+
+C<span class="p">:</span><span class="nl">\share\cdb_cust_dev</span>
+[CDBTools]$
+</pre></div>
+</div>
+<div class="section" id="konsolen-prompt-der-umgebungen">
+<span id="rte-prompt"></span><h2>Konsolen Prompt der Umgebungen<a class="headerlink" href="#konsolen-prompt-der-umgebungen" title="Link zu dieser Überschrift">¶</a></h2>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">[CDBTools]</span></code></dt><dd><p>Hier in der Anleitung wird der Prompt <code class="docutils literal notranslate"><span class="pre">[CDBTools]</span></code> genutzt, um anzuzeigen,
+das ein Kommando <strong>in einer CDB-Tools Umgebung ausgeführt werden muss</strong>.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">[cdbsrv-11.3.10:cust_dev]</span></code></dt><dd><p>Hier in der Anleitung wird der Prompt <code class="docutils literal notranslate"><span class="pre">[cdb:prod_copy]</span></code> genutzt, um
+anzuzeigen, das ein Kommando <strong>in einer Standard CDB-Installation ageführt
+werden muss</strong>.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="setup-cdbenv">
+<span id="id1"></span><h2>Setup cdbEnv<a class="headerlink" href="#setup-cdbenv" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Damit die CDB-Tools und die CDB Installation <em>zueinander finden</em> müssen in der
+Datei <code class="docutils literal notranslate"><span class="pre">winShortcuts/cdbEnv.bat</span></code> folgende Umgebungen angepasst werden.</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="s2">&quot;CADDOK_BASE=C:\share\cdb_cust_dev&quot;</span>
+<span class="k">SET</span> <span class="s2">&quot;CADDOK_DBNAME=cust_dev&quot;</span>
+
+<span class="k">SET</span> <span class="s2">&quot;CADDOK_RUNTIME=C:\share\contact\cdbsrv-11.3.10&quot;</span>
+<span class="k">SET</span> <span class="s2">&quot;CADDOK_CLIENT_HOME=C:\share\contact\cdbpc-11.3.0.10&quot;</span>
+</pre></div>
+</div>
+<p>Nachdem die Umgebung korrekt gesetzt wurde, ist es möglich mit
+<code class="docutils literal notranslate"><span class="pre">winShortcuts/cdb-sh.bat</span></code> eine CDB-Shell zu starten:</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>$ C:\share\cdb-tools\winShortcuts\cdb-sh.bat
+...
+[cdbsrv-11.3.10:cust_dev] C:\share\cdb_cust_dev<span class="p">&gt;</span> ...
+</pre></div>
+</div>
+<p>Den Prompt <code class="docutils literal notranslate"><span class="pre">[cdbsrv-11.3.10:cust_dev]</span></code> setzt die CDB-Shell, er wird in der
+<em>eigenen</em> Instanz vermutlich etwas anders aussehen (s.a. <a class="reference internal" href="#rte-prompt"><span class="std std-ref">Konsolen Prompt der Umgebungen</span></a>).  Um
+zu überprüfen ob die Umgebung korrekt gesetzt ist sollte man sich die
+<code class="docutils literal notranslate"><span class="pre">CADDOK_*</span></code> Variablen anschauen:</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>[cdbsrv-11.3.10:cust_dev] C:\<span class="p">&gt;</span> SET CADDOK
+...
+CADDOK_RUNTIME=C:\share\contact\cdbsrv-11.3.10
+CADDOK_BASE=C:\share\cdb_cust_dev
+CADDOK_DEFAULT=cust_dev@C:\share\cdb_cust_dev
+...
+</pre></div>
+</div>
+<p>Stimmen nicht alle Einstellungen, so muss man ggf. noch die <code class="docutils literal notranslate"><span class="pre">etc/site.conf</span></code>
+oder eine der anderen <code class="docutils literal notranslate"><span class="pre">etc/*.conf</span></code> Dateien anpassen (normale CDB
+Konfiguration).</p>
+</div>
+<div class="section" id="portable">
+<span id="cdbtools-portable"></span><h2>Portable<a class="headerlink" href="#portable" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Die einfachste Form Software zu installieren ist, sie nicht zu installieren /
+einfach nur den ZIP-Ordner mit den CDB-Tools auspacken.  In diesem Sinne sind
+die CDB-Tools <a class="reference external" href="https://de.wikipedia.org/wiki/Portable_Software">portable Software</a>.  Da jedoch nicht alle Module der CDB-Tools
+(insbesondere Python Pakete) <em>per se</em> in diesem Sinne <em>portabel</em> sind, muss nach
+dem <em>Verschieben</em> der CDB-Tools an einen anderen Ort einmal das Skript:</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ cdbtools-fix-launcher
+</pre></div>
+</div>
+<p>in einer CDB-Tools Shell ausgeführt werden.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hinweis</p>
+<p>Wir haben z.T. Probleme mit CDB festgestellt, wenn unter Windows die
+CDB-Tools in einen anderen Laufwerksbuchstaben als CDB installiert werden.
+Am besten liegen CDB-Instanz, CDB-Software und die CDB-Tools auf dem gleichen
+Laufwerksbuchstaben.</p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cdbtools_repo.html" class="btn btn-neutral float-right" title="Build aus dem Reposetorie" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="Aufbau der CDB-Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

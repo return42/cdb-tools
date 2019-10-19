@@ -1,0 +1,270 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Installation &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="./" src="_static/documentation_options.js"></script>
+        <script type="text/javascript" src="_static/jquery.js"></script>
+        <script type="text/javascript" src="_static/underscore.js"></script>
+        <script type="text/javascript" src="_static/doctools.js"></script>
+        <script type="text/javascript" src="_static/language_data.js"></script>
+        <script type="text/javascript" src="_static/translations.js"></script>
+    
+    <script type="text/javascript" src="_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="genindex.html" />
+    <link rel="search" title="Suche" href="search.html" />
+    <link rel="next" title="winShortcuts" href="winShortcuts/index.html" />
+    <link rel="prev" title="CDB Tools" href="index.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Installation</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#hinweise">Hinweise</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="cdbtools_dev/index.html">Aufbau der CDB-Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="tools/index.html">Werkzeuge der CDB-Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="best_practice/index.html">Best practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="index.html">Docs</a> &raquo;</li>
+        
+      <li>Installation</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="_sources/install.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="installation">
+<span id="install-cdbtools"></span><h1>Installation<a class="headerlink" href="#installation" title="Link zu dieser Überschrift">¶</a></h1>
+<p>Die CDB-Tools sind <em>non invasiv</em>, d.h. sie werden nicht in <em>CIM DATABASE</em> (CDB)
+installiert.  Die Idee der CDB-Tools ist es, eine erweiterte Laufzeitumgebung
+für CDB bereit zu stellen ohne das dazu die CDB Installation <em>verändert</em> werden
+muss.  Mit dieser Eigenschaft können die CDB-Tools komfortabel auf jede
+bestehende CDB Instanz <em>aufgesattelt</em> werden.</p>
+<ol class="arabic simple">
+<li><p>Die CDB-Tools können als fertiges ZIP <em>runter geladen</em> werden.  Siehe aktuelle
+<code class="docutils literal notranslate"><span class="pre">cdb-tools.zip</span></code> in den <a class="reference external" href="https://github.com/return42/cdb-tools/releases">Releases</a>.</p></li>
+<li><p>Der Ordner <code class="docutils literal notranslate"><span class="pre">cdb-tools</span></code> in der ZIP Datei muss <em>irgendwo - hin</em> ausgepackt
+werden (s.a. <a class="reference internal" href="cdbtools_dev/cdbtools_rte.html#cdbtools-portable"><span class="std std-ref">Hinweise</span></a> ).</p></li>
+<li><p>CDB in den CDB-Tools bekannt machen.  In der CDB-Tools Umgebung müssen ein
+paar <code class="docutils literal notranslate"><span class="pre">CADDOK_*</span></code> Variablen angepasst werden (s.a. <a class="reference internal" href="cdbtools_dev/cdbtools_rte.html#setup-cdbenv"><span class="std std-ref">Setup cdbEnv</span></a>).</p></li>
+</ol>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span><span class="c1">REM Datei winShortcuts/cdbEnv.bat</span>
+
+<span class="k">SET</span> <span class="s2">&quot;CADDOK_BASE=C:\share\cdb_cust_dev&quot;</span>
+<span class="k">SET</span> <span class="s2">&quot;CADDOK_DBNAME=cust_dev&quot;</span>
+
+<span class="k">SET</span> <span class="s2">&quot;CADDOK_RUNTIME=C:\share\contact\cdbsrv-11.3.10&quot;</span>
+<span class="k">SET</span> <span class="s2">&quot;CADDOK_CLIENT_HOME=C:\share\contact\cdbpc-11.3.0.10&quot;</span>
+</pre></div>
+</div>
+<p>Damit ist die Installation bereits abgeschlossen.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tipp</p>
+<p>Wenn die CDB-Tools in mehreren Instanzen genutzt werden sollen, dann kopiert
+man am besten den <a class="reference external" href="https://github.com/return42/cdb-tools/blob/master/winShortcuts">cdb-tools/winShortcuts</a> Ordner in die CDB-Instanzen und
+passt zusätzlich noch <code class="docutils literal notranslate"><span class="pre">CDBTOOLS_HOME</span></code> an.</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="s2">&quot;CDBTOOLS_HOME=C:\share\cdb-tools&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="hinweise">
+<h2>Hinweise<a class="headerlink" href="#hinweise" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Ab Version 11.3 verwendet CDB ELEMENTS die 64bit Bibliotheken (<code class="docutils literal notranslate"><span class="pre">win_amd64</span></code> ist
+der Default in den CDB-Tools), weshalb für ältere Versionen noch die Variable
+<code class="docutils literal notranslate"><span class="pre">PIP_PY_PLATFORM</span></code> gesetzt (<em>aus-kommentiert</em>) werden muss:</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span><span class="k">SET</span> <span class="nv">PIP_PY_PLATFORM</span><span class="p">=</span>win32
+</pre></div>
+</div>
+<p>Initial sollte noch einmal das folgende Skript in einer CDB-Tools Shell
+ausgeführt werden (siehe Hinweise Abschnitt <a class="reference internal" href="cdbtools_dev/cdbtools_rte.html#cdbtools-portable"><span class="std std-ref">Portable</span></a>):</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ cdbtools-fix-launcher
+</pre></div>
+</div>
+<p>Bezüglich Aktualisierung der CDB-Tools siehe <a class="reference internal" href="cdbtools_dev/cdbtools_repo.html#update-cdbtools"><span class="std std-ref">Update der CDB-Tools</span></a>.  Eine
+alternative Installation, ist im Abschhnitt „<a class="reference internal" href="cdbtools_dev/cdbtools_repo.html#cdbtools-repo"><span class="std std-ref">Build aus dem Reposetorie</span></a>“ beschrieben.
+Sie basiert auf dem selben git-Reposetorie, welches bereits in dem obigen ZIP
+download enthalten ist.</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="winShortcuts/index.html" class="btn btn-neutral float-right" title="winShortcuts" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="index.html" class="btn btn-neutral float-left" title="CDB Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

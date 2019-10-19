@@ -1,0 +1,767 @@
+<!DOCTYPE html>
+
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <title>CDB Komponenten</title>
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    
+
+    
+<link rel="stylesheet" href="_static/css/reset.css">
+<link rel="stylesheet" href="_static/css/reveal.min.css">
+<link rel="stylesheet" href="_static/css/theme/dejavu.css" id="theme">
+<!-- Theme used for syntax highlighting of code -->
+<link rel="stylesheet" href="_static/lib/css/zenburn.css">
+
+<link rel="stylesheet" href="_static/mysettings.css" type="text/css" />
+
+
+    <!-- Printing and PDF exports -->
+    <script>
+      var link = document.createElement( 'link' );
+      link.rel = 'stylesheet';
+      link.type = 'text/css';
+      link.href = window.location.search.match( /print-pdf/gi ) ? '_static/css/print/pdf.css' : '_static/css/print/paper.css';
+      document.getElementsByTagName( 'head' )[0].appendChild( link );
+    </script>
+
+
+    <!--[if lt IE 9]>
+    <script src="_static/lib/js/html5shiv.js"></script>
+    <![endif]-->
+      <script type="text/javascript" src="_static/language_data.js"></script>
+      <script type="text/javascript" src="_static/translations.js"></script>
+  </head>
+  <body>
+    <div class="reveal">
+      <div class="slides">
+        
+  <div class="section" id="cdb-komponenten">
+<h1>CDB Komponenten<a class="headerlink" href="#cdb-komponenten" title="Link zu dieser Überschrift">¶</a></h1>
+<aside id="logo" style="height:8vh; width:8vw; position:absolute; bottom:2vh; left:2vw; ">
+  <a href="http://www.darmarit.de">
+    <img src="_static/darmarIT_logo_512.png">
+  </a>
+</aside><section>
+<h2>CDB Komponenten</h2>
+<p class="first">Komponenten Architektur &amp; verteilte Entwicklung</p>
+<p>mit CIM DATABASE / CONTACT Elements</p>
+<small class="last">
+<p class="first">compiled by <a class="reference external" href="http://www.darmarit.de">darmarIT</a></p>
+<p class="last"><em>Hit ‚?‘ to see keyboard shortcuts</em></p>
+</small>
+</section>
+<section>
+<h2>Themen</h2>
+<ul class="first last simple">
+<li><p><a class="reference internal" href="#cdb-pakete-intro"><span class="std std-ref">CDB Pakete</span></a></p></li>
+<li><p><a class="reference internal" href="#struktur-kundenpaket"><span class="std std-ref">Struktur Kundenpaket</span></a></p></li>
+<li><p><a class="reference internal" href="#voraussetzungen"><span class="std std-ref">Voraussetzungen</span></a> + <em>repair</em> <a class="reference internal" href="#schema-repair"><span class="std std-ref">Schema</span></a> &amp; <a class="reference internal" href="#config-repair"><span class="std std-ref">Konfiguration</span></a></p></li>
+<li><p><a class="reference internal" href="#updates-und-konflikte"><span class="std std-ref">Updates &amp; Konflikte</span></a> + cdbpkg &amp; SCM
+<a class="reference internal" href="#big-picture-cdbpkg-scm"><span class="std std-ref">big picture</span></a></p></li>
+<li><p><a class="reference internal" href="#transport-aenderung"><span class="std std-ref">Transport</span></a>: Code &amp; Config
+<a class="reference internal" href="#merge-graph"><span class="std std-ref">Merge-Schaubild</span></a></p></li>
+<li><p><a class="reference internal" href="#cdb-und-scm"><span class="std std-ref">CDB &amp; SCM-System</span></a></p></li>
+<li><p><a class="reference internal" href="#id2"><span class="std std-ref">Merge Strategien</span></a></p></li>
+<li><p><a class="reference internal" href="#lieferantenanbindung"><span class="std std-ref">Lieferantenanbindung</span></a>: <a class="reference internal" href="#aenderung-beauftragen"><span class="std std-ref">Beauftragung</span></a> &amp; <a class="reference internal" href="#aenderung-ausliefern"><span class="std std-ref">Auslieferung</span></a></p></li>
+<li><p><a class="reference internal" href="#merge-dev-branches"><span class="std std-ref">Entwicklungszweige mergen</span></a></p></li>
+</ul>
+</section>
+<section id="cdb-pakete-intro">
+<h3>CDB Pakete</h3>
+<p class="first">Hersteller-Pakete in <code class="docutils literal notranslate"><span class="pre">site-packages</span></code></p>
+<p>Änderungen nur durch Hersteller-Updates</p>
+<p>Beispiel: keine eignen Änderungen an <code class="docutils literal notranslate"><span class="pre">cs.</span></code> Paketen</p>
+<p class="last">Kunden-Paket <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code> darf nicht im Python-Pfad (<code class="docutils literal notranslate"><span class="pre">site-packages</span></code>) liegen.</p>
+</section>
+<section>
+<h3>Namensräume, Pakete & Ebenen</h3>
+<ul class="first simple">
+<li><p>Ebene 3 – <code class="docutils literal notranslate"><span class="pre">cust.</span></code>   pflegt der <em>Customer</em></p></li>
+<li><p>Ebene 2 – <code class="docutils literal notranslate"><span class="pre">tpm.</span></code>    pflegt der <em>Third Party Maker</em></p></li>
+<li><p>Ebene 1 – <code class="docutils literal notranslate"><span class="pre">cs.</span></code>     pflegt die <em>Contact Software GmbH</em></p></li>
+</ul>
+<p>Dependency-Direction: 3 darf 2 oder auch 1 anpassen</p>
+<p><code class="docutils literal notranslate"><span class="pre">cust.</span></code> –&gt; <code class="docutils literal notranslate"><span class="pre">tpm</span></code> –&gt; <code class="docutils literal notranslate"><span class="pre">cs.</span></code></p>
+<small class="last">
+<p class="first last">Namensräume sind was anderes als Pakete. Ein Namensraum beinhaltet
+i.d.R. mehrere Pakete – z.B. die Pakete <code class="docutils literal notranslate"><span class="pre">cs.base</span></code> und <code class="docutils literal notranslate"><span class="pre">cs.vp</span></code> im
+Namensraum <code class="docutils literal notranslate"><span class="pre">cs</span></code>. Die CDB-Module in einem Paket gehören aber alle zum
+Namensraum des Pakets – z.B. das CDB-Modul <code class="docutils literal notranslate"><span class="pre">cs.calender</span></code> aus dem
+Paket <code class="docutils literal notranslate"><span class="pre">cs.base</span></code>. Der Hersteller pflegt seinen Namensraum und schnürrt
+die Pakete.</p>
+</small>
+</section>
+<section>
+<h3>Anpassungen des Customer</h3>
+<ol class="first arabic">
+<li><p>Quellcode in <code class="docutils literal notranslate"><span class="pre">cust.</span></code></p>
+<p>Anpassung z.B. durch Verbung aus <code class="docutils literal notranslate"><span class="pre">cs.</span></code> und <code class="docutils literal notranslate"><span class="pre">tpm.</span></code> oder Signalhandler
+die in <code class="docutils literal notranslate"><span class="pre">cs.</span></code> und <code class="docutils literal notranslate"><span class="pre">tpm.</span></code> registriert werden.</p>
+</li>
+<li><p>Konfiguration aus <code class="docutils literal notranslate"><span class="pre">cs.</span></code> und <code class="docutils literal notranslate"><span class="pre">tpm.</span></code> die der Customer ändern muss</p>
+<p>z.B. Anpassungen an Masken &amp; Tabellen aus <code class="docutils literal notranslate"><span class="pre">cs.</span></code> und <code class="docutils literal notranslate"><span class="pre">tpm.</span></code></p>
+</li>
+</ol>
+<small class="last">
+<p class="first last">Die Anpassungen einer Kundeninstallation werden in einem Paket verwaltet
+– z.B. Paket <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code> im Namensraum <code class="docutils literal notranslate"><span class="pre">cust</span></code>. Die Anpassungen
+beschränken sich aber nicht auf diesen Namensraum, man wird auch
+Konfigurationen in der DB aus <code class="docutils literal notranslate"><span class="pre">cs</span></code> und <code class="docutils literal notranslate"><span class="pre">tpm</span></code> anpassen wollen.</p>
+</small>
+</section>
+<section>
+<h3>app_conf</h3>
+<p class="first">Master + Historie für jedes CDB-Modul, wird aus der DB aufgebaut, von
+<code class="docutils literal notranslate"><span class="pre">cdbpkg</span></code> verwaltet und wird <strong>nicht</strong> im SCM-System versioniert!</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">CADDOK_BASE</span>
+  <span class="o">+---</span><span class="n">app_conf</span>
+      <span class="o">+---</span><span class="n">cs</span>
+      <span class="o">|</span>   <span class="o">...</span>
+      <span class="o">|</span>   \<span class="o">---</span><span class="n">erp</span>
+      <span class="o">|</span>       <span class="o">+---</span><span class="n">current</span>
+      <span class="o">|</span>       <span class="o">+---</span><span class="n">history</span>
+      <span class="o">|</span>       \<span class="o">---</span><span class="n">master</span>
+      <span class="o">+</span> <span class="o">...</span>
+      \<span class="o">---</span><span class="n">cust</span><span class="o">.</span><span class="n">plm</span>
+</pre></div>
+</div>
+<small class="last">
+<p class="first last">Die Details sind für uns unwichtig, wir müssen nur wissen, dass es diesen
+Ordner gibt und das die <code class="docutils literal notranslate"><span class="pre">cdbpkg</span></code> Tools ihn für so eine Art <em>micro</em>
+Versionsverwaltung nutzen.</p>
+</small>
+</section>
+<section id="struktur-kundenpaket">
+<h2>Struktur cust.plm Paket (1)</h2>
+<p class="first">CDB-Paket mit zwei CDB-Modulen <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code> und <code class="docutils literal notranslate"><span class="pre">cust.foo</span></code></p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="o">---</span><span class="n">cust</span><span class="o">.</span><span class="n">plm</span>             <span class="c1"># CDB-Paket</span>
+    <span class="o">+---</span><span class="n">cust</span><span class="o">.</span><span class="n">plm</span><span class="o">.</span><span class="n">egg</span><span class="o">-</span><span class="n">info</span>
+    <span class="o">|</span>   <span class="n">setup</span><span class="o">.</span><span class="n">py</span>         <span class="c1"># schauen wir uns gleich an</span>
+    <span class="o">|</span>                    <span class="c1">#   ansonsten keine weiteren Dateien</span>
+    \<span class="o">---</span><span class="n">cust</span>             <span class="c1"># Python Namespace &#39;from cust import foo&#39;</span>
+        <span class="o">|</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>    <span class="c1">#   ist ein Python (kein CDB) Paket</span>
+        <span class="o">|</span>                <span class="c1">#   ansonsten keine weiteren Dateien</span>
+        <span class="o">+---</span><span class="n">plm</span>          <span class="c1"># Modul &#39;plm&#39; nicht zwingend erforderlich</span>
+        \<span class="o">---</span><span class="n">foo</span>          <span class="c1"># Modul &#39;foo&#39; schauen wir uns gleich an</span>
+</pre></div>
+</div>
+<small class="last">
+<p class="first last">CDB-Paketname ist <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code>. Die CDB-Module sind Python-Pakete deren
+Namespace <code class="docutils literal notranslate"><span class="pre">cust.*</span></code> ist. Typische Namen von CDB-Modulen: <code class="docutils literal notranslate"><span class="pre">cust.foo</span></code> oder
+<code class="docutils literal notranslate"><span class="pre">cust.bar</span></code>. Ein <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code> kann, muss es aber nicht geben.</p>
+</small>
+</section>
+<section>
+<h2>Struktur cust.plm Paket (2)</h2>
+<div class="first highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="o">---</span><span class="n">cust</span><span class="o">.</span><span class="n">plm</span>             <span class="c1"># CDB-Paket</span>
+    <span class="o">+---</span><span class="n">cust</span><span class="o">.</span><span class="n">plm</span><span class="o">.</span><span class="n">egg</span><span class="o">-</span><span class="n">info</span>
+    <span class="o">|</span>   <span class="n">setup</span><span class="o">.</span><span class="n">py</span>         <span class="c1"># schauen wir uns gleich an</span>
+    <span class="o">|</span>                    <span class="c1">#   ansonsten keine weiteren Dateien</span>
+    \<span class="o">---</span><span class="n">cust</span>             <span class="c1"># Python Namespace &#39;from cust import foo&#39;</span>
+        <span class="o">|</span> <span class="fm">__init__</span><span class="o">.</span><span class="n">py</span>    <span class="c1">#   ist ein Python (kein CDB) Paket</span>
+        <span class="o">|</span>                <span class="c1">#   ansonsten keine weiteren Dateien</span>
+        <span class="o">+---</span><span class="n">plm</span>          <span class="c1"># Modul &#39;plm&#39; nicht zwingend erforderlich</span>
+        \<span class="o">---</span><span class="n">foo</span>          <span class="c1"># Modul &#39;foo&#39; schauen wir uns gleich an</span>
+</pre></div>
+</div>
+<small class="last">
+<p class="first last">Wenn im Namespace <code class="docutils literal notranslate"><span class="pre">cust</span></code> mehrere CDB-Module rumliegen – hier
+z.B. <code class="docutils literal notranslate"><span class="pre">cust.foo</span></code> und <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code> – dann müssen diese auch in der
+Paket-Konfig in CDB als Module existieren, Anderes darf hier nicht
+rumliegen! Vergleiche <code class="docutils literal notranslate"><span class="pre">cs.base</span></code> Paket, das n-CDB-Module vereint.  Häufig
+ist das Customizing ein CDB-Paket <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code> in dem nur ein Modul
+<code class="docutils literal notranslate"><span class="pre">cust.plm</span></code> exisitert.</p>
+</small>
+</section>
+<section>
+<h3>cust.plm setup.py</h3>
+<pre class="python first">
+<code data-trim contenteditable>from cdb.comparch.pkgtools import setup
+setup(
+    name               = &quot;cust.plm&quot; # package name
+    , version          = &quot;1.0.0&quot;    # package version
+    # list of required packages
+    , install_requires = [
+        &#x27;cs.platform&#x27;, &#x27;cs.base&#x27;, &#x27;cs.workflow&#x27; ..]
+    # relative path for each documentation
+    , docsets          = []
+    # list of contained modules (cdb_modules.txt)
+    , cdb_modules      = [&#x27;cust.plm&#x27;, &#x27;cust.foo&#x27;, ..]
+    # list of services (class names cdb_services.txt)
+    cdb_services       = []
+  ],</code></pre>
+<small class="last">
+<p class="first last">Die <code class="docutils literal notranslate"><span class="pre">install_requires</span></code> muss vollständig sein! <a class="reference external" href="https://docs.python.org/2/distutils/setupscript.html">setup.py</a> gehört zu
+Python, für CDB wurde es um <code class="docutils literal notranslate"><span class="pre">cdb_</span></code> Eigenschaften erweitert.</p>
+</small>
+</section>
+<section>
+<h3>Modul cust.foo</h3>
+<div class="first highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="o">--</span><span class="n">foo</span>                      <span class="c1"># CDB 10.x</span>
+   <span class="o">|</span>  <span class="n">module_metadata</span><span class="o">.</span><span class="n">json</span>
+   <span class="o">|</span>  <span class="n">content_metadata</span><span class="o">.</span><span class="n">json</span> <span class="c1"># in 15.x unter ./configuration</span>
+   <span class="o">|</span>  <span class="n">schema</span><span class="o">.</span><span class="n">json</span>           <span class="c1"># in 15.x unter ./configuration</span>
+   <span class="o">+---</span><span class="n">patches</span>              <span class="c1"># in 15.x unter ./configuration</span>
+   <span class="o">+---</span><span class="n">configuration</span>
+   \<span class="o">---</span><span class="n">resources</span>
+</pre></div>
+</div>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="o">--</span><span class="n">foo</span>                      <span class="c1"># CDB 15.x</span>
+   <span class="o">|</span>  <span class="n">module_metadata</span><span class="o">.</span><span class="n">json</span>
+   <span class="o">+---</span><span class="n">configuration</span>
+   \<span class="o">---</span><span class="n">resources</span>
+</pre></div>
+</div>
+<small class="last">
+<p class="first last">Die Struktur hat sich in CDB ELEMENTS leicht geändert, vom Prinzip her
+bleibt es gleich; Konfig Schlonz liegt im Modul und wird im SCM versioniert.
+Ab CDB 15.x nur noch <code class="docutils literal notranslate"><span class="pre">configuration</span></code>, wir reden ab jetzt nur noch von
+<code class="docutils literal notranslate"><span class="pre">configuration</span></code>.</p>
+</small>
+</section>
+<section>
+<h3>configuration Ordner vom CDB-Modul cust.foo</h3>
+<div class="first highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="o">--</span><span class="n">configuration</span>
+   <span class="o">|</span>  <span class="n">content_metadata</span><span class="o">.</span><span class="n">json</span>          <span class="c1"># Checksumme</span>
+   <span class="o">|</span>  <span class="n">schema</span><span class="o">.</span><span class="n">json</span>                    <span class="c1"># DB Schema</span>
+   <span class="o">+---</span><span class="n">content</span>                       <span class="c1">#</span>
+   <span class="o">|</span>   <span class="o">|</span>   <span class="n">ausgaben</span><span class="o">.</span><span class="n">json</span>             <span class="c1"># eigene Meldungstexte</span>
+   <span class="o">|</span>   <span class="o">|</span>   <span class="n">browsers</span><span class="o">.</span><span class="n">json</span>             <span class="c1"># eigene Auswahlbrowser</span>
+   <span class="o">|</span>   \<span class="o">---</span><span class="n">blobs</span>                     <span class="c1"># eigene BLOBs</span>
+   <span class="o">|</span>           <span class="mi">6</span><span class="n">eccde35</span><span class="o">-</span><span class="mi">1</span><span class="n">fa8</span><span class="o">-...</span>     <span class="c1"># --&gt; z.B. Report-Template</span>
+   \<span class="o">---</span><span class="n">patches</span>                       <span class="c1"># Anpassungen andere Module</span>
+       <span class="o">+---</span><span class="n">cs</span><span class="o">.</span><span class="n">pcs</span><span class="o">.</span><span class="n">projects</span>           <span class="c1"># --&gt; cs.pcs.projects</span>
+       <span class="o">|</span>   <span class="o">|</span>   <span class="n">patches</span><span class="o">.</span><span class="n">json</span>          <span class="c1">#     patch Konfiguration</span>
+       <span class="o">|</span>   \<span class="o">---</span><span class="n">blobs</span>                 <span class="c1">#     patch blobs</span>
+       <span class="o">|</span>           <span class="mi">12</span><span class="n">eeddaa</span><span class="o">-</span><span class="mi">17</span><span class="n">fa</span><span class="o">-...</span> <span class="c1">#</span>
+       <span class="o">+---</span><span class="n">cs</span><span class="o">.</span><span class="n">pcs</span><span class="o">.</span><span class="n">cheklists</span>          <span class="c1"># --&gt; cs.pcs.checklists</span>
+       <span class="o">|</span>       <span class="n">patches</span><span class="o">.</span><span class="n">json</span>          <span class="c1">#     patch Konfiguration</span>
+</pre></div>
+</div>
+<small class="last">
+<p class="first last">Konfigurationen werden als JSON Dateien zum Modul hinterlegt.  Hier zu
+erkennen: <code class="docutils literal notranslate"><span class="pre">cust.foo</span></code> hat Meldungstexte, Auswahlbrowser und einen BLOB.
+Desweiteren scheint es die Module <code class="docutils literal notranslate"><span class="pre">projects</span></code> und <code class="docutils literal notranslate"><span class="pre">checklists</span></code> des
+<code class="docutils literal notranslate"><span class="pre">cs.pcs</span></code> Pakets anzupasssen.</p>
+</small>
+</section>
+<section id="voraussetzungen">
+<h2>Voraussetzungen</h2>
+<p class="first">Instanz &amp; DB müssen immer zueinander passen.</p>
+<p>DB Schema muss im Data-Dictionary vollständig den Modulen zugeordnet sein.</p>
+<p>Referenzielle Integrität der Konfiguration muss gewährleistet sein.</p>
+<p>Konflikte müssen aufgelöst werden!</p>
+<small class="last">
+<p class="first last">Diese Voraussetzungen müssen erfüllt werden, sonst gibt es Probleme beim
+Transport von Änderungen innerhalb der Komponenten Architektur. D.h. ohne
+diese Voraussetzungen ist eine verteilte Entwicklung nicht oder nur mit
+Fehlern möglich.</p>
+</small>
+</section>
+<section id="schema-repair">
+<h3>schema -- check & repair</h3>
+<pre class="bash first">
+<code data-trim contenteditable>$ cdbpkg schema_coverage</code></pre>
+<ul class="simple">
+<li><p><code class="docutils literal notranslate"><span class="pre">tmp/cdbpkg_schema_coverage-views.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tmp/cdbpkg_schema_coverage-tables.csv</span></code></p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">tmp/cdbpkg_schema_coverage-columns.csv</span></code></p></li>
+</ul>
+<p class="last">Mit Option <code class="docutils literal notranslate"><span class="pre">-f</span></code> reparieren, aber vorher <em>Komponentenarchitektur</em> lesen!!!</p>
+</section>
+<section id="config-repair">
+<h3>config -- check & repair</h3>
+<p class="first">Komandozeile gibt guten Überblick über alles</p>
+<pre class="bash">
+<code data-trim contenteditable>$ cdbpkg check
+...
+cs.tools.batchoperations
+------------------------
+masken: name=cdbbop_operation/owner=public/attribut=button_ex...
+  error: Referenced object does not exist
+  reference: Icons
+  foreign keys: {u&#x27;string1&#x27;: u&#x27;foofoo&#x27;}
+...</code></pre>
+<p>Reparieren einfacher im CDB-Client / je Modul :</p>
+<p class="last">Kontextmenü <em>Modulkonfigurationsüberprüfung</em></p>
+</section>
+<section id="updates-und-konflikte">
+<h3>Updates & Konflikte</h3>
+<dl class="first simple">
+<dt>Source-Code</dt><dd><p>Konflikte im SCM-System ermitteln &amp; auflösen</p>
+</dd>
+<dt>Konfiguration + Schema</dt><dd><p>Konflikte in CDB ermitteln &amp; auflösen .. CDB 10.x unter
+<em>Protokolle</em> .. CDB 15.x <em>Modul / Entwicklerübersicht</em></p>
+</dd>
+</dl>
+<p class="last">Konflikte in Schema &amp; Konfiguration kann CDB nur erkennen, wenn das DB
+<a class="reference internal" href="#schema-repair"><span class="std std-ref">Schema</span></a> im Data Dictionary ist und die
+<a class="reference internal" href="#config-repair"><span class="std std-ref">Konfigurationen</span></a> den Modulen zugeordnet sind –
+siehe <a class="reference internal" href="#voraussetzungen"><span class="std std-ref">Voraussetzungen</span></a></p>
+</section>
+<section>
+<h3>was sind Updates?</h3>
+<dl class="first simple">
+<dt>DB + <code class="docutils literal notranslate"><span class="pre">configuration</span></code> + Source-Code sind <em>EINS</em></dt><dd><p>Ändert sich daran was, ist das ein <em>Update</em> – <a class="reference internal" href="#voraussetzungen"><span class="std std-ref">Voraussetzungen</span></a></p>
+</dd>
+<dt>Entwicklung tauscht Patches im SCM-System aus</dt><dd><p><code class="docutils literal notranslate"><span class="pre">pull</span></code> eines Patches aus dem SCM-System in das <em>working directory</em>
+aktualisiert <code class="docutils literal notranslate"><span class="pre">configuration</span></code> und Source-Code (das <em>Update</em>). <code class="docutils literal notranslate"><span class="pre">cdbpkg</span>
+<span class="pre">sync</span></code> spielt Änderung in DB ein</p>
+</dd>
+</dl>
+<small class="last">
+<p class="first last">Konfliktpotential hat also nicht nur ein Update der Anwendungspakete.
+Jede Änderung <em>die man sich in seine Instanz holt</em> ist ein Update mit
+Konfliktpotential .. eigentlich logisch: <em>Neu</em> seit CDB 10 ist nur, dass
+der DB Content jetzt mit dazu gehört.</p>
+</small>
+</section>
+<section id="big-picture-cdbpkg-scm">
+<h2>cdbpkg & SCM / big picture</h2>
+<div class="first figure align-default">
+<a class="reference internal image-reference" href="_images/cdbpkg_scm_big_picture.svg"><img alt="_images/cdbpkg_scm_big_picture.svg" src="_images/cdbpkg_scm_big_picture.svg" width="60%" /></a>
+</div>
+<small class="last">
+<p class="first last">Nach Abschluss einer Konfiguration: <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">build</span></code>, danach <code class="docutils literal notranslate"><span class="pre">git</span>
+<span class="pre">commit</span></code> + <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">commit</span></code>.  Die <em>commits</em> von SCM und CDB sollten immer
+synchron angewendet werden.</p>
+</small>
+</section>
+<section id="transport-aenderung">
+<h3>Transport Source-Code & Konfiguration</h3>
+<div class="first highlight-default notranslate"><div class="highlight"><pre><span></span>\<span class="o">---</span><span class="n">cust</span><span class="o">.</span><span class="n">plm</span>             <span class="c1"># CDB-Paket</span>
+    <span class="o">...</span>
+    \<span class="o">---</span><span class="n">cust</span>             <span class="c1"># Python Namespace &#39;from cust import foo&#39;</span>
+        <span class="o">...</span>              <span class="c1"># Python Pakete ...</span>
+        \<span class="o">--</span><span class="n">foo</span>           <span class="c1"># Python Paket &#39;foo&#39;</span>
+           <span class="o">|</span>  <span class="n">module_metadata</span><span class="o">.</span><span class="n">json</span>
+           <span class="o">+---</span><span class="n">configuration</span>
+           \<span class="o">---</span><span class="n">resources</span>
+</pre></div>
+</div>
+<ul class="last simple">
+<li><p><strong>Source-Code</strong>: sind die Python Pakete wie z.B. <code class="docutils literal notranslate"><span class="pre">foo</span></code>. Diese werden mit
+dem SCM <em>gemerged</em>.</p></li>
+<li><p><strong>Konfiguration</strong>: ist im Ordner <code class="docutils literal notranslate"><span class="pre">configuration</span></code>. Der Ordner muss mit
+<code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">diff</span></code> und <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">patch</span></code> <em>gemerged</em> werden.</p></li>
+</ul>
+</section>
+<section id="merge-graph">
+<h3>Merge Source-Code & Konfiguration</h3>
+<div class="first figure align-default">
+<a class="reference internal image-reference" href="_images/merge_graph.svg"><img alt="_images/merge_graph.svg" src="_images/merge_graph.svg" width="500px" /></a>
+</div>
+<p class="last">Typisches Schaubild für einen <em>Feature-Branch</em>, der in den <em>master</em> Branch
+gemerged wird. Der <em>master</em> Branch kann z.B. <strong>QS</strong> oder <strong>PROD</strong> sein.  Egal
+ob man eine Kopie anlegt oder dazu ein SCM-System nutzt, es gibt immer einen
+Branch-Point und einen Merge-Point.  Die Änderungen in der DB können nur mit
+<code class="docutils literal notranslate"><span class="pre">cdbpkg</span></code> gemerged werden.</p>
+</section>
+<section>
+<h3>Merge und Commit der Konfiguration</h3>
+<p class="first">Diff zur Kopie des <strong>Branch-Point</strong> (Abzweigung) bilden:</p>
+<pre class="bash">
+<code data-trim contenteditable>$ cdbpkg diff cust.plm -p ./branch-point-copy -d ./patch_folder</code></pre>
+<p><strong>Merge-Point</strong>: Patch in DB des <code class="docutils literal notranslate"><span class="pre">PROD</span></code>-Systems einspielen:</p>
+<pre class="bash">
+<code data-trim contenteditable>$ cdbpkg patch ./patch_folder/patch_cust.fo_xx_yyyy</code></pre>
+<p>Konflikte in CDB auflösen, anschließend commiten</p>
+<pre class="bash last">
+<code data-trim contenteditable>$ cdbpkg build cust.plm               # DB export
+# git add --all .                     # SCM-Commit
+$ git commit -m &quot;merged branch &#x27;foo&#x27;&quot; # ..
+$ cdbpkg commit cust.plm              # CDB-Commit</code></pre>
+</section>
+<section id="cdb-und-scm">
+<h3>CDB & SCM-System</h3>
+<ul class="first last simple">
+<li><p>Transport des Source-Code über SCM-System.</p></li>
+<li><p>Paket <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code> wird im SCM-System versioniert.  Besteht aus
+Source-Code + <code class="docutils literal notranslate"><span class="pre">configuration</span></code></p></li>
+<li><p>Abgleich zw. DB &amp; <code class="docutils literal notranslate"><span class="pre">configuration</span></code> machen die <code class="docutils literal notranslate"><span class="pre">cdbpkg</span></code> -Tools</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">cdbpkg</span></code> -Tools und SCM-System müssen synchron verlaufen (siehe
+<a class="reference internal" href="#merge-graph"><span class="std std-ref">Merge-Schaubild</span></a>)</p></li>
+<li><p>Einfach mal ins SCM committen ist vorbei!  wer <strong>das</strong> <code class="docutils literal notranslate"><span class="pre">pull</span></code>’t hat
+u.U. ein <a class="reference external" href="https://en.wikipedia.org/wiki/Bisection_(software_engineering)">bisect</a> Problem</p></li>
+</ul>
+</section>
+<section>
+<h2>Wahl des SCM-System</h2>
+<p class="first">prinzipell geht jedes, populär sind <a class="reference external" href="https://subversion.apache.org/">SVN</a> &amp; <a class="reference external" href="https:/git-scm.com/">git</a></p>
+<p>Verglichen mit SVN ist git beim Branchen und verteiltem Arbeiten wesentlich
+stärker. Z.B. diverse <a class="reference external" href="https://git-scm.com/book/id/v2/Git-on-the-Server-The-Protocols">Protokolle</a> zum Transport: <code class="docutils literal notranslate"><span class="pre">file://</span></code>,
+<code class="docutils literal notranslate"><span class="pre">http://</span></code>, <code class="docutils literal notranslate"><span class="pre">ssh://</span></code> usw. / s.a. <a class="reference external" href="https://www.kernel.org/pub/software/scm/git/docs/git-clone.html#URLS">git URLs</a>, <a class="reference external" href="https://git-scm.com/docs/git-send-email">git-send-email</a></p>
+<p>nicht zu vergessen: SVN ist tot.</p>
+<p class="last">Wir verwenden hier <a class="reference external" href="https:/git-scm.com/">git</a> / siehe auch <a class="reference external" href="https://return42.github.io/handsOn/slides/git/index.html">get git started</a></p>
+</section>
+<section>
+<h3>SCM-System einrichten</h3>
+<pre class="bash first">
+<code data-trim contenteditable>(prod)$ cd cust.plm
+(prod)$ git init
+(prod)$ git add --all .
+(prod)$ git commit -m &#x27;cust.plm initial&#x27;</code></pre>
+<p>Ggf. letzte Änderungen beenden und <em>festschreiben</em></p>
+<pre class="bash last">
+<code data-trim contenteditable>(prod)$ cdbpkg build cust.plm
+(prod)$ git add --all .
+(prod)$ git commit -m &quot;add &#x27;cust.foo&#x27; to package &#x27;cust.plm&#x27;&quot;
+(prod)$ cdbpkg commit cust.plm</code></pre>
+</section>
+<section id="id2">
+<h3>Merge Strategien</h3>
+<p class="first">SCM-Systeme wie <a class="reference external" href="https:/git-scm.com/">git</a> verfügen über ausgereifte Merge Strategien zum Mergen
+von <strong>S</strong>ource-<strong>C</strong>ode (<em>build-in</em>).</p>
+<p>Merge der CDB-Konfiguration benötigt besondere Strategie.</p>
+<p class="last">Diese Strategie bedarf <code class="docutils literal notranslate"><span class="pre">cdbpkg</span></code> Tools, welche die Semantik der
+Konfiguration <em>kennen</em> und Checksummen neu berechnen können.</p>
+</section>
+<section id="git-merge-strategie">
+<h3>Merge Strategie (git)</h3>
+<p class="first"><a class="reference external" href="https:/git-scm.com/">git</a> unterstützt <em>alternative</em> <a class="reference external" href="https://git-scm.com/docs/git-merge#_merge_strategies">Merge Strategien</a>, mittels <a class="reference external" href="https://git-scm.com/book/en/v2/Customizing-Git-Git-Attributes#Merge-Strategies">Git Attributen</a>
+kann die Strategie individuell gewählt werden.</p>
+<p>Um <code class="docutils literal notranslate"><span class="pre">configuration</span></code> <strong>nicht</strong> zu mergen; Strategie <code class="docutils literal notranslate"><span class="pre">ours</span></code>.</p>
+<pre class="bash">
+<code data-trim contenteditable># location: cust.plm/.gitattributes
+# CDB 15.x
+cust/*/configuration         merge=ours</code></pre>
+<p>Dummy handler <code class="docutils literal notranslate"><span class="pre">true</span></code> für <code class="docutils literal notranslate"><span class="pre">ours</span></code> registrieren</p>
+<pre class="bash">
+<code data-trim contenteditable>$ git config --local merge.ours.driver true</code></pre>
+<small class="last">
+<p class="first last">In CDB 10.x müssen noch <code class="docutils literal notranslate"><span class="pre">patches</span></code>, <code class="docutils literal notranslate"><span class="pre">schema.json</span></code>,
+<code class="docutils literal notranslate"><span class="pre">module_metadata.json</span></code> und <code class="docutils literal notranslate"><span class="pre">content_metadata.json</span></code> analog gesetzt
+werden (<a class="reference external" href="https://git-scm.com/docs/gitattributes">.gitattributes</a>)</p>
+</small>
+</section>
+<section id="lieferantenanbindung">
+<h2>Lieferantenanbindung</h2>
+<div class="first figure align-default">
+<a class="reference internal image-reference" href="_images/clone_graph.svg"><img alt="_images/clone_graph.svg" src="_images/clone_graph.svg" width="500px" /></a>
+</div>
+<p class="last">Lieferantenanbindung erfolgt an einem Branch-Point (<code class="docutils literal notranslate"><span class="pre">foo</span></code>).  Die
+Auslieferung an den Lieferanten ist ein <em>Clone</em>. Siehe auch
+<a class="reference external" href="https://return42.github.io/cdb-tools/best_practice/release_management.html">Releasemanagement und CONTACT Elements</a>.</p>
+</section>
+<section>
+<h3>Änderung einplanen (master)</h3>
+<p class="first">Initial gibt es den <code class="docutils literal notranslate"><span class="pre">master</span></code> branch, darin existiert bereits Modul <code class="docutils literal notranslate"><span class="pre">cust.foo</span></code>
+im Paket <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code>. In dem Modul soll nun noch die Klasse <code class="docutils literal notranslate"><span class="pre">Foo</span></code>
+konfiguriert &amp; implementiert werden.</p>
+<pre class="bash">
+<code data-trim contenteditable>$ git branch -v
+* master 268a44e add &#x27;cust.foo&#x27; to package &#x27;cust.plm&#x27;</code></pre>
+<p>feature branch ‚foo‘ anlegen</p>
+<pre class="bash">
+<code data-trim contenteditable>$ git branch -v
+  foo    268a44e add &#x27;cust.foo&#x27; to package &#x27;cust.plm&#x27;
+* master 268a44e add &#x27;cust.foo&#x27; to package &#x27;cust.plm&#x27;</code></pre>
+<p class="last">Siehe auch <a class="reference external" href="https://return42.github.io/cdb-tools/best_practice/release_management.html">Releasemanagement und CONTACT Elements</a>.</p>
+</section>
+<section data-background="#332222" id="aenderung-beauftragen">
+<h3>Änderung beauftragen (clone)</h3>
+<p class="first">Der Übergabepunkt einer Beauftragung ist der Branch-Point (<code class="docutils literal notranslate"><span class="pre">foo</span></code>). Er muss
+dem Auftragnehmer übergeben werden.</p>
+<pre>
+<code data-trim contenteditable>(dev)$ git clone file:///path/to/prod/cust.plm.git/
+(dev)$ cd cust.plm
+(dev)$ git checkout foo
+Zu Branch &#x27;foo&#x27; gewechselt</code></pre>
+<p class="last">Für einen Spiegel beim Auftragnehmer – ggf. auch mit Nutzdaten – sind
+i.d.R. weitere Maßnahmen erforderlich.  Meist wird initial die komplette
+Instanz ausgeliefert (z.B. ZIP des <code class="docutils literal notranslate"><span class="pre">CADDOK_BASE</span></code> am Branchpoint plus
+DB-Dump aber ohne Storage).</p>
+</section>
+<section data-background="#333344">
+<h3>Spiegel einrichten</h3>
+<p class="first">Auftragnehmer muss (Teil-) Spiegel-System einrichten.</p>
+<small>
+<p class="first last">Abhängig von den benötigten CDB- und <em>Third-Party-</em> Diensten (z.B. SAP)
+und <em>externen</em> Anwendungen kann ein <em>vollständiger*</em> Spiegel z.T. sehr
+Aufwändig bis unmöglich sein.</p>
+</small>
+<p>Stand aus Branch <code class="docutils literal notranslate"><span class="pre">foo</span></code> in den lokalen Spiegel einspielen</p>
+<pre class="bash">
+<code data-trim contenteditable>(dev)$ cdbpkg sync
+(dev)$ cdbpkg import_blobs    # falls DB-Dump verwendet wurde
+(dev)$ cdbpkg commit cust.plm</code></pre>
+<small class="last">
+<p class="first last">Ein <code class="docutils literal notranslate"><span class="pre">import_blobs</span></code> ist i.d.R. erforderlich, wenn der Spiegel aus einem
+DB-Dump aufgebaut wurde (und der storage des Spiegels noch <em>leer*</em> ist).
+Das <code class="docutils literal notranslate"><span class="pre">commit</span></code> sollte nicht unbedingt erforderlich sein, stellt aber in
+jedem Fall sicher, dass ab <strong>jetzt</strong> lokale Änderungen <em>aufgezeichnet</em>
+werden.</p>
+</small>
+</section>
+<section data-background="#333344">
+<h3>Änderung implementieren (1)</h3>
+<p class="first">Die Aufgabe wird in zwei Teil-Aufgaben aufgeteilt. Als erstes richtet der
+Entwickler das DB-Schema für das ‚foo‘ feature ein.</p>
+<blockquote>
+<div><div class="figure align-default">
+<a class="reference internal image-reference" href="_images/dd_class_foo_1.png"><img alt="_images/dd_class_foo_1.png" src="_images/dd_class_foo_1.png" style="width: 540.0px; height: 136.5px;" /></a>
+</div>
+<div class="figure align-default">
+<a class="reference internal image-reference" href="_images/dd_class_foo_2.png"><img alt="_images/dd_class_foo_2.png" src="_images/dd_class_foo_2.png" style="width: 534.0px; height: 37.5px;" /></a>
+</div>
+</div></blockquote>
+<p class="last">In der Entwickler-Übersicht den Dev-Build anstoßen.  Doppel-Klick auf ‚Dev
+Patches‘ zeigt die lokalen Änderungen.</p>
+</section>
+<section data-background="#333344">
+<h3>Änderung implementieren (1)</h3>
+<p class="first">Schema soll erster Commit ins SCM werden</p>
+<pre class="bash">
+<code data-trim contenteditable>(dev)$ cdbpkg build cust.plm
+(dev)$ git add --all .
+(dev)$ git commit -m &quot;configured &#x27;foo&#x27; schema&quot;</code></pre>
+<p><em>Dieser</em> Teil-Änderung ist nun im SCM-System. Alle weiteren lokalen
+Änderungen sollen relativ zu dem Stand <strong>jetzt</strong> <em>aufgezeichnet</em> werden.</p>
+<pre class="bash">
+<code data-trim contenteditable>(dev)$ cdbpkg commit cust.plm</code></pre>
+<p class="last">In der Entwickler-Übersicht ist der Eintrag ‚Dev Patches‘ für die lokalen
+Änderungen nun <em>verschwunden</em>.</p>
+</section>
+<section data-background="#333344">
+<h3>Änderung implementieren (2)</h3>
+<p class="first">Entwickler erstellt <code class="docutils literal notranslate"><span class="pre">cust.plm/cust/foo/__init___.py</span></code></p>
+<pre class="python">
+<code data-trim contenteditable>#!/usr/bin/env python
+# -*- coding: utf-8; mode: python -*-
+
+from cdb.objects import Object
+class Foo(Object):
+    __maps_to__   = &quot;foo&quot;
+    __classname__ = &quot;Foo&quot;</code></pre>
+<p>und registriert den Voll qualifizierten Python Namen (<a class="reference external" href="https://en.wikipedia.org/wiki/Fully_qualified_name">FQN</a>).</p>
+<div class="last figure align-default">
+<a class="reference internal image-reference" href="_images/dd_class_foo_2.png"><img alt="_images/dd_class_foo_2.png" src="_images/dd_class_foo_2.png" style="width: 534.0px; height: 37.5px;" /></a>
+</div>
+</section>
+<section data-background="#333344">
+<h3>Änderung implementieren (2)</h3>
+<p class="first">Änderungen sind abgeschlossen, zweiten Commit vorbereiten ..</p>
+<pre class="bash">
+<code data-trim contenteditable>(dev)$ cdbpkg build cust.plm</code></pre>
+<p>In der Entwickler-Übersicht ist wieder der Eintrag ‚Dev Patches‘ zu sehen.
+Doppel-Klick darauf zeigt die lokalen Änderungen.</p>
+<pre class="bash">
+<code data-trim contenteditable>(dev)$ git add --all .
+(dev)$ git commit -m &quot;implemented class &#x27;Foo&#x27;&quot;
+(dev)$ cdbpkg commit cust.plm</code></pre>
+<p class="last">Umsetzung der Anforderung ist nun vollständig im SCM-System (Source-Code und
+Konfiguration) und kann ausgeliefert werden.</p>
+</section>
+<section data-background="#332222" id="aenderung-ausliefern">
+<h3>Änderung ausliefern (push)</h3>
+<p class="first">Auslieferung erfolgt in den Übergabepunkt; Branch <code class="docutils literal notranslate"><span class="pre">foo</span></code> des Auftraggebers.</p>
+<div class="last figure align-default">
+<a class="reference internal image-reference" href="_images/push_graph.svg"><img alt="_images/push_graph.svg" src="_images/push_graph.svg" width="500px" /></a>
+</div>
+</section>
+<section data-background="#332222">
+<h3>Änderung ausliefern</h3>
+<pre class="bash first">
+<code data-trim contenteditable>$ git push origin foo
+...
+[PATCH 1/2] configured &#x27;foo&#x27; schema
+[PATCH 2/2] implemented class &#x27;Foo&#x27;</code></pre>
+<small>
+<p class="first last">Die Transportwege für die Übernahme und Auslieferung einer Beauftragung
+können mit <a class="reference external" href="https:/git-scm.com/">git</a> individuell gewählt werden (<a class="reference external" href="https://subversion.apache.org/">SVN</a> schränkt sehr ein). Hier
+wurde ein <em>online</em> Szenario beschrieben, die zur Verfügung stehenden
+<a class="reference external" href="https://git-scm.com/book/id/v2/Git-on-the-Server-The-Protocols">Protokolle</a> wurden schon erwähnt.</p>
+</small>
+<p class="last"><a class="reference external" href="https:/git-scm.com/">git</a> ist – wie kein anders SCM-System – für <em>dezentral</em> und <em>offline</em>
+ausgelegt.  Lösungen für <em>offline</em> Szenarien sind z.B. <a class="reference external" href="https://git-scm.com/docs/git-send-email">git-send-email</a> oder
+<a class="reference external" href="https://git-scm.com/docs/git-bundle">git-bundle</a> .. um nur zwei zu nennen.</p>
+</section>
+<section>
+<h2>Zusammenfassung Lieferantenanbindung</h2>
+<ul class="first simple">
+<li><p>Es muss einen reproduzierbaren Übergabepunkt (Gesammtzustand des Systems)
+geben. Hierfür eignet sich ein Branch.</p></li>
+<li><p>Es muss ein Spiegel beim Lieferant aufgebaut werden. I.d.R. wird man nie
+alle Dienste und Funktionen auf dem Spiegel einrichten (zu Aufwendig).</p></li>
+<li><p>Lieferant plant die Implementierung, setzt sie um, testet sie und liefert
+sie wieder an den Übergabepunkt aus.</p></li>
+</ul>
+<p class="last">Bisher nicht betrachtet, wie bekommt der Auftrageber die Änderung in seinen
+<code class="docutils literal notranslate"><span class="pre">master</span></code>? Dazu siehe auch <a class="reference external" href="https://return42.github.io/cdb-tools/best_practice/release_management.html">Releasemanagement und CONTACT Elements</a>.</p>
+</section>
+<section id="merge-dev-branches">
+<h2>Entwicklungszweige mergen</h2>
+<div class="figure align-default">
+<img alt="_images/git-graph_001.svg" src="_images/git-graph_001.svg" /></div>
+</section>
+<section>
+<h2>Merge ist immer gleich</h2>
+<div class="first figure align-default">
+<a class="reference internal image-reference" href="_images/merge_graph.svg"><img alt="_images/merge_graph.svg" src="_images/merge_graph.svg" width="500px" /></a>
+</div>
+<p class="last">Der Merge des Branch <code class="docutils literal notranslate"><span class="pre">foo</span></code> enspricht genau dem <a class="reference internal" href="#merge-graph"><span class="std std-ref">Merge-Schaubild</span></a>. Es gibt den Branch-Point und im Merge-Point sollen die
+Änderungen aus Source-Code (<code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">merge</span></code>) und Konfiguration (<code class="docutils literal notranslate"><span class="pre">cdbpkg</span></code>) im
+<code class="docutils literal notranslate"><span class="pre">master</span></code> Branch zusammengeführt werden.</p>
+</section>
+<section>
+<h3>Merge Strategie (cdbpkg diff)</h3>
+<p class="first">Für den <code class="docutils literal notranslate"><span class="pre">diff</span></code> wird der Working-tree des Branch-Points benötigt.</p>
+<pre class="bash">
+<code data-trim contenteditable>$ git worktree add /tmp/foo-start 268a44e
+$ git worktree list
+  /path/to/cust.plm    3e3838e [foo]
+  /tmp/foo-start       268a44e (detached HEAD)</code></pre>
+<p class="last">Der Branch-Point <code class="docutils literal notranslate"><span class="pre">268a44e</span></code> wurde aus dem Log entnommen. Die Kopie des
+Branch-Points liegt nun unter <code class="docutils literal notranslate"><span class="pre">/tmp/foo-start</span></code>.</p>
+</section>
+<section>
+<h3>Merge Strategie (cdbpkg diff)</h3>
+<p class="first">Branch <code class="docutils literal notranslate"><span class="pre">foo</span></code> wird ausgecheckt, jetzt diff zum Branch-Point ermitteln</p>
+<pre class="bash">
+<code data-trim contenteditable>$ git checkout foo
+$ cdbpkg diff cust.plm -p /tmp/foo-start -d /tmp
+Writing changes to directory /tmp/patch_cust.fo_xx_yyyy
+11 changes on cust.foo
+ 1 changes on cust.plm</code></pre>
+<p>Der Patch liegt jetzt bereit unter …</p>
+<pre class="bash">
+<code data-trim contenteditable>$ dir /tmp/patch_cust.fo_xx_yyyy</code></pre>
+<p class="last">Die Vorbereitungen sind damit abgeschlossen, der eigentliche Merge
+(SCM-Merge + <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">patch</span></code>) kann nun beginnen.</p>
+</section>
+<section>
+<h3>Merge foo into master</h3>
+<p class="first">SCM-Merge für Source-Code &amp; <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">patch</span></code> für Konfiguration</p>
+<pre class="bash">
+<code data-trim contenteditable>$ cd cust.plm
+$ git checkout master
+$ git merge foo                               # SCM-Merge
+$ cdbpkg patch /tmp/patch_cust.fo_xx_yyyy     # CDB-Merge</code></pre>
+<p>Konflikte in CDB auflösen, anschließend commiten</p>
+<pre class="bash">
+<code data-trim contenteditable>$ cdbpkg build cust.plm
+$ git add --all .
+$ git commit -m &quot;merged branch &#x27;foo&#x27;&quot;
+$ cdbpkg commit cust.plm</code></pre>
+<small class="last">
+<p class="first last">Konflikte in Sourcen werden vom SCM-System erkannt. Außnahme ist
+<code class="docutils literal notranslate"><span class="pre">configuration</span></code> siehe <a class="reference internal" href="#git-merge-strategie"><span class="std std-ref">Merge Strategie</span></a>.
+Konflikte in Konfiguration werden von CDB erkannt. Letztere werden über
+das Protokoll eingesehen und mit anderen Warnungen in CDB behandelt.</p>
+</small>
+</section>
+<section>
+<h2>Zusammenfassung Merge</h2>
+<ul class="first last simple">
+<li><p>Source-Code wird vom SCM-System gemerged.</p></li>
+<li><p><code class="docutils literal notranslate"><span class="pre">configuration</span></code> benötigt andere <a class="reference internal" href="#git-merge-strategie"><span class="std std-ref">Merge Strategie</span></a></p></li>
+<li><p>Um Konfig-Änderungen zu mergen, muss der Start-Punkt reproduzierbar
+sein. <strong>Hierfür eignen sich die Branch-Points.</strong></p></li>
+<li><p>Der <code class="docutils literal notranslate"><span class="pre">master</span></code> war exemplarisch, i.d.R. wird man für den <em>master</em> min. zwei
+Branches haben: <code class="docutils literal notranslate"><span class="pre">QS</span></code> und <code class="docutils literal notranslate"><span class="pre">PROD</span></code></p></li>
+<li><p>Der Transport zw. <code class="docutils literal notranslate"><span class="pre">QS</span></code> und <code class="docutils literal notranslate"><span class="pre">PROD</span></code> ist wieder vergleichbar, nur mit <em>anderem</em>
+Branch-Point und Merge-Point.</p></li>
+</ul>
+</section>
+<section>
+<h2>Merge ist immer gleich</h2>
+<div class="first figure align-default">
+<a class="reference internal image-reference" href="_images/merge_graph.svg"><img alt="_images/merge_graph.svg" src="_images/merge_graph.svg" width="500px" /></a>
+</div>
+<p class="last">Für die Umsetzung eines <em>Features</em> (einer Anforderung) gibt es den
+Feature-Branch. Im Merge-Point werden die Änderungen aus Source-Code (<code class="docutils literal notranslate"><span class="pre">git</span>
+<span class="pre">merge</span></code>) und Konfiguration (<code class="docutils literal notranslate"><span class="pre">cdbpkg</span></code>) im <code class="docutils literal notranslate"><span class="pre">master</span></code> Branch zusammengeführt
+werden.</p>
+</section>
+<section>
+<h2>Danke!</h2>
+</section>
+<section>
+</section>
+<section>
+<h5>Marken- & Produktnamen</h5>
+<small class="first last">
+<p class="first last">CIM DATABASE (CDB) und CONTACT Elements sind Produktenamen der <a class="reference external" href="https://www.contact-software.com/">Contact
+Software GmbH</a>.</p>
+</small>
+</section>
+</div>
+
+
+      </div>
+    </div>
+    
+<script src="_static/jquery.js"></script>
+<script src="_static/js/reveal.min.js"></script>
+    <script>
+
+      // change DOM for reveal.js
+      $("div.section h1").remove();
+      var content = $("div.section").html();
+      $("div.section").remove();
+      $("div.slides").html(content);
+
+      Reveal.initialize({
+        width: 960,
+        height: 700,
+
+        margin: 0.1,
+
+        minScale: 0.2,
+        maxScale: 2,
+
+        controls: true,
+        progress: true,
+        history: true,
+        center: false,
+
+        keyboard : true,
+        overview: true,
+        touch: true,
+        loop: false,
+        rtl: false,
+        fragments: true,
+
+        autoSlide: 0,
+        mouseWheel: false,
+        rollingLinks: false,
+        previewLinks: false,
+
+        transitionSpeed: "default",
+        backgroundTransition: "default",
+
+        slideNumber: true,
+        embedded: false,
+        autoSlideStoppable: true,
+        hideAddressBar: true,
+
+        parallaxBackgroundImage: "",
+        parallaxBackgroundSize: "",
+
+        focusBodyOnPageVisiblityChange: true,
+
+        viewDistance: 3,
+
+        transition: Reveal.getQueryHash().transition || "slide",
+
+        
+
+        dependencies: [
+          { src: '_static/plugin/markdown/marked.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '_static/plugin/markdown/markdown.js', condition: function() { return !!document.querySelector( '[data-markdown]' ); } },
+          { src: '_static/plugin/highlight/highlight.js', async: true },
+          { src: '_static/plugin/search/search.js', async: true },
+          { src: '_static/plugin/zoom-js/zoom.js', async: true },
+          { src: '_static/plugin/notes/notes.js', async: true},
+        ]
+      });
+    </script>
+    <script src="_static/mysettings.js"></script>
+    
+  </body>
+</html>

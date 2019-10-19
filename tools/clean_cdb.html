@@ -1,0 +1,365 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Bereinigung der Datenbank &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="Konsole &amp; ConEmu" href="console.html" />
+    <link rel="prev" title="Initialisieren eines CDB Spiegel-Systems" href="init_cdb_mirror.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cdbtools_dev/index.html">Aufbau der CDB-Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Werkzeuge der CDB-Tools</a><ul class="current">
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#cdb-wartung-und-pflege">CDB Wartung und Pflege</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="init_cdb_mirror.html">Initialisieren eines CDB Spiegel-Systems</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Bereinigung der Datenbank</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#kommando-clean-cdb">Kommando clean-cdb</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bereinigen-des-object-dictionary">Bereinigen des Object-Dictionary</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#loschen-der-lizenz-statistik-lstatistics">Löschen der Lizenz-Statistik (lstatistics)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#bereinigen-der-mq-anwendungen-mq">Bereinigen der MQ-Anwendungen (mq)</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#reduzieren-der-erp-log-eintrage">Reduzieren der ERP-Log-Einträge</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#historie-der-kennzahlen-in-cdb">Historie der Kennzahlen in CDB</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#db-management-system">DB-Management System</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="index.html#entwickler-tools">Entwickler Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../best_practice/index.html">Best practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Werkzeuge der CDB-Tools</a> &raquo;</li>
+        
+      <li>Bereinigung der Datenbank</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tools/clean_cdb.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="bereinigung-der-datenbank">
+<span id="clean-cdb"></span><h1>Bereinigung der Datenbank<a class="headerlink" href="#bereinigung-der-datenbank" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="sidebar">
+<p class="sidebar-title">ES WERDEN DATEN GELÖSCHT!</p>
+<p>Das Löschen von Daten muss immer gegen die eigenen Anwendungsszenarien
+geprüft werden!  Die Bereinigung der DB sollte an einem Spiegel-System (DUMP)
+getestet werden, bevor diese auf ein produktives System angewendet wird.</p>
+</div>
+<p>In CDB sammeln sich z.T. Daten an, die u.U. nicht länger benötigt werden.  Gute
+Beispiele sind <em>uralt</em> Einträge in der Lizenzstatistik, abgeschlossene Jobs in
+den MQ-Anwendungen oder ein überbordendes ERP-Log.  In <em>unaufgeräumten</em>
+Installationen die seit Jahren im Betrieb sind, können 30% bis 60% der
+DB-Resourcen auf solche obsoleten Objekte entfallen.  Ob Optimierungen solcher
+Art für Ihre konkreten Anwendungsszenarien überhaupt geeignet sind oder ob dabei
+ggf. noch benötigte Daten gelöscht werden kann nicht allgemein beantwortet
+werden.  Beim Erstellen von Spiegel-System für die Entwicklung ist eine
+Optimierung i.d.R. zu empfehlen.</p>
+<div class="section" id="kommando-clean-cdb">
+<h2>Kommando clean-cdb<a class="headerlink" href="#kommando-clean-cdb" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="sidebar">
+<p class="sidebar-title">Massen-Änderung</p>
+<p>Die gelöschten Daten selbst einzelner Relationen können gewaltig sein und
+u.U. das Transaktions-LOG des DB Systems sprengen.  Die Optionen
+<code class="docutils literal notranslate"><span class="pre">--truncate</span></code> und <code class="docutils literal notranslate"><span class="pre">--days</span></code> können ggf. helfen.</p>
+</div>
+<p>Für die Bereinigung steht das Tool <code class="docutils literal notranslate"><span class="pre">clean-cdb</span></code> zur Verfügung:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ clean-cdb --help
+</pre></div>
+</div>
+<p>Mit dem Tool können die unten beschriebenen Anwendungen aufgeräumt werden.
+Mit dem Parameter <code class="docutils literal notranslate"><span class="pre">all</span></code> werden alle Aktionen nacheinander ausgeführt.</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ clean-cdb all
+</pre></div>
+</div>
+<dl>
+<dt><code class="docutils literal notranslate"><span class="pre">--day</span></code> (default 30 Tage)</dt><dd><p>Wenn in Installationen die seit Jahren im Betrieb sind zum ersten Mal
+aufgeräumt wird, können die Transaktionen zum Löschen gewaltig sein.  Um das
+Transaktions LOG nicht zum Bersten zu bringen kann es sinnvoll sein, zuerst
+die ganz alten Einträge zu löschen und sich sukzessive zum gewünschten
+Erhalt-Datum nach vorne zu arbeiten.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--truncate</span></code> (default False)</dt><dd><p>Wenn die Inhalte der zu bereinigenden DB-Tabellen komplett gelöscht werden
+können, dann kann das über diese Option erreicht werden.  Die DB Tabellen
+werden mit dem SQL-TRUNCATE Statement geleert, welches kein Transaktions-LOG
+erstellt.  Nach dem TRUNCATE wird noch eine Bereinigung des Object-Dictionary
+(<code class="docutils literal notranslate"><span class="pre">cdb_objects</span></code>) durchgeführt.</p>
+<p>Diese Option ist oftmals für Spiegel-Systeme geeignet, die man auf einfache
+weise <em>schlank</em> halten will (z.B. <code class="docutils literal notranslate"><span class="pre">clean-cdb</span> <span class="pre">all</span> <span class="pre">--truncate</span></code>).</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="bereinigen-des-object-dictionary">
+<h2>Bereinigen des Object-Dictionary<a class="headerlink" href="#bereinigen-des-object-dictionary" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Bereinigung des Object-Dictionary (cdb_object).  Kann nach SQL Update-Skripten,
+insbesondere nach einem SQL-TRUNCATE sinnvoll sein. Wird automatisch auf die
+bereinigten Relationen angewendet, die mit der Option <code class="docutils literal notranslate"><span class="pre">clean-cdb</span> <span class="pre">--truncate</span></code>
+aufgerufen wurden.</p>
+</div>
+<div class="section" id="loschen-der-lizenz-statistik-lstatistics">
+<h2>Löschen der Lizenz-Statistik (lstatistics)<a class="headerlink" href="#loschen-der-lizenz-statistik-lstatistics" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Die Lizenzstatistik wächst kontinuierlich an. In <em>lang laufenden</em> Systemen mit
+vielen Benutzern ist die Statistik oftmals eine der größten Tabellen.  Sofern
+die Statistik nicht ausgewertet wird, kann sie auch von Zeit zu Zeit mal
+gelöscht werden.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ clean-cdb lstatistics --help
+</pre></div>
+</div>
+</div>
+<div class="section" id="bereinigen-der-mq-anwendungen-mq">
+<h2>Bereinigen der MQ-Anwendungen (mq)<a class="headerlink" href="#bereinigen-der-mq-anwendungen-mq" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Es werden alle Message-Queues aufgelistet und Vorschläge zum Reduzieren der
+MQ-Daten gemacht (inklusieve dem Löschen der Langtexte).:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ clean-cdb mq --help
+</pre></div>
+</div>
+</div>
+<div class="section" id="reduzieren-der-erp-log-eintrage">
+<h2>Reduzieren der ERP-Log-Einträge<a class="headerlink" href="#reduzieren-der-erp-log-eintrage" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Das Kontext bezogene ERP-Log (Reiter ERP-Log im Info Dialog) wird über die
+CAD-Konfig-Schalter gesteuert:</p>
+<ul class="simple">
+<li><p>„ERP Logging“ bzw. „SAP Logging“: <code class="docutils literal notranslate"><span class="pre">AN</span></code> oder <code class="docutils literal notranslate"><span class="pre">AUS</span></code></p></li>
+<li><p>„SAP Logmode“ bzw. „SAP Logmode:&lt;klasse&gt;“ [Messages|Calls|Params|Results]</p></li>
+</ul>
+<p>In einem produktiven System sollte der „SAP Logmode“ auf <code class="docutils literal notranslate"><span class="pre">Results</span></code> stehen, zu
+Diagnosezwecken empfiehlt es sich den Wert kurzfristig auf z.B. <code class="docutils literal notranslate"><span class="pre">Results,</span>
+<span class="pre">Messages</span></code> zu setzen (Details bitte dem Handbuch entnehmen).  In jedem Fall
+sollten solche Diagnose Einstellungen aber nicht dauerhaft im produktiven System
+aktiviert sein, da das ERP Log die DB aufbläht.  Zum Löschen alter Meldungen
+eignet sich das Kommando:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ clean-cdb erplog --help
+</pre></div>
+</div>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">--sap-system</span> <span class="pre">SAP_SYSTEM</span></code> (default: all)</dt><dd><p>SAP-System dessen Logs bereinigt werden sollen.</p>
+</dd>
+<dt><code class="docutils literal notranslate"><span class="pre">--drop-result</span></code> (default: False)</dt><dd><p>Die <code class="docutils literal notranslate"><span class="pre">Results</span></code> Meldungen des SAP-GW sollen auch gelöscht werden.</p>
+</dd>
+</dl>
+<p>Auch wenn das Logging nur auf <code class="docutils literal notranslate"><span class="pre">Results</span></code> steht, kann es passieren, dass das
+ERP-Log extrem anwächst, wenn z.B. SAP Abgleichvorgänge über lange Zeiträume
+fehlschlagen, diese aber permanent wiederholt werden.  Folgendes SQL Statement
+kann einen Eindruck darüber vermitteln ob es angebracht ist das ERP-Log mal zu
+bereinigen.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">obj_id</span><span class="p">,</span> <span class="k">COUNT</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span> <span class="s1">&#39;Einträge&#39;</span>
+  <span class="k">FROM</span> <span class="n">erp_log</span>
+ <span class="k">GROUP</span> <span class="k">BY</span> <span class="n">obj_id</span>
+ <span class="k">ORDER</span> <span class="k">BY</span> <span class="k">count</span><span class="p">(</span><span class="n">obj_id</span><span class="p">)</span> <span class="k">DESC</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Wenn das Statement viele Objekte mit mehr als 100 Einträgen auflistet, kann sich
+eine Bereinigung des Logs lohnen.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="k">COUNT</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">FROM</span> <span class="n">erp_log</span><span class="p">;</span>
+</pre></div>
+</div>
+<p>Sollte das letzte Statement mehr als 200.000 Einträge zählen, kann man auch mal
+überlegen aufzuräumen.</p>
+</div>
+<div class="section" id="historie-der-kennzahlen-in-cdb">
+<h2>Historie der Kennzahlen in CDB<a class="headerlink" href="#historie-der-kennzahlen-in-cdb" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Für die Bereinigung der Relation <code class="docutils literal notranslate"><span class="pre">CDBQC_HISTORY</span></code> bieten die CDB-Tools aktuell
+keine Lösung.  Jedoch sollte der CDB-Admin diese genau im Auge behalten, denn
+auch sie wird oftmals nicht benötigt.</p>
+</div>
+<div class="section" id="db-management-system">
+<h2>DB-Management System<a class="headerlink" href="#db-management-system" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Räumt man eine DB nach langer Zeit zum ersten mal auf, so können die gelöschten
+Datenmengen z.T. sehr groß sein und es kann Sinn machen die Datenbank-Files zu
+<em>shrinken</em> und auch das Transaction Log zu löschen und/oder nach Bedarf zu
+konfigurieren (s.a. <a class="reference internal" href="../best_practice/optimze_db.html#optimze-db"><span class="std std-ref">DB optimieren</span></a>).</p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="console.html" class="btn btn-neutral float-right" title="Konsole &amp; ConEmu" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="init_cdb_mirror.html" class="btn btn-neutral float-left" title="Initialisieren eines CDB Spiegel-Systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

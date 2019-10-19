@@ -1,0 +1,1053 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Releasemanagement und CONTACT Elements &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="DB optimieren" href="optimze_db.html" />
+    <link rel="prev" title="Aufbau eines CDB Spiegel-Systems" href="build_cdb_mirror.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cdbtools_dev/index.html">Aufbau der CDB-Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Werkzeuge der CDB-Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Best practice</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="build_cdb_mirror.html">Aufbau eines CDB Spiegel-Systems</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Releasemanagement und CONTACT Elements</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#big-picture">Big Picture</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#zusammenfuhrung-zweier-entwicklungslinien">Zusammenführung zweier Entwicklungslinien</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#merge-mit-git-und-cdbpkg-tools">Merge mit git und cdbpkg Tools</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#branch-point">Branch-Point</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#branch-mit-git-anlegen">Branch mit git anlegen</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#dump-der-konfiguration-ins-scm">Dump der Konfiguration ins SCM</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#commit-messages">Commit-Messages</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#common-pitfalls">Common Pitfalls</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="optimze_db.html">DB optimieren</a></li>
+<li class="toctree-l2"><a class="reference internal" href="snippets.html">Code Snippets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html">Cheat Sheet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Best practice</a> &raquo;</li>
+        
+      <li>Releasemanagement und CONTACT Elements</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/best_practice/release_management.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="releasemanagement-und-contact-elements">
+<span id="release-management"></span><h1>Releasemanagement und CONTACT Elements<a class="headerlink" href="#releasemanagement-und-contact-elements" title="Link zu dieser Überschrift">¶</a></h1>
+<blockquote>
+<div><p><em>Das Releasemanagement hat zur Aufgabe, sicherzustellen, dass eine erwartete
+Anforderung an eine Veränderung in einem Prozess mit einem vertretbaren Risiko
+in der geforderten Zeit erfolgreich umgesetzt werden kann.</em> <a class="reference external" href="https://de.wikipedia.org/wiki/Releasemanagement">[ref]</a></p>
+</div></blockquote>
+<p>Ein geordnetes Releasemanagement ist reproduzierbar, trägt zu einer Verkürzung
+der Durchlaufzeiten von Änderungen bei und mindert die Risiken in Projekten.
+<em>Kurzum;</em> das Releasemanagement ist ein wichtiger Baustein der Projekt-Planung
+und -Durchführung. Softwareentwicklung ist immer eine Team-Leistung bei der die
+Team-Mitglieder ihre Änderungen aus verschiedensten Projekten in EINE
+Infrastruktur einbringen. Diese Änderungs-Beiträge durchwandern i.d.R. noch
+(Anwender-) Tests und <em>BugFixing</em> bevor sie schlussendlich in den Rollout
+gehen. Aufgabe des Releasemanagement ist es, Entwicklungsprozesse über alle
+Phasen des Projekts hin zu erfassen und einem geordnetem Verfahren zu
+unterwerfen.</p>
+<p>Das Releasemanagement kann nicht willkürlich ausgelegt werden, es wird
+maßgeblich bestimmt durch die Verfahren, mit denen eine Änderung durch eine
+Infrastruktur transportiert werden kann. Bei CONTACT Elements basiert der
+Transport von Änderungen auf der Komponentenarchitektur (s.a. Foliensammlung
+<a class="reference external" href="../slides/cdb_comp/index.html">CDB Komponenten &amp; Entwicklung</a>). Die
+Komponentenarchitektur kennt eine Teilung <strong>nur entlang der Pakete</strong>. Damit ist
+gemeint, dass ein Transport immer alle Änderungen eines <strong>ganzen Pakets</strong>
+umfasst, die Pakete zueinander aber entkoppelt sind.</p>
+<blockquote>
+<div><p>Die parallele Entwicklung an unterschiedlichen Paketen ist durch
+die Komponentenarchitektur ausreichend entkoppelt.</p>
+</div></blockquote>
+<p>Dieser Artikel befasst sich ausschließlich mit der Problematik die entsteht,
+wenn mehrere Veränderungsprojekte in einem Paket parallel umgesetzt werden
+müssen (was quasi für alle Kunden-Pakete der Fall ist).</p>
+<div class="tip admonition">
+<p class="admonition-title">Der Transport einer Änderung umfasst immer das ganze Paket.</p>
+<p>Ein (Kunden-) Paket kann immer nur als ganze Einheit transportiert werden. Es
+ist nicht möglich zwei unterschiedliche Entwicklungen an einem Paket
+gleichzeitig aber doch für sich getrennt durch ein System (z.B. QS) zu
+transportieren.</p>
+</div>
+<p>Aus Sicht der Weiterentwicklung von Kundenanpassungen (<code class="docutils literal notranslate"><span class="pre">cust.plm</span></code>) wird hier
+schon die erste maßgebliche Einschränkung des Releasemanagement deutlich: Im
+Grunde können Weiterentwicklungen an einem (Kunden)-Paket nur <em>nacheinander</em>
+entwickelt, getestet und ausgerollt werden.</p>
+<p>In der Praxis wird man ein Releasemanagement finden müssen, dass einem unter den
+gegebenen Rahmenbedingungen mehr Flexibilität bietet: Es muss immer mal wieder
+ein HotFix angebracht werden und es muss ein Verfahren zur parallelen
+Entwicklung geben. Auch wenn dieses Verfahren nicht über eine so schöne
+Entkopplung wie die Pakete zueinander verfügt und deshalb auch etwas aufwendiger
+sein wird als in getrennten Paketen parallel zu entwickeln.</p>
+<p>Bei typischen CDB-Kunden existiert in der Kundenanpassung i.d.R. nur ein Paket
+(<code class="docutils literal notranslate"><span class="pre">cust.plm</span></code>) und es wird dafür ein geordnetes Releasemanagement benötigt.  Die
+hier im Artikel aufgezeichneten Entwicklungslinien aus Abbildungen wie <a class="reference internal" href="#figure-rm-big-picture"><span class="std std-ref">big
+picture</span></a> zeigen immer die Entwicklungslinie <strong>eines</strong>
+Pakets. An der Trennung der Pakete wird schon deutlich, dass auch die
+Architektur der Kundenanpassung einen maßgeblichen Einfluss auf die
+Projekt-Planung resp. das Releasemanagement haben kann.</p>
+<div class="note admonition" id="cs-elements-package-design">
+<p class="admonition-title">Exkursion: Design &amp; Architektur der Kundenanpassung</p>
+<p>Auch eine Kundenanpassung kann in mehrere Pakete aufgeteilt werden. Die
+eigentliche Herausforderung dabei ist es, geeignete <em>Schnittlinien</em> zu
+finden, die der Projekt-Planung und dem Releasemanagement auch zukunftssicher
+mehr Freiheiten einräumen.  Bei den sich heute rasch ändernden Unternehmen
+sind <em>Schnittlinien</em> – die auch in weiter Zukunft noch ihre Berechtigung
+haben – im Vorfeld schwer festzulegen. Eine mögliche <em>Schnittlinie</em> könnte
+entlang der Sparten eines Unternehmens erfolgen, wenn man weiß, dass die
+Sparten mit unterschiedlichen Geschwindigkeiten Änderungsanforderungen an die
+<em>CONTACT Elements</em> Infrastruktur stellen werden. Es gibt dafür aber keine
+<em>allgemeingültige</em> Regel, weshalb wir hier nicht weiter auf dieses Thema
+eingehen wollen.</p>
+</div>
+<p>Die hier vorgestellten Verfahren zum Releasemanagement basieren auf einem
+allgemein als <a class="reference external" href="https://www.atlassian.com/git/tutorials/comparing-workflows/feature-branch-workflow">Feature Branch</a>
+bekanntem Workflow. Dieser wird auch im CDB Handbuch zur Komponentenarchitektur
+vorgestellt.</p>
+<p id="scm-caddok-base">Die im CDB Handbuch zur Komponentenarchitektur vorgestellten Verfahren gehen von
+<em>idealen</em> Bedingungen der <em>CONTACT Elements</em> Infrastruktur aus. Unter solch
+<em>idealen</em> Bedingungen werden theoretisch alle Änderungen innerhalb eines Pakets
+auch vom Paket erfasst. Für Softwarepakete von CONTACT oder Drittanbietern mag
+das (inzwischen) auch stimmen. In der Praxis wird eine Weiterentwicklung an den
+Kundenpaketen jedoch von Faktoren geprägt sein, die über den <em>Scope</em> des Pakets
+hinaus gehen. Dazu gehören Objekte zum Testen, Objekte die ggf. noch nicht im
+Kundenpakt aufgenommen wurden (z.B. Bugs wie <em>‚Zuordnung zum Paket fehlt‘</em> /
+<em>‚mangelhaftes DB-Schema‘</em>) oder beispielsweise die Anbindung von
+(Unternehmens-) Software an die Kundeninstanz, welche nicht von CDB-Komponenten
+abgedeckt wird.</p>
+<div class="tip admonition">
+<p class="admonition-title">komplette Instanz wird SCM-System versioniert</p>
+<p>Es werden alle Dateien aus <code class="docutils literal notranslate"><span class="pre">$CADDOK_BASE</span></code> in die Versionsverwaltung mit
+aufgenommen. Das umschließt die komplette Installation des
+Applikation-Servers mit den Paketen in <code class="docutils literal notranslate"><span class="pre">$CADDOK_BASE/site-packages</span></code> und den
+Konfigurationen (z.B. aus <code class="docutils literal notranslate"><span class="pre">$CADDOK_BASE/etc</span></code>). Nicht dazu gehören der
+BLOB-Store und temporäre Speicher wie z.B. <code class="docutils literal notranslate"><span class="pre">./tmp</span></code> und <code class="docutils literal notranslate"><span class="pre">./app_conf</span></code>.</p>
+</div>
+<p>Eine CONTACT Elements Installation verfügt immer über Anpassungen:</p>
+<ul class="simple">
+<li><p>im Source Code und</p></li>
+<li><p>in der DB</p></li>
+</ul>
+<div class="tip admonition">
+<p class="admonition-title">Sourcen und Konfiguration in der DB bilden eine Einheit.</p>
+<p>Jede Änderung und sei es nur eine kleine Änderung an der Konfiguration muss
+dem Releasemanagement untergeordnet werden! Man sollte nicht einfach irgendwo
+in einem uralten System was konfigurieren und davon ausgehen, man könne diese
+Änderung <em>mal eben kurz ausrollen</em> und dabei das Releasemanagement umgehen.
+Jede Änderung steht potentiell im Konflikt mit anderen, parallelen
+Entwicklungslinien und muss eingeplant werden.</p>
+</div>
+<p id="db-export-at-branch-point">Da wir nicht sicher sein können, dass alle Konfigurationen auch im <code class="docutils literal notranslate"><span class="pre">cust.plm</span></code>
+Paket enthalten sind (aus oben genannten Gründen) und weil wir auch die
+Nutzdaten im Rahmen einer Entwicklung brauchen gilt für das hier vorgeschlagene
+Releasemanagement zusätzlich noch:</p>
+<div class="tip admonition">
+<p class="admonition-title">DB Export zu jedem Branch-Point</p>
+<p>Sobald eine Entwicklung abzweigt (branch) wird ein Export der DB gesichert.
+Die Entwickler können sich dann ein Entwickler-System aus dem DB Export
+aufbauen (s.a. <a class="reference internal" href="../tools/init_cdb_mirror.html#init-cdb-mirror"><span class="std std-ref">Initialisieren eines CDB Spiegel-Systems</span></a>).</p>
+</div>
+<p>Näheres zum DB-Export kann weiter unten im Abschnitt zum Anlegen des
+Branch-Point nachgelesen werden. Hier noch ein paar umgangssprachliche
+Nomenklaturen:</p>
+<dl class="simple">
+<dt>Rollout</dt><dd><p>Markteinführung einer Änderung</p>
+</dd>
+<dt>PROD</dt><dd><p>Im Betrieb befindliche CONTACT Elements Infrastruktur, Ziel aller
+Weiterentwicklungen.</p>
+</dd>
+<dt>QS</dt><dd><p>CONTACT Elements Infrastruktur die für die Anwendertests der Änderungen bereit
+gestellt wird.</p>
+</dd>
+</dl>
+<dl class="simple" id="rm-commit-def">
+<dt>Commit</dt><dd><p>Kleinste Einheit einer Änderung die im SCM-System versioniert werden kann auch
+<em>atomare</em> Änderung genannt und in den Abbildungen mit einem Kreis dargestellt
+(Hintergrundfarbe kann in den Abbildungen je nach Bedeutung des Commits
+variieren)</p>
+</dd>
+<dt>HotFix</dt><dd><p>Eine Fehlerbehebung (i.d.R.) im PROD-System um den Betrieb erst mal aufrecht
+zu erhalten. Auch solche Änderungen müssen im Releasemanagement beachtet
+werden und werden im SCM-System versioniert. Jeder HotFix ist auch ein commit,
+in den Abbildungen mit einem Kreis dargestellt: <img alt="HotFix" src="../_images/hotfix-point.svg" /></p>
+</dd>
+</dl>
+<dl class="simple" id="rm-merge-def">
+<dt>Merge</dt><dd><p>Die Zusammenführung zwei oder mehrerer Entwicklungen, meist aber die
+Zusammenführung zweier Entwicklungslinien. Abgesehen von seltenen Ausnahmen
+(fast-forward) ist der Merge auch immer eine Änderung, ein commit im
+SCM-System der auch merge-point bezeichnet wird. In den Abbildungen mit einem
+Kreis dargestellt: <img alt="merge-point" src="../_images/merge-point.svg" /></p>
+</dd>
+<dt>Branch: <code class="docutils literal notranslate"><span class="pre">master</span></code></dt><dd><p>Haupt-Entwicklungslinie und i.d.R. auch gleichzeitig Stand des PROD</p>
+</dd>
+<dt>Branch: <code class="docutils literal notranslate"><span class="pre">qs</span></code></dt><dd><p>Entwicklungslinie der QS</p>
+</dd>
+<dt>Branch-Point</dt><dd><p>Abzweigung resp. Start-Punkt einer Entwicklungslinie. In den
+Abbildungen durch einen gelben Kreis <img alt="branch-point" src="../_images/branch-point.svg" /> gekennzeichnet.</p>
+</dd>
+</dl>
+<dl class="simple" id="rm-system-branch-def">
+<dt>System-Branch</dt><dd><p>Entwicklungslinie einer Instanzen wie QS oder PROD. Zu diesen Branches gibt es
+<strong>immer</strong> eine aktive Instanz an der sich Anwender &amp; Entwickler anmelden
+können. Beispiele hierfür sind die QS zum Testen und die PROD für den regulären
+Betrieb. Diese Instanzen verfügen über eine voll ausgebaute und <em>lauffähige</em>
+CONTACT Elements Infrastruktur inklusive der Kopplungen zu externen Systemen
+wie beispielsweise SAP oder Konvertierungs-Diensten.</p>
+</dd>
+</dl>
+<dl class="simple" id="rm-feature-branch-dev">
+<dt>Feature-Branch</dt><dd><p>Entwicklungslinie eines Veränderungsprojekts. Wird z.T. auch als Dev-Branch
+bezeichnet.  I.d.R. sind die Instanzen zu solchen Branches nur für die
+Entwickler zugänglich.  Sie verfügen auch nur über einen, für die Änderung
+minimal erforderlichen Ausbau.  Fremdsysteme wie SAP werden beispielsweise nur
+dann angebunden, wenn dies für die Umsetzung des Feature erforderlich ist.
+Die Instanzen zu dem Feature-Branch existieren teilweise nur beim Lieferanten
+und nur für die Zeit der Entwicklung bis zum Rollout, danach können die
+Instanzen wieder verworfen werden.</p>
+</dd>
+</dl>
+<div class="section" id="big-picture">
+<h2>Big Picture<a class="headerlink" href="#big-picture" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Bereits in der Einleitung wurde festgestellt, dass ein <em>sauberess</em>
+Releasemanagement nicht willkürlich sein kann; es muss kausalen Ketten folgen
+und unter den gegebenen Rahmenbedingungen (s.o. <em>Transport</em>) abbildbar
+sein. Welche <strong>Rahmenbedingungen</strong> im Einzelnen zu beachten sind soll im
+Weiterem erarbeitet werden. Als Gegenstand dient eine exemplarische
+Infrastruktur mit:</p>
+<ul class="simple">
+<li><p>einer PROD Instanz für den <em>Betrieb</em> der Anwendung im Unternehmen und</p></li>
+<li><p>einer QS Instanz in der (Anwender-) Tests durchgeführt werden.</p></li>
+</ul>
+<p>Eine solche Infrastruktur (<a class="reference internal" href="#figure-rm-big-picture"><span class="std std-ref">big picture</span></a>) ist
+sicherlich die <em>kleinst-mögliche</em>, sie reicht aber aus um die Anforderungen und
+Verfahren rund um das Releasemanagement zu erörtern.  In der Praxis wird man
+oftmals eine etwas größere Infrastruktur, evtl. mit einem HotFix-System und
+einer gemeinsamen Entwickler Umgebung (DEV) vorfinden und für Planung und Test
+des Rollout wird man sich ggf. noch einen Spiegel des PROD Systems anlegen.
+Ganz gleich wie aufwendig die Infrastruktur letztendlich ist, es wird eine
+koordinierende Instanz benötigt; der <strong>Maintainer</strong>.</p>
+<div class="tip admonition" id="job-of-maintainer">
+<p class="admonition-title">Der Maintainer koordiniert alle Änderungen (im SCM)</p>
+<p>Die Koordination der Änderungen im Entwicklerteam, den Anwendertests und den
+Rollouts übernimmt der <em>Maintainer</em>. Der Maintainer verwaltet das zentrale
+Repository und vermittelt zw. den Projekt-Terminen und den dadurch
+erforderlichen Planungen in der Entwicklung &amp; im Test.</p>
+</div>
+<p>Um die am System angebrachten Teil-Änderungen zu verwalten bedient man sich
+eines Source-Code-Managment-Systems (SCM). Die parallelen Entwicklungen auf
+Basis der CDB Komponentenarchitektur bedingen entsprechend viele parallele
+Entwicklungslinien (a.k.a. Branches, s.a. <a class="reference external" href="https://en.wikipedia.org/wiki/Branching_(version_control)">SCM-Branching</a>). Damit empfiehlt es
+sich <a class="reference external" href="https:/git-scm.com/">git</a> als SCM-System einzusetzen, da es über ein besonders leichtes,
+schnelles und flexibles Branching-Model verfügt.</p>
+<div class="tip admonition" id="recommend-git">
+<p class="admonition-title">Als SCM-System bietet sich git an</p>
+<p>Andere SCM-System insbesondere zentrale SCM-Systeme wie SVN eignen sich
+weniger, da sie bei der Arbeit mit Branches zu schwach sind und kaum
+brauchbare Unterstützung bieten.  <em>Sollten Sie noch SVN verwenden, dann
+wechseln Sie JETZT zu</em> <a class="reference external" href="https:/git-scm.com/">git</a>. Siehe auch Foliensammlung zur pragmatischen
+Einarbeitung: <a class="reference external" href="https://return42.github.io/handsOn/slides/git/index.html">get git started</a>.</p>
+</div>
+<p>Die Abbildung <a class="reference internal" href="#figure-rm-big-picture"><span class="std std-ref">big picture</span></a> zeigt den zeitlichen
+Verlauf dreier Änderungen in einer Infrastruktur mit PROD und QS.  Der gezeigte
+verlauf ist <strong>exemplarisch</strong>. In den <em>eigenen</em> Projekten wird der Verlauf von
+der Projekt-Leitung und dem <a class="reference internal" href="#job-of-maintainer"><span class="std std-ref">Maintainer</span></a> gemeinsam
+geplant. Insbesondere wenn es zu Verzögerungen im Verlauf eines
+Veränderungsprojekts kommt, besteht ein hoher Abstimmungsbedarf zw.
+Projekt-Planung und Release-Planung. Dabei wird die Projekt-Planung dominiert
+von den Faktoren <em>Resourcen</em> und <em>Terminen</em> und die Release-Planung muss
+abschätzen in wie weit sie die Entwicklungslinien insbesondere der
+<a class="reference internal" href="#rm-system-branch-def"><span class="std std-ref">System-Branches</span></a> unter den gegebenen
+Rahmenbedingungen (s.o. <em>Transport</em>) möglichst ohne Verluste und mit
+vertretbarem Aufwand der Projekt-Planung entsprechend anpassen kann.</p>
+<p>Jeder kreisförmige Punkt in der Abbildung <a class="reference internal" href="#figure-rm-big-picture"><span class="std std-ref">big picture</span></a> entspricht einer Teil-Änderung die im SCM-System
+erfasst wird (<a class="reference internal" href="#rm-commit-def"><span class="std std-ref">commit</span></a>). Die Teil-Änderungen entlang einer
+Entwicklungslinie wie z.B. <code class="docutils literal notranslate"><span class="pre">foo</span></code> beschreiben in ihrer Gesamtheit die
+Implementierung eines Änderungsauftrags resp. des <em>Features</em>. Eine Linie von
+Teil-Änderungen wird auch als <strong>Patch-Serie</strong> bezeichnet.</p>
+<div class="figure align-center" id="id1">
+<span id="figure-rm-big-picture"></span><img alt="Figure (big-picture.svg)" src="../_images/big-picture.svg" /><p class="caption"><span class="caption-text">big picture (t<sub>0</sub>): Änderungsverlauf mit PROD &amp; QS</span><a class="headerlink" href="#id1" title="Link zu diesem Bild">¶</a></p>
+<div class="legend">
+</div>
+</div>
+<p>Links von t<sub>0</sub> (<em>jetzt-Zeit</em>) ist die Historie und rechts der
+Planungsverlauf zu sehen. In oberster Linie ist die Entwicklungslinie des im
+Betrieb befindlichen PROD Systems zu sehen. Darunter die Entwicklungslinie des
+QS-Systems.  Des Weiteren sind noch die Entwicklungslinien zweier
+Weiterentwicklungen (<a class="reference internal" href="#rm-feature-branch-dev"><span class="std std-ref">Feature-Branch</span></a>) zu sehen,
+die im Folgenden nur mit den Platzhaltern <code class="docutils literal notranslate"><span class="pre">foo</span></code> und <code class="docutils literal notranslate"><span class="pre">bar</span></code> unterschieden
+werden sollen.  In der Projekt-Planung ist vorgesehen, die aktuellen Änderungen
+aus dem QS noch in den Rollout zu bringen, danach soll der <code class="docutils literal notranslate"><span class="pre">foo</span></code> Branch in die
+QS gemerged werden und dann ebenfalls in den Rollout gehen. Die Planung für den
+Feature-Branch <code class="docutils literal notranslate"><span class="pre">bar</span></code> ist nur bis zum Merge in die QS dargestellt.  So
+zumindest die Planung zum Zeitpunkt t<sub>0</sub>.  Der hier gezeigte Verlauf ist
+exemplarisch; er soll u.A. erkennen lassen:</p>
+<ol class="arabic simple">
+<li><p>Die Abspaltung von Entwicklungslinien sollte immer vom <em>aktuellen</em> PROD
+(<strong>master</strong>) aus erfolgen.</p></li>
+</ol>
+<div class="tip admonition" id="always-branch-from-master">
+<p class="admonition-title">Abspaltung immer von der Entwicklungslinie des PROD (<strong>master</strong>)</p>
+<p>Ob und in welcher Form eine <em>aktuelle</em> Änderung z.B. aus dem QS-System
+überhaupt in Betrieb genommen wird, kann im Vorfeld nie mit absoluter
+Sicherheit gesagt werden. Deswegen empfiehlt es sich, jede Änderungen immer
+direkt vom <em>aktuellen</em> PROD ausgehend zu starten (s.a. <a class="reference internal" href="#rm-create-branch"><span class="std std-ref">Branch-Point</span></a>).</p>
+</div>
+<ol class="arabic simple" start="2">
+<li><p>In der Praxis wird die Entwicklungslinie eines <a class="reference internal" href="#rm-system-branch-def"><span class="std std-ref">System-Branch</span></a> wie QS etwas anders ausgeprägt sein als die
+Entwicklungslinie eines <a class="reference internal" href="#rm-feature-branch-dev"><span class="std std-ref">Feature-Branch</span></a> wie
+<code class="docutils literal notranslate"><span class="pre">foo</span></code>.</p></li>
+</ol>
+<div class="tip admonition" id="always-update-sys-branch">
+<p class="admonition-title">System-Branches regelmäßig aus PROD aktualisieren</p>
+<p>Abspaltungen für Systeme wie z.B. QS werden regelmäßig aus der PROD
+aktualisiert, z.B. nach Abschluss eines Rollouts. Um Konflikte beim Merge in
+die PROD zu reduzieren sollte die <em>Distanz</em> der aktuellen Zustände von PROD
+und anderen Branches, insbesondere der System-Branches so klein wie möglich
+gehalten werden.</p>
+</div>
+<p>Zusammenfassung der Entwicklungslinien aus der Abbildung <a class="reference internal" href="#figure-rm-big-picture"><span class="std std-ref">big picture</span></a>:</p>
+<dl class="simple">
+<dt><code class="docutils literal notranslate"><span class="pre">foo</span></code> &amp; <code class="docutils literal notranslate"><span class="pre">bar</span></code></dt><dd><p>Zwei exemplarische Weiterentwicklungen die z.B. an einen Lieferanten
+beauftragt wurden oder aber im eigenen Haus abgewickelt werden. Beide
+Entwicklungslinien wurden, wie die QS vom PROD abgespalten (<strong>branch</strong>) und
+beide werden später wieder mit der PROD zusammengeführt (<strong>merge</strong>).</p>
+</dd>
+<dt>PROD</dt><dd><p>Die letzte Änderung vor t<sub>0</sub> war ein <em>HotFix</em>. Planmäßig sollen als
+Nächstes (in der Reihenfolge) die letzten Änderungen aus QS, aus <code class="docutils literal notranslate"><span class="pre">foo</span></code> und aus
+<code class="docutils literal notranslate"><span class="pre">bar</span></code> in den Betrieb genommen werden.</p>
+</dd>
+<dt>QS</dt><dd><p>Zum Zeitpunkt t<sub>0</sub> befindet sich eine Änderung in der QS, die in der
+Projektplanung als nächstes ausgerollt werden soll. Für den Rollout muss die
+QS mit dem PROD zusammengeführt werden (<strong>merge</strong>). Etwaige Konflikte aus den
+Änderungen aus dem HotFix mit den letzten Änderungen aus dem QS müssen
+aufgelöst werden.</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="zusammenfuhrung-zweier-entwicklungslinien">
+<span id="rm-merge-branch"></span><h2>Zusammenführung zweier Entwicklungslinien<a class="headerlink" href="#zusammenfuhrung-zweier-entwicklungslinien" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Die Zusammenführung zwei Entwicklungslinien wird allgemein auch als <strong>merge</strong>
+bezeichnet. Der Merge ist die eigentliche Herausforderung im Rahmen des
+Releasemanagement. Ziel ist es, die Änderungen aus der einen Entwicklungslinie
+mit denen aus einer anderen Entwicklungslinie zusammenzuführen. Im Folgendem
+Beispiel sollen die vier Änderungen aus dem QS Branch in den PROD Branch
+gemischt werden. Die Abbildung <a class="reference internal" href="#figure-rm-qs-merge"><span class="std std-ref">qs-merge</span></a> zeigt die
+Entwicklungslinie des QS Branch bevor (obere Hälfte) und nachdem (untere Hälfte)
+die Änderungen aus diesem Branch in den <strong>master</strong> (PROD) gemerged wurden.</p>
+<div class="figure align-center" id="id2">
+<span id="figure-rm-qs-merge"></span><img alt="Figure (merge-qs.svg)" src="../_images/merge-qs.svg" /><p class="caption"><span class="caption-text">qs-merge: Zusammenführung der Änderungen aus QS mit PROD</span><a class="headerlink" href="#id2" title="Link zu diesem Bild">¶</a></p>
+</div>
+<p>Die Vorgehensweise beim Mergen ist immer gleich, egal ob man einen (Feature-)
+Branch merged, oder wie hier eine Änderung aus dem QS übernehmen will. Die
+Abbildung <a class="reference internal" href="#figure-rm-qs-merge"><span class="std std-ref">merge-qs</span></a> ist von daher, für sich alleine
+erst mal nur abstrakt. Um das Beispiel etwas <em>konkreter</em> zu machen sei folgender
+Kontext gegeben:</p>
+<blockquote>
+<div><p>Im PROD war ein Maskenfeld mit einem Auswahlbrowser konfiguriert. Dieser
+Auswahlbrowser lieferte aber falsche Werte. Damit die Anwender erst mal weiter
+arbeiten können wurde im PROD ein HotFix <img alt="HotFix" src="../_images/hotfix-point.svg" /> angebracht, mit dem die
+Editierbarkeit des Maskenfeld von <em>‚nur aus dem Katalog zu befüllen‘</em>
+(<code class="docutils literal notranslate"><span class="pre">catalog</span></code>) in <em>‚frei editierbar‘</em> (<code class="docutils literal notranslate"><span class="pre">free</span></code>) geändert wurde.  Anschließend
+hat man das Problem mit dem Auswahlbrowser (zeitnah) in der QS
+korrigiert. Dazu wurde keine neue QS aufgesetzt, sondern die bestehende
+genutzt, die wurde allerdings bereits abgespalten (branch) als der HotFix noch
+nicht im PROD war.</p>
+</div></blockquote>
+<p>Das Beispiel mag etwas <em>konstruiert</em> anmuten, es beschreibt aber einen typischen
+Fall (<strong>conflict</strong>), dem bei einem Merge besondere Beachtung geschenkt werden
+muss. Schon aus der Beschreibung oben wird klar, dass im PROD und im QS parallel
+und unabhängig voneinander an dem problematischen Maskenfeld (bzw.
+Auswahlbrowser) Änderungen vorgenommen wurden: im PROD ist das Feld <code class="docutils literal notranslate"><span class="pre">free</span></code> und
+im QS muss es – mit dem korrigierten Auswahlbrowser – auf <code class="docutils literal notranslate"><span class="pre">catalog</span></code>
+konfiguriert sein.  Werden die beiden Entwicklungslinien nun zusammengeführt, so
+besteht ein <em>Konflikt</em> zw. dem HotFix <img alt="HotFix" src="../_images/hotfix-point.svg" /> und dem letztem Stand der QS
+<img alt="merge-point" src="../_images/merge-point.svg" />, der <em>nun</em> gemerged werden soll.</p>
+<p>An welchem Commit der Konflikt mit der QS Entwicklungslinie auftritt brauchen
+wir nicht zu wissen, wir sollten nur wissen, <strong>dass es immer zu Konflikten
+kommen kann, wenn zwei Entwicklungslinien zusammengeführt werden.</strong> Konflikte
+müssen erkannt und dann <em>fachlich</em> aufgelöst werden, so dass aus der Summe der
+beiden Entwicklungslinien eine funktionierende und sinnvolle Anwendung entsteht.</p>
+<div class="tip admonition">
+<p class="admonition-title">Konflikte müssen fachlich/inhaltlich aufgelöst werden, dafür
+             gibt es keine Tools.</p>
+<p>Vorausgesetzt die Entwicklungslinien sind kurz und bauen aufeinander auf, so
+sind die meisten Konflikte eher inhaltlicher/fachlicher Natur. Tools können
+helfen solche Konflikte zu erkennen, sie können aber keine fachlichen Fragen
+beantworten und sind somit auch nicht in der Lage die detektierten Konflikte
+selbständig aufzulösen.</p>
+</div>
+<p id="cs-elements-conflicts">Bei Weiterentwicklungen auf Basis der CONTACT Elements gibt es zwei Arten von
+potentiellen Konflikten:</p>
+<ul class="simple">
+<li><p>Konflikte im Quellcode: meist werden diese schon durch das SCM System (git)
+beim Merge erkannt. Der Merge Vorgang bleibt an der Stelle dann stehen und man
+muss ggf. manuell noch korrigierend eingreifen.</p></li>
+<li><p>Konflikte in der Konfiguration: Die Konfigurationen in der DB werden in JSON
+Dateien exportiert und im (Kunden-) Paket transportiert. Die JSON Dateien kann
+man nicht mit dem SCM mergen. Für die Zusammenführung zweier Konfigurationen
+gibt es die Tools <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">diff</span></code> und <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">patch</span></code>. Nach dem <code class="docutils literal notranslate"><span class="pre">cdbpkg</span>
+<span class="pre">patch</span></code> kann man die Konflikte in CDB recherchieren und diese (fachlich) in
+CDB interaktiv auflösen.</p></li>
+</ul>
+<p>Die Vorgehensweisen beim Merge werden im Abschnitt <a class="reference internal" href="#rm-merge-cdbpg-patch"><span class="std std-ref">Merge mit git und cdbpkg Tools</span></a>
+detailliert beschrieben. Egal ob mit oder ohne Änderungen an der Konfiguration,
+es gilt immer:</p>
+<div class="tip admonition">
+<p class="admonition-title">Der Merge zweier Entwicklungslinien wird immer mit SCM-Commit
+             abgeschlossen.</p>
+<p>Beim Merge wird die <strong>Patch-Serie</strong> aus der einen Änderungslinie (QS) nahtlos
+an die andere Entwicklungslinie (PROD/master) angehängt. Alle einzelnen
+Commits aus QS sind jetzt Teil von PROD. Der merge-point <img alt="merge-point" src="../_images/merge-point.svg" /> ist
+auch ein Commit, er trägt u.A. die Änderungen in sich, die im Rahmen des
+Merge zur Konfliktauflösung vorgenommen wurden.</p>
+</div>
+<p>Im unteren Teil der Abbildung <a class="reference internal" href="#figure-rm-qs-merge"><span class="std std-ref">qs-merge: Zusammenführung der Änderungen aus QS mit PROD</span></a> ist bereits die PROD
+Entwicklungslinie nach dem Merge dargestellt. Die Abb. <a class="reference internal" href="#rm-bp-merged-qs"><span class="std std-ref">big-picture (tqs-merge): Entwicklungslinien nach merge-qs</span></a>
+zeigt das Eingangs gezeigte <a class="reference internal" href="#figure-rm-big-picture"><span class="std std-ref">big picture</span></a> nach dem
+Merge.  In beiden Darstellungen ist zu sehen, dass sich die Commits, die vor dem
+Merge nur in der QS-Linie waren, nun in der PROD-Linie wiederzufinden sind. Der
+HotFix <img alt="HotFix" src="../_images/hotfix-point.svg" /> aus dem PROD verbleibt ebenfalls in der Historie, der
+ggf. vorhandene Konflikt wurde ja im merge-point <img alt="merge-point" src="../_images/merge-point.svg" /> aufgelöst.</p>
+<div class="figure align-center" id="id3">
+<span id="rm-bp-merged-qs"></span><img alt="Figure (big-picture-merged-qs.svg)" src="../_images/big-picture-merged-qs.svg" /><p class="caption"><span class="caption-text">big-picture (t<sub>qs-merge</sub>): Entwicklungslinien nach merge-qs</span><a class="headerlink" href="#id3" title="Link zu diesem Bild">¶</a></p>
+</div>
+<p>Schaut man auf die Abbildung, so kann man schon erahnen, wie ein Merge des
+Foo-branches aussehen würde. Ebenso wie eben beim Merge des QS in die PROD würde
+später (gestrichelte Linien) der <code class="docutils literal notranslate"><span class="pre">foo</span></code> Branch in die QS gemerged werden, wobei
+die Patch-Serie der grünen Linie (<code class="docutils literal notranslate"><span class="pre">foo</span></code>) an das Ende der QS angehängt werden
+würde.</p>
+</div>
+<div class="section" id="merge-mit-git-und-cdbpkg-tools">
+<span id="rm-merge-cdbpg-patch"></span><h2>Merge mit git und cdbpkg Tools<a class="headerlink" href="#merge-mit-git-und-cdbpkg-tools" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Die Zusammenführung zweier Entwicklungslinien soll wieder am Beispiel
+<a class="reference internal" href="#figure-rm-qs-merge"><span class="std std-ref">qs-merge</span></a> erfolgen, bei dem der QS-Branch in die
+PROD-Linie gemerged wird (PROD ist das Ziel).</p>
+<div class="tip admonition">
+<p class="admonition-title">Vor einem Merge oder Branch den letzten Änderungsstand comitten.</p>
+<p>Bevor ein Merge durchgeführt oder einen Branch abspaltet wird, muss
+sichergestellt sein, dass der aktuelle Stand im SCM commited wurde.
+Insbesondere die Konfiguration aus der DB sollte dabei nicht vergessen
+werden, hierzu siehe <a class="reference internal" href="#rm-dump-into-scm"><span class="std std-ref">Dump der Konfiguration ins SCM</span></a>.</p>
+</div>
+<p>Sobald der aktuelle Stand im SCM-System ist, kann mit dem eigentlichen Merge
+angefangen werden. Ein Merge in CONTACT Elements besteht dabei immer aus zwei
+Teilen (s.a. <a class="reference internal" href="#cs-elements-conflicts"><span class="std std-ref">potentielle Konflikte beim Merge</span></a>):</p>
+<ul class="simple">
+<li><p>Source Code: wird mit SCM (git) gemerged</p></li>
+<li><p>Konfiguration in der DB: wird mit <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">diff</span> <span class="pre">&amp;</span> <span class="pre">patch</span></code> in CDB gemerged.</p></li>
+</ul>
+<p>Die Konfiguration ist zwar in den JSON Dateien und somit im SCM-System
+enthalten, für einen Merge mit dem SCM-System eignet sich das JSON Format aber
+nicht.</p>
+<div class="tip admonition">
+<p class="admonition-title">Vor einem Merge muss das Diff der CDB-Konfigurationen ermittelt
+             werden.</p>
+<p>Für die Zusammenführung zweier Konfigurationen erzeugt man mit <code class="docutils literal notranslate"><span class="pre">cdbpkg</span>
+<span class="pre">diff</span></code> einen Patch den man mit <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">patch</span></code> einspielen kann. Anschließend
+kann man die Änderungen in CDB recherchieren und ggf. vorhandene Konflikte
+auflösen.</p>
+</div>
+<p>Das Kommando <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">diff</span></code> erechnet die Differenz zwischen zwei Ständen der
+Konfiguration eines Pakets. Um die Differenz des Kunden-Pakets (<code class="docutils literal notranslate"><span class="pre">cust.plm</span></code>) in
+der Änderungslinie (QS) zu berechnen wird dazu der Ausgangspunkt, also
+Branch-Point der QS Linie und der letzte Stand der Änderungslinie (QS)
+benötigt, siehe Abb. <a class="reference internal" href="#rm-cdbpkg-diff-qs"><span class="std std-ref">merge: cdbpkg diff &amp; cdbpkg patch</span></a>:</p>
+<div class="figure align-center" id="id4">
+<span id="rm-cdbpkg-diff-qs"></span><img alt="Figure (rm-cdbpkg-diff-qs)" src="../_images/cdbpkg-diff-qs.svg" /><p class="caption"><span class="caption-text">merge: cdbpkg diff &amp; cdbpkg patch</span><a class="headerlink" href="#id4" title="Link zu diesem Bild">¶</a></p>
+</div>
+<p>Der Ausgangspunkt des Feature-Branch ist der branch-point <img alt="branch-point" src="../_images/branch-point.svg" /> an dem
+die Änderungslinie abzweigt. Den Commit der Abzweigung kann man mit folgendem
+Kommando ermitteln:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git log --oneline --decorate --graph --all
+...
+| * 8e448cd (hello-world) hello-world: add changelog
+| * 0dd2abe add hello-world script
+* | c1ce07c add remark about &#39;hello world&#39; order
+|/
+* 9af1a51 add README
+* 849c175 inital boilerplate
+</pre></div>
+</div>
+<p>Obiges Log-Beispiel stammt aus der Foliensammlung <a class="reference external" href="https://return42.github.io/handsOn/slides/git/index.html">get git started</a>, das
+Repository dazu ist <a class="reference external" href="https://github.com/return42/git-teaching/network">github.com/return42/git-teaching</a>. Es soll hier ersatzweise
+als ein Beispiel dienen um den Commit zu <em>finden</em>, an dem der branch-point
+<img alt="branch-point" src="../_images/branch-point.svg" /> abzweigt. In dem Beispiel ist zu erkennen, dass der
+<code class="docutils literal notranslate"><span class="pre">(hello-world)</span></code> Branch bei Commit <code class="docutils literal notranslate"><span class="pre">9af1a51</span></code> abzweigt. Neben dem <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">log</span></code>
+kann man aber auch andere Werkzeuge wie z.B. die <a class="reference external" href="https://gitextensions.github.io/">Git Extensions</a> verwenden um die Historie zu visualisieren
+(s.a. <a class="reference external" href="https://git-scm.com/downloads/guis">git GUI Clients</a>).</p>
+<p>Im Beispiel der Abb. <a class="reference internal" href="#rm-cdbpkg-diff-qs"><span class="std std-ref">merge: cdbpkg diff &amp; cdbpkg patch</span></a> zweigt die QS Linie zum Zeitpunkt
+t<sub>qs</sub> ab, hier im Beispiel nehmen wir mal an, dass der Commit zu diesem
+Stand die ID <code class="docutils literal notranslate"><span class="pre">4711</span></code> trägt. Damit wir den Diff anfertigen können muss der Stand
+zum Zeitpunkt t<sub>qs</sub> (also Commit <code class="docutils literal notranslate"><span class="pre">4711</span></code>) nun in einen separaten Ordner
+ausgecheckt werden. Hier im Beispiel verwenden wir <code class="docutils literal notranslate"><span class="pre">/tmp/qs-branch-point</span></code>
+(kann später wieder gelöscht werden).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># !!! Auf dem Quell-System / im Feature-Branch (z.B. foo oder qs)  !!!</span>
+<span class="c1"># $ git checkout qs   # sollte i.d.R. bereits ausgechekt sein</span>
+...
+<span class="c1"># git worktree add &lt;workspace-folder&gt; &lt;branch-point&gt;</span>
+$ git worktree add /tmp/qs-branch-point <span class="m">4711</span>
+</pre></div>
+</div>
+<p>Nachdem Feature-Branch <code class="docutils literal notranslate"><span class="pre">qs</span></code> und der Branch-Point ausgecheckt wurden, kann nun
+mit <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">diff</span></code> die Differenz zwischen den beiden Konfigurationsständen des
+<code class="docutils literal notranslate"><span class="pre">cust.plm</span></code> Pakets berechnet werden.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cdbpkg diff -p /tmp/qs-branch-point/cust.plm -d /tmp/merge-qs-patch cust.plm
+Writing changes to directory /tmp/merge-qs-patch
+...
+</pre></div>
+</div>
+<p>Der cdbpkg-Patch liegt nun im Ordner <code class="docutils literal notranslate"><span class="pre">/tmp/merge-qs-patch</span></code>. Der Workingtree
+<code class="docutils literal notranslate"><span class="pre">/tmp/qs-branch-point</span></code> wird nicht mehr benötigt, er kann jetzt (oder auch
+später) aus dem <code class="docutils literal notranslate"><span class="pre">/tmp</span></code> gelöscht werden. Mit <code class="docutils literal notranslate"><span class="pre">prune</span></code> löscht man ihn dann auch
+aus dem lokalem git Repository:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ rm -r /tmp/qs-branch-point    <span class="c1"># Worktree im Dateisystem löschen</span>
+$ git worktree prune
+</pre></div>
+</div>
+<p>Nachdem der cdbpkg-Patch vorbereitet ist, kann mit dem eigentlichen Merge
+anfangen werden.  Als Erstes werden die Sourcen mit dem SCM-System gemerged.
+Dazu wechselt man in den Branch, in dem man die Änderungen mergen
+will. <strong>Wichtig ist wieder, dass die cdbpkg Tools auf einen BLOB-Store und die
+DB (des Ziel Systems) zugreifen können</strong>.</p>
+<div class="tip admonition">
+<p class="admonition-title">Die cdbpkg Tools müssen beim Merge Zugriff auf das Ziel System haben</p>
+<p>Bei einem Merge z.B. von einem Feature-Branch in die QS wird man den Merge
+meist direkt im QS-System ausführen, da hier die Ausfallzeiten flexibler
+sind.  Die im Betrieb befindliche PROD bietet nur kurze Wartungsfenster für
+den Rollout, weshalb dieser dezidiert vorbereitet werden muss.  I.d.R. findet
+die Vorbereitung und der Test des Rollouts <em>zeitnah</em> in einem Spiegel-System
+der PROD statt. Die PROD darf dann bis zum Rollout gegenüber dem Spiegel
+keine Änderung an den Sourcen oder der Konfiguration erfahren.</p>
+</div>
+<p>Hier in den Beispielen <em>mergen</em> wir immer direkt in das Ziel System, in diesem
+Beispiel also direkt in die PROD (<code class="docutils literal notranslate"><span class="pre">master</span></code>). Bereits oben wurde erwähnt: <strong>Bei
+einem Merge muss beachtet werden, dass nur der Source-Code nicht aber die ganze
+Konfiguration in den JSON Dateien gemerged werden</strong>. Der Merge beginnt deshalb
+erst mal ganz normal:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># !!! Auf dem Ziel-System / im Ziel-Branch (z.B. master) !!!</span>
+<span class="c1"># $ git checkout master  # sollte i.d.R. bereits ausgechekt sein</span>
+...
+$ git merge qs --no-commit --no-ff     <span class="c1"># SCM merge</span>
+Auto-merging cust.plm/cust/plm/module_metadata.json
+...
+CONFLICT <span class="o">(</span>content<span class="o">)</span>: Merge conflict in cust.plm/cust/plm/module_metadata.json
+Automatic merge failed<span class="p">;</span> fix conflicts and <span class="k">then</span> commit the result.
+</pre></div>
+</div>
+<p>Ganz gleich ob man an dieser Stelle (wie hier im Beispiel) einen <code class="docutils literal notranslate"><span class="pre">CONFLICT</span></code>
+erhalten hat oder nicht, das <code class="docutils literal notranslate"><span class="pre">merge</span></code> Kommando eines SCM-System führt
+i.d.R. immer alle Dateien im Workingtree zusammen. Es werden also auch immer die
+JSON Dateien mit dem Kommando gemerged.  Hier im Beispiel gab es dabei einen
+<code class="docutils literal notranslate"><span class="pre">CONFLICT</span></code>, das muss aber nicht unbedingt der Fall sein: manchmal <em>merged</em> das
+SCM-Merge auch irgendwas zusammen, was es für <em>richtig</em> hält und dann meldet es
+keinen Konflikt. Egal wie, <strong>ein SCM-Merge ist nicht für die JSON Dateien</strong>
+geeignet und wir müssen diesen Teil wieder <em>zurück spulen</em> zu dem, was im
+Ziel-Branch (hier der <strong>master</strong>) versioniert wurde.  Am einfachsten geht das im
+Rahmen eines git-Merge mit <code class="docutils literal notranslate"><span class="pre">checkout</span> <span class="pre">--ours</span></code>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> cust.plm/cust/plm
+$ git reset configuration module_metadata.json
+$ git checkout --ours configuration module_metadata.json
+</pre></div>
+</div>
+<p>Bei älteren CDB Versionen (10.x) müssen noch zwei weitere Objekte <em>zurück
+gespult</em> werden:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ <span class="nb">cd</span> cust.plm/cust/plm
+$ git reset content_metadata.json patches           <span class="c1"># ab CDB 15 nicht mehr erforderlich</span>
+$ git checkout --ours content_metadata.json patches <span class="c1"># ab CDB 15 nicht mehr erforderlich</span>
+</pre></div>
+</div>
+<div class="tip admonition">
+<p class="admonition-title">Konfiguration (JSON) darf nicht vom SCM-System gemerged werden.</p>
+<p>Die Konfigurationen in den JSON Dateien werden nicht gemerged! Für den Merge
+der Konfiguration hat man sich mit <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">diff</span></code> einen Patch erzeugt, den
+man einspielen muss. Anschließend kann man die Änderungen in CDB
+recherchieren und ggf. vorhandene Konflikte auflösen..</p>
+</div>
+<p>Mit <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> kann man nun überprüfen ob es auch Konflikte außerhalb der
+JSON Dateien im Source-Code gab. Sollte in der Ausgabe noch ein <em>Unmerged paths</em>
+auftauchen, so hat man noch nicht alle Konflikte im Source-Code aufgelöst.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>Unmerged paths:
+
+    both modified:   cust/plm/foo.py
+</pre></div>
+</div>
+<p>Wenn das der Fall ist, muss man diese Konflikte auflösen und die dabei
+angebrachten Änderungen wieder mit <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">add</span></code> in den <em>Stage</em> aufnehmen.
+Nachdem alle Konflikte aufgelöst sind sollte in der <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> Ausgabe ein
+Satz wie <em>All conflicts fixed but you are still merging.</em> zu finden sein, hier
+eine beispielhafte Ausgabe:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>On branch master
+All conflicts fixed but you are still merging.
+  <span class="o">(</span>use <span class="s2">&quot;git commit&quot;</span> to conclude merge<span class="o">)</span>
+
+Changes to be committed:
+
+        modified:   cust/plm/foo.py
+</pre></div>
+</div>
+<p>Der merge der Dateien ist damit abgeschlossen und wir kommen zum zweiten Teil
+des Merge, bei dem die Konfiguration gemerged wird.  Dazu spielt man den
+cdbpkg-Patch ein und nach Prüfung in CDB wird nochmal ein <code class="docutils literal notranslate"><span class="pre">build</span></code> erzeugt.</p>
+<p>Erst wenn alle Konflikte im Source-Code aufgelöst sind hat man wieder eine
+<em>lauffähige</em> Instanz! In deren DB nun der zuvor erzeugte cdbpkg-Patch
+<code class="docutils literal notranslate"><span class="pre">/tmp/merge-qs-patch</span></code> eingespielt wird:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cdbpkg patch /tmp/merge-qs-patch     <span class="c1"># CDB-Merge</span>
+</pre></div>
+</div>
+<p>Nun kann man in CDB die Änderungen recherchieren und etwaige Konflikte auflösen
+(Dazu einen build erstellen, alternativ Dev-Build in CDB).</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cdbpkg build cust.plm
+</pre></div>
+</div>
+<p>Der Merge ist abgeschlossen, sobald man der Überzeugung ist, dass alle
+Änderungen aus dem Branch korrekt übernommen wurden. Man hat dann Änderungen im
+Dateisystem und an der Konfiguration in der DB, die beide noch nicht ins SCM
+Commited wurden (der Merge ins SCM ist noch nicht abgeschlossen). Um den Merge
+abzuschließen und ins SCM-System aufzunehmen, muss man wieder einen <em>build</em>
+erzeugen und dann alles im SCM-System als auch in CDB (app_conf) <em>committen</em>:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cdbpkg build cust.plm
+...
+$ git add --all cust.plm/cust/plm
+$ git commit -m <span class="s2">&quot;merged branch &#39;qs&#39;&quot;</span>
+$ cdbpkg commit cust.plm
+</pre></div>
+</div>
+<p>Die Änderungen sind (der Merge ist) jetzt im lokalem Klone des Repository. Er
+muss <em>irgendwann</em> dann auch mal an den SCM-Server gepusht werden. Bei einem
+Feature-Branch oder der QS wird man den Push vermutlich gleich durchführen. Bei
+der PROD (<strong>master</strong>) gehört dieser Push allerdings zum Rollout und sollte
+deshalb ggf. für später – am besten kurz vor dem Rollout Termin – eingeplant
+werden.</p>
+</div>
+<div class="section" id="branch-point">
+<span id="rm-create-branch"></span><h2>Branch-Point<a class="headerlink" href="#branch-point" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Die Aufgabe des Branch-Point ist es, einen klar definierten Zustand festzuhalten
+(s.a. <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">Branches-in-a-Nutshell</a>) auf
+dem eine Änderungslinie aufbaut.  Dieser <em>gesicherte</em> Zustand wird später beim
+Merge von CDB benötigt um die Differenz zwischen zwei Konfigurationsständen
+(JSON) eines Pakets zu berechnen (vgl. <a class="reference internal" href="#rm-cdbpkg-diff-qs"><span class="std std-ref">merge: cdbpkg diff &amp; cdbpkg patch</span></a>). Die Abbildung
+<a class="reference internal" href="#figure-rm-branch-foo"><span class="std std-ref">branch point</span></a> zeigt die Entwicklungslinie eines
+exemplarischen Feature-Branch <code class="docutils literal notranslate"><span class="pre">foo</span></code> in einer Infrastruktur mit PROD und QS.</p>
+<div class="figure align-center" id="id5">
+<span id="figure-rm-branch-foo"></span><img alt="Figure (branch-foo.svg)" src="../_images/branch-foo.svg" /><p class="caption"><span class="caption-text">branch-point: Abzweigung für einen Feature-Branch</span><a class="headerlink" href="#id5" title="Link zu diesem Bild">¶</a></p>
+</div>
+<p>Inital beginnt der foo-Branch am Branch-Point zum Zeitpunkt t<sub>foo</sub>.  Die
+Abspaltung von Entwicklungslinien sollte immer vom <em>aktuellen</em> PROD <strong>master</strong>
+aus erfolgen. Dort fangen alle Entwicklungen an, dort müssen sie am Ende auch
+wieder hin: <a class="reference internal" href="#always-branch-from-master"><span class="std std-ref">Abspaltung immer von der Entwicklungslinie des PROD</span></a>. Ebenfalls in Abbildung <a class="reference internal" href="#figure-rm-branch-foo"><span class="std std-ref">branch point</span></a> zu sehen ist, dass ein <a class="reference internal" href="#rm-system-branch-def"><span class="std std-ref">System-Branch</span></a> wie QS regelmäßig aus der PROD aktualisiert wird:
+<a class="reference internal" href="#always-update-sys-branch"><span class="std std-ref">System-Branches regelmäßig aus PROD aktualisieren</span></a>.</p>
+<p>Die Aktualisierung eines Feature-Branch aus der PROD sollte nach Möglichkeit nur
+selten erforderlich sein, ist aber im Bedarfsfall grundsätzlich möglich. Eine
+Aktualisierung des Feature-Branch <code class="docutils literal notranslate"><span class="pre">foo</span></code> ist z.B. dann erforderlich, wenn man
+im Verlauf des Projekts feststellt, dass eine andere Änderung, die erst nach der
+Abspaltung von <code class="docutils literal notranslate"><span class="pre">foo</span></code> implementiert wurde (z.B. die Änderungen aus der QS) nun
+doch in <code class="docutils literal notranslate"><span class="pre">foo</span></code> benötigt wird. In diesen Fällen muss man sich die benötigte
+Änderung (Patch-Serie) in den <code class="docutils literal notranslate"><span class="pre">foo</span></code> Branch <em>holen</em>, was einem <a class="reference internal" href="#rm-merge-cdbpg-patch"><span class="std std-ref">Merge</span></a> entspricht, bei dem <strong>‚foo‘ das Ziel ist</strong>. Alternativ
+kann man aber auch einen sogenannten <strong>Rebase</strong> durchführen, sofern der Feature
+noch nicht schon von anderer Stelle aus geclonet wurde (s.a. <a class="reference external" href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing">Merging
+vs. Rebasing</a> &amp;
+<a class="reference external" href="https://www.atlassian.com/git/tutorials/merging-vs-rebasing#the-golden-rule-of-rebasing">The Golden Rule of Rebasing</a>).</p>
+<p>Ein anders Beispiel ist der Fall, bei dem man <code class="docutils literal notranslate"><span class="pre">foo</span></code> ins QS gemerged hat und
+beim Testen dann weitere Änderungen angebracht hat die man nicht verlieren will,
+man aber gleichzeitig feststellt, dass es noch weiterer und ausführlicher
+Nacharbeiten bedarf, die nicht mehr im QS – sondern wieder <em>zurück</em> – im
+<code class="docutils literal notranslate"><span class="pre">foo</span></code> Branch umgesetzt werden müssen, weil <em>jetzt</em> erst mal eine andere
+Änderung durch die QS <em>gezogen</em> werden soll.</p>
+<div class="tip admonition">
+<p class="admonition-title">Vorausschauende Planung hält den Aufwand für Merges klein.</p>
+<p>Egal was die Gründe sind, ein Merge ist immer mit einem gewissen Aufwand
+verbunden, der um so größer wird, um so weiter sich zwei Entwicklungslinien
+voneinander entfernen.  Insbesondere <em>Langläufer</em> die sich unnötig früh von
+der PROD abspalten sollten schon in der Projekt-/Release-Planung vermieden
+werden. Dennoch muss man aber immer flexibel reagieren können: Ein Plan ist
+ein Plan und man weiß nie, wann im Projektverlauf einem die Risiken
+schlussendlich <em>um die Ohren fliegen</em>.</p>
+</div>
+</div>
+<div class="section" id="branch-mit-git-anlegen">
+<h2>Branch mit git anlegen<a class="headerlink" href="#branch-mit-git-anlegen" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Für das Anlegen eines Branch-Points braucht man kein CDB-Tool und keinen
+CDB-Dienst.  Ein Branch-Point lässt sich sehr einfach auf einem Klone des git
+Repository anlegen, den man sich beispielsweise auf seinem Desktop PC erzeugt
+hat.  Dennoch sollte sichergestellt sein, dass sich auch <em>letzte</em> Änderungen
+bereits im SCM-System befinden. Insbesondere die Konfiguration aus der DB sollte
+dabei nicht vergessen werden, hierzu siehe <a class="reference internal" href="#rm-dump-into-scm"><span class="std std-ref">Dump der Konfiguration ins SCM</span></a>. Ist das
+erledigt kann der Branch-Point ohne CDB angelegt werden. Hier im Beispiel soll
+der Branch-Point vom letzten Commit des PROD (<strong>master</strong>) ausgehen:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git clone http://gitserver/cust_plm <span class="c1"># falls nicht eh schon vorhanden</span>
+$ git checkout -b master              <span class="c1"># falls nicht bereits ausgecheckt</span>
+$ git pull                            <span class="c1"># falls nicht eh schon aktuell</span>
+</pre></div>
+</div>
+<p>Mit Letzterem hat man den aktuellen Stand des <strong>masters</strong> ausgecheckt (was
+i.d.R. auf dem PROD-Server ohnehin immer der Fall sein sollte).  Der
+Branch-Point kann nun auf dem aktuellen Stand des <strong>master</strong> angelegt werden,
+das geschieht immer erst mal lokal und dann schiebt man diesen Branch-Point auf
+den git-Server:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git branch &lt;branch-name&gt;         <span class="c1"># Branch lokal anlegen aber nicht aus-checken</span>
+$ git push -u origin &lt;branch-name&gt; <span class="c1"># Branch auf dem zentralem Server bereitstellen</span>
+</pre></div>
+</div>
+<p>Vergleicht man die bisherige Vorgehensweise mit dem im CDB Handbuch zur
+Komponentenarchitektur vorgestelltem Verfahren, so wird man merken, dass die
+Verfahren dort, an diesem Punkt enden und nicht über das (Kunde-) Paket hinaus
+gehen.  In der Praxis wird man aber bei der Weiterentwicklung auf Nutzdaten
+angewiesen sein, die nicht im Paket enthalten sind und für die man sich nun ein
+Transport-Mechanismus ausdenken müsste.</p>
+<p>Diesen und anderen Problemen (s.o. <a class="reference internal" href="#scm-caddok-base"><span class="std std-ref">Scope des Pakets</span></a>)
+geht man am einfachsten aus dem Weg, indem man zu jedem Branch-Point einen
+Export der DB erstellt.</p>
+<div class="tip admonition">
+<p class="admonition-title">DB Export zu jedem Branch-Point</p>
+<p>Das Spiegelsystem für die Entwicklung der geplanten Änderung wird aus dem DB
+Export aufgebaut (s.a. <a class="reference internal" href="../tools/init_cdb_mirror.html#init-cdb-mirror"><span class="std std-ref">Initialisieren eines CDB Spiegel-Systems</span></a>).</p>
+</div>
+<p>Der DB Export wird im jeweiligen Management Tool des DB-Systems erstellt.  Für
+die Ablage eignet sich ein Share auf den die Entwickler zugreifen können um sich
+Spiegel-Systeme aufbauen zu können. Evtl. reicht aber auch schon die
+tagesaktuelle Sicherung des DB-Managment für einen Import im Spiegel-System
+aus. Egal wie man es macht, man sollte sich den Export zum Branch-Point solange
+aufheben, bis die Änderung im PROD gemerged wurde (die Änderung also in Betrieb
+genommen wurde). Hilfreich können Namen oder Listen sein, die das Datum des
+Exports und den Namen des Branch-Points erkennen lassen, wie z.B.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">PROD</span><span class="o">-</span><span class="n">EXP</span><span class="o">-&lt;</span><span class="n">YYYYMMDD</span><span class="o">-</span><span class="n">HH</span><span class="p">:</span><span class="n">MM</span><span class="o">&gt;-&lt;</span><span class="n">branch</span><span class="o">-</span><span class="n">name</span><span class="o">&gt;.</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="dump-der-konfiguration-ins-scm">
+<span id="rm-dump-into-scm"></span><h2>Dump der Konfiguration ins SCM<a class="headerlink" href="#dump-der-konfiguration-ins-scm" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Bevor man einen Branch-Point anlegt oder einen Merge durchführt, muss der
+aktuelle Stand der Konfiguration – der sich u.U. nur in der DB befindet – in
+die JSON Dateien exportiert und in das SCM-System commited werden. Hierfür
+empfiehlt es sich prophylaktisch einen <code class="docutils literal notranslate"><span class="pre">build</span></code> zu erzeugen. Im dem folgendem
+Beispiel soll ein Dump der Konfigurationen des PROD Systems (<strong>master</strong>)
+erfolgen, also wird der <code class="docutils literal notranslate"><span class="pre">build</span></code> auch dort im PROD-System ausgeführt.  Der Dump
+von QS oder einem Feature-Branch wäre analog, nur eben im jeweiligen System:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span><span class="c1"># !!! Auf dem jeweiligen System, hier z.B. dem master (PROD)      !!!</span>
+<span class="c1"># !!! sollte der richtige Branch eigentlich schon ausgechekt sein !!!</span>
+$ git checkout master
+</pre></div>
+</div>
+<p>Wichtig ist, dass die cdbpkg Tools auf einen BLOB-Store und die DB zugreifen
+können, hier im Beispiel ist das der Applikation Server der PROD.</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cdbpkg build cust.plm               <span class="c1"># DB export</span>
+</pre></div>
+</div>
+<p>Sollte ein <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">status</span></code> eine Differenz anzeigen, so muss der <em>aktuelle</em> Stand
+noch in das SCM-System commited werden:</p>
+<div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ git add --all .                     <span class="c1"># SCM-Commit ..</span>
+$ git commit -m <span class="s2">&quot;retain last changes from PROD&quot;</span>
+$ cdbpkg commit cust.plm              <span class="c1"># CDB-Commit</span>
+$ git push                            <span class="c1"># auf SCM-Server ablegen</span>
+</pre></div>
+</div>
+<p>Die hier in den Beispielen verwendeten Commit-Messages sind exemplarisch und für
+die Praxis ungeeignet, hierzu siehe Abschnitt <a class="reference internal" href="#recommend-commit-msg"><span class="std std-ref">Commit-Messages</span></a>.</p>
+</div>
+<div class="section" id="commit-messages">
+<span id="recommend-commit-msg"></span><h2>Commit-Messages<a class="headerlink" href="#commit-messages" title="Link zu dieser Überschrift">¶</a></h2>
+<p>In der Praxis wird den Commit-Messages in viel zu vielen Projekten und leider
+auch von vielen Zulieferern noch zu wenig Beachtung geschenkt, dabei sind die
+Commit-Messages insbesondere bei langlebigen Projekten und wechselnden
+Projektteams von besonderem Wert.</p>
+<p>Saubere Commit-Messages sind erste Voraussetzung für eine Recherche.  Eine
+Commit-Message gibt Auskunft darüber, was eine Änderung bezwecken soll und was
+die Motivation zu dieser Änderung war. Die Historie eines Änderungsverlaufs wird
+durch die Summe der Commit-Messages beschrieben. In dieser Historie will man
+sich als Entwickler bewegen und einen Änderungsverlauf verstehen, ohne dass man
+dazu die einzelnen Teil-Änderungen im Detail anschaut. Es muss im Verlauf der
+Historie zumindest grob erkennbar werden, <em>was, wann, wo und warum</em> geändert
+wurde.</p>
+<p>Wie wichtig <em>gut gewählte</em> Commit Messages sind wird z.B. deutlich wenn es um
+die Auflösung von Konflikten geht. Dabei (beim Merge) muss man wissen, warum
+<em>diese Änderung hier im Branch</em> anders ausgefallen ist als <em>die gleiche Änderung
+im anderen Branch</em>. Ohne die inhaltlichen, fachlichen und ggf. auch technischen
+Hintergründe einer Änderung muss derjenige, der den Merge durchführt selber
+<strong>erahnen</strong> was die Gründe dafür waren und wie man den Konflikt am besten
+auflöst .. etwas zu <strong>erahnen</strong> ist keine solide Basis für eine Entscheidung.</p>
+<div class="tip admonition">
+<p class="admonition-title">Die Commit-Message sollte <em>einheitlich</em> und <em>ausdrucksstark</em>
+             sein.</p>
+<p>In der Praxis hat sich ein einfaches Schema bewährt:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">tag</span><span class="o">&gt;</span><span class="p">:</span> <span class="o">&lt;</span><span class="n">Zusammenfassung</span><span class="o">&gt;</span>
+
+<span class="n">Lorem</span> <span class="n">ipsum</span> <span class="n">dolor</span> <span class="n">sit</span> <span class="n">amet</span><span class="p">,</span> <span class="n">consetetur</span> <span class="n">sadipscing</span> <span class="n">elitr</span><span class="p">,</span> <span class="n">sed</span> <span class="n">diam</span> <span class="n">nonumy</span>
+<span class="n">eirmod</span> <span class="n">tempor</span> <span class="n">invidunt</span> <span class="n">ut</span> <span class="n">labore</span> <span class="n">et</span> <span class="n">dolore</span> <span class="n">magna</span> <span class="n">aliquyam</span> <span class="n">erat</span><span class="p">,</span> <span class="n">sed</span> <span class="n">diam</span>
+<span class="n">voluptua</span><span class="o">.</span>
+</pre></div>
+</div>
+</div>
+<p>Es hat sich bewährt die ersten Zeile am Anfang mit einem <code class="docutils literal notranslate"><span class="pre">&lt;tag&gt;</span></code> mit
+anschließendem Doppelpunkt zu beginnen. Das <code class="docutils literal notranslate"><span class="pre">&lt;tag&gt;</span></code> sollte einen Hinweis auf
+den Kontext geben, zu dem diese Änderung gehört. Der Kontext kann sein:</p>
+<ul class="simple">
+<li><p>Eine Fehler- oder Vorfallnummer wie z.B.: <code class="docutils literal notranslate"><span class="pre">I004711:</span></code> für <em>issue 4711</em></p></li>
+<li><p>Die Kurzbezeichnung des Projekts, z.B. <code class="docutils literal notranslate"><span class="pre">FooFoo:</span></code> für alle Commits
+(Beiträge), die das FooFoo-Feature implementieren und/oder korrigieren.</p></li>
+<li><p>Eine Sparte oder eine Modulzuordnung, wie z.B. <code class="docutils literal notranslate"><span class="pre">doc:</span></code> für Korrekturen an der
+Dokumentation</p></li>
+<li><p>Manchmal kann der Kontext aber auch ganz allgemeiner Natur sein wie
+z.B. <code class="docutils literal notranslate"><span class="pre">HotFix:</span></code></p></li>
+</ul>
+<p>Die erste Zeile sollte ein kompakter <em>one-liner</em> mit Kontext und Zusammenfassung
+sein, der aber auch nicht mehr als 80 oder 120 Zeichen haben sollte.  Darauf
+folgt eine Leerzeile und danach kann ein ausführlicherer Text kommen der die
+Hintergründe dieser Änderung beschreibt. Dabei beschreibt man nicht den
+Source-Code, sondern das, was die Änderung bezwecken soll.  Für das Beispiel von
+oben, bei dem ein HotFix angebracht wurde, könnte man beispielsweise schreiben:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>HotFix: Maskenfeld XYZ auf &#39;free&#39; gesetzt
+
+Das Maskenfeld XYZ war mit einem defekten Auswahlbrowser XYZ konfiguriert,
+welcher falsche Werte lieferte. Damit die Anwender erst mal weiter arbeiten
+können wird dieser HotFix angebracht, mit dem die Editierbarkeit des
+Maskenfelds von &#39;catalog&#39; (nur aus dem Katalog zu befüllen) in &#39;free&#39; (frei
+editierbar) geändert wird.
+
+Eine Überarbeitung des Auswahlbrowser XYZ findet derzeit schon im QS statt und
+soll später diesen HotFix ersetzen.
+</pre></div>
+</div>
+<p>Wenn man später (<a class="reference internal" href="#rm-merge-branch"><span class="std std-ref">so wie oben gezeigt</span></a>) dann die
+Überarbeitung aus dem QS in die PROD merged, dann weiß man aufgrund der
+ausführlichen Commit-Message genau, wie man mit dem Konflikt rund um das
+Maskenfeld XYZ umzugehen hat.</p>
+<p>Ohne eine derartige Commit-Message und ohne die Hinweise auf <em>HotFix</em> &amp;
+<em>Überarbeitung im QS</em> wüsste man beim Merge nicht mehr warum die Änderung damals
+angebracht hatte. Hier noch das negativ-Beispiel dazu:</p>
+<div class="highlight-none notranslate"><div class="highlight"><pre><span></span>BugFix: Maskenfeld XYZ auf &#39;free&#39; gesetzt
+
+Das Maskenfeld XYZ sollte auf &#39;free&#39; gesetzt werden; ist hiermit
+erledigt.
+</pre></div>
+</div>
+<p>Letztere Commit-Message hat für andere Personen als den Ersteller kaum einen
+Informationsgehalt. Es fehlt der Hinweis darauf, dass es sich eigentlich nur um
+einen HotFix handelt, das eigentlich der Auswahlbrowser kaputt ist und das
+dieser noch überarbeitet wird und das diese Überarbeitung diesen HotFix dann
+ersetzen wird. Wie soll ein Maintainer der den Merge dazu durchführen will mit
+dem Kontext aber evtl. nicht vertraut ist, wie soll der wissen welche
+Entscheidungen er bei der Konfliktauflösung treffen soll. Ohne stundenlange
+Recherchen und Nachfragen ist es bei derart schlechten Commit-Messages oftmals
+kaum möglich vernünftige Entscheidungen treffen.</p>
+<div class="tip admonition">
+<p class="admonition-title">Schlechte Commit-Messages kosten Geld</p>
+<p>Hört endlich auf damit und schreibt Eure Commit Message aus der Perspektive
+des Maintainers, der Euer Projekt nicht im Detail kennen kann!!!!</p>
+</div>
+</div>
+<div class="section" id="common-pitfalls">
+<h2>Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Ein paar Hinweise zu <em>gern</em> gemachten Fehlern:</p>
+<dl class="simple">
+<dt><strong>Branch im laufendem Prozess wechseln</strong></dt><dd><p>Man darf auf einem System, auf dem CDB Prozesse laufen nicht einfach den
+Workingtree ändern, indem man z.B. ein <strong>checkout</strong> eines anderen Branches
+macht. Zum Einen mögen es die gerade aktiven Prozesse nicht, wenn man ihnen
+den Workingtree <em>unter dem Arsch</em> wegreißt und zum Anderen hat jeder Branch
+seine eigene DB .. im schlimmsten Fall wird dann noch gegen die falsche DB
+Verbunden und diese dann sabotiert!</p>
+</dd>
+</dl>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="optimze_db.html" class="btn btn-neutral float-right" title="DB optimieren" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="build_cdb_mirror.html" class="btn btn-neutral float-left" title="Aufbau eines CDB Spiegel-Systems" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

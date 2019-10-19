@@ -1,0 +1,334 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Eclipse &amp; PowerScript Studio &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="Pylint" href="pylint.html" />
+    <link rel="prev" title="Konsole &amp; ConEmu" href="console.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cdbtools_dev/index.html">Aufbau der CDB-Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Werkzeuge der CDB-Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#cdb-wartung-und-pflege">CDB Wartung und Pflege</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#entwickler-tools">Entwickler Tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="console.html">Konsole &amp; ConEmu</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Eclipse &amp; PowerScript Studio</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#get-started">get started</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#pylint-in-pydev-einrichten">Pylint in PyDev einrichten</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="pylint.html">Pylint</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../best_practice/index.html">Best practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Werkzeuge der CDB-Tools</a> &raquo;</li>
+        
+      <li>Eclipse &amp; PowerScript Studio</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tools/eclipse.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="eclipse-powerscript-studio">
+<span id="powerscript-studio"></span><span id="cdbtools-eclipse"></span><h1>Eclipse &amp; PowerScript Studio<a class="headerlink" href="#eclipse-powerscript-studio" title="Link zu dieser Überschrift">¶</a></h1>
+<p>Das PowerScript Studio ist eine <a class="reference external" href="https://www.eclipse.org/">Eclipse</a> Installation mit vorinstalliertem
+Plugins wie <a class="reference external" href="http://www.pydev.org">PyDev</a> und einem Dropin von Contact, in dem der Projekt-Wizzard für
+CDB Installationen enthalten ist (siehe <code class="docutils literal notranslate"><span class="pre">$CADDOK_BASE\eclipse\dropins</span></code>).
+Alternativ zum PowerScript Studio kann auch eine aktuelle Eclipse Version mit
+PyDev genutzt werden, in der das Dropin installiert wird, worauf aber hier nicht
+weiter eingegangen werden soll.</p>
+<div class="admonition hint">
+<p class="admonition-title">Hinweis</p>
+<p>Eclipse ist für die Python Entwicklung nur bedingt geeignet.</p>
+</div>
+<p>Die Eclipse Versionen in CDB sind i.d.R. hoffnungslos veraltet, so wird mit CDB
+15.3 das Eclipse Version 3.8 aus dem Jahre 2012 ausgeliefert.  Das PyDev Modul
+liegt in der Version 4.3 aus dem Jahre 2015 vor und selbst das PowerScript
+Dropin ist aus dem Jahre 2012.  Neuere Versionen von Eclipse &amp; Co. können etwas
+Linderung verschaffen, wer aber mal genau auf die PyDev Entwicklung schaut
+<a class="reference external" href="https://www.brainwy.com/tracker/PyDev/">[ref]</a> wird merken, dass die
+Workflows dort etwas an dem vorbei gehen, was man evtl. aus modernen
+Entwicklungen kennt.</p>
+<p>In gewachsenen Umgebungen mag es sein, dass Eclipse &amp; Co. nur schwer zu ersetzen
+sind.  Wer das aber nicht hat sollte sich gleich überlegen ob das mit dem
+Eclipse in CDB überhaupt noch Sinn macht oder ob man nicht besser gleich auf
+moderne Werkzeuge ausweicht, die i.d.R. dynamischer oder zumindest
+leichtgewichtiger sind als Eclipse. <em>Fazit: für Python &amp; Node.js Entwicklungen
+gibt es passendere Werkzeuge.</em></p>
+<div class="section" id="get-started">
+<h2>get started<a class="headerlink" href="#get-started" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Das Basis-Setup des Eclipse wird beim ersten Start im HOME-Ordner abgelegt
+(<code class="docutils literal notranslate"><span class="pre">.eclipse</span></code> Ordner).  Ebenfalls beim ersten Start wird man gefragt, wo man
+seinen Arbeitsbereich anlegen möchte.</p>
+<div class="figure align-default" id="id1">
+<a class="reference internal image-reference" href="../_images/WorkspaceLauncher.png"><img alt="../_images/WorkspaceLauncher.png" src="../_images/WorkspaceLauncher.png" style="width: 350.0px; height: 187.5px;" /></a>
+<p class="caption"><span class="caption-text">Eclipse Workspace Launcher</span><a class="headerlink" href="#id1" title="Link zu diesem Bild">¶</a></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tipp</p>
+<p>Will man seine Eclipse Settings komplett entfernen, so muss man den Ordner
+<code class="docutils literal notranslate"><span class="pre">$HOME/.eclipse</span></code> und den Ordner für den Arbeitsbereich
+(z.B. <code class="docutils literal notranslate"><span class="pre">$HOME/workspace</span></code>) löschen.</p>
+</div>
+<p>In diesem Arbeitsbereich speichert Eclipse die Metadaten zu den Projekten, die
+man in Eclipse einrichtet, da steht dann z.B. auch drin, wo man seinen
+Arbeitsbereich angelegt hat.  Ist der Arbeitsbereich gesetzt, so startet Eclipse
+und man kann sein PowerScript Studio Projekt anlegen (Kontextmenü im
+Project-Explorer).</p>
+<div class="figure align-default" id="id2">
+<a class="reference internal image-reference" href="../_images/cdb_instance.png"><img alt="../_images/cdb_instance.png" src="../_images/cdb_instance.png" style="width: 350.0px; height: 309.0px;" /></a>
+<p class="caption"><span class="caption-text">PowerScript Studio Projekt anlegen</span><a class="headerlink" href="#id2" title="Link zu diesem Bild">¶</a></p>
+</div>
+<div class="admonition tip">
+<p class="admonition-title">Tipp</p>
+<p>Neue Entwickler-Pakete leg man am einfachsten mit <code class="docutils literal notranslate"><span class="pre">cdbpkg</span> <span class="pre">new</span></code> an
+<a class="reference internal" href="../best_practice/cheat-sheet.html#cdbpkg-new"><span class="std std-ref">[ref]</span></a>.</p>
+</div>
+</div>
+<div class="section" id="pylint-in-pydev-einrichten">
+<span id="powerscript-studio-pylint"></span><h2>Pylint in PyDev einrichten<a class="headerlink" href="#pylint-in-pydev-einrichten" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Das <a class="reference external" href="http://www.pydev.org">PyDev</a> hat einen integrierten Code-Checker, wesentlich ausgereifter und
+flexibler ist aber <a class="reference external" href="https://www.pylint.org">Pylint</a>, das sich inzwischen zum <em>Standard</em> etabliert hat
+(s.a. <a class="reference internal" href="pylint.html#cdbtools-pylint"><span class="std std-ref">Pylint</span></a>).  Die CDB-Tools bringen eine Pylint Installation
+und ein Pylint Profil mit, das in Eclipse eingerichtet werden kann.  Dazu öffnet
+man in Eclipse die Einstellungen unter <span class="menuselection">Window / Preferences</span>.</p>
+<div class="figure align-default" id="id3">
+<a class="reference internal image-reference" href="../_images/PyDev_Pylint_prefs.png"><img alt="../_images/PyDev_Pylint_prefs.png" src="../_images/PyDev_Pylint_prefs.png" style="width: 347.0px; height: 462.5px;" /></a>
+<p class="caption"><span class="caption-text">PyDev Preferences (Pylint)</span><a class="headerlink" href="#id3" title="Link zu diesem Bild">¶</a></p>
+</div>
+<p>Unter <span class="menuselection">PyDev / Pylint</span> muss das Häkchen bei <span class="guilabel">Use
+Pylint</span> gesetzt werden.  Als Launcher trägt man <code class="docutils literal notranslate"><span class="pre">tools-pylint</span></code> ein und unten
+in den Argumenten wird noch ein Profil mitgeben, hier im Beispiel wird das
+Profil aus den Vorlagen der CDB-Tools genutzt:</p>
+<div class="admonition tip">
+<p class="admonition-title">Tipp</p>
+<p>Kopieren Sie die Vorlage in den Ordner der CDB-Instanz nach:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$CADDOK_BASE\pylintrc
+</pre></div>
+</div>
+<p>und versionieren sie diese im Repository (s.a. <a class="reference internal" href="pylint.html#cdbtools-pylint"><span class="std std-ref">Pylint</span></a>).  Die
+Option <code class="docutils literal notranslate"><span class="pre">--rcfile</span></code> in den Argumenten sollte dann wie folgt eingestellt
+werden:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">pylint</span> <span class="o">--</span><span class="n">rcfile</span><span class="o">=%</span><span class="n">CADDOK_BASE</span><span class="o">%/</span><span class="n">pylintrc</span>
+</pre></div>
+</div>
+</div>
+<p>Das reicht aber nicht, im jeweiligen PyDev Projekt muss man noch die Sourcen
+einstellen, wenn man möchte, kann man unter den <span class="guilabel">External Libraries</span>
+noch die Python Pfade aus den CDB-Tools eintragen (muss man aber nicht).</p>
+<div class="figure align-default" id="id4">
+<a class="reference internal image-reference" href="../_images/PyDev-Project-Sources.png"><img alt="../_images/PyDev-Project-Sources.png" src="../_images/PyDev-Project-Sources.png" style="width: 478.0px; height: 296.5px;" /></a>
+<p class="caption"><span class="caption-text">PyDev Sourcen des Projekts</span><a class="headerlink" href="#id4" title="Link zu diesem Bild">¶</a></p>
+</div>
+<div class="figure align-default" id="id5">
+<a class="reference internal image-reference" href="../_images/PyDev-External-Sources.png"><img alt="../_images/PyDev-External-Sources.png" src="../_images/PyDev-External-Sources.png" style="width: 478.0px; height: 296.5px;" /></a>
+<p class="caption"><span class="caption-text">PyDev Sourcen des Projekts</span><a class="headerlink" href="#id5" title="Link zu diesem Bild">¶</a></p>
+</div>
+<p>Hat man alles eingestellt, so wird bei jedem Speichern einer geänderten Python
+Datei nun ein Check mit dem Pylint durchgeführt.  Auf der linken Seite, sieht
+man Symbole für die Meldungen aus dem Pylint-Lauf.  Rechts im Übersichtsbalken
+sind entsprechend farblich hervorgehobene Bereiche.</p>
+<div class="figure align-default" id="id6">
+<a class="reference internal image-reference" href="../_images/Pylint_example001.png"><img alt="../_images/Pylint_example001.png" src="../_images/Pylint_example001.png" style="width: 486.5px; height: 302.5px;" /></a>
+<p class="caption"><span class="caption-text">Pylint Meldungen in Eclipse.</span><a class="headerlink" href="#id6" title="Link zu diesem Bild">¶</a></p>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="pylint.html" class="btn btn-neutral float-right" title="Pylint" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="console.html" class="btn btn-neutral float-left" title="Konsole &amp; ConEmu" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

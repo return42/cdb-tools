@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="900" height="600" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <metadata id="metadata45">image/svg+xmlimage/svg+xml</metadata>
+
+ <g id="g1">
+  <title>background</title>
+  <rect id="canvas_background" height="600" width="900" y="-1" x="-1" fill="#ffffff"/>
+  <g display="none" id="canvasGrid">
+   <rect y="0" x="0" height="300" width="900" id="rect10" fill="url(#gridpattern)"/>
+  </g>
+ </g>
+ <g id="g2">
+  <title>Template</title>
+  <rect id="svg_46" height="55" width="740" y="260" x="95" stroke-dasharray="2,2" stroke-width="2" stroke="#4c4c4c" fill="#ffffaa"/>
+  <rect height="35" width="410" y="530" x="105" stroke-width="2" stroke="#4c4c4c" fill="#e5e5e5" id="svg_33"/>
+  <rect stroke-dasharray="2,2" id="svg_4" height="90" width="740" y="35" x="95" stroke-width="2" stroke="#4c4c4c" fill="#ffffaa"/>
+  <path id="svg_10" d="m604.983887,59.690674c0,5.470032 -33.793579,9.904999 -75.483826,9.904999m75.483826,-9.904999l0,0c0,5.470032 -33.793579,9.904999 -75.483826,9.904999c-41.690369,0 -75.483948,-4.434967 -75.483948,-9.904999m0,0l0,0c0,-5.470184 33.793579,-9.905151 75.483948,-9.905151c41.690247,0 75.483826,4.434967 75.483826,9.905151l0,39.619476c0,5.470001 -33.793579,9.904327 -75.483826,9.904327c-41.690369,0 -75.483948,-4.434326 -75.483948,-9.904327l0,-39.619476z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#4c4c4c" fill="#ffffff"/>
+  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="95" x="530" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#000000" id="svg_1">Konfig: DB</text>
+  <g id="svg_6"/>
+  <path d="m804.983887,60.190674c0,5.470032 -33.793579,9.904999 -75.483826,9.904999m75.483826,-9.904999l0,0c0,5.470032 -33.793579,9.904999 -75.483826,9.904999c-41.690369,0 -75.483948,-4.434967 -75.483948,-9.904999m0,0l0,0c0,-5.470184 33.793579,-9.905151 75.483948,-9.905151c41.690247,0 75.483826,4.434967 75.483826,9.905151l0,39.619476c0,5.470001 -33.793579,9.904327 -75.483826,9.904327c-41.690369,0 -75.483948,-4.434326 -75.483948,-9.904327l0,-39.619476z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="2" stroke="#4c4c4c" fill="#ffffff" id="svg_11"/>
+  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="95.5" x="730" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#000000" fill="#000000" id="svg_12">Dateien: BLOB</text>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="260" y="70" id="svg_17" font-size="18" font-family="Sans-serif" text-anchor="middle" xml:space="preserve">Änderungen an CDB-Konfig DB &amp;</text>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="255" y="95" font-size="18" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" id="svg_18">Dateien im BLOB-Store</text>
+  <rect height="35" width="270" y="270" x="555" stroke-width="2" stroke="#4c4c4c" fill="#e5e5e5" id="svg_20"/>
+  <text style="cursor: move;" transform="matrix(1.11765, 0, 0, 1, -64.7059, 0)" fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="670" y="295" font-size="18" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" id="svg_21">app_conf (baseline)</text>
+  <rect height="35" width="420" y="270" x="105" stroke-width="2" stroke="#4c4c4c" fill="#d4ffaa" id="svg_16"/>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="295" y="295" font-size="18" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" id="svg_19">configuration Ordner im cust.plm</text>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="295" y="555" font-size="18" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" id="svg_34">SCM-System: remote Server (origin)</text>
+  <rect height="35" width="410" y="400" x="105" stroke-width="2" stroke="#4c4c4c" fill="#ffd4aa" id="svg_29"/>
+  <text fill="#000000" stroke="#000000" stroke-width="0" stroke-dasharray="null" stroke-linejoin="null" stroke-linecap="null" x="295" y="425" font-size="18" font-family="Sans-serif" text-anchor="middle" xml:space="preserve" id="svg_30">SCM-System: .git Ordner (local)</text>
+  <path transform="rotate(-180, 418.961, 360)" id="svg_8" d="m332.167389,359.930176l86.795105,-29.180176l86.791962,29.180176l-43.396606,0l0,29.319824l-86.793488,0l0,-29.319824l-43.396973,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#ffd4aa"/>
+  <text id="svg_9" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="370" x="420" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">commit</text>
+  <path id="svg_28" d="m117.706299,354.930176l86.795105,-29.180176l86.791992,29.180176l-43.396606,0l0,29.319824l-86.793518,0l0,-29.319824l-43.396973,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#d4ffaa"/>
+  <text id="svg_31" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="370" x="205" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">pull</text>
+  <path transform="rotate(-180, 417.48, 487.25)" d="m330.686951,487.180176l86.795105,-29.180176l86.791931,29.180176l-43.396606,0l0,29.319824l-86.793457,0l0,-29.319824l-43.396973,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#e5e5e5" id="svg_22"/>
+  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="500" x="415" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000" id="svg_32">push</text>
+  <path d="m116.22583,482.180176l86.795105,-29.180176l86.791992,29.180176l-43.396606,0l0,29.319824l-86.793518,0l0,-29.319824l-43.396973,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#ffd4aa" id="svg_35"/>
+  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="505" x="200" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000" id="svg_36">fetch</text>
+  <path d="m117.706451,189.860352l86.795105,-58.360352l86.792023,58.360352l-43.396637,0l0,58.639648l-86.793518,0l0,-58.639648l-43.396973,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#ffffaa" id="svg_3"/>
+  <path d="m332.706421,194.860352l86.795105,-58.360352l86.792053,58.360352l-43.396667,0l0,58.639648l-86.793518,0l0,-58.639648l-43.396973,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#d4ffaa" id="svg_7" transform="rotate(-180, 419.5, 195)"/>
+  <path d="m607.706421,210.548996l86.795105,-43.13591l86.792053,43.13591l-43.396667,0l0,43.342361l-86.793518,0l0,-43.342361l-43.396973,0z" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#e5e5e5" transform="rotate(-180, 694.5, 210.652)" id="svg_15"/>
+  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="185" x="205" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000" id="svg_24">cdbpkg</text>
+  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="185" x="420" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000" id="svg_25">cdbpkg</text>
+  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="205" x="695" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000" id="svg_26">cdbpkg</text>
+  <text xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="210" x="200" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000" id="svg_37">sync &amp;</text>
+  <text id="svg_13" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="230" x="200" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">install</text>
+  <text style="cursor: move;" id="svg_38" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="210" x="420" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">build</text>
+  <text id="svg_39" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="230" x="695" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">commit</text>
+  <text id="svg_40" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="155" x="690" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">Dev-Patches / Entwickleransicht</text>
+  <text id="svg_42" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="480" x="200" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">git</text>
+  <text id="svg_43" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="480" x="415" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">git</text>
+  <text id="svg_44" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="350" x="420" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">git</text>
+  <text id="svg_45" xml:space="preserve" text-anchor="middle" font-family="Sans-serif" font-size="18" y="350" x="205" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="null" stroke-width="0" stroke="#4c4c4c" fill="#000000">git</text>
+  <line id="svg_47" y2="565" x2="540" y1="130" x1="540" stroke-linecap="null" stroke-linejoin="null" stroke-dasharray="2,2" stroke-width="2" stroke="#000000" fill="none"/>
+ </g>
+</svg>

@@ -1,0 +1,283 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Pylint &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="Best practice" href="../best_practice/index.html" />
+    <link rel="prev" title="Eclipse &amp; PowerScript Studio" href="eclipse.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cdbtools_dev/index.html">Aufbau der CDB-Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Werkzeuge der CDB-Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="index.html#cdb-wartung-und-pflege">CDB Wartung und Pflege</a></li>
+<li class="toctree-l2 current"><a class="reference internal" href="index.html#entwickler-tools">Entwickler Tools</a><ul class="current">
+<li class="toctree-l3"><a class="reference internal" href="console.html">Konsole &amp; ConEmu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eclipse.html">Eclipse &amp; PowerScript Studio</a></li>
+<li class="toctree-l3 current"><a class="current reference internal" href="#">Pylint</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../best_practice/index.html">Best practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Werkzeuge der CDB-Tools</a> &raquo;</li>
+        
+      <li>Pylint</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tools/pylint.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="cdbtools-pylint">
+<span id="id1"></span><h1>Pylint<a class="headerlink" href="#cdbtools-pylint" title="Link zu dieser Überschrift">¶</a></h1>
+<p><a class="reference external" href="https://www.pylint.org">Pylint</a> ist ein Werkzeug zur Code-Analyse, dass sich in alle gängigen IDEs
+integrieren lässt <a class="reference external" href="https://pylint.readthedocs.io/en/stable/user_guide/ide-integration.html">[ref]</a>.
+Alle Code-Checker auf dem <em>freien Markt</em> kennen i.d.R. die CDB-Runtime, das
+Vererbungsmodell in CDB und den ORM von CDB nicht, weshalb ihr Einsatz immer nur
+mit Auflagen möglich ist.  Dennoch kann man sagen, dass bei einem umsichtigen
+Einsatz dieser Werkzeuge die Code-Qualität und die Produktivität signifikant
+verbessert werden kann.</p>
+<p>In den CDB-Tools ist bereits eine <a class="reference external" href="https://www.pylint.org">Pylint</a> Installation und ein exemplarisches
+Setup (<code class="docutils literal notranslate"><span class="pre">templates/pylintrc</span></code>) enthalten.  Die Vorlage kopiert man sich am
+besten in den Ordner der CDB-Instanz nach:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$CADDOK_BASE\pylintrc
+</pre></div>
+</div>
+<p>und nimmt es in das Reposetory in die Versionsverwaltung mit auf.  Pylint findet
+diese Datei automatisch <a class="reference external" href="http://pylint.pycqa.org/en/latest/user_guide/run.html#command-line-options">[ref]</a>.</p>
+<dl>
+<dt><a class="reference external" href="https://www.gnu.org/software/emacs">Emacs</a>:</dt><dd><p>Am besten <a class="reference external" href="https://www.flycheck.org/">flycheck</a> und <a class="reference external" href="https://github.com/flycheck/flycheck-pos-tip">flycheck-pos-tip</a> über <a class="reference external" href="https://stable.melpa.org">MELPA</a> installieren und im
+CDB-Instanz Ordner eine <a class="reference external" href="https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html#Directory-Variables">.dir-locals.el</a> einrichten (s.a. <a class="reference external" href="https://www.flycheck.org/en/latest/languages.html?#python">Python in flycheck</a>).:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">;;;</span> <span class="o">.</span><span class="n">dir</span><span class="o">-</span><span class="nb">locals</span><span class="o">.</span><span class="n">el</span>
+<span class="p">((</span><span class="n">nil</span>
+  <span class="o">.</span> <span class="p">((</span><span class="n">indent</span><span class="o">-</span><span class="n">tabs</span><span class="o">-</span><span class="n">mode</span> <span class="o">.</span> <span class="n">t</span><span class="p">)</span>
+     <span class="p">(</span><span class="n">fill</span><span class="o">-</span><span class="n">column</span> <span class="o">.</span> <span class="mi">120</span><span class="p">)</span>
+     <span class="p">))</span>
+ <span class="p">(</span><span class="n">python</span><span class="o">-</span><span class="n">mode</span>
+  <span class="o">.</span> <span class="p">((</span><span class="n">indent</span><span class="o">-</span><span class="n">tabs</span><span class="o">-</span><span class="n">mode</span> <span class="o">.</span> <span class="n">nil</span><span class="p">)</span>
+     <span class="p">(</span><span class="n">flycheck</span><span class="o">-</span><span class="n">pylintrc</span> <span class="o">.</span> <span class="s2">&quot;pylintrc&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="n">flycheck</span><span class="o">-</span><span class="n">python</span><span class="o">-</span><span class="n">pylint</span><span class="o">-</span><span class="n">executable</span> <span class="o">.</span> <span class="s2">&quot;c:/share/cdb_cust_dev/winShortcuts/tools-pylint.bat&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="n">python</span><span class="o">-</span><span class="n">shell</span><span class="o">-</span><span class="n">interpreter</span> <span class="o">.</span> <span class="s2">&quot;c:/share/cdb_cust_dev/winShortcuts/tools-wrapper.bat&quot;</span><span class="p">)</span>
+     <span class="p">(</span><span class="n">python</span><span class="o">-</span><span class="n">shell</span><span class="o">-</span><span class="n">interpreter</span><span class="o">-</span><span class="n">args</span> <span class="o">.</span> <span class="s2">&quot;powerscript&quot;</span><span class="p">)</span>
+    <span class="p">))</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>In der <code class="docutils literal notranslate"><span class="pre">~/.emacs</span></code> empfiehlt sich:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">(</span><span class="k">global</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">key</span> <span class="p">[</span><span class="n">f6</span><span class="p">]</span>                    <span class="s1">&#39;flycheck-mode)</span>
+<span class="p">(</span><span class="k">global</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">key</span> <span class="s2">&quot;\M-n&quot;</span>                  <span class="s1">&#39;flycheck-next-error)</span>
+<span class="p">(</span><span class="k">global</span><span class="o">-</span><span class="nb">set</span><span class="o">-</span><span class="n">key</span> <span class="s2">&quot;\M-p&quot;</span>                  <span class="s1">&#39;flycheck-previous-error)</span>
+</pre></div>
+</div>
+</dd>
+<dt>PowerScript Studio:</dt><dd><p>Siehe Abschnitt „<a class="reference internal" href="eclipse.html#powerscript-studio-pylint"><span class="std std-ref">Pylint in PyDev einrichten</span></a>“</p>
+</dd>
+<dt>Kommandozeile:</dt><dd><p>CDB-Tools Umgebung entweder mit <a class="reference internal" href="../winShortcuts/cdbtools_winShortcuts.html#cdbtools-activate-bat"><span class="std std-ref">cdbtools-activate.bat</span></a> oder
+<a class="reference internal" href="../winShortcuts/cdbtools_winShortcuts.html#tools-sh-bat"><span class="std std-ref">tools-sh.bat</span></a> anziehen und direkt aufrufen:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ cd %CADDOK_BASE%
+[CDBTools]$ pylint -f colorized cust.plm\cust
+Using config file C:\share\cdb_cust_dev\pylintrc
+************* Module cust
+C:  1, 0: Missing module docstring (missing-docstring)
+************* Module cust.plm.__init__
+...
+</pre></div>
+</div>
+</dd>
+</dl>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../best_practice/index.html" class="btn btn-neutral float-right" title="Best practice" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="eclipse.html" class="btn btn-neutral float-left" title="Eclipse &amp; PowerScript Studio" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

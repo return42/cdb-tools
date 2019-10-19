@@ -1,0 +1,280 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>DB optimieren &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="Code Snippets" href="snippets.html" />
+    <link rel="prev" title="Releasemanagement und CONTACT Elements" href="release_management.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cdbtools_dev/index.html">Aufbau der CDB-Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Werkzeuge der CDB-Tools</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Best practice</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="build_cdb_mirror.html">Aufbau eines CDB Spiegel-Systems</a></li>
+<li class="toctree-l2"><a class="reference internal" href="release_management.html">Releasemanagement und CONTACT Elements</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">DB optimieren</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#mssql">MSSQL</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#top-10">TOP 10</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#datenbank-files">Datenbank-Files</a></li>
+<li class="toctree-l4"><a class="reference internal" href="#mssql-transaction">MSSQL-Transaction</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#oracle">Oracle</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="snippets.html">Code Snippets</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cheat-sheet.html">Cheat Sheet</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Best practice</a> &raquo;</li>
+        
+      <li>DB optimieren</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/best_practice/optimze_db.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="db-optimieren">
+<span id="optimze-db"></span><h1>DB optimieren<a class="headerlink" href="#db-optimieren" title="Link zu dieser Überschrift">¶</a></h1>
+<div class="section" id="mssql">
+<h2>MSSQL<a class="headerlink" href="#mssql" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="section" id="top-10">
+<h3>TOP 10<a class="headerlink" href="#top-10" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Auflistung der zehn größten Tabellen.</p>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span><span class="k">SELECT</span> <span class="n">TOP</span> <span class="mi">10</span> <span class="n">OBJECT_NAME</span><span class="p">(</span><span class="n">OBJECT_ID</span><span class="p">)</span> <span class="n">TableName</span><span class="p">,</span> <span class="n">st</span><span class="p">.</span><span class="k">row_count</span>
+  <span class="k">FROM</span> <span class="n">sys</span><span class="p">.</span><span class="n">dm_db_partition_stats</span> <span class="n">st</span>
+ <span class="k">WHERE</span> <span class="n">index_id</span> <span class="o">&lt;</span> <span class="mi">2</span>
+ <span class="k">ORDER</span> <span class="k">BY</span> <span class="n">st</span><span class="p">.</span><span class="k">row_count</span> <span class="k">DESC</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="datenbank-files">
+<h3>Datenbank-Files<a class="headerlink" href="#datenbank-files" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Datenbank Management-Systeme geben i.d.R. einmal allozierten Platz in den
+DB-Files nicht von alleine frei (<a class="reference external" href="https://docs.microsoft.com/en-us/sql/relational-databases/databases/database-files-and-filegroups">MS-SQL DB-Files</a>). Nach größeren Änderungen
+an den DB-Inhalten (Aufräum-Aktionen), kann es Sinn machen die DB-Files auch zu
+<em>shrinken</em> (s. <a class="reference external" href="https://docs.microsoft.com/en-us/sql/relational-databases/databases/shrink-a-database">MS-SQL shrink DB</a>) damit der überschüssig allozierte
+Plattenplatz wieder frei gegeben wird und dem System zur Verfügung steht.</p>
+</div>
+<div class="section" id="mssql-transaction">
+<h3>MSSQL-Transaction<a class="headerlink" href="#mssql-transaction" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Die Dateigrößen des <a class="reference external" href="https://docs.microsoft.com/en-us/sql/relational-databases/logs/the-transaction-log-sql-server">MS-SQL Transaction-log</a> können u.U. stark anwachsen,
+insbesondere nach größeren SQL-UPDATE Statements die große Tabellen komplett
+ändern oder leeren.  In einem Entwickler-System sollte es ausreichen, das
+<a class="reference external" href="https://docs.microsoft.com/de-de/sql/relational-databases/backup-restore/recovery-models-sql-server?view=sql-server-2017">Wiederherstellungsmodell „Einfach“</a>
+zu wählen.</p>
+<p>Um das Transaction-log und damit die Größe der DB Instanz zu optimieren kann man
+im <em>MS-SQL Server Management Studio</em> folgendes ausführen:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Task</span> <span class="o">--&gt;</span> <span class="n">Shrink</span> <span class="o">--&gt;</span> <span class="n">Database</span>
+</pre></div>
+</div>
+<p>Die Dateien zum Transaction-log sind in den Properties der DB konfiguriert. Dort
+kann man auch die <em>Autogrow</em> Eigenschaften parametrisieren:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">Database</span><span class="o">-</span><span class="n">Properties</span> <span class="o">/</span> <span class="n">Files</span> <span class="o">/</span> <span class="n">File</span> <span class="n">Type</span> <span class="o">=</span> <span class="n">Log</span>
+</pre></div>
+</div>
+<p>In der Spalte ‚Autogrowth / Maxsize‘ können die Einstellungen vorgenommen
+werden. In einer Entwickler Installation sollte ein Limit von 2GB genug sein.</p>
+</div>
+</div>
+<div class="section" id="oracle">
+<h2>Oracle<a class="headerlink" href="#oracle" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Siehe <a class="reference external" href="http://return42.github.io/handsOn/oracle/">http://return42.github.io/handsOn/oracle/</a></p>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="snippets.html" class="btn btn-neutral float-right" title="Code Snippets" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="release_management.html" class="btn btn-neutral float-left" title="Releasemanagement und CONTACT Elements" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

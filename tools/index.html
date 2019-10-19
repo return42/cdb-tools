@@ -1,0 +1,255 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Werkzeuge der CDB-Tools &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="Initialisieren eines CDB Spiegel-Systems" href="init_cdb_mirror.html" />
+    <link rel="prev" title="Paketmanagement der CDB-Tools" href="../cdbtools_dev/cdbtools_pckg.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../cdbtools_dev/index.html">Aufbau der CDB-Tools</a></li>
+<li class="toctree-l1 current"><a class="current reference internal" href="#">Werkzeuge der CDB-Tools</a><ul>
+<li class="toctree-l2"><a class="reference internal" href="#cdb-wartung-und-pflege">CDB Wartung und Pflege</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="init_cdb_mirror.html">Initialisieren eines CDB Spiegel-Systems</a></li>
+<li class="toctree-l3"><a class="reference internal" href="clean_cdb.html">Bereinigung der Datenbank</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="#entwickler-tools">Entwickler Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="console.html">Konsole &amp; ConEmu</a></li>
+<li class="toctree-l3"><a class="reference internal" href="eclipse.html">Eclipse &amp; PowerScript Studio</a></li>
+<li class="toctree-l3"><a class="reference internal" href="pylint.html">Pylint</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../best_practice/index.html">Best practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+      <li>Werkzeuge der CDB-Tools</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/tools/index.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="werkzeuge-der-cdb-tools">
+<h1>Werkzeuge der CDB-Tools<a class="headerlink" href="#werkzeuge-der-cdb-tools" title="Link zu dieser Überschrift">¶</a></h1>
+<p>Die hier vorgestellten Werkzeuge stehen in einer CDB-Tools Umgebung zur
+Verfügung. Eine solche Umgebung (Shell) bekommt man z.B. durch Doppelklick auf
+<a class="reference internal" href="../winShortcuts/cdbtools_winShortcuts.html#tools-sh-bat"><span class="std std-ref">tools-sh.bat</span></a>. In der CDB-Tools Umgebung stehen alle Kommandos aus der CDB
+Software als auch aus den CDB-Tools zur Verfügung. Also auch alles was mittels
+<a class="reference internal" href="../cdbtools_dev/cdbtools_pckg.html#cdbtools-pckg"><span class="std std-ref">pip –user</span></a> installiert wurde
+(s.a. <a class="reference external" href="https://github.com/return42/cdb-tools/blob/master/bootstrap/requirements.txt">cdb-tools/bootstrap/requirements.txt</a>).</p>
+<div class="section" id="cdb-wartung-und-pflege">
+<h2>CDB Wartung und Pflege<a class="headerlink" href="#cdb-wartung-und-pflege" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="init_cdb_mirror.html">Initialisieren eines CDB Spiegel-Systems</a></li>
+<li class="toctree-l1"><a class="reference internal" href="clean_cdb.html">Bereinigung der Datenbank</a></li>
+</ul>
+</div>
+</div>
+<div class="section" id="entwickler-tools">
+<h2>Entwickler Tools<a class="headerlink" href="#entwickler-tools" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="toctree-wrapper compound">
+<ul>
+<li class="toctree-l1"><a class="reference internal" href="console.html">Konsole &amp; ConEmu</a></li>
+<li class="toctree-l1"><a class="reference internal" href="eclipse.html">Eclipse &amp; PowerScript Studio</a></li>
+<li class="toctree-l1"><a class="reference internal" href="pylint.html">Pylint</a></li>
+</ul>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="init_cdb_mirror.html" class="btn btn-neutral float-right" title="Initialisieren eines CDB Spiegel-Systems" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="../cdbtools_dev/cdbtools_pckg.html" class="btn btn-neutral float-left" title="Paketmanagement der CDB-Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

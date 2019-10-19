@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="300" height="150" xmlns="http://www.w3.org/2000/svg" xmlns:svg="http://www.w3.org/2000/svg">
+ <!-- Created with Method Draw - http://github.com/duopixel/Method-Draw/ -->
+
+ <metadata id="metadata45">image/svg+xmlimage/svg+xml</metadata>
+ <g id="g4">
+  <title>background</title>
+  <rect fill="#ffffff" x="-1" y="-1" width="300" height="150" id="canvas_background"/>
+  <g id="canvasGrid" display="none">
+   <rect fill="url(#gridpattern)" stroke-width="0" id="rect10" width="300" height="150" x="0" y="0"/>
+  </g>
+ </g>
+ <g id="g12">
+  <title>Layer 1</title>
+  <line x1="33" y1="23" x2="146" y2="23" id="svg_1" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="3" stroke="#999999" fill="none"/>
+  <ellipse cx="63" cy="23" id="svg_2" rx="5" ry="5" stroke-width="1.5" stroke="#4c4c4c" fill="#4c4c4c"/>
+  <line x1="146" y1="23" x2="230" y2="23" id="svg_14" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-dasharray="2, 2" stroke-width="3" stroke="#999999" fill="none"/>
+  <ellipse cx="146" cy="23" id="svg_5" rx="5" ry="5" stroke-width="1.5" stroke="#4c4c4c" fill="#4c4c4c"/>
+  <ellipse cx="119" cy="23" id="svg_6" rx="5" ry="5" stroke-width="1.5" stroke="#4c4c4c" fill="#4c4c4c"/>
+  <line x1="110" y1="75" x2="180" y2="75" id="svg_8" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="3" stroke="#999999" fill="none"/>
+  <line x1="90" y1="23" x2="111" y2="75" id="svg_12" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-width="3" stroke="#999999" fill="none"/>
+  <ellipse cx="119" cy="75" id="svg_9" rx="5" ry="5" stroke-width="1.5" stroke="#4c4c4c" fill="#4c4c4c"/>
+  <ellipse cx="146" cy="75" id="svg_10" rx="5" ry="5" stroke-width="1.5" stroke="#4c4c4c" fill="#4c4c4c"/>
+  <line fill-opacity="null" x1="180" y1="75" x2="230" y2="23" id="svg_15" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-dasharray="2, 2" stroke-width="3" stroke="#7f0000" fill="none"/>
+  <ellipse cx="230" cy="23" id="svg_7" rx="5" ry="5" stroke-width="1.5" stroke="#7f0000" fill="#ffff00"/>
+  <text transform="rotate(-45, 217, 58)" x="180" y="60" id="svg_17" font-size="10px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="'Courier New', Courier, monospace">cdbpkg patch</text>
+  <line x1="90" y1="23" x2="178" y2="75" id="svg_23" stroke-linejoin="null" stroke-linecap="null" stroke-dasharray="2, 2" stroke-width="3" stroke="#7f0000" fill="none"/>
+  <text transform="rotate(33, 151, 48)" x="118" y="51" id="svg_25" font-size="10px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="'Courier New', Courier, monospace">cdbpkg diff</text>
+  <ellipse cx="180" cy="75" id="svg_13" rx="5" ry="5" stroke-width="1.5" stroke="#4c4c4c" fill="#4c4c4c"/>
+  <ellipse cx="90" cy="23" id="svg_3" rx="5" ry="5" stroke-width="1.5" stroke="#7f0000" fill="#4c4c4c"/>
+  <line x1="123" y1="100" x2="158" y2="100" id="svg_28" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-dasharray="2, 2" stroke-width="3" stroke="#7f0000" fill="none"/>
+  <line x1="123" y1="120" x2="158" y2="120" id="svg_27" stroke-linejoin="undefined" stroke-linecap="undefined" stroke-dasharray="2, 2" stroke-width="3" stroke="#999999" fill="none"/>
+  <ellipse cx="40" cy="100" id="svg_30" rx="5" ry="5" stroke-width="1.5" stroke="#7f0000" fill="#4c4c4c"/>
+  <ellipse cx="40" cy="120" id="svg_33" rx="5" ry="5" stroke-width="1.5" stroke="#7f0000" fill="#ffff00"/>
+  <text x="55" y="102.5" id="svg_34" font-size="10px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Branch-Point</text>
+  <text x="55" y="122.5" id="svg_35" font-size="10px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Helvetica, Arial, sans-serif">Merge-Point</text>
+  <text x="165" y="102.5" id="svg_29" font-size="10px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Helvetica, Arial, sans-serif">merge Konfiguration (CDB)</text>
+  <text x="165" y="122.5" id="svg_16" font-size="10px" xml:space="preserve" stroke-width="0" stroke="#4c4c4c" fill="#000000" text-anchor="start" font-family="Helvetica, Arial, sans-serif">merge Source-Code (SCM)</text>
+ </g>
+</svg>

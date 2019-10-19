@@ -1,0 +1,364 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Paketmanagement der CDB-Tools &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="Werkzeuge der CDB-Tools" href="../tools/index.html" />
+    <link rel="prev" title="Build aus dem Reposetorie" href="cdbtools_repo.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Aufbau der CDB-Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cdbtools_rte.html">Laufzeitumgebung</a></li>
+<li class="toctree-l2"><a class="reference internal" href="cdbtools_repo.html">Build aus dem Reposetorie</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Paketmanagement der CDB-Tools</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#python-pakte-der-cdb-tools">Python Pakte der CDB-Tools</a><ul>
+<li class="toctree-l4"><a class="reference internal" href="#python-pakete-in-cdb">Python Pakete in CDB</a></li>
+</ul>
+</li>
+<li class="toctree-l3"><a class="reference internal" href="#softwarepakete-der-cdb-tools">Softwarepakete der CDB-Tools</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Werkzeuge der CDB-Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../best_practice/index.html">Best practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Aufbau der CDB-Tools</a> &raquo;</li>
+        
+      <li>Paketmanagement der CDB-Tools</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cdbtools_dev/cdbtools_pckg.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="paketmanagement-der-cdb-tools">
+<span id="cdbtools-pckg"></span><h1>Paketmanagement der CDB-Tools<a class="headerlink" href="#paketmanagement-der-cdb-tools" title="Link zu dieser Überschrift">¶</a></h1>
+<p>Die CDB-Tools sind eine Umgebung in der zusätzliche Software in CDB Prozessen
+bereit gestellt werden kann.  Einiges wird bereits in der Standard-Installation
+der CDB-Tools bereit gestellt, anderes kann individuell nachinstalliert werden.
+Die CDB-Tools Umgebung bietet im Kern zwei unterschiedliche Methoden zur
+Installation zusätzlicher Software:</p>
+<ol class="arabic simple">
+<li><p>Zusätzliche Python Pakte: bereitgestellt  über <a class="reference external" href="https://pypi.python.org/pypi">PyPi</a> (pip)</p></li>
+<li><p>Zusätzliche Software: bereitgestellt über die CDB-Tools Entwicklung</p></li>
+</ol>
+<div class="section" id="python-pakte-der-cdb-tools">
+<span id="cdbtools-pip"></span><h2>Python Pakte der CDB-Tools<a class="headerlink" href="#python-pakte-der-cdb-tools" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Python Pakete werden mit dem Kommando <a class="reference external" href="https://pip.pypa.io">pip</a> installiert.  Es existiert ein
+<code class="docutils literal notranslate"><span class="pre">pip</span></code> in der CDB-Installation und ein weiteres <code class="docutils literal notranslate"><span class="pre">pip</span></code> in der CDB-Tools
+Umgebung.  In der CDB-Tools Umgebung (z.B. <code class="docutils literal notranslate"><span class="pre">winShortcuts/tools-sh.bat</span></code>):</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\share\cdb_cust_dev</span>
+[CDBTools]$ pip --version
+pip 19.0.3 from C:\share\cdb-tools\py27\Python27\site-packages\pip (python 2.7)
+</pre></div>
+</div>
+<p>Die CDB-Tools beziehen bereits diverse Pakete über <a class="reference external" href="https://pypi.python.org/pypi">PyPi</a>, die in der
+<a class="reference external" href="https://github.com/return42/cdb-tools/blob/master/bootstrap/requirements.txt">cdb-tools/bootstrap/requirements.txt</a> Datei aufgelistet sind.  Um die CDB-Instanz
+resp. die CDB-Software nicht zu manipulieren muss die Installation der Pakete
+immer in das User-Scheme (<code class="docutils literal notranslate"><span class="pre">PYTHONUSERBASE</span></code>) der <a class="reference internal" href="cdbtools_rte.html#cdbtools-rte"><span class="std std-ref">Laufzeitumgebung</span></a> erfolgen.</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ pip install --user <span class="p">&lt;</span>package-name&gt;
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hinweis</p>
+<p>Bei der Verwendung von <code class="docutils literal notranslate"><span class="pre">pip</span> <span class="pre">install</span></code> in den CDB-Tools sollte immer die
+Option <code class="docutils literal notranslate"><span class="pre">--user</span></code> verwendet werden.  Bei unsachgemäßer Installation von
+Paketen mit <a class="reference external" href="https://pip.pypa.io">pip</a> kann es passieren, dass in die CDB-Software installiert
+wird, deshalb immer erst mal in einem <em>unkritischen</em> System testen!</p>
+</div>
+<p>In der CDB-Tools Umgebung ist die <code class="docutils literal notranslate"><span class="pre">PIP_CONFIG_FILE%</span></code> Variable gesetzt.  Die
+<cite>pip.ini</cite> Konfiguration liegt unter <a class="reference external" href="https://github.com/return42/cdb-tools/blob/master/bootstrap/pip.ini">cdb-tools/bootstrap/pip.ini</a>:</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ echo <span class="nv">%PIP_CONFIG_FILE%</span>
+C<span class="p">:</span><span class="nl">\share\cdb-tools\bootstrap\pip.ini</span>
+</pre></div>
+</div>
+<div class="section" id="python-pakete-in-cdb">
+<span id="cdb-pip"></span><h3>Python Pakete in CDB<a class="headerlink" href="#python-pakete-in-cdb" title="Link zu dieser Überschrift">¶</a></h3>
+<p>Ab CDB-15 ist auch ein pip in CDB enthalten.  Dieses wird nicht von den
+CDB-Tools genutzt, die haben ihr eigenes pip resp. Paketmanagement.  In einer
+Standard CDB-Installation (z.B. <code class="docutils literal notranslate"><span class="pre">winShortcuts/cdb-sh.bat</span></code>):</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>[cdbsrv-11.3.10:cust_dev] C:\share\cdb_cust_dev<span class="p">&gt;</span> pip --version
+pip 9.0.1 from C:\share\contact\cdbsrv-11.3.10\lib\site-packages (python 2.7)
+</pre></div>
+</div>
+<div class="admonition warning">
+<p class="admonition-title">Warnung</p>
+<p>In dem Plattform Handbuch von CDB wird dieses pip vorgestellt, dort werden
+auch die Einschränkungen erwähnt.  Mit diesem pip wird in die CDB-Software
+resp. in den CDB-Instanz installiert.  Bei dem pip aus CDB muss der Schalter
+<code class="docutils literal notranslate"><span class="pre">--target</span></code> mit angegeben werden, sonst werden die Pakete in den
+CDB-Software Ordner installiert.  Werden (neue) Python Pakete damit
+installiert, so kann es sein, dass deren Abhängigkeiten aktuelle Versionen
+von Python Paketen benötigen, die bereits mit der CDB-Software ausgeliefert
+werden.  Diese werden dann ebenfalls im <em>target</em> Ordner installiert.  Damit
+wird dann auch die CDB-Software resp. die Standard CDB-Umgebung verändert, da
+nun auch die CDB Module (ungetestet) diese neuen Bibliotheken nutzen.</p>
+</div>
+<p>Die CDB-Tools Umgebung wurde entwickelt um genau das zu vermeiden
+(<em>non-Invasiv</em>) und um eine klare Trennung zwischen CDB-Standard Umgebung und
+einer <em>erweiterten</em> Umgebung zu haben.  Deshalb ist es im allgemeinen zu
+empfehlen, das pip aus den CDB-Tools zu verwenden, siehe „<a class="reference internal" href="#cdbtools-pip"><span class="std std-ref">Python Pakte der CDB-Tools</span></a>“.</p>
+<div class="admonition tip">
+<p class="admonition-title">Tipp</p>
+<p>Egal ob CDB oder CDB-Tools, wenn Sie auch bei unsachgemäßer Nutzung sicher
+vermeiden wollen, dass Manipulationen an der CDB-Software sattfinden, dann
+müssen Sie den CDB -Admins bzw. -Entwicklern die Schreibberechtigungen auf
+den <code class="docutils literal notranslate"><span class="pre">CADDOK_RUNTIME</span></code> Ordner entziehen.</p>
+</div>
+</div>
+</div>
+<div class="section" id="softwarepakete-der-cdb-tools">
+<span id="cdbtools-software"></span><h2>Softwarepakete der CDB-Tools<a class="headerlink" href="#softwarepakete-der-cdb-tools" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Die CDB-Tools stellen über die <a class="reference external" href="https://github.com/return42/cdb-tools/releases">Releases</a> ergänzende Software Pakete zur
+Verfügung.  Um diese Pakete zu installieren muss die CDB-Tools Umgebung aktiv
+sein (entweder über <code class="docutils literal notranslate"><span class="pre">tools-sh</span></code> oder in einer normalen Shell aktivieren):</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\share\cdb-tools</span><span class="c1">&gt; win_bin\cdbtools-activate.bat</span>
+...
+</pre></div>
+</div>
+<p>Der Download und die Installation der Pakete wird mit dem Skript
+<a class="reference external" href="https://github.com/return42/cdb-tools/blob/master/bootstrap/build.py">cdb-tools/bootstrap/build.py</a> durchgeführt, hier ein Beispiel bei dem das
+<code class="docutils literal notranslate"><span class="pre">ConEmu.zip</span></code> Paket aus den <a class="reference external" href="https://github.com/return42/cdb-tools/releases">Releases</a> heruntergeladen und installiert wird:</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>C<span class="p">:</span><span class="nl">\share\cdb-tools</span>
+[CDBTools]$ python bootstrap/build.py install-software ConEmu.zip
+install:  win_bin\ConEmu
+          C:\share\cdb-tools\dist\sw-download\ConEmu.zip
+missing: ConEmu.zip
+download: https://github.com/return42/cdb-tools/releases/download/v1.1/ConEmu.zip ...
+download: ConEmu.zip[7.8 MB][======================================================] 100%
+  ConEmu.zip already installed
+  --<span class="p">&gt;</span> to update first remove: C:\share\cdb-tools\win_bin\ConEmu
+  --<span class="p">&gt;</span> ..........
+  --<span class="p">&gt;</span> ConEmu.zip: pe.t64.map          [============================================] 100%
+install: win_bin\ConEmu OK
+</pre></div>
+</div>
+<div class="admonition hint">
+<p class="admonition-title">Hinweis</p>
+<p>Das <code class="docutils literal notranslate"><span class="pre">ConEmu.zip</span></code> Paket ist bereits in dem <code class="docutils literal notranslate"><span class="pre">cdb-tools.zip</span></code> der <a class="reference external" href="https://github.com/return42/cdb-tools/releases">Releases</a>
+enthalten und braucht i.d.R. nicht nochmal installiert werden.  Es soll hier
+lediglich als <em>ein</em> Beispiel dienen.</p>
+</div>
+<p>In dem Beispiel ist zu sehen, dass zuerst der Download erfolgt, danach wird
+versucht das Paket zu installieren.  Sofern bereits ein solches Paket
+installiert ist muss dieses erst entfernt werden (einfach löschen oder
+umbenennen).  Der Download erfolgt in den Ordner <code class="docutils literal notranslate"><span class="pre">dist/sw-download</span></code> und kann
+auch separat ausgeführt werden (siehe command: <code class="docutils literal notranslate"><span class="pre">get-software</span></code>).</p>
+<div class="highlight-dosbatch notranslate"><div class="highlight"><pre><span></span>[CDBTools]$ python bootstrap/build.py --help
+
+usage: build.py [-h] [--debug] [--verbose] [--quiet]  <span class="p">&lt;</span>command<span class="p">&gt;</span> ...
+
+CDB-Tools build maintenance script
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --debug               run in debug mode (default: False)
+  --verbose             run in verbose mode (default: False)
+  --quiet               run in quiet mode (default: False)
+
+<span class="p">&lt;</span>command<span class="p">&gt;</span>:
+
+    get-pypkgs          download python requirements (pip download)
+    install-pypkgs      install python requirements (pip download)
+    get-software        get software archieves (ZIP)
+    install-software    install software archieves (ZIP)
+    dist                build distribution
+</pre></div>
+</div>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="../tools/index.html" class="btn btn-neutral float-right" title="Werkzeuge der CDB-Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="cdbtools_repo.html" class="btn btn-neutral float-left" title="Build aus dem Reposetorie" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>

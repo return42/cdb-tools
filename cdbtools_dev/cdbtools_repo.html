@@ -1,0 +1,315 @@
+
+
+<!DOCTYPE html>
+<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
+<head>
+  <meta charset="utf-8">
+  
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+  <title>Build aus dem Reposetorie &mdash; CDB Tools 2.0 Dokumentation</title>
+  
+
+  
+  
+  
+  
+
+  
+  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
+  
+    
+      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+        <script type="text/javascript" src="../_static/jquery.js"></script>
+        <script type="text/javascript" src="../_static/underscore.js"></script>
+        <script type="text/javascript" src="../_static/doctools.js"></script>
+        <script type="text/javascript" src="../_static/language_data.js"></script>
+        <script type="text/javascript" src="../_static/translations.js"></script>
+    
+    <script type="text/javascript" src="../_static/js/theme.js"></script>
+
+    
+
+  
+  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+    <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
+    <link rel="search" title="Suche" href="../search.html" />
+    <link rel="next" title="Paketmanagement der CDB-Tools" href="cdbtools_pckg.html" />
+    <link rel="prev" title="Laufzeitumgebung" href="cdbtools_rte.html" /> 
+</head>
+
+<body class="wy-body-for-nav">
+
+   
+  <div class="wy-grid-for-nav">
+    
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search" >
+          
+
+          
+            <a href="../index.html" class="icon icon-home"> CDB Tools
+          
+
+          
+            
+            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
+          
+          </a>
+
+          
+            
+            
+              <div class="version">
+                2.0
+              </div>
+            
+          
+
+          
+<div role="search">
+  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
+    <input type="text" name="q" placeholder="Search docs" />
+    <input type="hidden" name="check_keywords" value="yes" />
+    <input type="hidden" name="area" value="default" />
+  </form>
+</div>
+
+          
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
+          
+            
+            
+              
+            
+            
+              <ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="index.html">Aufbau der CDB-Tools</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="cdbtools_rte.html">Laufzeitumgebung</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Build aus dem Reposetorie</a><ul>
+<li class="toctree-l3"><a class="reference internal" href="#git-clone">git-clone</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#bootstrap-download-online">Bootstrap &amp; Download (online)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#build-der-cdb-tools-offline">Build der CDB-Tools (offline)</a></li>
+<li class="toctree-l3"><a class="reference internal" href="#update-der-cdb-tools">Update der CDB-Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l2"><a class="reference internal" href="cdbtools_pckg.html">Paketmanagement der CDB-Tools</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../tools/index.html">Werkzeuge der CDB-Tools</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../best_practice/index.html">Best practice</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
+</ul>
+
+            
+          
+        </div>
+      </div>
+    </nav>
+
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+
+      
+      <nav class="wy-nav-top" aria-label="top navigation">
+        
+          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+          <a href="../index.html">CDB Tools</a>
+        
+      </nav>
+
+
+      <div class="wy-nav-content">
+        
+        <div class="rst-content">
+        
+          
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div role="navigation" aria-label="breadcrumbs navigation">
+
+  <ul class="wy-breadcrumbs">
+    
+      <li><a href="../index.html">Docs</a> &raquo;</li>
+        
+          <li><a href="index.html">Aufbau der CDB-Tools</a> &raquo;</li>
+        
+      <li>Build aus dem Reposetorie</li>
+    
+    
+      <li class="wy-breadcrumbs-aside">
+        
+            
+            <a href="../_sources/cdbtools_dev/cdbtools_repo.rst.txt" rel="nofollow"> View page source</a>
+          
+        
+      </li>
+    
+  </ul>
+
+  
+  <hr/>
+</div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+           <div itemprop="articleBody">
+            
+  <div class="section" id="build-aus-dem-reposetorie">
+<span id="cdbtools-repo"></span><h1>Build aus dem Reposetorie<a class="headerlink" href="#build-aus-dem-reposetorie" title="Link zu dieser Überschrift">¶</a></h1>
+<p>Die Entwicklung der CDB-Tools findet in dem Reposetorie <a class="reference external" href="https://github.com/return42/cdb-tools">cdb-tools&#64;github</a> statt.  Will man die CDB-Tools selber
+bauen oder ein Update durchführen so muss man zunächst über einen Klon dieses
+Reposetories verfügen (<code class="docutils literal notranslate"><span class="pre">cdb-tools.zip</span></code> in den <a class="reference external" href="https://github.com/return42/cdb-tools/releases">Releases</a> ist bereits ein
+git-Clone).</p>
+<div class="section" id="git-clone">
+<span id="clone-cdbtools"></span><h2>git-clone<a class="headerlink" href="#git-clone" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Das Repository der CDB-Tools wird mit <code class="docutils literal notranslate"><span class="pre">git</span> <span class="pre">clone</span></code> <em>geklont</em>.:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git clone --recursive https://github.com/return42/cdb-tools
+</pre></div>
+</div>
+<p>Wichtig ist der Schalter <code class="docutils literal notranslate"><span class="pre">--recursive</span></code> der sicherstellt, dass auch die
+Submodule der CDB-Tools <em>geklont</em> werden.  Es kann aber auch später nachgeholt
+werden:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git submodule init
+$ git submodule update
+</pre></div>
+</div>
+<p>Als nächstes müssen die <code class="docutils literal notranslate"><span class="pre">CADDOK_*</span></code> Variablen angepasst werden
+(<a class="reference internal" href="../install.html#install-cdbtools"><span class="std std-ref">Installation</span></a>).</p>
+<p>Der Build besteht aus den unten beschriebenen Schritten.  Da in <em>restricted
+areas</em> nicht immer ein Zugang zum Internet zur Verfügung steht, wurde der
+<em>Build</em> in eine <em>online</em> und eine <em>offline</em> Phase aufgeteilt.</p>
+</div>
+<div class="section" id="bootstrap-download-online">
+<span id="cdbtools-bootstrap"></span><h2>Bootstrap &amp; Download (online)<a class="headerlink" href="#bootstrap-download-online" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Bevor die CDB-Tools genutzt werden können müssen zunächst die externen
+Abhängigkeiten aus dem Internet geladen werden (im <code class="docutils literal notranslate"><span class="pre">cdb-tools.zip</span></code> initial
+enthalten).</p>
+<div class="admonition tip">
+<p class="admonition-title">Tipp</p>
+<p>Die Schritte können komfortabel mit einem Doppelklick auf <a class="reference internal" href="../winShortcuts/cdbtools_winShortcuts.html#upkeep-bat"><span class="std std-ref">upkeep.bat</span></a>
+durchgeführt werden.</p>
+</div>
+<p>Für die beiden ersten Schritte (Bootstrap &amp; Download) ist ein online Zugang zum
+Internet und ein Python 2.7.9 erforderlich.  Sofern eine CDB-Instanz zur
+Verfügung steht wird der Python Interpreter aus der CDB-Instanz bezogen
+(ansonsten muss man ein Python 2.7.9 auf dem <em>online</em> Host installieren).</p>
+<dl class="simple">
+<dt>bootstrap</dt><dd><p>Der <em>bootstrap</em> ist initial einmal erforderlich.  Er installiert eine minimal
+erforderliche Umgebung mit der die weiteren Schritte wie ‚download‘ oder
+‚install‘ erst möglich sind.</p>
+</dd>
+<dt>download</dt><dd><p>Beim Download werden alle Python-Pakete und <em>Tools</em> aus dem Internet geladen
+und in dem <code class="docutils literal notranslate"><span class="pre">dist</span></code> Ordner abgelegt.  Die Tools wie <a class="reference internal" href="../tools/console.html#cdbtools-conemu"><span class="std std-ref">Konsole &amp; ConEmu</span></a>
+werden dabei aus dem Download bereich der CDB-Tools bezogen.</p>
+<ul class="simple">
+<li><p>Quelle der Python Pakete: <a class="reference external" href="https://pypi.python.org/pypi">PyPi</a> (<a class="reference external" href="https://github.com/return42/cdb-tools/blob/master/bootstrap/requirements.txt">cdb-tools/bootstrap/requirements.txt</a>)</p></li>
+<li><p>Quelle der <em>Tools</em>: <a class="reference external" href="https://github.com/return42/cdb-tools/releases/">https://github.com/return42/cdb-tools/releases/</a></p></li>
+</ul>
+</dd>
+</dl>
+</div>
+<div class="section" id="build-der-cdb-tools-offline">
+<span id="cdbtools-build"></span><h2>Build der CDB-Tools (offline)<a class="headerlink" href="#build-der-cdb-tools-offline" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Für die folgenden Schritte ist eine CDB Instanz erforderlich. Ein online Zugang
+zum Internet ist nicht mehr erforderlich, da die erforderlichen Pakete bereits
+aus dem Internet geladen wurden.</p>
+<dl class="simple">
+<dt>install</dt><dd><p>Für die Installation ist kein online Zugang mehr erforderlich. Die
+Installation erfolgt aus dem <code class="docutils literal notranslate"><span class="pre">dist</span></code> Ordner.</p>
+</dd>
+<dt>update launcher</dt><dd><p>Die Python Pakete installieren sich z.T. mit absoluten Pfadnamen. Damit die
+CDB-Tools <em>portable</em> sind müssen die absoluten Pfadnamen in relative
+<em>umgebogen</em> werden.</p>
+</dd>
+<dt>ZIP CDB-Tools</dt><dd><p>In diesem letzten Schritt wird aus den CDB-Tools ein <code class="docutils literal notranslate"><span class="pre">cdb-tools.zip</span></code> gebaut.
+Dieser Schritt ist nur erforderlich, wenn Sie sich eine aktuelle Version der
+CDB-Tools als ZIP bereit stellen möchten (ein eigenes Release).</p>
+</dd>
+</dl>
+</div>
+<div class="section" id="update-der-cdb-tools">
+<span id="update-cdbtools"></span><h2>Update der CDB-Tools<a class="headerlink" href="#update-der-cdb-tools" title="Link zu dieser Überschrift">¶</a></h2>
+<p>Die Aktualisierung der CDB-Tools erfolgt über das Reposetorie.  Für das Update
+muss <code class="docutils literal notranslate"><span class="pre">git</span></code> und ein online Zugang zur Verfügung stehen:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ git pull
+$ git submodule update --recursive
+</pre></div>
+</div>
+<p>Die CDB-Tools müssen dann neu gebaut werden:</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#cdbtools-bootstrap"><span class="std std-ref">Bootstrap &amp; Download (online)</span></a></p></li>
+<li><p><a class="reference internal" href="#cdbtools-build"><span class="std std-ref">Build der CDB-Tools (offline)</span></a></p></li>
+</ul>
+</div>
+</div>
+
+
+           </div>
+           
+          </div>
+          <footer>
+  
+    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
+      
+        <a href="cdbtools_pckg.html" class="btn btn-neutral float-right" title="Paketmanagement der CDB-Tools" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
+      
+      
+        <a href="cdbtools_rte.html" class="btn btn-neutral float-left" title="Laufzeitumgebung" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
+      
+    </div>
+  
+
+  <hr/>
+
+  <div role="contentinfo">
+    <p>
+        &copy; Copyright 2019 Markus Heiser
+
+    </p>
+  </div>
+  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
+
+</footer>
+
+        </div>
+      </div>
+
+    </section>
+
+  </div>
+  
+
+
+  <script type="text/javascript">
+      jQuery(function () {
+          SphinxRtdTheme.Navigation.enable(true);
+      });
+  </script>
+
+  
+  
+    
+   
+
+</body>
+</html>
