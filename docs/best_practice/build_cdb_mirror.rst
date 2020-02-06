@@ -182,7 +182,7 @@ Modulen in den BlobStore importiert werden::
 Vault übernehmen
 ================
 
-.. sidebar:: ptional
+.. sidebar:: optional
 
    Die Vaults aus dem PROD System in das Entwickler System zu übernehmen ist
    eher selten erforderlich, aber auch solche Szenarien kann es geben.

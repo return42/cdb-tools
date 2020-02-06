@@ -59,6 +59,7 @@ IGNORE_FILES = [
     , r'\.#*$'
     , r'.DS_Store'
     , r'.*\.pyc$'
+    , r'.*\.pyo$'
     #, r'.*\.elc$'
     , ]
 
