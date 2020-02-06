@@ -58,12 +58,11 @@ PHONY += cdbtools
 cdbtools:
 	winShortcuts\upkeep.bat
 
-PHONY += bootstrap download dist
-bootstrap:
-	winShortcuts\upkeep.bat bootstrap
+PHONY += download dist
 download:
 	winShortcuts\upkeep.bat download
 dist:
+	git gc --force
 	winShortcuts\upkeep.bat dist
 
 .PHONY: $(PHONY)

@@ -53,6 +53,17 @@ exit 42
 
 :main
 
+  IF x%1 EQU x GOTO runall
+
+  CALL "%CDBTOOLS_HOME%\win_bin\cdbtools-activate.bat"
+
+  IF x%1 EQU xdownload GOTO downloadPackages
+  IF x%1 EQU xdist GOTO buildZIP
+  echo "-- END --"
+  GOTO EXIT_OK
+
+:runall
+
   REM bootsrap and download (with or without CDB installation)
 
   echo.
