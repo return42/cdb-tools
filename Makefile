@@ -62,7 +62,7 @@ PHONY += download dist
 download:
 	winShortcuts\upkeep.bat download
 dist:
-	git gc --force
+	@- git gc --force --quiet
 	winShortcuts\upkeep.bat dist
 
 .PHONY: $(PHONY)
