@@ -1,3 +1,15 @@
+2020-07-16 Release 3.0
+
+  * requirements.txt um pylint u. sphinx Pakete erweitert
+  * diverse kleinere Verbesserungen beim Erstellen des Builds
+  * doc: Kapitel zum Aufbau eines Spiegels überarbeitet,
+  * doc: clean-cdb Doku überarbeitet
+  * boilerplate: updated
+  * cdb-clean object-dict: Bereinigung des Object-Dictionary (cdb_object).
+  * init_cdb_mirror: Normalisierung INTERFACE auf 'localhost'
+  * slides: use dejavu theme
+  * Eclipse & Pylint
+
 2019-03-15 Release 2.0
 
   * CDB ELEMENTS 15.3 getestet

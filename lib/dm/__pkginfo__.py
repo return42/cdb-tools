@@ -5,10 +5,10 @@ python package meta informations
 """
 
 package      = 'dm'
-version      = '2.0'
+version      = '3.0'
 authors      = ['Markus Heiser', ]
 emails       = ['markus.heiser@darmarIT.de', ]
-copyright    = '2019 Markus Heiser'
+copyright    = '2020 Markus Heiser'
 url          = 'https://github.com/return42/cdb-tools'
 description  = 'Sammlung von Tools & Skripten zur Wartung einer CIM DATABASE Installation.'
 license      = 'GPLv2'
