@@ -1,175 +1,49 @@
 
-
 <!DOCTYPE html>
-<!--[if IE 8]><html class="no-js lt-ie9" lang="de" > <![endif]-->
-<!--[if gt IE 8]><!--> <html class="no-js" lang="de" > <!--<![endif]-->
-<head>
-  <meta charset="utf-8">
-  
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  
-  <title>Initialisieren eines CDB Spiegel-Systems &mdash; CDB Tools 2.0 Dokumentation</title>
-  
 
-  
-  
-  
-  
-
-  
-  <script type="text/javascript" src="../_static/js/modernizr.min.js"></script>
-  
-    
-      <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
-        <script type="text/javascript" src="../_static/jquery.js"></script>
-        <script type="text/javascript" src="../_static/underscore.js"></script>
-        <script type="text/javascript" src="../_static/doctools.js"></script>
-        <script type="text/javascript" src="../_static/language_data.js"></script>
-        <script type="text/javascript" src="../_static/translations.js"></script>
-    
-    <script type="text/javascript" src="../_static/js/theme.js"></script>
-
-    
-
-  
-  <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
-  <link rel="stylesheet" href="../_static/theme_overrides.css" type="text/css" />
+<html lang="de">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Initialisieren eines CDB Spiegel-Systems &#8212; CDB-Tools (3.0)</title>
+    <link rel="stylesheet" href="../_static/cdb-tools.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script src="../_static/jquery.js"></script>
+    <script src="../_static/underscore.js"></script>
+    <script src="../_static/doctools.js"></script>
+    <script src="../_static/language_data.js"></script>
+    <script src="../_static/translations.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
     <link rel="search" title="Suche" href="../search.html" />
     <link rel="next" title="Bereinigung der Datenbank" href="clean_cdb.html" />
-    <link rel="prev" title="Werkzeuge der CDB-Tools" href="index.html" /> 
-</head>
-
-<body class="wy-body-for-nav">
-
+    <link rel="prev" title="Werkzeuge der CDB-Tools" href="index.html" />
+  <script>DOCUMENTATION_OPTIONS.URL_ROOT = '../';</script>
    
-  <div class="wy-grid-for-nav">
-    
-    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
-      <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-          
+  </head><body>
+    <div class="related" role="navigation" aria-label="related navigation">
+      <h3>Navigation</h3>
+      <ul>
+        <li class="right" style="margin-right: 10px">
+          <a href="../genindex.html" title="Stichwortverzeichnis"
+             accesskey="I">Index</a></li>
+        <li class="right" >
+          <a href="clean_cdb.html" title="Bereinigung der Datenbank"
+             accesskey="N">weiter</a> |</li>
+        <li class="right" >
+          <a href="index.html" title="Werkzeuge der CDB-Tools"
+             accesskey="P">zurück</a> |</li>
+        <li class="nav-item nav-item-0"><a href="../index.html">CDB-Tools (3.0)</a> &#187;</li>
+          <li class="nav-item nav-item-1"><a href="index.html" accesskey="U">Werkzeuge der CDB-Tools</a> &#187;</li>
+        <li class="nav-item nav-item-this"><a href="">Initialisieren eines CDB Spiegel-Systems</a></li> 
+      </ul>
+    </div>  
 
-          
-            <a href="../index.html" class="icon icon-home"> CDB Tools
-          
-
-          
-            
-            <img src="../_static/darmarIT_logo_128.png" class="logo" alt="Logo"/>
-          
-          </a>
-
-          
-            
-            
-              <div class="version">
-                2.0
-              </div>
-            
-          
-
-          
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-
-          
-        </div>
-
-        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="main navigation">
-          
-            
-            
-              
-            
-            
-              <ul class="current">
-<li class="toctree-l1"><a class="reference internal" href="../install.html">Installation</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../winShortcuts/index.html">winShortcuts</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../cdbtools_dev/index.html">Aufbau der CDB-Tools</a></li>
-<li class="toctree-l1 current"><a class="reference internal" href="index.html">Werkzeuge der CDB-Tools</a><ul class="current">
-<li class="toctree-l2 current"><a class="reference internal" href="index.html#cdb-wartung-und-pflege">CDB Wartung und Pflege</a><ul class="current">
-<li class="toctree-l3 current"><a class="current reference internal" href="#">Initialisieren eines CDB Spiegel-Systems</a></li>
-<li class="toctree-l3"><a class="reference internal" href="clean_cdb.html">Bereinigung der Datenbank</a></li>
-</ul>
-</li>
-<li class="toctree-l2"><a class="reference internal" href="index.html#entwickler-tools">Entwickler Tools</a></li>
-</ul>
-</li>
-<li class="toctree-l1"><a class="reference internal" href="../best_practice/index.html">Best practice</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../hints.html">wichtige Hinweise</a></li>
-<li class="toctree-l1"><a class="reference internal" href="../LICENSE.html">Lizenzbedingungen</a></li>
-</ul>
-
-            
-          
-        </div>
-      </div>
-    </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
-
-      
-      <nav class="wy-nav-top" aria-label="top navigation">
-        
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="../index.html">CDB Tools</a>
-        
-      </nav>
-
-
-      <div class="wy-nav-content">
-        
-        <div class="rst-content">
-        
-          
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-<div role="navigation" aria-label="breadcrumbs navigation">
-
-  <ul class="wy-breadcrumbs">
-    
-      <li><a href="../index.html">Docs</a> &raquo;</li>
-        
-          <li><a href="index.html">Werkzeuge der CDB-Tools</a> &raquo;</li>
-        
-      <li>Initialisieren eines CDB Spiegel-Systems</li>
-    
-    
-      <li class="wy-breadcrumbs-aside">
-        
-            
-            <a href="../_sources/tools/init_cdb_mirror.rst.txt" rel="nofollow"> View page source</a>
-          
-        
-      </li>
-    
-  </ul>
-
-  
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
+    <div class="document">
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+          <div class="body" role="main">
             
   <div class="section" id="initialisieren-eines-cdb-spiegel-systems">
 <span id="init-cdb-mirror"></span><h1>Initialisieren eines CDB Spiegel-Systems<a class="headerlink" href="#initialisieren-eines-cdb-spiegel-systems" title="Link zu dieser Überschrift">¶</a></h1>
@@ -201,52 +75,61 @@ END
 </div>
 
 
-           </div>
-           
+            <div class="clearer"></div>
           </div>
-          <footer>
-  
-    <div class="rst-footer-buttons" role="navigation" aria-label="footer navigation">
-      
-        <a href="clean_cdb.html" class="btn btn-neutral float-right" title="Bereinigung der Datenbank" accesskey="n" rel="next">Next <span class="fa fa-arrow-circle-right"></span></a>
-      
-      
-        <a href="index.html" class="btn btn-neutral float-left" title="Werkzeuge der CDB-Tools" accesskey="p" rel="prev"><span class="fa fa-arrow-circle-left"></span> Previous</a>
-      
-    </div>
-  
-
-  <hr/>
-
-  <div role="contentinfo">
-    <p>
-        &copy; Copyright 2019 Markus Heiser
-
-    </p>
-  </div>
-  Built with <a href="http://sphinx-doc.org/">Sphinx</a> using a <a href="https://github.com/rtfd/sphinx_rtd_theme">theme</a> provided by <a href="https://readthedocs.org">Read the Docs</a>. 
-
-</footer>
-
         </div>
       </div>
-
-    </section>
-
-  </div>
-  
-
-
-  <script type="text/javascript">
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(true);
-      });
-  </script>
-
-  
+  <span id="sidebar-top"></span>
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
   
     
-   
+            <p class="logo"><a href="../index.html">
+              <img class="logo" src="../_static/darmarIT_logo_128.png" alt="Logo"/>
+            </a></p>
+  
 
-</body>
+  <h3>Project Links</h3>
+  <ul>
+    <li><a href="https://github.com/return42/cdb-tools">Source</a>
+  
+    <li><a href="http://return42.github.io/handsOn/slides/git">Get git started</a>
+  
+    <li><a href="slides/cdb_comp/index.html">CDB Entwicklung</a>
+  
+    <li><a href="/todo.html">ToDo</a>
+  </ul><h3>Navigation</h3>
+<ul>
+  <li><a href="../index.html">Overview</a>
+    <ul>
+      <li><a href="index.html">Werkzeuge der CDB-Tools</a>
+        <ul>
+          <li>Previous: <a href="index.html" title="vorheriges Kapitel">Werkzeuge der CDB-Tools</a>
+          <li>Next: <a href="clean_cdb.html" title="nächstes Kapitel">Bereinigung der Datenbank</a></ul>
+      </li>
+    </ul>
+  </li>
+</ul>
+<div id="searchbox" style="display: none" role="search">
+  <h3 id="searchlabel">Schnellsuche</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" aria-labelledby="searchlabel" />
+      <input type="submit" value="Los" />
+    </form>
+    </div>
+</div>
+<script>$('#searchbox').show(0);</script>
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+  
+    <div class="footer" role="contentinfo">
+        &#169; Copyright 2020 Markus Heiser.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+    </div>
+  <script src="../_static/version_warning_offset.js"></script>
+
+  </body>
 </html>
