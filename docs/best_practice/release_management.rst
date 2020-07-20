@@ -11,10 +11,18 @@
 Releasemanagement und CONTACT Elements
 ======================================
 
-  *Das Releasemanagement hat zur Aufgabe, sicherzustellen, dass eine erwartete
-  Anforderung an eine Veränderung in einem Prozess mit einem vertretbaren Risiko
-  in der geforderten Zeit erfolgreich umgesetzt werden kann.* `[ref]
-  <https://de.wikipedia.org/wiki/Releasemanagement>`__
+.. sidebar:: Motivation
+
+   Das Releasemanagement hat zur Aufgabe, sicherzustellen, dass eine erwartete
+   Anforderung an eine Veränderung in einem Prozess mit einem vertretbaren Risiko
+   in der geforderten Zeit erfolgreich umgesetzt werden kann. `[ref]
+   <https://de.wikipedia.org/wiki/Releasemanagement>`__
+
+
+.. contents:: Contents
+   :depth: 2
+   :local:
+   :backlinks: entry
 
 Ein geordnetes Releasemanagement ist reproduzierbar, trägt zu einer Verkürzung
 der Durchlaufzeiten von Änderungen bei und mindert die Risiken in Projekten.
@@ -590,7 +598,7 @@ aus dem lokalem git Repository:
    $ git worktree prune
 
 Nachdem der cdbpkg-Patch vorbereitet ist, kann mit dem eigentlichen Merge
-anfangen werden.  Als Erstes werden die Sourcen mit dem SCM-System gemerged.
+angefangen werden.  Als Erstes werden die Sourcen mit dem SCM-System gemerged.
 Dazu wechselt man in den Branch, in dem man die Änderungen mergen
 will. **Wichtig ist wieder, dass die cdbpkg Tools auf einen BLOB-Store und die
 DB (des Ziel Systems) zugreifen können**.
@@ -695,6 +703,15 @@ Erst wenn alle Konflikte im Source-Code aufgelöst sind hat man wieder eine
 .. code-block:: bash
 
    $ cdbpkg patch /tmp/merge-qs-patch     # CDB-Merge
+
+.. admonition:: Service-Daemon im Update-Modus
+   :class: tip
+
+   Falls erforderlich kann der Service-Daemon so gestartet werden, dass keine
+   Konsistenzprüfung der Paketinstallation durchgeführt wird
+   :ref:`[ref] <cdbsvcd_for_update>`::
+
+     cdbsvcd --debug --for_update
 
 Nun kann man in CDB die Änderungen recherchieren und etwaige Konflikte auflösen
 (Dazu einen build erstellen, alternativ Dev-Build in CDB).

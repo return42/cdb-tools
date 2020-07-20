@@ -23,7 +23,7 @@ müssen.  Die CDB-Tools richten sich an erfahrene CDB -Entwickler und
 
 
 .. toctree::
-   :maxdepth: 1
+   :maxdepth: 2
 
    install
    winShortcuts/index
