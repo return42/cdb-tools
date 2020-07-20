@@ -31,3 +31,17 @@ CDB-Instanz sind ist der relative Pfad immer gleich.::
 
 Die Verwendung von Slash (``../``) gewährleistet, dass der Pfad auf allen
 Plattformen und nicht nur auf MS-Windows funktioniert.
+
+.. _cdbsvcd_for_update:
+
+cdbpkg (Update Modus)
+=====================
+
+::
+
+   cdbsvcd --debug --for_update
+
+Das Kommando startet den Service-Daemon in einem speziellen Update Modus, der
+ausschließlich die für das Update benötigten Dienste startet und keine
+Konsistenzprüfung der Paketinstallation durchführt (wird bei bestimmten
+Update-/Merge- oder ``sync``-Konstellationen des öfteren nötig).

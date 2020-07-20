@@ -47,11 +47,25 @@
             
   <div class="section" id="releasemanagement-und-contact-elements">
 <span id="release-management"></span><h1>Releasemanagement und CONTACT Elements<a class="headerlink" href="#releasemanagement-und-contact-elements" title="Link zu dieser Überschrift">¶</a></h1>
-<blockquote>
-<div><p><em>Das Releasemanagement hat zur Aufgabe, sicherzustellen, dass eine erwartete
+<div class="sidebar">
+<p class="sidebar-title">Motivation</p>
+<p>Das Releasemanagement hat zur Aufgabe, sicherzustellen, dass eine erwartete
 Anforderung an eine Veränderung in einem Prozess mit einem vertretbaren Risiko
-in der geforderten Zeit erfolgreich umgesetzt werden kann.</em> <a class="reference external" href="https://de.wikipedia.org/wiki/Releasemanagement">[ref]</a></p>
-</div></blockquote>
+in der geforderten Zeit erfolgreich umgesetzt werden kann. <a class="reference external" href="https://de.wikipedia.org/wiki/Releasemanagement">[ref]</a></p>
+</div>
+<div class="contents local topic" id="contents">
+<p class="topic-title">Contents</p>
+<ul class="simple">
+<li><p><a class="reference internal" href="#big-picture" id="id6">Big Picture</a></p></li>
+<li><p><a class="reference internal" href="#zusammenfuhrung-zweier-entwicklungslinien" id="id7">Zusammenführung zweier Entwicklungslinien</a></p></li>
+<li><p><a class="reference internal" href="#merge-mit-git-und-cdbpkg-tools" id="id8">Merge mit git und cdbpkg Tools</a></p></li>
+<li><p><a class="reference internal" href="#branch-point" id="id9">Branch-Point</a></p></li>
+<li><p><a class="reference internal" href="#branch-mit-git-anlegen" id="id10">Branch mit git anlegen</a></p></li>
+<li><p><a class="reference internal" href="#dump-der-konfiguration-ins-scm" id="id11">Dump der Konfiguration ins SCM</a></p></li>
+<li><p><a class="reference internal" href="#commit-messages" id="id12">Commit-Messages</a></p></li>
+<li><p><a class="reference internal" href="#common-pitfalls" id="id13">Common Pitfalls</a></p></li>
+</ul>
+</div>
 <p>Ein geordnetes Releasemanagement ist reproduzierbar, trägt zu einer Verkürzung
 der Durchlaufzeiten von Änderungen bei und mindert die Risiken in Projekten.
 <em>Kurzum;</em> das Releasemanagement ist ein wichtiger Baustein der Projekt-Planung
@@ -223,7 +237,7 @@ Instanzen wieder verworfen werden.</p>
 </dd>
 </dl>
 <div class="section" id="big-picture">
-<h2>Big Picture<a class="headerlink" href="#big-picture" title="Link zu dieser Überschrift">¶</a></h2>
+<h2><a class="toc-backref" href="#id6">Big Picture</a><a class="headerlink" href="#big-picture" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Bereits in der Einleitung wurde festgestellt, dass ein <em>sauberess</em>
 Releasemanagement nicht willkürlich sein kann; es muss kausalen Ketten folgen
 und unter den gegebenen Rahmenbedingungen (s.o. <em>Transport</em>) abbildbar
@@ -341,7 +355,7 @@ aufgelöst werden.</p>
 </dl>
 </div>
 <div class="section" id="zusammenfuhrung-zweier-entwicklungslinien">
-<span id="rm-merge-branch"></span><h2>Zusammenführung zweier Entwicklungslinien<a class="headerlink" href="#zusammenfuhrung-zweier-entwicklungslinien" title="Link zu dieser Überschrift">¶</a></h2>
+<span id="rm-merge-branch"></span><h2><a class="toc-backref" href="#id7">Zusammenführung zweier Entwicklungslinien</a><a class="headerlink" href="#zusammenfuhrung-zweier-entwicklungslinien" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Die Zusammenführung zwei Entwicklungslinien wird allgemein auch als <strong>merge</strong>
 bezeichnet. Der Merge ist die eigentliche Herausforderung im Rahmen des
 Releasemanagement. Ziel ist es, die Änderungen aus der einen Entwicklungslinie
@@ -434,7 +448,7 @@ die Patch-Serie der grünen Linie (<code class="docutils literal notranslate"><s
 würde.</p>
 </div>
 <div class="section" id="merge-mit-git-und-cdbpkg-tools">
-<span id="rm-merge-cdbpg-patch"></span><h2>Merge mit git und cdbpkg Tools<a class="headerlink" href="#merge-mit-git-und-cdbpkg-tools" title="Link zu dieser Überschrift">¶</a></h2>
+<span id="rm-merge-cdbpg-patch"></span><h2><a class="toc-backref" href="#id8">Merge mit git und cdbpkg Tools</a><a class="headerlink" href="#merge-mit-git-und-cdbpkg-tools" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Die Zusammenführung zweier Entwicklungslinien soll wieder am Beispiel
 <a class="reference internal" href="#figure-rm-qs-merge"><span class="std std-ref">qs-merge</span></a> erfolgen, bei dem der QS-Branch in die
 PROD-Linie gemerged wird (PROD ist das Ziel).</p>
@@ -521,7 +535,7 @@ $ git worktree prune
 </pre></div>
 </div>
 <p>Nachdem der cdbpkg-Patch vorbereitet ist, kann mit dem eigentlichen Merge
-anfangen werden.  Als Erstes werden die Sourcen mit dem SCM-System gemerged.
+angefangen werden.  Als Erstes werden die Sourcen mit dem SCM-System gemerged.
 Dazu wechselt man in den Branch, in dem man die Änderungen mergen
 will. <strong>Wichtig ist wieder, dass die cdbpkg Tools auf einen BLOB-Store und die
 DB (des Ziel Systems) zugreifen können</strong>.</p>
@@ -610,6 +624,15 @@ cdbpkg-Patch ein und nach Prüfung in CDB wird nochmal ein <code class="docutils
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cdbpkg patch /tmp/merge-qs-patch     <span class="c1"># CDB-Merge</span>
 </pre></div>
 </div>
+<div class="tip admonition">
+<p class="admonition-title">Service-Daemon im Update-Modus</p>
+<p>Falls erforderlich kann der Service-Daemon so gestartet werden, dass keine
+Konsistenzprüfung der Paketinstallation durchgeführt wird
+<a class="reference internal" href="cheat-sheet.html#cdbsvcd-for-update"><span class="std std-ref">[ref]</span></a>:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cdbsvcd</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="n">for_update</span>
+</pre></div>
+</div>
+</div>
 <p>Nun kann man in CDB die Änderungen recherchieren und etwaige Konflikte auflösen
 (Dazu einen build erstellen, alternativ Dev-Build in CDB).</p>
 <div class="highlight-bash notranslate"><div class="highlight"><pre><span></span>$ cdbpkg build cust.plm
@@ -636,7 +659,7 @@ deshalb ggf. für später – am besten kurz vor dem Rollout Termin – eingepla
 werden.</p>
 </div>
 <div class="section" id="branch-point">
-<span id="rm-create-branch"></span><h2>Branch-Point<a class="headerlink" href="#branch-point" title="Link zu dieser Überschrift">¶</a></h2>
+<span id="rm-create-branch"></span><h2><a class="toc-backref" href="#id9">Branch-Point</a><a class="headerlink" href="#branch-point" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Die Aufgabe des Branch-Point ist es, einen klar definierten Zustand festzuhalten
 (s.a. <a class="reference external" href="https://git-scm.com/book/en/v2/Git-Branching-Branches-in-a-Nutshell">Branches-in-a-Nutshell</a>) auf
 dem eine Änderungslinie aufbaut.  Dieser <em>gesicherte</em> Zustand wird später beim
@@ -681,7 +704,7 @@ schlussendlich <em>um die Ohren fliegen</em>.</p>
 </div>
 </div>
 <div class="section" id="branch-mit-git-anlegen">
-<h2>Branch mit git anlegen<a class="headerlink" href="#branch-mit-git-anlegen" title="Link zu dieser Überschrift">¶</a></h2>
+<h2><a class="toc-backref" href="#id10">Branch mit git anlegen</a><a class="headerlink" href="#branch-mit-git-anlegen" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Für das Anlegen eines Branch-Points braucht man kein CDB-Tool und keinen
 CDB-Dienst.  Ein Branch-Point lässt sich sehr einfach auf einem Klone des git
 Repository anlegen, den man sich beispielsweise auf seinem Desktop PC erzeugt
@@ -731,7 +754,7 @@ Exports und den Namen des Branch-Points erkennen lassen, wie z.B.:</p>
 </div>
 </div>
 <div class="section" id="dump-der-konfiguration-ins-scm">
-<span id="rm-dump-into-scm"></span><h2>Dump der Konfiguration ins SCM<a class="headerlink" href="#dump-der-konfiguration-ins-scm" title="Link zu dieser Überschrift">¶</a></h2>
+<span id="rm-dump-into-scm"></span><h2><a class="toc-backref" href="#id11">Dump der Konfiguration ins SCM</a><a class="headerlink" href="#dump-der-konfiguration-ins-scm" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Bevor man einen Branch-Point anlegt oder einen Merge durchführt, muss der
 aktuelle Stand der Konfiguration – der sich u.U. nur in der DB befindet – in
 die JSON Dateien exportiert und in das SCM-System commited werden. Hierfür
@@ -761,7 +784,7 @@ $ git push                            <span class="c1"># auf SCM-Server ablegen<
 die Praxis ungeeignet, hierzu siehe Abschnitt <a class="reference internal" href="#recommend-commit-msg"><span class="std std-ref">Commit-Messages</span></a>.</p>
 </div>
 <div class="section" id="commit-messages">
-<span id="recommend-commit-msg"></span><h2>Commit-Messages<a class="headerlink" href="#commit-messages" title="Link zu dieser Überschrift">¶</a></h2>
+<span id="recommend-commit-msg"></span><h2><a class="toc-backref" href="#id12">Commit-Messages</a><a class="headerlink" href="#commit-messages" title="Link zu dieser Überschrift">¶</a></h2>
 <p>In der Praxis wird den Commit-Messages in viel zu vielen Projekten und leider
 auch von vielen Zulieferern noch zu wenig Beachtung geschenkt, dabei sind die
 Commit-Messages insbesondere bei langlebigen Projekten und wechselnden
@@ -852,7 +875,7 @@ des Maintainers, der Euer Projekt nicht im Detail kennen kann!!!!</p>
 </div>
 </div>
 <div class="section" id="common-pitfalls">
-<h2>Common Pitfalls<a class="headerlink" href="#common-pitfalls" title="Link zu dieser Überschrift">¶</a></h2>
+<h2><a class="toc-backref" href="#id13">Common Pitfalls</a><a class="headerlink" href="#common-pitfalls" title="Link zu dieser Überschrift">¶</a></h2>
 <p>Ein paar Hinweise zu <em>gern</em> gemachten Fehlern:</p>
 <dl class="simple">
 <dt><strong>Branch im laufendem Prozess wechseln</strong></dt><dd><p>Man darf auf einem System, auf dem CDB Prozesse laufen nicht einfach den

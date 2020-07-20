@@ -68,6 +68,16 @@ CDB-Instanz sind ist der relative Pfad immer gleich.:</p>
 <p>Die Verwendung von Slash (<code class="docutils literal notranslate"><span class="pre">../</span></code>) gewährleistet, dass der Pfad auf allen
 Plattformen und nicht nur auf MS-Windows funktioniert.</p>
 </div>
+<div class="section" id="cdbpkg-update-modus">
+<span id="cdbsvcd-for-update"></span><h2>cdbpkg (Update Modus)<a class="headerlink" href="#cdbpkg-update-modus" title="Link zu dieser Überschrift">¶</a></h2>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">cdbsvcd</span> <span class="o">--</span><span class="n">debug</span> <span class="o">--</span><span class="n">for_update</span>
+</pre></div>
+</div>
+<p>Das Kommando startet den Service-Daemon in einem speziellen Update Modus, der
+ausschließlich die für das Update benötigten Dienste startet und keine
+Konsistenzprüfung der Paketinstallation durchführt (wird bei bestimmten
+Update-/Merge- oder <code class="docutils literal notranslate"><span class="pre">sync</span></code>-Konstellationen des öfteren nötig).</p>
+</div>
 </div>
 
 
