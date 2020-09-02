@@ -193,28 +193,39 @@ Administration Konfiguration des BlobStore Dienstes).  In den meisten Setups ist
 der ``vault_path`` bereits im ``base_path`` enthalten.  Im ``base_path``
 befinden sich die SQLite Datenbank ``filestore.db`` in welcher der BlobStore
 Server seine Hash-Value Objekte verwaltet.  Siehe auch im CDB Plattform Handbuch
-im Abschnitt *"Die BLOB-Storage-DB"*.::
+im Abschnitt *"Die BLOB-Storage-DB"*:
 
-  $ cd $CADDOK_BASE\storage\blobstore
-  $ sqlite3-shell filestore.db
-  ...
-  sqlite> .tables
-  backup    blobs     metadata  vaults
-  ...
-  sqlite> .schema vaults
-  CREATE TABLE vaults (
-            vault_id INTEGER PRIMARY KEY,
-            path     TEXT NOT NULL);
-  ...
-  sqlite> .schema blobs
-  CREATE TABLE blobs (
-            id          TEXT PRIMARY KEY,
-            vault_id    INTEGER,
-            filename    TEXT NOT NULL,
-            size        INTEGER,
-            created_at  TIMESTAMP);
-  ...
-  sqlite> select count(*) from blobs;
+.. code:: bat
+
+   cd /D %CADDOK_BASE%\storage\blobstore
+   sqlite3 filestore.db
+
+.. code:: sql
+
+   sqlite> .tables
+   -- backup    blobs     metadata  vaults
+   sqlite> .schema vaults
+   --   CREATE TABLE vaults (
+   --          vault_id INTEGER PRIMARY KEY,
+   --          path     TEXT NOT NULL);
+   -- ...
+   sqlite> .schema blobs
+   --   CREATE TABLE blobs (
+   --          id          TEXT PRIMARY KEY,
+   --          vault_id    INTEGER,
+   --          filename    TEXT NOT NULL,
+   --          size        INTEGER,
+   --          created_at  TIMESTAMP);
+   -- ...
+   sqlite> select vault_id, count(*) from blobs group by vault_id;
+   -- 1|nnnn
+   -- 2|mmmm
+   sqlite> select * from vaults;
+   -- 1|z:\blobstore\vault\
+   -- 2|c:\share\cdb_cust_dev\storage\blobstore\vault\
+
+
+  sqlite> select vault_id, count(*) from blobs group by vault_id;
   ...
 
 Mit einem *Distinct* auf die Vault-ID kann man nachschauen, welche Vaults
