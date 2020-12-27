@@ -12,35 +12,48 @@ quiet_cmd_cdbtools_clean = CLEAN     cdbtools-clean
 
 all: clean cdbtools docs
 
+help: help-min
+	@echo  ''
+	@echo  'to get more help:  make help-all'
+
 PHONY += help
-help:
+help-min:
 	@echo  '  docs      - build documentation'
 	@echo  '  docs-live - autobuild HTML documentation while editing'
 	@echo  '  slides    - build reveal.js slide presentation / use e.g.'
 	@echo  '              cdb-slide-live to autobuild a presentation'
 	@echo  '  clean     - remove most generated files'
 	@echo  '  cdbtools  - bootstrap & build CDB-Tools'
+	@echo  '  rqmts	    - info about build requirements'
+
+help-all: help-min
 	@echo  ''
-	@$(MAKE) -s -f utils/makefile.sphinx docs-help
+	$(Q)$(MAKE) -e -s docs-help
+	@echo  ''
+	$(Q)$(MAKE) -e -s python-help
+
+
+PHONY += rqmts
+rqmts: msg-python-exe msg-pip-exe
 
 PHONY += docs
-docs:  sphinx-doc slides
-	$(call cmd,sphinx,html,docs,docs)
+docs:  pyenv slides
+	$(call cmd,sphinx,html,$(DOCS_FOLDER),$(DOCS_FOLDER))
 
 PHONY += docs-live
-docs-live: sphinx-live
-	$(call cmd,sphinx_autobuild,html,docs,docs)
+docs-live: pyenv
+	$(call cmd,sphinx_autobuild,html,$(DOCS_FOLDER),$(DOCS_FOLDER))
 
 PHONY += slides
 slides: cdb-slide
 	cd $(DOCS_DIST)/slides; python -m zipfile -c cdb_comp.zip cdb_comp
 
 PHONY += cdb-slide
-cdb-slide:  sphinx-doc
+cdb-slide:  pyenv
 	$(call cmd,sphinx,html,$(SLIDES)/cdb_comp,$(SLIDES)/cdb_comp,slides/cdb_comp)
 
 PHONY += cdb-slide-live
-cdb-slide-live: sphinx-live
+cdb-slide-live: pyenv
 	$(call cmd,sphinx_autobuild,html,$(SLIDES)/cdb_comp,$(SLIDES)/cdb_comp,slides/cdb_comp)
 
 PHONY += clean
