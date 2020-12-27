@@ -40,3 +40,16 @@ beschädigt wurden.  Die Checksumme kann wie folgt berechnet werden:
    from cdb.comparch import modules
    m = modules.Module.ByKeys("cust.plm")
    m._getLayout().refresh_std_conf_cheksum()
+
+
+Introspektion URL Namespaces
+============================
+
+.. _more.pathtool: https://github.com/morepath/more.pathtool
+
+Das ``mppt`` Kommando kommt aus dem more.pathtool_, Dokumentation siehe dort.
+
+.. code-block:: sh
+
+   $ mppt -f csv my_instance_url_list.csv
+

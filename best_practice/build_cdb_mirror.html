@@ -4,16 +4,19 @@
 <html lang="de">
   <head>
     <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>Aufbau eines CDB Spiegel-Systems &#8212; CDB-Tools (3.0)</title>
-    <link rel="stylesheet" href="../_static/cdb-tools.css" type="text/css" />
     <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/cdb-tools.css" type="text/css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/segment.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/menu.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/semantic-ui-2.4.1/tab.min.css" />
+    <link rel="stylesheet" type="text/css" href="../_static/sphinx_tabs/tabs.css" />
     <script id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
     <script src="../_static/jquery.js"></script>
     <script src="../_static/underscore.js"></script>
     <script src="../_static/doctools.js"></script>
-    <script src="../_static/language_data.js"></script>
     <script src="../_static/translations.js"></script>
     <link rel="index" title="Stichwortverzeichnis" href="../genindex.html" />
     <link rel="search" title="Suche" href="../search.html" />
@@ -202,28 +205,36 @@ Administration Konfiguration des BlobStore Dienstes).  In den meisten Setups ist
 der <code class="docutils literal notranslate"><span class="pre">vault_path</span></code> bereits im <code class="docutils literal notranslate"><span class="pre">base_path</span></code> enthalten.  Im <code class="docutils literal notranslate"><span class="pre">base_path</span></code>
 befinden sich die SQLite Datenbank <code class="docutils literal notranslate"><span class="pre">filestore.db</span></code> in welcher der BlobStore
 Server seine Hash-Value Objekte verwaltet.  Siehe auch im CDB Plattform Handbuch
-im Abschnitt <em>„Die BLOB-Storage-DB“</em>.:</p>
-<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ cd $CADDOK_BASE\storage\blobstore
-$ sqlite3-shell filestore.db
-...
-sqlite&gt; .tables
-backup    blobs     metadata  vaults
-...
-sqlite&gt; .schema vaults
-CREATE TABLE vaults (
-          vault_id INTEGER PRIMARY KEY,
-          path     TEXT NOT NULL);
-...
-sqlite&gt; .schema blobs
-CREATE TABLE blobs (
-          id          TEXT PRIMARY KEY,
-          vault_id    INTEGER,
-          filename    TEXT NOT NULL,
-          size        INTEGER,
-          created_at  TIMESTAMP);
-...
-sqlite&gt; select count(*) from blobs;
-...
+im Abschnitt <em>„Die BLOB-Storage-DB“</em>:</p>
+<div class="highlight-bat notranslate"><div class="highlight"><pre><span></span><span class="k">cd</span> /D <span class="nv">%CADDOK_BASE%</span>\storage\blobstore
+sqlite3 filestore.db
+</pre></div>
+</div>
+<div class="highlight-sql notranslate"><div class="highlight"><pre><span></span> <span class="n">sqlite</span><span class="o">&gt;</span> <span class="p">.</span><span class="n">tables</span>
+ <span class="c1">-- backup    blobs     metadata  vaults</span>
+ <span class="n">sqlite</span><span class="o">&gt;</span> <span class="p">.</span><span class="k">schema</span> <span class="n">vaults</span>
+ <span class="c1">--   CREATE TABLE vaults (</span>
+ <span class="c1">--          vault_id INTEGER PRIMARY KEY,</span>
+ <span class="c1">--          path     TEXT NOT NULL);</span>
+ <span class="c1">-- ...</span>
+ <span class="n">sqlite</span><span class="o">&gt;</span> <span class="p">.</span><span class="k">schema</span> <span class="n">blobs</span>
+ <span class="c1">--   CREATE TABLE blobs (</span>
+ <span class="c1">--          id          TEXT PRIMARY KEY,</span>
+ <span class="c1">--          vault_id    INTEGER,</span>
+ <span class="c1">--          filename    TEXT NOT NULL,</span>
+ <span class="c1">--          size        INTEGER,</span>
+ <span class="c1">--          created_at  TIMESTAMP);</span>
+ <span class="c1">-- ...</span>
+ <span class="n">sqlite</span><span class="o">&gt;</span> <span class="k">select</span> <span class="n">vault_id</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">from</span> <span class="n">blobs</span> <span class="k">group</span> <span class="k">by</span> <span class="n">vault_id</span><span class="p">;</span>
+ <span class="c1">-- 1|nnnn</span>
+ <span class="c1">-- 2|mmmm</span>
+ <span class="n">sqlite</span><span class="o">&gt;</span> <span class="k">select</span> <span class="o">*</span> <span class="k">from</span> <span class="n">vaults</span><span class="p">;</span>
+ <span class="c1">-- 1|z:\blobstore\vault\</span>
+ <span class="c1">-- 2|c:\share\cdb_cust_dev\storage\blobstore\vault\</span>
+
+
+<span class="n">sqlite</span><span class="o">&gt;</span> <span class="k">select</span> <span class="n">vault_id</span><span class="p">,</span> <span class="k">count</span><span class="p">(</span><span class="o">*</span><span class="p">)</span> <span class="k">from</span> <span class="n">blobs</span> <span class="k">group</span> <span class="k">by</span> <span class="n">vault_id</span><span class="p">;</span>
+<span class="p">...</span>
 </pre></div>
 </div>
 <p>Mit einem <em>Distinct</em> auf die Vault-ID kann man nachschauen, welche Vaults
@@ -382,7 +393,7 @@ exemplarische <a class="reference external" href="https://git-scm.com/docs/gitig
   
     <div class="footer" role="contentinfo">
         &#169; Copyright 2020 Markus Heiser.
-      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.1.2.
+      Created using <a href="https://www.sphinx-doc.org/">Sphinx</a> 3.4.1.
     </div>
   <script src="../_static/version_warning_offset.js"></script>
 
