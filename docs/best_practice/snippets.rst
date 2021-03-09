@@ -16,7 +16,7 @@ Die Checksumme eines CDB Moduls (z.B. ``cust.plm``) ist in der Datei::
 
   cust.plm/cust/plm/module_metadata.json
 
-Im Wert ``mudule.DATA.master_config_checksum`` hinterlegt:
+Im Wert ``mudule::DATA::master_config_checksum`` hinterlegt:
 
 .. code-block:: json
 
@@ -39,7 +39,7 @@ beschädigt wurden.  Die Checksumme kann wie folgt berechnet werden:
 
    from cdb.comparch import modules
    m = modules.Module.ByKeys("cust.plm")
-   m._getLayout().refresh_std_conf_cheksum()
+   m._getLayout().build_std_conf_checksum()
 
 
 Introspektion URL Namespaces
