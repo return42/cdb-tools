@@ -1,5 +1,7 @@
 ;;; .dir-locals.el
 ;;
+;; Copy this file to your instance folder (CADDOK_BASE).
+;;
 ;; Per-Directory Local Variables:
 ;;   https://www.gnu.org/software/emacs/manual/html_node/emacs/Directory-Variables.html
 ;;
