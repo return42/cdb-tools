@@ -14,6 +14,14 @@ REM color 0E
 REM LC_ALL is used by ConEmu
 SET LC_ALL=de_DE.UTF-8
 
+REM shortcut Setup
+REM --------------
+
+SET "ENV_APP_URL=https://srv1.example.local"
+SET "ENV_BLOB_URL=https://srv2.example.local"
+SET "ENV_ASYNC_URL=https://srv3.example.local"
+SET "ENV_EDGE_URL=https://srv5.example.local"
+
 REM CDB setup
 REM ---------------
 
