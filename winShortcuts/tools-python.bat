@@ -1,4 +1,4 @@
-@REM -*- coding: windows-1252; mode: bat -*-
+@REM -*- coding: utf-8; mode: bat -*-
 @echo off
 REM ----------------------------------------------------------------------------
 REM --                             --  File:     cdbtools-wrapper.bat

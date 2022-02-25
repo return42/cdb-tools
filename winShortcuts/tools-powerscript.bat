@@ -1,8 +1,8 @@
-@REM -*- coding: windows-1252; mode: bat -*-
+@REM -*- coding: utf-8; mode: bat -*-
 @echo off
 REM ----------------------------------------------------------------------------
 REM --                             --  File:     cdbtools-wrapper.bat
-REM -- Copyright (C) 2019 darmarIT --  Author:   Markus Heiser
+REM -- Copyright (C) 2022 darmarIT --  Author:   Markus Heiser
 REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------

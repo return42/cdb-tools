@@ -1,8 +1,8 @@
-@REM -*- coding: windows-1252; mode: bat -*-
+@REM -*- coding: utf-8; mode: bat -*-
 @echo off
 REM ----------------------------------------------------------------------------
 REM --                             --  File:     cdbEnv.bat
-REM -- Copyright (C) 2019 darmarIT --  Author:   Markus Heiser
+REM -- Copyright (C) 2022 darmarIT --  Author:   Markus Heiser
 REM --     All rights reserved     --  mail:     markus.heiser@darmarIT.de
 REM --                             --  http://www.darmarIT.de
 REM ----------------------------------------------------------------------------
@@ -20,16 +20,17 @@ REM --------------
 SET "ENV_APP_URL=https://srv1.example.local"
 SET "ENV_BLOB_URL=https://srv2.example.local"
 SET "ENV_ASYNC_URL=https://srv3.example.local"
+SET "ENV_REPORT_URL=https://srv4.example.local"
 SET "ENV_EDGE_URL=https://srv5.example.local"
 
 REM CDB setup
 REM ---------------
 
-SET "CADDOK_BASE=C:\share\cdb_cust_dev"
+SET "CADDOK_BASE=C:\cdb\instance_dev"
 SET "CADDOK_DBNAME=cust_dev"
 
-SET "CADDOK_RUNTIME=C:\share\contact\cdbsrv-11.3.10"
-SET "CADDOK_CLIENT_HOME=C:\share\contact\cdbpc-11.3.0.10"
+SET "CADDOK_RUNTIME=C:\cdb\cdb-15.5"
+SET "CADDOK_CLIENT_HOME=C:\cdb\cdb-15.5"
 
 SET "CADDOK_INSTALLDIR=%CADDOK_RUNTIME%"
 SET "CADDOK_LOGDIR=%CADDOK_BASE%\tmp"

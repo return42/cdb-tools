@@ -7,7 +7,7 @@ REM ----------------------------------------------------------------------------
 call "%~d0%~p0cdbEnv.bat"
 
 REM start "CDB-Client" "%CADDOK_CLIENT_HOME%\cdbpc.exe" --url https://localhost --user caddok --password "welcome" --autologon
-start "CDB-Client" "%CADDOK_CLIENT_HOME%\cdbpc.exe"
+start "CDB-Client" "%CADDOK_CLIENT_HOME%\cdbpc.exe"  --url "%ENV_APP_URL%"  --user xxx
 
 REM ==============================================================================
 :Exit

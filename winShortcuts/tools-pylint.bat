@@ -1,4 +1,4 @@
-@REM -*- coding: windows-1252; mode: bat -*-
+@REM -*- coding: utf-8; mode: bat -*-
 @echo off
 IF NOT DEFINED CDBTOOLS_HOME (
    call "%~d0%~p0cdbEnv.bat"
