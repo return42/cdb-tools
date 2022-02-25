@@ -1,3 +1,16 @@
+2022-02-25 Release 4.0
+
+  * master [mod] zusätzliche Python Pakete cx-Oracle pymssql, pyexcel, Pillow
+  * [mod] winShortcuts: Start-Dateien für Edge- und Report-Server
+  * .dir-locals.el - Kommentar hinzugefügt
+  * [fix] .dir-locals.el / per-pirectory local variables
+  * winShortcuts: URL Link Dateien gegen .bat ausgetauscht
+  * [fix] Snipptes - CDB-Modul Checksumme
+  * [boilerplate] updated boilerplate stuff
+  * Code Snippets - Introspektion URL Namespaces - more.pathtool (mppt)
+  * Kleinere Änderungen an der Doku. & dem ptpython setup
+  * Kleinere Änderungen an der Dokumentation
+
 2020-07-16 Release 3.0
 
   * requirements.txt um pylint u. sphinx Pakete erweitert
