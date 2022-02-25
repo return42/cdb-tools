@@ -72,3 +72,30 @@ git+https://github.com/return42/sphinxjp.themes.revealjs
 
 # linuxdoc for DOT support
 linuxdoc @ git+http://github.com/return42/linuxdoc.git
+
+# http://www.pymssql.org/  (last Py2.7 build is 2.1.5)
+pymssql==2.1.5
+
+# https://docs.pyexcel.org/
+pyexcel
+
+# https://github.com/pyexcel/pyexcel-xlsx
+pyexcel-xlsx
+
+# https://github.com/pyexcel/pyexcel-ods (pyexcel-ods 0.6.0 requires pyexcel-io>=0.6.2 which is not available for Py2.7)
+pyexcel-ods==0.5.6
+
+# https://github.com/foutaise/texttable/
+texttable
+
+# https://tqdm.github.io/
+tqdm
+
+# https://github.com/martinblech/xmltodict
+xmltodict
+
+# https://python-pillow.org/
+Pillow
+
+# https://github.com/oracle/python-cx_Oracle
+cx-Oracle==7.3.0

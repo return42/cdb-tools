@@ -152,7 +152,7 @@ def cli_build_install_pypkgs(cli):  # pylint: disable=unused-argument
     if platform.system() == 'Windows':
         pip  = FSPath(CDBTOOLS_PY27 / "Scripts" / "pip.exe")
     proc =  subprocess.Popen(
-        # https://pip.pypa.io/en/latest/reference/pip_download/#overview
+        # https://pip.pypa.io/en/latest/cli/pip_install
         [ pip, 'install'
           , '--user'
           , '--no-index'
@@ -169,7 +169,7 @@ def cli_build_get_pypkgs(cli):  # pylint: disable=unused-argument
     if platform.system() == 'Windows':
         pip  = FSPath(CDBTOOLS_PY27 / "Scripts" / "pip.exe")
     proc =  subprocess.Popen(
-        # https://pip.pypa.io/en/latest/reference/pip_download/#overview
+        # https://pip.pypa.io/en/latest/cli/pip_download/
         [ pip, 'download'
           , '--dest'           , CDBTOOLS_PIP_DOWNLOAD
           , '--python-version' , PIP_PY_VERSION
